@@ -14,7 +14,7 @@ class Tarefa extends Model
     protected $fillable = [
         'projeto_id',
         'descricao',
-        
+
     ];
 
     // Relação com o Projeto
@@ -22,5 +22,5 @@ class Tarefa extends Model
     {
         return $this->belongsTo(Projeto::class, 'projeto_id');
     }
-    
+
 }

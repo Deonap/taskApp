@@ -12,7 +12,9 @@ class Cliente extends Model
     protected $table = 'clientes';
 
     protected $fillable = [
-        'nome', 'email', 'telefone'
+        'nome',
+        'email',
+        'telefone'
     ];
 
     public function projetos()
@@ -20,5 +22,5 @@ class Cliente extends Model
         return $this->hasMany(Projeto::class);
     }
 
-    
+
 }

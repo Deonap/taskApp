@@ -31,20 +31,19 @@ class Projeto extends Model
         return $this->belongsTo(EstadoProjeto::class, 'estado_projeto_id');
     }
 
-public function tipoCliente()
-{
-    return $this->belongsTo(TipoCliente::class, 'tipo_cliente_id');
-}
+    public function tipoCliente()
+    {
+        return $this->belongsTo(TipoCliente::class, 'tipo_cliente_id');
+    }
 
-public function users()
-{
-    return $this->belongsToMany(User::class, 'projeto_users')
-                ->withPivot('prioridade', 'tempo_gasto', 'observacoes');
-                 
-}
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'projeto_users')->withPivot('prioridade', 'tempo_gasto', 'observacoes');
+
+    }
 
     public function tarefas()
-{
-    return $this->hasMany(Tarefa::class);
-}
+    {
+        return $this->hasMany(Tarefa::class);
+    }
 }

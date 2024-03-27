@@ -27,9 +27,16 @@
                             <form action="{{ route('users.updateType', $user->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-                                <select name="tipo" onchange="this.form.submit()">
+                                <?php 
+                                    if(auth()->user() && auth()->user()->tipo != 'admin'){
+                                        $status = 'disabled';
+                                    }else{
+                                        $status = 'enabled';
+                                    }
+                                ?>
+                                <select name="tipo" {{$status}} onchange="this.form.submit()" class="pr-10 pl-1 text-left">
                                     <option value="colaborador" {{ $user->tipo == 'colaborador' ? 'selected' : '' }}>Colaborador</option>
-                                    <option value="admin" {{ $user->tipo == 'admin' ? 'selected' : '' }}>Admin</option>
+                                    <option value="admin" {{ $user->tipo == 'admin' ? 'selected' : '' }}>Administrador</option>
                                 </select>
                             </form>
                         </td>
