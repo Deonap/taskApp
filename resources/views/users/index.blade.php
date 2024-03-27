@@ -16,11 +16,16 @@
     </head>
     <body>
         <x-app-layout>
-            <div class="flex-1 bg-gray-200 p-6 m-20">
+            <div class="flex-1 m-20">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-semibold text-gray-800">
-                        Lista de Usuários
+                    <div class="flex items-center">
+                    <h2 class="text-xl font-black text-darkBlue">
+                        Parametrizações >
                     </h2>
+                    <div class="ml-2">
+                        Níveis de Acesso
+                    </div>
+                </div>
                     @if(auth()->user() && auth()->user()->tipo == 'admin')
                         <a href="{{ route('users.create') }}" class="bg-darkBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
                             Adicionar
@@ -28,10 +33,10 @@
                     @endif
                 </div>
             
-                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                    <table class="table-auto w-full ">
+                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border">
+                    <table class="table-auto w-full">
                         <thead>
-                            <tr class="bg-blue-100">
+                            <tr class="bg-gray-300">
                                 <th>Nome</th>
                                 <th>Email</th>
                                 <th>Password</th>
