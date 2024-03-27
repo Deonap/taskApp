@@ -15,6 +15,9 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
         },
+        colors: {
+            'darkBlue': 'rgb(0,40,91)'
+        }
     },
 
     plugins: [forms],
