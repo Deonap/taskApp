@@ -1,0 +1,82 @@
+<?php
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjetoController;
+use App\Http\Controllers\EstadoProjetoController;
+use App\Http\Controllers\TipoClienteController;
+use App\Http\Controllers\PrioridadesController;
+use App\Http\Controllers\HistoricoController;
+use App\Models\Projeto;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
+
+
+
+
+Route::resource('clientes', ClienteController::class);
+Route::resource('projetos', ProjetoController::class);
+
+
+Route::resource('estado-projetos', EstadoProjetoController::class);
+Route::resource('tipo-clientes', TipoClienteController::class);
+Route::resource('users', UserController::class);
+Route::put('/users/{id}/updateType', [UserController::class, 'updateType'])->name('users.updateType');
+
+
+
+Route::resource('prioridades', PrioridadesController::class);
+
+Route::get('/filtrar/projetos', [PrioridadesController::class, 'filtrarProjetos']);
+Route::get('/filtrar/projetospendentes', [PrioridadesController::class, 'filtrarProjetosPendente']);
+
+Route::get('/filtrar/projetos-outros-colaboradores/{colaboradorId}', [PrioridadesController::class, 'filtrarProjetosComOutrosColaboradores']);
+
+
+Route::post('/salvar/projetos', [PrioridadesController::class, 'salvarProjetos']);
+
+
+
+
+Route::get('/historico', [HistoricoController::class, 'index'])->name('historico.index');
+Route::get('/api/historico/projetos-em-aberto', [HistoricoController::class, 'filtrarProjetos']);
+Route::get('/api/historico/projetos-pendentes', [HistoricoController::class, 'filtrarProjetosPendente']);
+Route::get('/api/historico/projetos-com-outros', [HistoricoController::class, 'filtrarProjetosComOutrosColaboradores']);
+
+
+Route::post('/atualizar/projetos', [PrioridadesController::class, 'atualizarOrdemProjetos']);
+
+
+Route::post('/projetos/{projeto}/colaboradores/atualizar', [ProjetoController::class, 'atualizarColaborador'])->name('projetos.colaboradores.atualizar');
+
+// Rota para adicionar um novo colaborador a um projeto
+Route::post('/projetos/{projeto}/colaboradores/adicionar', [ProjetoController::class, 'adicionarColaborador'])->name('projetos.colaboradores.adicionar');
+
+Route::get('/projetos/{projeto}/colaboradores/disponiveis', [ProjetoController::class, 'buscarColaboradoresDisponiveis']);
+
