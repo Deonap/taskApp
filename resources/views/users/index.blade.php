@@ -18,14 +18,14 @@
         <x-app-layout>
             <div class="flex-1 m-20">
                 <div class="flex justify-between items-center mb-4">
-                    <div class="flex items-center">
-                    <h2 class="text-xl font-black text-darkBlue">
-                        Parametrizações >
-                    </h2>
-                    <div class="ml-2">
-                        Níveis de Acesso
+                    <div class="flex items-center text-darkBlue">
+                        <h2 class="text-xl font-black">
+                            Parametrizações >
+                        </h2>
+                        <div class="ml-2">
+                            Níveis de Acesso
+                        </div>
                     </div>
-                </div>
                     @if(auth()->user() && auth()->user()->tipo == 'admin')
                         <a href="{{ route('users.create') }}" class="bg-darkBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
                             Adicionar
@@ -79,11 +79,13 @@
                                 @if(auth()->user() && auth()->user()->tipo == 'admin')
                                     <td>
                                         <div class="flex justify-center space-x-3">
+                                            <!-- Botão editar -->
                                             <a href="{{ route('users.edit', $user->id) }}" title="Editar">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-darkBlue hover:text-blue-700">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                                 </svg>
                                             </a>
+                                            <!-- Botão apagar -->
                                             <form action="{{ route('users.destroy', $user->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')

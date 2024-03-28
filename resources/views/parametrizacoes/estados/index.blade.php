@@ -18,8 +18,8 @@
         <x-app-layout>
             <div class="flex-1 m-20">
                 <div class="flex justify-between items-center mb-4">
-                    <div class="flex items-center">
-                        <h2 class="text-xl font-black text-darkBlue">
+                    <div class="flex items-center text-darkBlue">
+                        <h2 class="text-xl font-black">
                             Parametrizações >
                         </h2>
                         <div class="ml-2">
