@@ -74,7 +74,7 @@
                                             Tipo
                                         </th>
                                         <th>
-                                            Nome do Projeto
+                                            Projeto
                                         </th>
                                         <th>
                                             Notas Iniciais
@@ -235,7 +235,8 @@
                                             <td>
                                                 @foreach($projeto->users as $user)
                                                     @if(!$loop->last)
-                                                        {{$user->name}},
+                                                        {{$user->name}}
+                                                        <br>
                                                     @else
                                                         {{$user->name}}
                                                     @endif

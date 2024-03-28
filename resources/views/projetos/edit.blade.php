@@ -140,14 +140,16 @@
                 
                 
                 <div class="form-group">
-                    <label for="users" class="form-label">Usuários Relacionados:</label>
-                    <select id="users" class="form-select" name="users[]" multiple required>
+                    <div>
+                        Colaboradores:
+                    </div>
+                    <div class="border shadow-md p-4 border-gray-300 w-fit max-h-[500px] overflow-y-scroll">
                         @foreach($users as $user)
-                            <option value="{{ $user->id }}" {{ in_array($user->id, $projeto->users->pluck('id')->toArray()) ? 'selected' : '' }}>
-                                {{ $user->name }}
-                            </option>
+                            <input type="checkbox" name="users[]" value="{{$user->id}}" {{in_array($user->id, $projeto->users->pluck('id')->toArray())? 'checked' : ''}} >
+                            <label for="users[]" class="ml-2">{{$user->name}}</label>
+                            <br>
                         @endforeach
-                    </select>
+                    </div>
                 </div>
 
                     <!-- Campo de Observações -->
@@ -164,7 +166,7 @@
                 
     
                 <div class="flex items-center justify-end">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="bg-darkBlue text-white py-2 px-4 rounded mr-4">
                         Atualizar Projeto
                     </button>
                 </div>
