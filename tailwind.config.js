@@ -16,7 +16,7 @@ export default {
             },
         },
         colors: {
-            'darkBlue': 'rgb(0,40,91)'
+            'darkBlue': 'rgb(10,56,87)'
         }
     },
 
