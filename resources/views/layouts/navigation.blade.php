@@ -130,7 +130,7 @@ button svg:last-child {
                 <i class="fas fa-tachometer-alt mr-3"></i>
                 Prioridades
             </span>
-            <a href="{{ route('prioridades.index') }}"  class=" rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('prioridades.index') ? 'active' : '' }}">
+            <a href="{{ route('prioridades.index') }}"  class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('prioridades.index') ? 'active' : '' }}">
                 - Definir
             </a>
             <a href="{{ route('historico.index') }}"  class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('historico.index') ? 'active' : '' }}">
@@ -158,13 +158,13 @@ button svg:last-child {
                 <i class="fas fa-cogs mr-3"></i>
                 Parametrizações
             </span>
-            <a href="{{ route('tipo-clientes.index') }}" class=" rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('tipo-clientes.index') ? 'active' : '' }}"  >
+            <a href="{{ route('tipo-clientes.index') }}" class=" rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('tipo-clientes.*') ? 'active' : '' }}"  >
                - Tipo de Cliente
             </a>
-            <a href="{{ route('users.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
+            <a href="{{ route('users.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
                - Níveis de Acesso
             </a>
-            <a href="{{ route('estado-projetos.index') }}" class=" rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('estado-projetos.index') ? 'active' : '' }}" >
+            <a href="{{ route('estado-projetos.index') }}" class=" rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('estado-projetos.*') ? 'active' : '' }}" >
                 - Estado
             </a>
         </div>
