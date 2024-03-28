@@ -121,12 +121,14 @@
                                                         {{ $user->name }}
                                                         <div class="ml-3 space-x-3 flex items-center">
                                                             <button class="btn-escolher-colaborador data-user-id={{ $user->id }}" data-projeto-id="{{ $projeto->id }}">
+                                                                <!-- Down arrow -->
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
                                                                 </svg>
                                                             </button>
                                                             @if($loop->last)
                                                                 <button class="btn-adicionar-colaborador" data-projeto-id="{{ $projeto->id }}">
+                                                                    <!-- + -->
                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                                                                         <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
                                                                     </svg>                                                                      
@@ -135,11 +137,13 @@
                                                         </div>
                                                     </div>
                                                     <div id="dropdown-escolher-colaborador" class="hidden">
-                                                        <select class="seletor-colaborador">
+                                                        
+                                                        <select class="selector-colaborador w-full">
                                                             @foreach($colaboradores as $colaborador)
                                                                 <option value="{{ $colaborador->id }}">{{ $colaborador->nome }}</option>
                                                             @endforeach
                                                         </select>
+                                                        <br>
                                                         <button class="confirmar-escolha-colaborador">Confirmar</button>
                                                     </div>
                                                     <select id="dropdownNovoColaborador" class="hidden">

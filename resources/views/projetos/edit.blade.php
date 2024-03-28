@@ -143,11 +143,16 @@
                     <div>
                         Colaboradores:
                     </div>
-                    <div class="border shadow-md p-4 border-gray-300 w-fit max-h-[500px] overflow-y-scroll">
+                    <div class="border shadow-md px-4 py-2 border-gray-300 w-fit h-fit max-h-[150px] overflow-y-scroll flex flex-wrap space-y-1">
                         @foreach($users as $user)
-                            <input type="checkbox" name="users[]" value="{{$user->id}}" {{in_array($user->id, $projeto->users->pluck('id')->toArray())? 'checked' : ''}} >
-                            <label for="users[]" class="ml-2">{{$user->name}}</label>
-                            <br>
+                            <div class="w-1/2 flex items-center">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="users[]" value="{{$user->id}}" {{in_array($user->id, $projeto->users->pluck('id')->toArray())? 'checked' : ''}}>
+                                    <div class="ml-2">
+                                        {{$user->name}}
+                                    </div>
+                                </label>
+                            </div>
                         @endforeach
                     </div>
                 </div>
