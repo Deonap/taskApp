@@ -75,7 +75,7 @@ class ProjetoController extends Controller
      */
     public function show(Projeto $projeto)
     {
-        //return view('projetos.show', compact('projeto'));
+        return view('projetos.show', compact('projeto'));
     }
 
     /**
@@ -138,7 +138,6 @@ class ProjetoController extends Controller
 
     public function atualizarColaborador(Request $request, Projeto $projeto)
     {
-        dd($request);
         $validated = $request->validate([
             'novoColaboradorId' => 'required|exists:users,id'
         ]);
