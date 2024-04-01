@@ -104,7 +104,6 @@
                                             <td>
                                                 {{ $projeto->nome }}
                                             </td>
-                                            
                                             <td>
                                                 <!-- Descrição de cada tarefa do projeto -->
                                                 @foreach($projeto->tarefas as $tarefa)
