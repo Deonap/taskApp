@@ -421,15 +421,17 @@
         var colaboradorCell = document.getElementById("colaboradorCell/" + this.id);
 
 
-        colaboradorCell.innerHTML +=    "<div class='flex items-center border-t border-gray-400 p-1'>" + 
-                                            "<select id={{$projeto->id}} class='w-fit pl-2 pr-8 border-none focus:border-none colaboradorDropdown'>" +
-                                                "<option disabled selected>...</option>" + 
-                                                "@foreach($colaboradores as $colaborador)" +
-                                                    "@if(!$projeto->users->contains($colaborador))"+
-                                                        "<option value='{{$colaborador->id}}' class='w-fit'>{{ $colaborador->name }}</option>" +
-                                                    "@endif" +
-                                                "@endforeach" +
-                                            "</select>" +
-                                        "</div>"
+        colaboradorCell.innerHTML +=    
+        `<div class='flex items-center border-t border-gray-400 p-1'>
+            <select id={{$projeto->id}} class='w-fit pl-2 pr-8 border-none focus:border-none colaboradorDropdown'>
+                <option disabled selected>...</option>
+                @foreach($colaboradores as $colaborador)
+                    @if(!$projeto->users->contains($colaborador))
+                        <option value='{{$colaborador->id}}' class='w-fit'>{{ $colaborador->name }}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+        `;
     }
 </script>

@@ -1,3 +1,18 @@
+<style>
+    #toggleFerias:checked + .toggle-line {
+    background-color: rgb(10,56,87); /* Change this to your desired color when toggle is active */
+    }
+
+    #toggleFerias:checked + .toggle-line + .toggle-dot {
+    transform: translateX(100%);
+    }
+
+    .toggle-line,
+    .toggle-dot {
+    transition-duration: 1s; /* Adjust the duration as needed */
+    }
+</style>
+
 <x-app-layout>
     <!-- Início da Trilha de Navegação (Breadcrumb) -->
     <nav class="bg-grey-light p-3 rounded font-sans w-full m-4 ">
@@ -17,18 +32,28 @@
                 <div class="flex items-center">
                     <label for="colaborador" class="block text-sm font-medium "></label>
                     <div class="relative">
-                      <select id="colaborador" name="colaborador" class="appearance-none border  rounded-md w-48 py-2 pl-3 pr-10  leading-tight focus:outline-none focus:shadow-outline  text-white"style="background-color: #0a3857;">
-                        @foreach($colaboradores as $colaborador)
+                        <select id="colaborador" name="colaborador" class="appearance-none border  rounded-md w-48 py-2 pl-3 pr-10  leading-tight focus:outline-none focus:shadow-outline  text-white"style="background-color: #0a3857;">
+                            @foreach($colaboradores as $colaborador)
                                 <option value="{{ $colaborador->id }}">{{ $colaborador->name }}</option>
                             @endforeach
-                      </select>
-                      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-white">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                          <path d="M5.295 7.295a1 1 0 011.41 0L10 10.59l3.295-3.295a1 1 0 111.41 1.41l-4 4a1 1 0 01-1.41 0l-4-4a1 1 0 010-1.41z" />
-                        </svg>
-                      </div>
+                        </select>
                     </div>
-                  </div>
+                    
+                    <div>
+                        <label for="toggleFerias" class="flex items-center cursor-pointer">
+                            <div class="mx-3 text-gray-700 font-medium">
+                                Férias
+                            </div>
+                            <div class="relative">
+                                <input id="toggleFerias" type="checkbox" class="hidden" />
+                                <div class="toggle-line w-10 h-4 bg-gray-400 rounded-full shadow-inner transition-colors"></div>
+                                <div class="toggle-dot absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0 transition-transform border" style="top: -4px;"></div>
+                            </div>
+                        </label>
+                    </div>
+
+
+
             </div>
         </div>
     </div>
@@ -308,25 +333,25 @@ celulaEstadoProjeto.innerHTML = projeto.estado_projeto ?
 
 
                 var celulaAcoes = linha.insertCell(8);
-celulaAcoes.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
-celulaAcoes.innerHTML = `
-    <div style="display: flex; align-items: center;">
-        <a href="/projetos/${projeto.id}/edit" class="text-indigo-600 hover:text-indigo-900 mr-2">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                      </svg>
-        </a>
-        <form action="/projetos/${projeto.id}/destroy" method="POST" class="inline">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="text-red-600 hover:text-red-900">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                          </svg>
-            </button>
-        </form>
-    </div>
-`;
+                celulaAcoes.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
+                celulaAcoes.innerHTML = `
+                    <div style="display: flex; align-items: center;">
+                        <a href="/projetos/${projeto.id}/edit" class="text-indigo-600 hover:text-indigo-900 mr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                    </svg>
+                        </a>
+                        <form action="/projetos/${projeto.id}/destroy" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 hover:text-red-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                        </svg>
+                            </button>
+                        </form>
+                    </div>
+                `;
 
             });
         });
@@ -446,93 +471,96 @@ function atualizarTabelaProjetosComOutrosColaboradores(userId) {
                 `;
             });
         });
-}
+    }
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    var el = document.getElementById('tabelaProjetosAbertos').getElementsByTagName('tbody')[0];
-    var sortable = new Sortable(el, {
-        animation: 150,
-        onEnd: function(evt) {
-            var items = el.getElementsByTagName('tr');
-            var projetosData = [];
-            var userId = document.getElementById('colaborador').value; // Obtém o user_id do dropdown de colaboradores
+    document.addEventListener('DOMContentLoaded', function() {
+        var el = document.getElementById('tabelaProjetosAbertos').getElementsByTagName('tbody')[0];
+        var sortable = new Sortable(el, {
+            animation: 150,
+            onEnd: function(evt) {
+                var items = el.getElementsByTagName('tr');
+                var projetosData = [];
+                var userId = document.getElementById('colaborador').value; // Obtém o user_id do dropdown de colaboradores
 
-            for (var i = 0; i < items.length; i++) {
-                projetosData.push({
-                    id: items[i].getAttribute('data-id'),
-                    user_id: userId, // Inclui o user_id no objeto
-                    prioridade: i + 1 // Nova prioridade baseada na posição
+                for (var i = 0; i < items.length; i++) {
+                    projetosData.push({
+                        id: items[i].getAttribute('data-id'),
+                        user_id: userId, // Inclui o user_id no objeto
+                        prioridade: i + 1 // Nova prioridade baseada na posição
+                    });
+                }
+
+                // Enviar a nova ordem para o servidor
+                fetch('/atualizar/projetos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ projetos: projetosData })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Ordem atualizada com sucesso:', data);
+                    atualizarTabelaProjetosEmAberto(userId); // Atualiza a tabela com o usuário atual
+                })
+                .catch(error => {
+                    console.error('Erro ao atualizar a ordem:', error);
                 });
             }
-
-            // Enviar a nova ordem para o servidor
-            fetch('/atualizar/projetos', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({ projetos: projetosData })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok: ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Ordem atualizada com sucesso:', data);
-                atualizarTabelaProjetosEmAberto(userId); // Atualiza a tabela com o usuário atual
-            })
-            .catch(error => {
-                console.error('Erro ao atualizar a ordem:', error);
-            });
-        }
-    });
-});
-;
-
-document.getElementById('salvarPrioridades').addEventListener('click', function() {
-    var userId = document.getElementById('colaborador').value; // Obter o user_id do dropdown
-    var projetosData = [];
-
-    document.querySelectorAll('#tabelaProjetosAbertos tbody tr').forEach(function(row) {
-        var projetoId = row.getAttribute('data-id');
-        var observacoes = row.querySelector('.observacoes').value;
-        var tempoGasto = row.querySelector('.tempo-gasto').value;
-
-        projetosData.push({ 
-            id: projetoId, 
-            user_id: userId, // Usar o mesmo user_id para todos os projetos
-            observacoes: observacoes, 
-            tempoGasto: tempoGasto 
         });
     });
-    fetch('/salvar/projetos', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({ projetos: projetosData })
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Algo deu errado no servidor.');
-        }
-    })
-    .then(data => {
-        alert('Projetos atualizados com sucesso!');
-    })
-    .catch(error => {
-        console.error('Erro ao salvar projetos:', error);
+
+
+    document.getElementById('salvarPrioridades').addEventListener('click', function() {
+        var userId = document.getElementById('colaborador').value; // Obter o user_id do dropdown
+        var projetosData = [];
+
+        document.querySelectorAll('#tabelaProjetosAbertos tbody tr').forEach(function(row) {
+            var projetoId = row.getAttribute('data-id');
+            var observacoes = row.querySelector('.observacoes').value;
+            var tempoGasto = row.querySelector('.tempo-gasto').value;
+
+            projetosData.push({ 
+                id: projetoId, 
+                user_id: userId, // Usar o mesmo user_id para todos os projetos
+                observacoes: observacoes, 
+                tempoGasto: tempoGasto 
+            });
+        });
+        fetch('/salvar/projetos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ projetos: projetosData })
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Algo deu errado no servidor.');
+            }
+        })
+        .then(data => {
+            alert('Projetos atualizados com sucesso!');
+        })
+        .catch(error => {
+            console.error('Erro ao salvar projetos:', error);
+        });
     });
-});
 
-
+    var toggleFerias = document.getElementById('toggleFerias');
+    toggleFerias.addEventListener('change',function(){
+        console.log("changed")
+    });
 
 
     </script>
