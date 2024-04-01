@@ -31,7 +31,7 @@
                             Clientes >
                         </h2>
                         <div class="ml-2">
-                            Editar
+                            Ver Cliente
                         </div>
                     </div>
                 </div>
@@ -41,19 +41,19 @@
                             <label for="nome">
                                 Nome
                             </label>
-                            <input disabled class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nome" autocomplete='off' type="text" name="nome" value={{$cliente->nome}}>
+                            <input disabled class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nome" autocomplete='off' type="text" name="nome" placeholder="{{$cliente->nome}}">
                         </div>
                         <div class="flex items-center space-x-3 w-full">
                             <label for="email">
                                 Email
                             </label>
-                            <input disabled class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" autocomplete='off' type="email" name="email" value={{$cliente->email}}>
+                            <input disabled class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" autocomplete='off' type="email" name="email" placeholder={{$cliente->email}}>
                         </div>
                         <div class="flex items-center space-x-3 w-full">    
                             <label for="telefone">
                                 Telefone 
                             </label>
-                            <input disabled class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="telefone" autocomplete='off' type="text" name="telefone" value={{$cliente->telefone}}>
+                            <input disabled class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="telefone" autocomplete='off' type="text" name="telefone" placeholder={{$cliente->telefone}}>
                         </div>
                     </div>
                     <div class="my-10">
@@ -379,34 +379,34 @@
         });
 
         // Evento de clique para adicionar um novo colaborador
-        $('.btn-adicionar-colaborador').on('click', function () {
-            var projetoId = $(this).data('projeto-id');
-            var novoColaboradorId = $('#dropdownNovoColaborador').val();
+        // $('.btn-adicionar-colaborador').on('click', function () {
+        //     var projetoId = $(this).data('projeto-id');
+        //     var novoColaboradorId = $('#dropdownNovoColaborador').val();
 
-            console.log("Projeto ID: " + projetoId); // Debug
-            console.log("Novo Colaborador ID: " + novoColaboradorId); // Debug
+        //     console.log("Projeto ID: " + projetoId); // Debug
+        //     console.log("Novo Colaborador ID: " + novoColaboradorId); // Debug
 
-            if (!novoColaboradorId) {
-                alert('Por favor, selecione um colaborador.');
-                return;
-            }
+        //     if (!novoColaboradorId) {
+        //         alert('Por favor, selecione um colaborador.');
+        //         return;
+        //     }
 
-            $.ajax({
-                url: '/projetos/' + projetoId + '/colaboradores/adicionar',
-                type: 'POST',
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    novoColaboradorId: novoColaboradorId
-                },
-                success: function (response) {
-                    alert('Colaborador adicionado com sucesso!');
-                    // Atualizações adicionais na UI
-                },
-                error: function (error) {
-                    alert('Erro ao adicionar colaborador.');
-                }
-            });
-        });
+        //     $.ajax({
+        //         url: '/projetos/' + projetoId + '/colaboradores/adicionar',
+        //         type: 'POST',
+        //         data: {
+        //             _token: "{{ csrf_token() }}",
+        //             novoColaboradorId: novoColaboradorId
+        //         },
+        //         success: function (response) {
+        //             alert('Colaborador adicionado com sucesso!');
+        //             // Atualizações adicionais na UI
+        //         },
+        //         error: function (error) {
+        //             alert('Erro ao adicionar colaborador.');
+        //         }
+        //     });
+        // });
     });
 
     var colaboradorCell = document.getElementsByClassName("colaboradorCell");
@@ -425,13 +425,11 @@
                                             "<select id={{$projeto->id}} class='w-fit pl-2 pr-8 border-none focus:border-none colaboradorDropdown'>" +
                                                 "<option disabled selected>...</option>" + 
                                                 "@foreach($colaboradores as $colaborador)" +
+                                                    "@if(!$projeto->users->contains($colaborador))"+
                                                         "<option value='{{$colaborador->id}}' class='w-fit'>{{ $colaborador->name }}</option>" +
-                                                    
+                                                    "@endif" +
                                                 "@endforeach" +
                                             "</select>" +
                                         "</div>"
     }
-
-
-
 </script>
