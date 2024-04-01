@@ -158,7 +158,7 @@
                                             <td  class="text-center">
                                                 @foreach($projeto->users as $user)
                                                     <div class="text-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
-                                                        {{$user->tempoGasto != 0 ? $user->tempoGasto: '00:00'}}
+                                                        {{$user->tempoGasto != '00:00' ? $user->tempoGasto: '00:00'}}
                                                         @if(!$loop->last)
                                                             <br>
                                                         @endif
@@ -251,15 +251,24 @@
                                                 @endforeach
                                             </td>
                                             <td  class="text-center">
-                                                {{ $projeto->tempo_gasto != 0 ? $projeto->tempo_gasto : '00:00'}}
+                                                {{ $projeto->tempo_gasto}}
                                             </td>
                                             <td>
                                                 <?php
-                                                    if($projeto->tempo_gasto < $projeto->tempo_previsto){
+                                                    function convertToMinutes($time) {
+                                                        $parts = explode(':', $time);
+                                                        return intval($parts[0]) * 60 + intval($parts[1]);
+                                                    }
+
+                                                    $tempo_gasto_minutes = convertToMinutes($projeto->tempo_gasto);
+                                                    $tempo_previsto_minutes = convertToMinutes($projeto->tempo_previsto);
+
+                                                    // Comparing durations
+                                                    if ($tempo_gasto_minutes < $tempo_previsto_minutes) {
                                                         $bgColor = 'green-300';
-                                                    }elseif ($projeto->tempo_gasto == $projeto->tempo_previsto) {
+                                                    } elseif ($tempo_gasto_minutes == $tempo_previsto_minutes) {
                                                         $bgColor = 'blue-500';
-                                                    }else{
+                                                    } else {
                                                         $bgColor = 'red-300';
                                                     }
                                                 ?>

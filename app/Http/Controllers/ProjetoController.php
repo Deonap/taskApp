@@ -49,7 +49,7 @@ class ProjetoController extends Controller
             'tarefas' => 'required|array',
             'tarefas.*' => 'string', // Assumindo que as tarefas são enviadas como um array
             'users' => 'required|array|exists:users,id', // Assumindo que os colaboradores são enviados como um array
-            'tempo_previsto' => 'required|numeric',
+            'tempo_previsto' => 'required|string',
             'notas_iniciais' => 'nullable|string',
         ]);
 
@@ -105,9 +105,9 @@ class ProjetoController extends Controller
             'tarefas' => 'required|array',
             'tarefas.*' => 'string',
             'users' => 'required|array|exists:users,id',
-            'tempo_previsto' => 'required|numeric',
+            'tempo_previsto' => 'required|string',
             'observacoes' => 'nullable|string',
-            'tempo_gasto' => 'nullable|numeric',
+            'tempo_gasto' => 'nullable|string',
         ]);
 
         $projeto->update($validatedData);

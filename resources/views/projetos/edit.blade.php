@@ -134,7 +134,7 @@
                 
                 <div class="form-group">
                     <label for="tempo_previsto" class="form-label">Tempo Previsto:</label>
-                    <input id="tempo_previsto" type="number" name="tempo_previsto" class="form-input" value="{{ $projeto->tempo_previsto }}" required>
+                    <input id="tempo_previsto" type="text" name="tempo_previsto" class="form-input" value="{{ $projeto->tempo_previsto }}" required>
                 </div>
                 
                 
@@ -165,7 +165,7 @@
                 <!-- Campo de Tempo Gasto -->
                 <div class="form-group">
                     <label for="tempo_gasto" class="form-label">Tempo Gasto:</label>
-                    <input id="tempo_gasto" type="number" name="tempo_gasto" class="form-input" value="{{ $projeto->tempo_gasto }}">
+                    <input id="tempo_gasto" type="text" name="tempo_gasto" class="form-input" value="{{ $projeto->tempo_gasto }}">
                 </div>
                 
     

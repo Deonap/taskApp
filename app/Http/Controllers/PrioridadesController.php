@@ -114,7 +114,7 @@ public function salvarProjetos(Request $request) {
         'projetos.*.id' => 'required|integer',
         'projetos.*.user_id' => 'required|integer',
         'projetos.*.observacoes' => 'nullable|string',
-        'projetos.*.tempoGasto' => 'nullable|integer'
+        'projetos.*.tempoGasto' => 'nullable|string'
     ]);
 
     foreach ($dados['projetos'] as $dado) {

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreignId('cliente_id')->constrained('clientes');
             $table->foreignId('tipo_cliente_id')->constrained('tipo_clientes');
             $table->foreignId('estado_projeto_id')->constrained('estado_projetos');
-            $table->integer('tempo_previsto');
+            $table->string('tempo_previsto');
             $table->text('observacoes')->nullable();
-            $table->integer('tempo_gasto')->nullable();
+            $table->string('tempo_gasto')->nullable();
             $table->timestamps();
         });
     }

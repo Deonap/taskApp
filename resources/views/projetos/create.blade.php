@@ -126,7 +126,7 @@
                 
                 <div class="form-group">
                     <label for="tempo_previsto" class="form-label">Tempo Previsto:</label>
-                    <input id="tempo_previsto" type="number" class="form-input" name="tempo_previsto" required>
+                    <input id="tempo_previsto" type="text" class="form-input" name="tempo_previsto" required>
                     @error('tempo_previsto')
                         <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
                     @enderror

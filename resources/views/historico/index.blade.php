@@ -244,9 +244,9 @@ function atualizarTabelaProjetos(idTabela, projetos) {
         // Coluna de Tempo Gasto
         var celulaTempoGasto = linha.cells[6];
         var inputTempoGasto = document.createElement('input');
-        inputTempoGasto.type = 'number';
+        inputTempoGasto.type = 'text';
         inputTempoGasto.classList.add('border', 'border-gray-300', 'rounded-md', 'p-2', 'w-full');
-        inputTempoGasto.value = projeto.tempo_gasto || '';
+        inputTempoGasto.value = projeto.tempo_gasto || '00:00';
         celulaTempoGasto.appendChild(inputTempoGasto);
 
         // Coluna de Estado do Projeto
