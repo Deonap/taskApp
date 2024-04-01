@@ -70,7 +70,6 @@
     <div class="container">
         <div class="card">
             <h2 class="text-2xl font-semibold mb-6">Editar Projeto</h2>
-            
             <form method="POST" action="{{ route('projetos.update', ['projeto' => $projeto->id]) }}">
                 @csrf
                 @method('PUT')
@@ -158,16 +157,16 @@
                 </div>
 
                     <!-- Campo de Observações -->
-                    <div class="form-group">
-                        <label for="observacoes" class="form-label">Observações:</label>
-                        <textarea id="observacoes" name="observacoes" class="form-input" rows="4">{{ $projeto->observacoes }}</textarea>
-                    </div>
+                <div class="form-group">
+                    <label for="observacoes" class="form-label">Observações:</label>
+                    <textarea id="observacoes" name="observacoes" class="form-input" rows="4">{{ $projeto->observacoes }}</textarea>
+                </div>
 
-                    <!-- Campo de Tempo Gasto -->
-                    <div class="form-group">
-                        <label for="tempo_gasto" class="form-label">Tempo Gasto:</label>
-                        <input id="tempo_gasto" type="number" name="tempo_gasto" class="form-input" value="{{ $projeto->tempo_gasto }}">
-                    </div>
+                <!-- Campo de Tempo Gasto -->
+                <div class="form-group">
+                    <label for="tempo_gasto" class="form-label">Tempo Gasto:</label>
+                    <input id="tempo_gasto" type="number" name="tempo_gasto" class="form-input" value="{{ $projeto->tempo_gasto }}">
+                </div>
                 
     
                 <div class="flex items-center justify-end">

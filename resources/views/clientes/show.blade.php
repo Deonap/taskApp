@@ -115,10 +115,15 @@
                                             <td class="text-center">
                                                 {{ $projeto->tempo_previsto }}
                                             </td>
-                                            <td>
+                                            <td id="colaboradorCell/{{$projeto->id}}">
                                                 @foreach($projeto->users as $user)
                                                     <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
-                                                        {{ $user->name }}
+                                                            <select id={{$projeto->id}} class="w-fit pl-2 pr-8 border-none focus:border-none colaboradorDropdown">
+                                                                @foreach($colaboradores as $colaborador)
+                                                                    <option value="{{$colaborador->id}}" class="w-fit" {{$colaborador->name == $user->name ? 'selected' : ''}}>{{ $colaborador->name }}</option>        
+                                                                @endforeach
+                                                            </select>
+                                                            <br>
                                                         <div class="ml-3 space-x-3 flex items-center">
                                                             <button class="btn-escolher-colaborador data-user-id={{ $user->id }}" data-projeto-id="{{ $projeto->id }}">
                                                                 <!-- Down arrow -->
@@ -127,7 +132,7 @@
                                                                 </svg>
                                                             </button>
                                                             @if($loop->last)
-                                                                <button class="btn-adicionar-colaborador" data-projeto-id="{{ $projeto->id }}">
+                                                                <button id="{{$projeto->id}}"class="btn-adicionar-colaborador" data-projeto-id="{{ $projeto->id }}">
                                                                     <!-- + -->
                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                                                                         <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
@@ -137,10 +142,9 @@
                                                         </div>
                                                     </div>
                                                     <div id="dropdown-escolher-colaborador" class="hidden">
-                                                        
                                                         <select class="selector-colaborador w-full">
                                                             @foreach($colaboradores as $colaborador)
-                                                                <option value="{{ $colaborador->id }}">{{ $colaborador->nome }}</option>
+                                                                <option value="{{ $colaborador->id }}">{{ $colaborador->name }}</option>
                                                             @endforeach
                                                         </select>
                                                         <br>
@@ -247,7 +251,7 @@
                                                 @endforeach
                                             </td>
                                             <td  class="text-center">
-                                                {{ $projeto->tempo_gasto }}
+                                                {{ $projeto->tempo_gasto != 0 ? $projeto->tempo_gasto : '00:00'}}
                                             </td>
                                             <td>
                                                 <?php
@@ -258,7 +262,6 @@
                                                     }else{
                                                         $bgColor = 'red-300';
                                                     }
-                                                    
                                                 ?>
                                                 <div class="rounded-full bg-{{$bgColor}} size-6">
 
@@ -365,6 +368,7 @@
                     // Aqui você pode querer atualizar a lista de colaboradores na view
                 },
                 error: function (error) {
+                    console.log("error");
                     // Trate os erros aqui
                     alert('Erro ao alterar colaborador.');
                 }
@@ -404,4 +408,30 @@
             });
         });
     });
+
+    var colaboradorCell = document.getElementsByClassName("colaboradorCell");
+    var btnAdicionarColaborador = document.getElementsByClassName("btn-adicionar-colaborador");
+
+
+    for(var i = 0; i <btnAdicionarColaborador.length;i++){
+        btnAdicionarColaborador[i].addEventListener('click', addNewColaboradorField);
+    }
+
+    function addNewColaboradorField(){
+        var colaboradorCell = document.getElementById("colaboradorCell/" + this.id);
+
+
+        colaboradorCell.innerHTML +=    "<div class='flex items-center border-t border-gray-400 p-1'>" + 
+                                            "<select id={{$projeto->id}} class='w-fit pl-2 pr-8 border-none focus:border-none colaboradorDropdown'>" +
+                                                "<option disabled selected>...</option>" + 
+                                                "@foreach($colaboradores as $colaborador)" +
+                                                        "<option value='{{$colaborador->id}}' class='w-fit'>{{ $colaborador->name }}</option>" +
+                                                    
+                                                "@endforeach" +
+                                            "</select>" +
+                                        "</div>"
+    }
+
+
+
 </script>

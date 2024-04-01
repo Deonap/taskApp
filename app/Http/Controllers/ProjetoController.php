@@ -138,6 +138,7 @@ class ProjetoController extends Controller
 
     public function atualizarColaborador(Request $request, Projeto $projeto)
     {
+        dd($request);
         $validated = $request->validate([
             'novoColaboradorId' => 'required|exists:users,id'
         ]);
