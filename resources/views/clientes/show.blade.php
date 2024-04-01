@@ -255,13 +255,16 @@
                                             </td>
                                             <td>
                                                 <?php
-                                                    function convertToMinutes($time) {
-                                                        $parts = explode(':', $time);
-                                                        return intval($parts[0]) * 60 + intval($parts[1]);
-                                                    }
 
-                                                    $tempo_gasto_minutes = convertToMinutes($projeto->tempo_gasto);
-                                                    $tempo_previsto_minutes = convertToMinutes($projeto->tempo_previsto);
+                                                    $tempoGastoP1 = explode(":",$projeto->tempo_gasto)[0];
+                                                    $tempoGastoP2 = explode(":",$projeto->tempo_gasto)[1];
+
+                                                    
+                                                    $tempoPrevistoP1 = explode(":",$projeto->tempo_previsto)[0];
+                                                    $tempoPrevistoP2 = explode(":",$projeto->tempo_previsto)[1];
+
+                                                    $tempo_gasto_minutes = intval($tempoGastoP1) * 60 + intval($tempoGastoP2);
+                                                    $tempo_previsto_minutes = intval($tempoPrevistoP1) * 60 + intval($tempoPrevistoP2);
 
                                                     // Comparing durations
                                                     if ($tempo_gasto_minutes < $tempo_previsto_minutes) {
@@ -273,7 +276,7 @@
                                                     }
                                                 ?>
                                                 <div class="rounded-full bg-{{$bgColor}} size-6">
-
+                                                    
                                                 </div>
                                             </td>
                                             @if(auth()->user() && auth()->user()->tipo == 'admin')
