@@ -138,16 +138,17 @@ class ProjetoController extends Controller
 
     public function atualizarColaborador(Request $request, Projeto $projeto)
     {
-        $validated = $request->validate([
-            'novoColaboradorId' => 'required|exists:users,id'
-        ]);
+        $aux = explode('/', $request['novoColaborador']);
+
+        $novoColaboradorId = $aux[0];
+        $oldColaboradorId = $aux[1];
+
+        $projeto->users()->where('id', $oldColaboradorId)->detach($oldColaboradorId);
+        $projeto->users()->attach($novoColaboradorId);
 
 
-        $novoColaboradorId = $validated['novoColaboradorId'];
-
-        $projeto->users()->syncWithoutDetaching([$validated['novoColaborador']]);
-
-        return response()->json(['message' => 'Colaborador atualizado com sucesso!']);
+        
+        return redirect(route('clientes.show', $projeto->cliente_id));
     }
 
     public function adicionarColaborador(Request $request, Projeto $projeto)

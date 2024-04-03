@@ -73,7 +73,7 @@ Route::get('/api/historico/projetos-com-outros', [HistoricoController::class, 'f
 Route::post('/atualizar/projetos', [PrioridadesController::class, 'atualizarOrdemProjetos']);
 
 
-Route::post('/projetos/{projeto}/colaboradores/atualizar', [ProjetoController::class, 'atualizarColaborador'])->name('projetos.colaboradores.atualizar');
+Route::put('/projetos/{projeto}/colaboradores/atualizar', [ProjetoController::class, 'atualizarColaborador'])->name('projetos.colaboradores.atualizar');
 
 // Rota para adicionar um novo colaborador a um projeto
 Route::post('/projetos/{projeto}/colaboradores/adicionar', [ProjetoController::class, 'adicionarColaborador'])->name('projetos.colaboradores.adicionar');

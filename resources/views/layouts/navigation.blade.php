@@ -144,10 +144,10 @@ button svg:last-child {
                 <i class="fas fa-users mr-3"></i>
                Clientes
             </span>
-            <a href="{{ route('clientes.create') }}" class=" rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('clientes.create') ? 'active' : '' }}">
+            <a href="{{ route('clientes.create') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('clientes.create') ? 'active' : '' }}">
                - Adicionar
             </a>
-            <a href="{{ route('clientes.index') }}" class=" rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('clientes.index') ? 'active' : '' }}">
+            <a href="{{ route('clientes.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('clientes.*') ? (request()->routeIs('clientes.create') ? '' : 'active') : '' }}">
                - Listagem
             </a>
         </div>
@@ -158,13 +158,13 @@ button svg:last-child {
                 <i class="fas fa-cogs mr-3"></i>
                 Parametrizações
             </span>
-            <a href="{{ route('tipo-clientes.index') }}" class=" rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('tipo-clientes.*') ? 'active' : '' }}"  >
+            <a href="{{ route('tipo-clientes.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('tipo-clientes.*') ? 'active' : '' }}"  >
                - Tipo de Cliente
             </a>
             <a href="{{ route('users.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
                - Níveis de Acesso
             </a>
-            <a href="{{ route('estado-projetos.index') }}" class=" rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('estado-projetos.*') ? 'active' : '' }}" >
+            <a href="{{ route('estado-projetos.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('estado-projetos.*') ? 'active' : '' }}" >
                 - Estado
             </a>
         </div>
