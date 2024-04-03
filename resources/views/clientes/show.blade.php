@@ -114,29 +114,35 @@
                                             <td class="text-center">
                                                 {{ $projeto->tempo_previsto }}
                                             </td>
-                                            <td id="colaboradorCell/{{$projeto->id}}" class="colaboradorCell">
-                                                <form action="{{ route('projetos.colaboradores.atualizar', $projeto->id) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                    @foreach($projeto->users as $user)
-                                                        <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
-                                                            <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none colaboradorDropdown">
-                                                                @foreach($colaboradores as $colaborador)
-                                                                    <?php
-                                                                        foreach($colaboradores as $c){
-                                                                            if($c->name == $user->name){
-                                                                                $original = $c;
-                                                                            }
-                                                                        }
-                                                                    ?>
-                                                                    <option value="{{$colaborador->id}}/{{$original->id}}" class="w-fit" {{$colaborador->name == $user->name ? 'selected' : ''}}>{{ $colaborador->name }}</option>        
+                                            <td>
+                                                <div class="flex items-end">
+                                                    <div id="colaboradorCell/{{$projeto->id}}" class="colaboradorCell">
+                                                        <div>
+                                                            <form action="{{ route('projetos.colaboradores.atualizar', $projeto->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                                @foreach($projeto->users as $user)
+                                                                    <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
+                                                                        <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                                            @foreach($colaboradores as $colaborador)
+                                                                                
+                                                                                <option value="{{$colaborador->id}}/{{$user->id}}" class="w-fit" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->id }}</option>        
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
                                                                 @endforeach
-                                                            </select>
-                                                                
-                                                            
+                                                            </form>
                                                         </div>
-                                                    @endforeach
-                                                </form>
+                                                    </div>
+                                                    <div class="ml-5 mb-5">
+                                                        <button id="{{$projeto->id}}"class="btn-adicionar-colaborador">
+                                                            <!-- + -->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                                                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+                                                            </svg>                                                                      
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td class="text-center">
                                                 @foreach($projeto->users as $user)
@@ -328,28 +334,27 @@
         btnAdicionarColaborador[i].addEventListener('click', addNewColaboradorField);
     }
 
- 
-
     function addNewColaboradorField(){
         var colaboradorCell = document.getElementById("colaboradorCell/" + this.id);
-
-
         colaboradorCell.innerHTML += `
-        <form action="{{ route('projetos.colaboradores.adicionar', $projeto->id) }}" method="POST">
-        @csrf
-            @foreach($projeto->users as $user)
-                <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
-                    <select name="novoColaboradorId" id={{$projeto->id}} onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none colaboradorDropdown">
-                        <option disabled selected>...</option>
-                        @foreach($colaboradores as $colaborador)
-                            <option value="{{$colaborador->id}}" class="w-fit">{{ $colaborador->name }}</option>        
-                        @endforeach
-                    </select>
-                </div>
-            @endforeach
-        </form>
+        <div>
+            <form action="{{ route('projetos.colaboradores.adicionar', $projeto->id) }}" method="POST">
+            @csrf
+                @foreach($projeto->users as $user)
+                    <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
+                        <select name="novoColaboradorId" id={{$projeto->id}} onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                            <option disabled selected>...</option>
+                            @foreach($colaboradores as $colaborador)
+                                @if($projeto->users->contains($colaborador))
+                                @else
+                                    <option value="{{$colaborador->id}}" class="w-fit">{{ $colaborador->name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                @endforeach
+            </form>
+        </div>
         `;
-
-        
     }
 </script>

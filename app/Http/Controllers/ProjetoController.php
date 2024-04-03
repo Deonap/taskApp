@@ -148,7 +148,7 @@ class ProjetoController extends Controller
 
 
         
-        return redirect(route('clientes.show', $projeto->cliente_id));
+        return redirect(route('clientes.index', $projeto->cliente_id));
     }
 
     public function adicionarColaborador(Request $request, Projeto $projeto)
@@ -165,7 +165,7 @@ class ProjetoController extends Controller
         if (!$existe) {
             // Adicionar o colaborador ao projeto se ele ainda não estiver associado
             $projeto->users()->attach($novoColaboradorId);
-            return response()->json(['message' => 'Colaborador adicionado com sucesso!']);
+            return redirect(route('clientes.show', $projeto->cliente_id));
         } else {
             // Responder que o colaborador já está no projeto
             return response()->json(['message' => 'Este colaborador já está associado a este projeto.'], 409); // 409 Conflict
