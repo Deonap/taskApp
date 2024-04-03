@@ -125,9 +125,11 @@
                                                                     <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
                                                                         <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                                                             @foreach($colaboradores as $colaborador)
-                                                                                
-                                                                                <option value="{{$colaborador->id}}/{{$user->id}}" class="w-fit" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->id }}</option>        
-                                                                            @endforeach
+                                                                            <!-- FALTA ISTO -->
+                                                                                @if(!$projeto->users->contains($colaborador) || $colaborador->id == $user->id)
+                                                                                    <option value="{{$colaborador->id}}/{{$user->id}}" class="w-fit" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->name }}</option>        
+                                                                                @endif
+                                                                                @endforeach
                                                                         </select>
                                                                     </div>
                                                                 @endforeach

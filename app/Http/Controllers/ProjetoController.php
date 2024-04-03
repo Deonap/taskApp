@@ -148,7 +148,7 @@ class ProjetoController extends Controller
 
 
         
-        return redirect(route('clientes.index', $projeto->cliente_id));
+        return redirect(route('clientes.show', $projeto->cliente_id));
     }
 
     public function adicionarColaborador(Request $request, Projeto $projeto)
