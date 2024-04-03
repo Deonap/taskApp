@@ -40,7 +40,6 @@ class ProjetoController extends Controller
      */
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'tipo_cliente_id' => 'required|exists:tipo_clientes,id',
@@ -89,7 +88,6 @@ class ProjetoController extends Controller
         $clientes = Cliente::all();
 
         return view('projetos.edit', compact('projeto', 'tiposClientes', 'clientes', 'users', 'estadosProjetos'));
-
     }
 
     /**
@@ -122,7 +120,7 @@ class ProjetoController extends Controller
         // Atualizar usuários relacionados
         $projeto->users()->sync($validatedData['users']);
 
-        return redirect()->route('clientes.index')->with('success', 'Projeto atualizado com sucesso.');
+        return redirect()->route('clientes.show', $projeto->cliente_id);
     }
 
 

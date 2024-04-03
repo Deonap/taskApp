@@ -58,11 +58,11 @@
                     <textarea class="form-input observacoes border border-gray-300 rounded-md w-full resize-none h-16 overflow-y-auto" rows="3" readonly>{{ $projeto->observacoes }}</textarea>
                 </td>
                 <td class="border px-3 py-4 whitespace-nowrap border-b w-1/12"> <!-- Reduzindo o tamanho da coluna de tempo gasto -->
-                    <input type="number" class="border border-gray-300 rounded-md p-2 w-full" value="{{ $projeto->tempo_gasto }}">
+                    <input type="text" class="border border-gray-300 rounded-md p-2 w-full" value="{{ $projeto->tempo_gasto }}">
                 </td>
                 <td class="border px-4 py-2">
-                        <div style="background-color: {{ $projeto->estadoProjeto->cor }};" class="w-4 h-4 rounded-full"></div>
-                    </td>
+                    <div style="background-color: {{ $projeto->estadoProjeto->cor }};" class="w-4 h-4 rounded-full"></div>
+                </td>
                 
             </tr>
         @endforeach
@@ -246,7 +246,7 @@ function atualizarTabelaProjetos(idTabela, projetos) {
         var inputTempoGasto = document.createElement('input');
         inputTempoGasto.type = 'text';
         inputTempoGasto.classList.add('border', 'border-gray-300', 'rounded-md', 'p-2', 'w-full');
-        inputTempoGasto.value = projeto.tempo_gasto || '00:00';
+        //inputTempoGasto.value = projeto.tempo_gasto || '00:00';
         celulaTempoGasto.appendChild(inputTempoGasto);
 
         // Coluna de Estado do Projeto

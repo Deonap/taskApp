@@ -39,7 +39,6 @@ class Projeto extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'projeto_users')->withPivot('prioridade', 'tempo_gasto', 'observacoes');
-
     }
 
     public function tarefas()

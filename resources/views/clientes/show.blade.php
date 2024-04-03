@@ -102,7 +102,8 @@
                                                 {{ $projeto->tipoCliente->nome }}
                                             </td>
                                             <td>
-                                                {{ $projeto->nome }}
+                                                {{ $projeto->nome }} -> 
+                                                {{$projeto->id}}
                                             </td>
                                             <td>
                                                 <!-- Descrição de cada tarefa do projeto -->
@@ -117,26 +118,23 @@
                                             <td>
                                                 <div class="flex items-end">
                                                     <div id="colaboradorCell/{{$projeto->id}}" class="colaboradorCell">
-                                                        <div>
-                                                            <form action="{{ route('projetos.colaboradores.atualizar', $projeto->id) }}" method="POST">
+                                                        @foreach($projeto->users as $user)
+                                                            <form action="{{ route('projetos.colaboradores.atualizar', $projeto->id) }}" method="POST" class="my-0 py-0">
                                                             @csrf
                                                             @method('PUT')
-                                                                @foreach($projeto->users as $user)
-                                                                    <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
-                                                                        <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
-                                                                            @foreach($colaboradores as $colaborador)
-                                                                            <!-- FALTA ISTO -->
-                                                                                @if(!$projeto->users->contains($colaborador) || $colaborador->id == $user->id)
-                                                                                    <option value="{{$colaborador->id}}/{{$user->id}}" class="w-fit" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->name }}</option>        
-                                                                                @endif
-                                                                                @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                @endforeach
+                                                                <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
+                                                                    <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                                        @foreach($colaboradores as $colaborador)
+                                                                            @if(!$projeto->users->contains($colaborador) || $colaborador->id == $user->id)
+                                                                                <option value="{{$colaborador->id}}/{{$user->id}}" class="w-fit" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->name }} -> {{$colaborador->id}}</option>        
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
                                                             </form>
-                                                        </div>
+                                                        @endforeach
                                                     </div>
-                                                    <div class="ml-5 mb-5">
+                                                    <div class="my-0 mx-3 {{$projeto->users->count() == $colaboradores->count() ? 'hidden' : ''}}">
                                                         <button id="{{$projeto->id}}"class="btn-adicionar-colaborador">
                                                             <!-- + -->
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
@@ -147,11 +145,13 @@
                                                 </div>
                                             </td>
                                             <td class="text-center">
-                                                @foreach($projeto->users as $user)
-                                                    <div class="text-center @if(!$loop->last) border-b border-gray-400 @endif">
-                                                        {{$user->tempoGasto != NULL ? $user->tempoGasto: '00:00'}}
-                                                    </div>
-                                                @endforeach
+                                                <div>
+                                                    @foreach($projeto->users as $user)
+                                                        <div class="text-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
+                                                            {{ $user->tempoGasto($projeto) }}
+                                                        </div>
+                                                    @endforeach
+                                                </div>
                                             </td>
                                             @if(auth()->user() && auth()->user()->tipo == 'admin')
                                                 <td>
@@ -255,7 +255,6 @@
 
                                                     $tempo_previsto_minutes = intval($tempoPrevistoP1) * 60 + intval($tempoPrevistoP2);
 
-                                                    // Comparing durations
                                                     if ($tempoGasto < $tempo_previsto_minutes) {
                                                         $bgColor = 'green-300';
                                                     } elseif ($tempoGasto == $tempo_previsto_minutes) {
@@ -338,25 +337,23 @@
 
     function addNewColaboradorField(){
         var colaboradorCell = document.getElementById("colaboradorCell/" + this.id);
+        //$projeto->users->count() != $colaboradores->count()
         colaboradorCell.innerHTML += `
-        <div>
-            <form action="{{ route('projetos.colaboradores.adicionar', $projeto->id) }}" method="POST">
-            @csrf
-                @foreach($projeto->users as $user)
-                    <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
+        @if(true)
+            <div>
+                <form action="{{ route('projetos.colaboradores.adicionar', $projeto->id) }}" method="POST">
+                @csrf
+                    <div class="flex items-center border-t border-gray-400 p-1">
                         <select name="novoColaboradorId" id={{$projeto->id}} onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
                             <option disabled selected>...</option>
                             @foreach($colaboradores as $colaborador)
-                                @if($projeto->users->contains($colaborador))
-                                @else
                                     <option value="{{$colaborador->id}}" class="w-fit">{{ $colaborador->name }}</option>
-                                @endif
                             @endforeach
                         </select>
                     </div>
-                @endforeach
-            </form>
-        </div>
+                </form>
+            </div>
+        @endif
         `;
     }
 </script>

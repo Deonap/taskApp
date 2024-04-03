@@ -18,7 +18,8 @@ class PrioridadesController extends Controller
     public function index()
     {
         $colaboradores = User::where('tipo', 'colaborador')->get();
-        $colaboradorId = $colaboradores->first()->id ?? null;
+        
+        $colaboradorId = $colaboradores->first() ?? null;
     
         // Carregar projetos com informações específicas do primeiro colaborador
         $projetosEmAberto = $this->filtrarProjetosPorEstadoEColaborador('Em desenvolvimento', $colaboradorId);
