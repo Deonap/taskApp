@@ -46,4 +46,19 @@ class Projeto extends Model
     {
         return $this->hasMany(Tarefa::class);
     }
+
+    public function totTempoGasto(){
+        $sum = 0;
+        foreach($this->users as $u){
+            $t = $u->tempoGasto($this);
+            if($t){
+                $HHmm = explode(":" , $t);
+                $h = intval($HHmm[0]);
+                $m = intval($HHmm[1]);
+
+                $sum += $h * 60 + $m;
+            }
+        }
+        return $sum;
+    }
 }

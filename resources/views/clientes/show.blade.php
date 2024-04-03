@@ -114,7 +114,7 @@
                                             <td class="text-center">
                                                 {{ $projeto->tempo_previsto }}
                                             </td>
-                                            <td id="colaboradorCell/{{$projeto->id}}">
+                                            <td id="colaboradorCell/{{$projeto->id}}" class="colaboradorCell">
                                                 <form action="{{ route('projetos.colaboradores.atualizar', $projeto->id) }}" method="POST">
                                                 @csrf
                                                 @method('PUT')
@@ -133,39 +133,15 @@
                                                                 @endforeach
                                                             </select>
                                                                 
-                                                            <div class="ml-3 space-x-3 flex items-center">
-                                                                @if($loop->last)
-                                                                    <button id="{{$projeto->id}}"class="btn-adicionar-colaborador" data-projeto-id="{{ $projeto->id }}">
-                                                                        <!-- + -->
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                                                                            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
-                                                                        </svg>                                                                      
-                                                                    </button>
-                                                                @endif
-                                                            </div>
+                                                            
                                                         </div>
-                                                        <div id="dropdown-escolher-colaborador" class="hidden">
-                                                            <select class="selector-colaborador w-full">
-                                                                @foreach($colaboradores as $colaborador)
-                                                                    <option value="{{ $colaborador->id }}">{{ $colaborador->name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                            <br>
-                                                            <button class="confirmar-escolha-colaborador">Confirmar</button>
-                                                        </div>
-                                                        <select id="dropdownNovoColaborador" class="hidden">
-                                                            <option value="{{ $colaborador->id }}">{{ $colaborador->nome }}</option>
-                                                        </select>
                                                     @endforeach
                                                 </form>
                                             </td>
-                                            <td  class="text-center">
+                                            <td class="text-center">
                                                 @foreach($projeto->users as $user)
-                                                    <div class="text-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
-                                                        {{$user->tempoGasto != '00:00' ? $user->tempoGasto: '00:00'}}
-                                                        @if(!$loop->last)
-                                                            <br>
-                                                        @endif
+                                                    <div class="text-center @if(!$loop->last) border-b border-gray-400 @endif">
+                                                        {{$user->tempoGasto != NULL ? $user->tempoGasto: '00:00'}}
                                                     </div>
                                                 @endforeach
                                             </td>
@@ -254,26 +230,27 @@
                                                     @endif
                                                 @endforeach
                                             </td>
-                                            <td  class="text-center">
-                                                {{ $projeto->tempo_gasto}}
+                                            <td class="text-center">
+                                                @foreach($projeto->users as $user)
+                                                    <div class="text-center @if(!$loop->last) border-b border-gray-400 @endif">
+                                                        {{$user->tempoGasto($projeto)}}
+                                                    </div>
+                                                @endforeach
                                             </td>
                                             <td>
                                                 <?php
+                                                    $tempoGasto = $projeto->totTempoGasto();
 
-                                                    $tempoGastoP1 = explode(":",$projeto->tempo_gasto)[0];
-                                                    $tempoGastoP2 = explode(":",$projeto->tempo_gasto)[1];
+                                                    $tempoPrevisto = explode(":", $projeto->tempo_previsto);
+                                                    $tempoPrevistoP1 = $tempoPrevisto[0];
+                                                    $tempoPrevistoP2 = $tempoPrevisto[1];
 
-                                                    
-                                                    $tempoPrevistoP1 = explode(":",$projeto->tempo_previsto)[0];
-                                                    $tempoPrevistoP2 = explode(":",$projeto->tempo_previsto)[1];
-
-                                                    $tempo_gasto_minutes = intval($tempoGastoP1) * 60 + intval($tempoGastoP2);
                                                     $tempo_previsto_minutes = intval($tempoPrevistoP1) * 60 + intval($tempoPrevistoP2);
 
                                                     // Comparing durations
-                                                    if ($tempo_gasto_minutes < $tempo_previsto_minutes) {
+                                                    if ($tempoGasto < $tempo_previsto_minutes) {
                                                         $bgColor = 'green-300';
-                                                    } elseif ($tempo_gasto_minutes == $tempo_previsto_minutes) {
+                                                    } elseif ($tempoGasto == $tempo_previsto_minutes) {
                                                         $bgColor = 'blue-500';
                                                     } else {
                                                         $bgColor = 'red-300';
@@ -344,110 +321,35 @@
         document.getElementById('tabelaProjetosAbertos').classList.add('hidden');
     });
 
-
-    $(document).ready(function () {
-        var i = 0;
-        // Evento de clique para mostrar o dropdown
-        $('.btn-escolher-colaborador').on('click', function () {
-            // Obtenha a posição do botão para posicionar o dropdown
-            var btnOffset = $(this).offset();
-
-            // Posicione o dropdown próximo ao botão e exiba-o
-            $('#dropdown-escolher-colaborador')
-                .css({ top: btnOffset.top + 25, left: btnOffset.left, position: 'absolute' })
-                .removeClass('hidden').addClass('bg-white border border-black p-1');
-
-            // Defina o usuário atual e o projetoId no dropdown para uso posterior
-            $('#dropdown-escolher-colaborador')
-                .data('current-user-id', $(this).data('user-id'))
-                .data('projeto-id', $(this).data('projeto-id'));
-        });
-
-        // // Evento de clique para confirmar a escolha de um novo colaborador
-        // $('.confirmar-escolha-colaborador').on('click', function () {
-        //     var userId = $('#dropdown-escolher-colaborador').data('current-user-id');
-        //     var projetoId = $('#dropdown-escolher-colaborador').data('projeto-id');
-        //     var novoColaboradorId = $('.seletor-colaborador').val();
-
-        //     $.ajax({
-        //         url: '/projetos/' + projetoId + '/colaboradores/atualizar', // Endpoint que você configurou no Laravel
-        //         type: 'POST',
-        //         data: {
-        //             _token: $('meta[name="csrf-token"]').attr('content'), // Token CSRF para segurança
-        //             projetoId: projetoId,
-        //             userId: userId,
-        //             novoColaboradorId: novoColaboradorId
-        //         },
-        //         success: function (response) {
-        //             // Atualize a interface do usuário conforme necessário
-        //             alert('Colaborador atualizado com sucesso!');
-        //             // Aqui você pode querer atualizar a lista de colaboradores na view
-        //         },
-        //         error: function (error) {
-        //             console.log("error");
-        //             // Trate os erros aqui
-        //             alert('Erro ao alterar colaborador.');
-        //         }
-        //     });
-
-        //     // Esconda o dropdown após a seleção
-        //     $('#dropdown-escolher-colaborador').addClass('hidden');
-        // });
-
-        // Evento de clique para adicionar um novo colaborador
-        // $('.btn-adicionar-colaborador').on('click', function () {
-        //     var projetoId = $(this).data('projeto-id');
-        //     var novoColaboradorId = $('#dropdownNovoColaborador').val();
-
-        //     console.log("Projeto ID: " + projetoId); // Debug
-        //     console.log("Novo Colaborador ID: " + novoColaboradorId); // Debug
-
-        //     if (!novoColaboradorId) {
-        //         alert('Por favor, selecione um colaborador.');
-        //         return;
-        //     }
-
-        //     $.ajax({
-        //         url: '/projetos/' + projetoId + '/colaboradores/adicionar',
-        //         type: 'POST',
-        //         data: {
-        //             _token: "{{ csrf_token() }}",
-        //             novoColaboradorId: novoColaboradorId
-        //         },
-        //         success: function (response) {
-        //             alert('Colaborador adicionado com sucesso!');
-        //             // Atualizações adicionais na UI
-        //         },
-        //         error: function (error) {
-        //             alert('Erro ao adicionar colaborador.');
-        //         }
-        //     });
-        // });
-    });
-
     var colaboradorCell = document.getElementsByClassName("colaboradorCell");
     var btnAdicionarColaborador = document.getElementsByClassName("btn-adicionar-colaborador");
-
 
     for(var i = 0; i <btnAdicionarColaborador.length;i++){
         btnAdicionarColaborador[i].addEventListener('click', addNewColaboradorField);
     }
 
+ 
+
     function addNewColaboradorField(){
         var colaboradorCell = document.getElementById("colaboradorCell/" + this.id);
 
 
-        colaboradorCell.innerHTML +=    
-        `<div class='flex items-center border-t border-gray-400 p-1'>
-            <select id={{$projeto->id}} class='w-fit pl-2 pr-8 border-none focus:border-none colaboradorDropdown'>
-                <option disabled selected>...</option>
-                @foreach($colaboradores as $colaborador)
-                    @if(!$projeto->users->contains($colaborador))
-                        <option value='{{$colaborador->id}}' class='w-fit'>{{ $colaborador->name }}</option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
+        colaboradorCell.innerHTML += `
+        <form action="{{ route('projetos.colaboradores.adicionar', $projeto->id) }}" method="POST">
+        @csrf
+            @foreach($projeto->users as $user)
+                <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
+                    <select name="novoColaboradorId" id={{$projeto->id}} onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none colaboradorDropdown">
+                        <option disabled selected>...</option>
+                        @foreach($colaboradores as $colaborador)
+                            <option value="{{$colaborador->id}}" class="w-fit">{{ $colaborador->name }}</option>        
+                        @endforeach
+                    </select>
+                </div>
+            @endforeach
+        </form>
         `;
+
+        
     }
 </script>
