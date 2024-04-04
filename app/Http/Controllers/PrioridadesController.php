@@ -68,7 +68,7 @@ class PrioridadesController extends Controller
             ->whereHas('estadoProjeto', function ($query) use ($estado) {
                 $query->where('nome', $estado);
             })
-            ->orderBy('projeto_users.prioridade')
+            ->orderByRaw('ISNULL(projeto_users.prioridade), projeto_users.prioridade')
             ->select('projetos.*') // Evita colunas duplicadas
             ->get();
 
@@ -159,17 +159,22 @@ class PrioridadesController extends Controller
         $projetosData = $request->validate([
             'projetos' => 'required|array',
             'projetos.*.id' => 'required|integer',
+            'projetos.*.user_id' => 'required|integer', // Validar user_id
             'projetos.*.estado' => 'required|integer'
         ]);
         
         DB::transaction(function () use ($projetosData) {
             foreach ($projetosData['projetos'] as $projeto) {
                 $projetoId = $projeto['id'];
+                $userId = $projeto['user_id'];
                 $estado = $projeto['estado'];
                 
                 DB::table('projetos')
                     ->where('id', $projetoId)
                     ->update(['estado_projeto_id' => $estado]);
+
+                DB::table('projeto_users')->where('projeto_id', $projetoId)->where('user_id', $userId)->update(['prioridade' => NULL]);
+
             }
         });
 

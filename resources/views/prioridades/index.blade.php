@@ -363,16 +363,12 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var userId = document.getElementById('colaborador').value
-        atualizarTabelaProjetosEmAberto(userId);
-        atualizarTabelaProjetosPendentes(userId);
-        atualizarTabelaProjetosComOutrosColaboradores(userId);
+        atualizarTabelas(userId)
     });
 
     document.getElementById('colaborador').addEventListener('change', function () {
         var userId = this.value;
-        atualizarTabelaProjetosEmAberto(userId);
-        atualizarTabelaProjetosPendentes(userId);
-        atualizarTabelaProjetosComOutrosColaboradores(userId);
+        atualizarTabelas(userId);
     });
 
     function atualizarTabelaProjetosEmAberto(userId) {
@@ -592,9 +588,9 @@
 
                 projetosData.push({
                     id: item.getAttribute('data-id'),
+                    user_id: userId,
                     estado: 6
                 });
-                console.log(item);
                 // Enviar a nova ordem para o servidor
                 fetch('/atualizar/estadoProjeto', {
                     method: 'POST',
@@ -615,8 +611,7 @@
                         console.error('Erro a mudar estado do projeto:', error);
                     });
             },
-            onSort: function (evt) {
-                console.log("el1");
+            onEnd: function (evt) {
                 var items = el.getElementsByTagName('tr');
                 var projetosData = [];
                 var userId = document.getElementById('colaborador').value; // Obtém o user_id do dropdown de colaboradores
@@ -662,9 +657,9 @@
 
                 projetosData.push({
                     id: item.getAttribute('data-id'),
+                    user_id:userId,
                     estado: 7
                 });
-                console.log(projetosData);
                 // Enviar a nova ordem para o servidor
                 fetch('/atualizar/estadoProjeto', {
                     method: 'POST',
