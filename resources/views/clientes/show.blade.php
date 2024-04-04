@@ -20,6 +20,7 @@
         td{
             padding: 0.75rem 1.5rem 0.75rem 1.5rem;
         }
+        
         </style>
     </head>
     <body>
@@ -102,8 +103,7 @@
                                                 {{ $projeto->tipoCliente->nome }}
                                             </td>
                                             <td>
-                                                {{ $projeto->nome }} -> 
-                                                {{$projeto->id}}
+                                                {{ $projeto->nome }}
                                             </td>
                                             <td>
                                                 <!-- Descrição de cada tarefa do projeto -->
@@ -123,10 +123,10 @@
                                                             @csrf
                                                             @method('PUT')
                                                                 <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
-                                                                    <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                                    <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" {{$projeto->users->count() == $colaboradores->count() ? 'disabled' : ''}} class="w-fit pl-2 pr-8 border-none focus:border-none">
                                                                         @foreach($colaboradores as $colaborador)
                                                                             @if(!$projeto->users->contains($colaborador) || $colaborador->id == $user->id)
-                                                                                <option value="{{$colaborador->id}}/{{$user->id}}" class="w-fit" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->name }} -> {{$colaborador->id}}</option>        
+                                                                                <option value="{{$colaborador->id}}/{{$user->id}}" class="w-fit" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->name }}</option>        
                                                                             @endif
                                                                         @endforeach
                                                                     </select>
