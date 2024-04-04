@@ -386,8 +386,9 @@
                     var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
                     var prioridade = userProjeto ? userProjeto.pivot.prioridade : 'N/A';
 
+
                     var celulaPrioridade = linha.insertCell(0);
-                    celulaPrioridade.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
+                    celulaPrioridade.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b', 'bg-red-300');
                     celulaPrioridade.innerHTML = prioridade;
 
 
@@ -395,16 +396,20 @@
                     celulaCliente.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
                     celulaCliente.innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
 
+
                     var celulaTipoCliente = linha.insertCell(2);
                     celulaTipoCliente.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
                     celulaTipoCliente.innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
+
 
                     var celulaNomeProjeto = linha.insertCell(3);
                     celulaNomeProjeto.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
                     celulaNomeProjeto.innerHTML = projeto.nome;
 
+
                     var tarefasHTML = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
                     linha.insertCell(4).innerHTML = tarefasHTML;
+
 
                     var userProjeto = projeto.users.find(user => user.id == userId);
                     var observacoes = userProjeto ? userProjeto.pivot.observacoes : 'Sem observações';
@@ -415,6 +420,7 @@
                     textareaObservacoes.value = observacoes;
                     celulaObservacoes.appendChild(textareaObservacoes);
 
+                    
                     var tempoGasto = userProjeto ? userProjeto.pivot.tempo_gasto : '';
                     var celulaTempoGasto = linha.insertCell();
                     celulaTempoGasto.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
@@ -574,7 +580,6 @@
         atualizarTabelaProjetosComOutrosColaboradores(userId);
     }
 
-
     document.addEventListener('DOMContentLoaded', function () {
         var el = document.getElementById('tabelaProjetosAbertos').getElementsByTagName('tbody')[0];
         var sortable = new Sortable(el, {
@@ -685,7 +690,6 @@
 
     });
 
-
     document.getElementById('salvarPrioridades').addEventListener('click', function () {
         var userId = document.getElementById('colaborador').value; // Obter o user_id do dropdown
         var projetosData = [];
@@ -725,8 +729,7 @@
             });
     });
 
-    var toggleFerias = document.getElementById('toggleFerias');
-    toggleFerias.addEventListener('change', function () {
+    document.getElementById('toggleFerias').addEventListener('change',function(){
         console.log("changed");
     });
 
