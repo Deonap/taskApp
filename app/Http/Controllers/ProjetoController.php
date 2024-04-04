@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProjetoUser;
 use App\Models\TipoCliente;
 use App\Models\Projeto;
 use Illuminate\Http\Request;
@@ -144,8 +145,6 @@ class ProjetoController extends Controller
         $projeto->users()->where('id', $oldColaboradorId)->detach($oldColaboradorId);
         $projeto->users()->attach($novoColaboradorId);
 
-
-        
         return redirect(route('clientes.show', $projeto->cliente_id));
     }
 
@@ -157,17 +156,16 @@ class ProjetoController extends Controller
 
         $novoColaboradorId = $validated['novoColaboradorId'];
 
-        // Verificar se a relação já existe
-        $existe = $projeto->users()->where('user_id', $novoColaboradorId)->exists();
-
-        if (!$existe) {
-            // Adicionar o colaborador ao projeto se ele ainda não estiver associado
-            $projeto->users()->attach($novoColaboradorId);
-            return redirect(route('clientes.show', $projeto->cliente_id));
-        } else {
-            // Responder que o colaborador já está no projeto
-            return response()->json(['message' => 'Este colaborador já está associado a este projeto.'], 409); // 409 Conflict
+        if ($projeto->users()->where('id', $novoColaboradorId)->exists()) {
+            return redirect()->route('clientes.show', $projeto->cliente_id);
         }
+
+        $pU = new ProjetoUser;
+        $pU->projeto_id = $projeto->id;
+        $pU->user_id = $novoColaboradorId;
+        $pU->save();
+
+        return redirect()->route('clientes.show', $projeto->cliente_id);
     }
 
 
@@ -179,7 +177,4 @@ class ProjetoController extends Controller
 
         return response()->json($colaboradoresDisponiveis);
     }
-
-
-
 }
