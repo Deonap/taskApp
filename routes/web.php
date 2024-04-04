@@ -65,7 +65,8 @@ Route::get('/api/historico/projetos-pendentes', [HistoricoController::class, 'fi
 Route::get('/api/historico/projetos-com-outros', [HistoricoController::class, 'filtrarProjetosComOutrosColaboradores']);
 
 
-Route::post('/atualizar/projetos', [PrioridadesController::class, 'atualizarOrdemProjetos']);
+Route::post('/atualizar/prioridades', [PrioridadesController::class, 'atualizarOrdemProjetos']);
+Route::post('/atualizar/estadoProjeto', [PrioridadesController::class, 'atualizarEstadoProjeto']);
 
 
 Route::put('/projetos/{projeto}/colaboradores/atualizar', [ProjetoController::class, 'atualizarColaborador'])->name('projetos.colaboradores.atualizar');

@@ -460,8 +460,6 @@
             });
     }
 
-
-
     function atualizarTabelaProjetosPendentes(userId) {
         fetch('/filtrar/projetospendentes?colaborador_id=' + userId)
             .then(response => response.json())
@@ -471,6 +469,7 @@
 
                 data.forEach((projeto) => {
                     var linha = tbodyPendentes.insertRow();
+                    linha.setAttribute('data-id', projeto.id);
                     linha.classList.add('border-b'); // Adiciona borda à linha
 
                     var celulas = [];
@@ -514,9 +513,6 @@
                 });
             });
     }
-
-
-
 
     function atualizarTabelaProjetosComOutrosColaboradores(userId) {
         fetch('/filtrar/projetos-outros-colaboradores/' + userId)
@@ -576,12 +572,51 @@
             });
     }
 
+    function atualizarTabelas(userId){
+        atualizarTabelaProjetosEmAberto(userId);
+        atualizarTabelaProjetosPendentes(userId);
+        atualizarTabelaProjetosComOutrosColaboradores(userId);
+    }
+
 
     document.addEventListener('DOMContentLoaded', function () {
         var el = document.getElementById('tabelaProjetosAbertos').getElementsByTagName('tbody')[0];
         var sortable = new Sortable(el, {
+            group: 'shared',
+            ghostClass: 'bg-gray-300',
             animation: 150,
-            onEnd: function (evt) {
+            onAdd: function(evt){
+                var item = evt.item;
+                var projetosData = [];
+                var userId = document.getElementById('colaborador').value; // Obtém o user_id do dropdown de colaboradores
+
+                projetosData.push({
+                    id: item.getAttribute('data-id'),
+                    estado: 6
+                });
+                console.log(item);
+                // Enviar a nova ordem para o servidor
+                fetch('/atualizar/estadoProjeto', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ projetos: projetosData })
+                }).then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok: ' + response.statusText);
+                        }
+                        return response.json();
+                    }).then(data => {
+                        console.log('Ordem atualizada com sucesso:', data);
+                        atualizarTabelas(userId); // Atualiza a tabela com o usuário atual
+                    }).catch(error => {
+                        console.error('Erro a mudar estado do projeto:', error);
+                    });
+            },
+            onSort: function (evt) {
+                console.log("el1");
                 var items = el.getElementsByTagName('tr');
                 var projetosData = [];
                 var userId = document.getElementById('colaborador').value; // Obtém o user_id do dropdown de colaboradores
@@ -593,31 +628,66 @@
                         prioridade: i + 1 // Nova prioridade baseada na posição
                     });
                 }
-
                 // Enviar a nova ordem para o servidor
-                fetch('/atualizar/projetos', {
+                fetch('/atualizar/prioridades', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
                     body: JSON.stringify({ projetos: projetosData })
-                })
-                    .then(response => {
+                }).then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok: ' + response.statusText);
                         }
                         return response.json();
-                    })
-                    .then(data => {
+                    }).then(data => {
                         console.log('Ordem atualizada com sucesso:', data);
-                        atualizarTabelaProjetosEmAberto(userId); // Atualiza a tabela com o usuário atual
-                    })
-                    .catch(error => {
+                        atualizarTabelas(userId);
+                    }).catch(error => {
                         console.error('Erro ao atualizar a ordem:', error);
                     });
             }
         });
+        
+        var el2 = document.getElementById('tabelaProjetosPendentes').getElementsByTagName('tbody')[0];
+        var sortable2 = new Sortable(el2,{
+            group: 'shared',
+            animation: 150,
+            sort: false,
+            onAdd: function(evt){
+                var item = evt.item;
+                var projetosData = [];
+                var userId = document.getElementById('colaborador').value; // Obtém o user_id do dropdown de colaboradores
+
+                projetosData.push({
+                    id: item.getAttribute('data-id'),
+                    estado: 7
+                });
+                console.log(projetosData);
+                // Enviar a nova ordem para o servidor
+                fetch('/atualizar/estadoProjeto', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ projetos: projetosData })
+                }).then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok: ' + response.statusText);
+                        }
+                        return response.json();
+                    }).then(data => {
+                        console.log('Ordem atualizada com sucesso:', data);
+                        atualizarTabelas(userId);
+                    }).catch(error => {
+                        console.error('Erro a mudar estado do projeto:', error);
+                    });
+            }
+        });
+
+
     });
 
 
