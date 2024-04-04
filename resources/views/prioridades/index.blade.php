@@ -194,7 +194,7 @@
 
                     <div id="tabelaProjetosPendentes" class="mb-8">
                         <div class="relative mb-4">
-                            <div class="flex-none text-white w-[7/10] h-[40px] p-[1rem] flex items-center" style="background-color: {{$corPendente}}; border-radius: 0.2rem; justify-content: start;">
+                            <div class="flex-none text-white w-[70%] h-[40px] p-[1rem] flex items-center" style="background-color: {{$corPendente}}; border-radius: 0.2rem; justify-content: start;">
                                 <h3 class="text-lg font-semibold">Projetos Pendentes</h3>
                             </div>
                         </div>
@@ -211,7 +211,7 @@
                                         Projeto
                                     </th>
                                     <th scope="col">
-                                        Tarefas
+                                        Prioridade
                                     </th>
                                     <th scope="col">
                                         Estado
@@ -286,13 +286,13 @@
                                     Projeto
                                 </th>
                                 <th scope="col">
-                                    Tarefas
-                                </th>
-                                <th scope="col">
-                                    Estado
+                                    Prioridade
                                 </th>
                                 <th scope="col">
                                     Colaboradores
+                                </th>
+                                <th scope="col">
+                                    Estado
                                 </th>
                                 <th scope="col">
                                     Ações
@@ -317,14 +317,16 @@
                                                 </div>
                                             @endforeach
                                         </td>
-                                        <td class="border px-4 py-2">
-                                            <div style="background-color: {{ $projeto->estadoProjeto->cor }};" class="w-7 h-7 rounded-full m-auto">
-                                            </div>
-                                        </td>
+                                        
                                         <td class="border px-6 py-4 whitespace-nowrap">
                                             @foreach ($projeto->users as $user)
                                                 <span>{{ $user->name }}</span>{{ !$loop->last ? ', ' : '' }}
                                             @endforeach
+                                        </td>
+                                        
+                                        <td class="border px-4 py-2">
+                                            <div style="background-color: {{ $projeto->estadoProjeto->cor }};" class="w-7 h-7 rounded-full m-auto">
+                                            </div>
                                         </td>
                                         <td class="border px-6 py-4 whitespace-nowrap">
                                             <div class="flex justify-center items-center">
@@ -388,7 +390,7 @@
 
 
                     var celulaPrioridade = linha.insertCell(0);
-                    celulaPrioridade.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b', 'bg-red-300');
+                    celulaPrioridade.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
                     celulaPrioridade.innerHTML = prioridade;
 
 
@@ -406,9 +408,9 @@
                     celulaNomeProjeto.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
                     celulaNomeProjeto.innerHTML = projeto.nome;
 
-
-                    var tarefasHTML = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
-                    linha.insertCell(4).innerHTML = tarefasHTML;
+                    var celulaTarefas = linha.insertCell(4);
+                    celulaTarefas.innerHTML = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
+                    celulaTarefas.classList.add('border');
 
 
                     var userProjeto = projeto.users.find(user => user.id == userId);
@@ -420,7 +422,7 @@
                     textareaObservacoes.value = observacoes;
                     celulaObservacoes.appendChild(textareaObservacoes);
 
-                    
+
                     var tempoGasto = userProjeto ? userProjeto.pivot.tempo_gasto : '';
                     var celulaTempoGasto = linha.insertCell();
                     celulaTempoGasto.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
@@ -430,11 +432,17 @@
                     inputTempoGasto.value = tempoGasto;
                     celulaTempoGasto.appendChild(inputTempoGasto);
 
+                    /* 
+                    <td class="border px-4 py-2">
+                        <div style="background-color: {{ $projeto->estadoProjeto->cor }}; class="m-auto size-7 rounded-full">
+                        </div>
+                    </td>
+                    */
                     var celulaEstadoProjeto = linha.insertCell(7);
-                    celulaEstadoProjeto.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
-                    celulaEstadoProjeto.innerHTML = projeto.estado_projeto ?
-                        `<div style="background-color: ${projeto.estado_projeto.cor};" class="w-4 h-4 rounded-full"></div>` :
-                        'Estado não especificado';
+                    celulaEstadoProjeto.classList.add('border', 'px-4', 'py-2');
+                    celulaEstadoProjeto.innerHTML =
+                        `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full">
+                        </div>`;
 
 
                     var celulaAcoes = linha.insertCell(8);
@@ -456,7 +464,7 @@
                                 </button>
                             </form>
                         </div>
-                    `;
+                        `;
 
                 });
             });
@@ -488,10 +496,12 @@
                     var tarefas = projeto.tarefas.map(tarefa => tarefa.descricao).join(", ");
                     celulas[3].innerHTML = tarefas;
 
+
                     var celulaEstadoProjeto = celulas[4];
-                    celulaEstadoProjeto.innerHTML = projeto.estado_projeto ?
-                        `<div style="background-color: ${projeto.estado_projeto.cor};" class="w-4 h-4 rounded-full"></div>` :
-                        'Estado não especificado';
+                    celulaEstadoProjeto.innerHTML =
+                        `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full">
+                        </div>`;
+                        
 
                     var celulaAcoes = celulas[5];
                     celulaAcoes.innerHTML = `
@@ -542,14 +552,29 @@
                     var tarefas = projeto.tarefas.map(tarefa => tarefa.descricao).join(", ");
                     celulas[3].innerHTML = tarefas;
 
-                    var celulaEstadoProjeto = celulas[4];
-                    celulaEstadoProjeto.innerHTML = projeto.estado_projeto ?
-                        `<div style="background-color: ${projeto.estado_projeto.cor};" class="w-4 h-4 rounded-full"></div>` :
-                        'Estado não especificado';
-
+                    
                     // Lista todos os colaboradores associados ao projeto
                     var colaboradores = projeto.users.map(user => user.name).join(", ");
-                    celulas[5].innerHTML = colaboradores;
+                    celulas[4].innerHTML = colaboradores;
+
+
+                    /* 
+                    <td class="border px-4 py-2">
+                        <div style="background-color: {{ $projeto->estadoProjeto->cor }}; class="m-auto size-7 rounded-full">
+                        </div>
+                    </td>
+                    */
+                    // var celulaEstadoProjeto = linha.insertCell(7);
+                    // celulaEstadoProjeto.classList.add('border', 'px-4', 'py-2');
+                    // celulaEstadoProjeto.innerHTML =
+                    //     `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full">
+                    //     </div>`;
+
+                    var celulaEstadoProjeto = celulas[5];
+                    celulaEstadoProjeto.innerHTML =
+                        `<div style="background-color: ${projeto.estado_projeto.cor};" class="size-7 rounded-full">
+                        </div>`;
+
 
                     var celulaAcoes = celulas[6];
                     celulaAcoes.innerHTML = `
@@ -610,13 +635,13 @@
                         }
                         return response.json();
                     }).then(data => {
-                        console.log('Ordem atualizada com sucesso:', data);
+                        console.log('Estado do projeto atualizado com sucesso:', data);
                         atualizarTabelas(userId); // Atualiza a tabela com o usuário atual
                     }).catch(error => {
                         console.error('Erro a mudar estado do projeto:', error);
                     });
             },
-            onEnd: function (evt) {
+            onSort: function (evt) {
                 var items = el.getElementsByTagName('tr');
                 var projetosData = [];
                 var userId = document.getElementById('colaborador').value; // Obtém o user_id do dropdown de colaboradores
@@ -653,6 +678,7 @@
         var el2 = document.getElementById('tabelaProjetosPendentes').getElementsByTagName('tbody')[0];
         var sortable2 = new Sortable(el2,{
             group: 'shared',
+            ghostClass: 'bg-gray-300',
             animation: 150,
             sort: false,
             onAdd: function(evt){
@@ -679,7 +705,7 @@
                         }
                         return response.json();
                     }).then(data => {
-                        console.log('Ordem atualizada com sucesso:', data);
+                        console.log('Estado do projeto atualizado com sucesso:', data);
                         atualizarTabelas(userId);
                     }).catch(error => {
                         console.error('Erro a mudar estado do projeto:', error);
