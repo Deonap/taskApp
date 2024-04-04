@@ -6,7 +6,6 @@ use App\Http\Controllers\EstadoProjetoController;
 use App\Http\Controllers\TipoClienteController;
 use App\Http\Controllers\PrioridadesController;
 use App\Http\Controllers\HistoricoController;
-use App\Models\Projeto;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -52,13 +51,9 @@ Route::put('/users/{id}/updateType', [UserController::class, 'updateType'])->nam
 
 
 Route::resource('prioridades', PrioridadesController::class);
-
 Route::get('/filtrar/projetos', [PrioridadesController::class, 'filtrarProjetos']);
 Route::get('/filtrar/projetospendentes', [PrioridadesController::class, 'filtrarProjetosPendente']);
-
 Route::get('/filtrar/projetos-outros-colaboradores/{colaboradorId}', [PrioridadesController::class, 'filtrarProjetosComOutrosColaboradores']);
-
-
 Route::post('/salvar/projetos', [PrioridadesController::class, 'salvarProjetos']);
 
 
