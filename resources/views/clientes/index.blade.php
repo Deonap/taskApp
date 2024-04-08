@@ -10,7 +10,7 @@
                 padding: 0.5rem 1rem 0.5rem 1rem;
             }
             form{
-                margin:auto;
+                margin: auto;
             }
         </style>
     </head>

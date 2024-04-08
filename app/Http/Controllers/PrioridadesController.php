@@ -104,7 +104,6 @@ class PrioridadesController extends Controller
 
     public function salvarProjetos(Request $request)
     {
-
         $dados = $request->validate([
             'projetos.*.id' => 'required|integer',
             'projetos.*.user_id' => 'required|integer',
@@ -155,7 +154,8 @@ class PrioridadesController extends Controller
         return response()->json(['message' => 'Prioridades atualizadas com sucesso.']);
     }
 
-    public function atualizarEstadoProjeto(Request $request){
+    public function atualizarEstadoProjeto(Request $request)
+    {
         $projetosData = $request->validate([
             'projetos' => 'required|array',
             'projetos.*.id' => 'required|integer',

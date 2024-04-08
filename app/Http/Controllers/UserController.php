@@ -12,6 +12,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
+        
         return view('users.index', compact('users'));
     }
 
@@ -31,6 +32,7 @@ class UserController extends Controller
 
         $validatedData['password'] = Hash::make($validatedData['password']);
         User::create($validatedData);
+
         return redirect()->route('users.index');
     }
 
@@ -49,6 +51,7 @@ class UserController extends Controller
         ]);
 
         $user->update($validatedData);
+
         return redirect()->route('users.index');
     }
 

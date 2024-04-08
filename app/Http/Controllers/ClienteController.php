@@ -62,8 +62,6 @@ class ClienteController extends Controller
         return view('clientes.show', compact('cliente', 'projetosAbertos', 'projetosConcluidos', 'colaboradores'));
     }
     
-
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -92,6 +90,6 @@ class ClienteController extends Controller
     public function destroy(Cliente $cliente)
     {
         $cliente->delete();
-    return redirect()->route('clientes.index');
+        return redirect()->route('clientes.index');
     }
 }

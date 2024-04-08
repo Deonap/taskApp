@@ -347,8 +347,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         }
     });
-
-
 });
 
 document.getElementById('salvarPrioridades').addEventListener('click', function () {
@@ -374,8 +372,7 @@ document.getElementById('salvarPrioridades').addEventListener('click', function 
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         },
         body: JSON.stringify({ projetos: projetosData })
-    })
-        .then(response => {
+    }).then(response => {
             if (response.ok) {
                 return response.json();
             } else {

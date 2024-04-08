@@ -7,7 +7,7 @@
                 line-height: 1.25rem;
                 margin-bottom: 0.5rem;
                 font-weight: 700;
-                 color: rgb(0 40 91);
+                color: rgb(0 40 91);
             }
         </style>
     </head>
@@ -56,7 +56,6 @@
                                 Atualizar
                             </button>
                         </div>
-                        
                     </form>
                 </div>
             </div>

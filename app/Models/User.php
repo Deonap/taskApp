@@ -52,9 +52,7 @@ class User extends Authenticatable
 
     public function tempoGasto(Projeto $projeto){
         $projetoUser = ProjetoUser::where('user_id', $this->id)->where('projeto_id', $projeto->id)->first();
-        return $projetoUser->tempo_gasto;
-                        
+        
+        return $projetoUser->tempo_gasto;                   
     }
-
-
 }
