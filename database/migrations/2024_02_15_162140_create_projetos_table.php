@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('estado_projeto_id')->constrained('estado_projetos');
             $table->string('tempo_previsto');
             $table->text('observacoes')->nullable();
-            $table->string('tempo_gasto')->nullable();
+            $table->string('tempo_gasto')->default('00:00');
             $table->timestamps();
         });
     }

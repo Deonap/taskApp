@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('projeto_users', function (Blueprint $table) {
             $table->foreignId('projeto_id')->constrained('projetos');
             $table->foreignId('user_id')->constrained('users');
-            $table->string('tempo_gasto')->nullable();
+            $table->string('tempo_gasto')->default('00:00');
             $table->text('observacoes')->nullable();
             
             $table->timestamps();
