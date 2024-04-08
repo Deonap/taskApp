@@ -28,6 +28,12 @@
                 border-bottom-width: 1px;
                 font-size: 14px;
             }
+
+            .disabledTable{
+                pointer-events: none !important;
+                opacity: 0;
+            }
+
         </style>
     </head>
     <body>
@@ -756,7 +762,8 @@
     });
 
     document.getElementById('toggleFerias').addEventListener('change',function(){
-        console.log("changed");
+        var tabelaPrioridadesAberto = document.querySelector('#tabelaProjetosAbertos tbody');
+        tabelaPrioridadesAberto.classList.toggle('disabledTable');
     });
 
 
