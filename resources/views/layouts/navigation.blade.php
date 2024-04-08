@@ -4,120 +4,122 @@
 <style>
    @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
 
+    .font-sans {
+        font-family: 'Open Sans', sans-serif;
+    }
+    .bg-sidebar {
+        background: #0a3857; /* Azul médio para fundo do menu lateral */
+    }
 
-   .font-sans {
-    font-family: 'Open Sans', sans-serif;
-}
-.bg-sidebar {
-    background: #0a3857; /* Azul médio para fundo do menu lateral */
-}
+    .cta-btn {
+        color: #aeb2f8; /* Azul claro acinzentado para botões de chamada para ação */
+    }
 
-.cta-btn {
-    color: #aeb2f8; /* Azul claro acinzentado para botões de chamada para ação */
-}
+    .upgrade-btn {
+        background: #1947ee; /* Azul brilhante para botão de upgrade */
+    }
 
-.upgrade-btn {
-    background: #1947ee; /* Azul brilhante para botão de upgrade */
-}
+    .upgrade-btn:hover {
+        background: #0038fd; /* Azul um pouco mais escuro para hover no botão de upgrade */
+    }
 
-.upgrade-btn:hover {
-    background: #0038fd; /* Azul um pouco mais escuro para hover no botão de upgrade */
-}
+    .active-nav-link {
+        background: #091f70; /* Azul escuro para link ativo */
+        opacity: 1 !important;
+    }
 
-.active-nav-link {
-    background: #091f70; /* Azul escuro para link ativo */
-    opacity: 1 !important;
-}
+    .nav-item {
+        color: #ffffff; /* Branco para texto do item do menu */
+        transition: background-color 0.3s;
+        padding-left: 20px;
+        width: 180px;
+        
+        
+    }
 
-.nav-item {
-    color: #ffffff; /* Branco para texto do item do menu */
-    transition: background-color 0.3s;
-    padding-left: 20px;
-    width: 180px;
-    
-    
-}
-.nav-item a:hover, .nav-item a.active {
-    padding: 5px auto; /* Adjust the padding as needed */
-    background: #ffffff; /* White background */
-    color: #0a3857; /* Blue text */
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    padding-left: 30px ;
-    width: 180px;
-    /* Smooth transition for hover effects */
-}
+    .nav-item a:hover, .nav-item a.active {
+        padding: 5px auto; /* Adjust the padding as needed */
+        background: #ffffff; /* White background */
+        color: #0a3857; /* Blue text */
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        padding-left: 30px ;
+        width: 180px;
+        /* Smooth transition for hover effects */
+    }
 
-.nav-item a:hover {
-    background: #ffffff; /* Branco para o fundo do item do menu */
-    color: #0a3857; /* Azul brilhante para o texto do item do menu */
-     /* Adiciona um padding interno para criar a margem visual desejada */
-     /* Opcional: adiciona uma pequena margem externa se necessário */
-    border-radius: 8px;
-     /* Mantém os cantos arredondados */
-}
-.account-link:hover {
-    background: #072079; /* Azul mais escuro para hover no link da conta */
-}
+    .nav-item a:hover {
+        background: #ffffff; /* Branco para o fundo do item do menu */
+        color: #0a3857; /* Azul brilhante para o texto do item do menu */
+        /* Adiciona um padding interno para criar a margem visual desejada */
+        /* Opcional: adiciona uma pequena margem externa se necessário */
+        border-radius: 8px;
+        /* Mantém os cantos arredondados */
+    }
 
-.active {
-    background-color: white;
-    color:#0a3857;
-      /* Cor mais escura para o item ativo */
-}
-/* ... mantenha os estilos existentes e adicione o seguinte ... */
+    .account-link:hover {
+        background: #072079; /* Azul mais escuro para hover no link da conta */
+    }
 
-/* Estilo para arredondar os cantos e adicionar margem ao item do menu */
-.nav-item a {
-    border-radius: 8px; /* Arredonda os cantos */
-     /* Adiciona margem em todos os lados */
-}
+    .active {
+        background-color: white;
+        color:#0a3857;
+        /* Cor mais escura para o item ativo */
+    }
+    /* ... mantenha os estilos existentes e adicione o seguinte ... */
 
-/* Centraliza o logotipo e o texto */
-.p-6 a,
-.nav-item span,
-.nav-item a {
-    display: flex;
-    align-items: left;
-    justify-content: start;
-}
+    /* Estilo para arredondar os cantos e adicionar margem ao item do menu */
+    .nav-item a {
+        border-radius: 8px; /* Arredonda os cantos */
+        /* Adiciona margem em todos os lados */
+    }
 
-/* Ajuste no padding para manter os itens do menu centralizados verticalmente após adicionar margens */
+    /* Centraliza o logotipo e o texto */
+    .p-6 a,
+    .nav-item span,
+    .nav-item a {
+        display: flex;
+        align-items: left;
+        justify-content: start;
+    }
 
-
-/* Adiciona margens nas laterais do menu para não tocar nas bordas da tela */
-.bg-sidebar {
-    margin: 10px;
-    margin-top: 30px;
-    margin-left: 20px;
-    
-    border-radius: 16px;
-    padding-left: 20px /* Arredonda os cantos do menu inteiro */
-}
-button.flex {
-  padding-left: 1rem; /* Espaço interno à esquerda */
-  padding-right: 1rem; /* Espaço interno à direita */
-  align-items: center; /* Alinha os itens verticalmente no centro */
-}
-
-/* Ícone de usuário e nome do usuário */
-button svg:first-child {
-  margin-right: 0.5rem; /* Espaço entre o ícone do usuário e o nome */
-}
-
-/* Ícone de seta para baixo */
-button svg:last-child {
-  margin-left: auto; /* Empurra o ícone de seta para a extremidade direita do botão */
-}
+    /* Ajuste no padding para manter os itens do menu centralizados verticalmente após adicionar margens */
 
 
-    
+    /* Adiciona margens nas laterais do menu para não tocar nas bordas da tela */
+    .bg-sidebar {
+        margin: 10px;
+        margin-top: 30px;
+        margin-left: 20px;
+        
+        border-radius: 16px;
+        padding-left: 20px /* Arredonda os cantos do menu inteiro */
+    }
+
+    button.flex {
+    padding-left: 1rem; /* Espaço interno à esquerda */
+    padding-right: 1rem; /* Espaço interno à direita */
+    align-items: center; /* Alinha os itens verticalmente no centro */
+    }
+
+    /* Ícone de usuário e nome do usuário */
+    button svg:first-child {
+    margin-right: 0.5rem; /* Espaço entre o ícone do usuário e o nome */
+    }
+
+    /* Ícone de seta para baixo */
+    button svg:last-child {
+    margin-left: auto; /* Empurra o ícone de seta para a extremidade direita do botão */
+    }
+
+
+        
 </style>
 </head>
 
 <body class="bg-gray-100 font-sans flex">
 
-<aside class="relative bg-sidebar    overflow-y-auto shadow-xl " style="height: 90vh; width:100%">
+<aside class="relative bg-sidebar overflow-y-auto shadow-xl" style="height: 90vh; width:100%">
     <div class="p-6 ">
         <a href="#" class="hover:text-gray-300 mt-8">
             <img src="/images/logo-buzina.png" alt="Logotipo Buzina" class="h-10" > <!-- Ajuste a classe de altura conforme necessário -->
