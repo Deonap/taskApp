@@ -27,7 +27,7 @@
                 <div class="flex justify-between items-center mb-4">
                     <form action="{{ route('clientes.store') }}" method="POST">
                         @csrf
-                        <div class="bg-white shadow-md rounded px-8  py-6 mb-4 border">
+                        <div class="bg-white shadow-md rounded px-8 py-6 mb-4 border">
                             <div class="mb-4">
                                 <div class="flex items-center space-x-3">
                                     <label for="nome">

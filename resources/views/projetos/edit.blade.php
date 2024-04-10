@@ -183,8 +183,12 @@
                 const novaTarefaRow = document.createElement('div');
                 novaTarefaRow.classList.add('tarefa-row', 'mb-2');
                 novaTarefaRow.innerHTML = `
-                    <input type="text" name="tarefas[]" class="form-input" placeholder="Descrição da Tarefa" required>
-                    ${podeRemover ? '<button type="button" class="btn btn-danger remover-tarefa ml-2">Remover</button>' : ''}
+                <div class="tarefa-row flex items-center space-x-3">
+                    <input type="text" name="tarefas[]" class="shadow appearance-none border rounded w-full py-2 pl-3 pr-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Nome da tarefa" required>
+                    <button type="button" class="bg-darkBlue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${!podeRemover ? 'invisible' : ''}">
+                        Remover
+                    </button>
+                </div>
                 `;
                 tarefasContainer.appendChild(novaTarefaRow);
             });
