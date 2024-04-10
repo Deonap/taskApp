@@ -123,7 +123,7 @@
                                     </label>
                                     <input id="nome" type="text" value="{{ $projeto->nome }}" class="shadow appearance-none border rounded w-full py-2 pl-3 pr-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="nome" placeholder="Nome do projeto" required>
                                     @error('nome')
-                                            <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
+                                        <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -221,11 +221,7 @@
                             </button>
                         </div>
                     </form>
-
-
-                   
                 </div>
-                
             </div>
         </x-app-layout>
 
