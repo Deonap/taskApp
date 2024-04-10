@@ -324,7 +324,7 @@
 
                     var linha = tbody.insertRow();
                     
-                    // <tr data-id="{{ $projeto->id }}">
+                    // <tr data-id=" $projeto->id ">
                     linha.setAttribute('data-id', projeto.id);
 
                     // Encontra o usuário específico e sua prioridade
@@ -333,57 +333,25 @@
 
 
                     var celulaN_Prioridade = linha.insertCell(0);
-                    // <td class="border px-3 py-4 whitespace-nowrap border-b">
-                    //     @if($projeto->users->isNotEmpty())
-                    //         {{ $projeto->users->first()->pivot->prioridade }}
-                    //     @else
-                    //         {{ 'Sem prioridade definida' }}
-                    //     @endif
-                    // </td>
                     celulaN_Prioridade.classList.add(...tdClassList);
                     celulaN_Prioridade.innerHTML = prioridade;
 
-
-                    // <td class="border px-3 py-4 whitespace-nowrap border-b">
-                    //     {{ $projeto->cliente->nome ?? 'Cliente não especificado' }}
-                    // </td>
                     var celulaNomeCliente = linha.insertCell(1);
                     celulaNomeCliente.classList.add(...tdClassList);
                     celulaNomeCliente.innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
 
-
-                    // <td class="border px-3 py-4 whitespace-nowrap border-b">
-                    //     {{ $projeto->tipoCliente->nome ?? 'Tipo não especificado' }}
-                    // </td>
                     var celulaTipoCliente = linha.insertCell(2);
                     celulaTipoCliente.classList.add(...tdClassList);
                     celulaTipoCliente.innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
 
-
-                    // <td class="border px-3 py-4 whitespace-nowrap border-b">
-                    //     {{ $projeto->nome }}
-                    // </td>
                     var celulaNomeProjeto = linha.insertCell(3);
                     celulaNomeProjeto.classList.add(...tdClassList);
                     celulaNomeProjeto.innerHTML = projeto.nome;
 
-
-                    // <td class="border px-3 py-4 whitespace-nowrap border-b w-1/4" style="border-right: 2px solid #bbbaba;">
-                    //     @foreach($projeto->tarefas as $tarefa)
-                    //         <div>
-                    //             {{ $tarefa->descricao }}
-                    //         </div>
-                    //     @endforeach
-                    // </td>
                     var celulaTarefas = linha.insertCell(4);
                     celulaTarefas.innerHTML = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
                     celulaTarefas.classList.add(...tdClassList);
 
-
-                    // <td class="border px-3 py-4 whitespace-nowrap border-b w-1/4">
-                    //     <textarea class="form-input observacoes border border-gray-300 rounded-md w-full resize-none h-16 overflow-hidden text-start hover:cursor-default" rows="3" readonly>
-                    //     </textarea>
-                    // </td>
                     var userProjeto = projeto.users.find(user => user.id == userId);
                     if(userProjeto){
                         observacoes = userProjeto.pivot.observacoes ? userProjeto.pivot.observacoes : 'Sem observações';
@@ -397,31 +365,21 @@
                     textareaObservacoes.setAttribute('readonly', true);
                     celulaObservacoes.appendChild(textareaObservacoes);
 
-
-                    // <td class="border px-3 py-4 whitespace-nowrap border-b w-1/12">
-                    //     <input class="border border-gray-300 rounded-md p-2 w-full tempo-gasto text-center" autocomplete="off" pattern="[0-9]{0,4}:[0-5][0-9]" type="text" placeholder="--:--" name="tempoPrevisto">
-                    // </td>
                     var tempoGasto = userProjeto ? userProjeto.pivot.tempo_gasto : '--:--';
                     var celulaTempoGasto = linha.insertCell(6);
                     celulaTempoGasto.classList.add(...tdClassList, 'flex');
-                    var inputTempoGasto = document.createElement('input');
-                    inputTempoGasto.type = 'text';
-                    inputTempoGasto.classList.add('tempo-gasto', 'w-[100px]', 'text-center', 'm-auto', 'p-auto', 'border-none');
-                    inputTempoGasto.value = tempoGasto;
-                    inputTempoGasto.setAttribute('autocomplete',false);
-                    inputTempoGasto.setAttribute('pattern','[0-9]{0,4}:[0-5][0-9]');
-                    inputTempoGasto.setAttribute('placeholder','--:--');
-                    inputTempoGasto.addEventListener('input', function(){
-                        console.log("yay");
-                    });
-                    celulaTempoGasto.appendChild(inputTempoGasto);
+                    var div = document.createElement('div');
+                    console.log(userProjeto);
+                    div.innerHTML = 
+                    `
+                        <form action="/projetos/${projeto.id}/${userId}/updateTimeSpent" method="POST" class="m-0">
+                            @csrf
+                            @method('PUT')
+                            <input value='${tempoGasto}' onChange='${this.submit}' class="border border-gray-300 rounded-md p-2 w-full tempo-gasto text-center" autocomplete="off" pattern="[0-9]{0,4}:[0-5][0-9]" type="text" placeholder="${tempoGasto}" name="tempoGasto">
+                        </form>
+                    `;
+                    celulaTempoGasto.appendChild(div);
 
-                    /* 
-                    <td class="border px-4 py-2">
-                        <div style="background-color: {{ $projeto->estadoProjeto->cor }}; class="m-auto size-7 rounded-full">
-                        </div>
-                    </td>
-                    */
                     var celulaEstadoProjeto = linha.insertCell(7);
                     celulaEstadoProjeto.classList.add(...tdClassList);
                     celulaEstadoProjeto.innerHTML =
@@ -543,17 +501,7 @@
                     celulas[4].innerHTML = colaboradores;
 
 
-                    /* 
-                    <td class="border px-4 py-2">
-                        <div style="background-color: {{ $projeto->estadoProjeto->cor }}; class="m-auto size-7 rounded-full">
-                        </div>
-                    </td>
-                    */
-                    // var celulaEstadoProjeto = linha.insertCell(7);
-                    // celulaEstadoProjeto.classList.add('border', 'px-4', 'py-2');
-                    // celulaEstadoProjeto.innerHTML =
-                    //     `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full">
-                    //     </div>`;
+
 
                     var celulaEstadoProjeto = celulas[5];
                     celulaEstadoProjeto.innerHTML =

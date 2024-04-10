@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\EstadoProjeto;
 use App\Models\Tarefa;
 use Illuminate\Routing\Events\ResponsePrepared;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProjetoController extends Controller
 {
@@ -177,4 +178,18 @@ class ProjetoController extends Controller
 
         return response()->json($colaboradoresDisponiveis);
     }
+
+    public function updateTimeSpent(Request $request, Projeto $projeto, User $user){
+
+        $validated = $request->validate([
+            'tempoGasto' => ' required'
+        ]);
+
+        $pU = ProjetoUser::where('projeto_id', $projeto->id)->where('user_id', $user->id)->first();
+        $pU->tempo_gasto = $validated['tempoGasto'];
+
+        $pU->update();
+        return back();
+    }
+
 }
