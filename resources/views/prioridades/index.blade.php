@@ -360,36 +360,45 @@
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.10.2/Sortable.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var userId = document.getElementById('colaborador').value
-        atualizarTabelas(userId)
+    var userId = document.getElementById('colaborador').value
+    atualizarTabelas(userId)
     });
+
     document.getElementById('colaborador').addEventListener('change', function () {
         var userId = this.value;
         atualizarTabelas(userId);
     });
+
     function atualizarTabelaProjetosEmAberto(userId) {
         fetch('/filtrar/projetos?colaborador_id=' + userId)
             .then(response => response.json())
             .then(data => {
                 var tbody = document.querySelector('#tabelaProjetosAbertos tbody');
                 tbody.innerHTML = '';
+
                 data.forEach((projeto) => {
                     var linha = tbody.insertRow();
                     linha.setAttribute('data-id', projeto.id);
+
                     // Encontra o usuário específico e sua prioridade
                     var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
                     var prioridade = userProjeto ? userProjeto.pivot.prioridade : 'N/A';
+
+
                     var celulaPrioridade = linha.insertCell(0);
                     celulaPrioridade.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
                     celulaPrioridade.innerHTML = prioridade;
+
 
                     var celulaCliente = linha.insertCell(1);
                     celulaCliente.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
                     celulaCliente.innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
 
+
                     var celulaTipoCliente = linha.insertCell(2);
                     celulaTipoCliente.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
                     celulaTipoCliente.innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
+
 
                     var celulaNomeProjeto = linha.insertCell(3);
                     celulaNomeProjeto.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
@@ -398,6 +407,8 @@
                     var celulaTarefas = linha.insertCell(4);
                     celulaTarefas.innerHTML = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
                     celulaTarefas.classList.add('border');
+
+
                     var userProjeto = projeto.users.find(user => user.id == userId);
                     var observacoes = userProjeto ? userProjeto.pivot.observacoes : 'Sem observações';
                     var celulaObservacoes = linha.insertCell();
@@ -406,7 +417,8 @@
                     textareaObservacoes.classList.add('observacoes', 'border', 'border-gray-300', 'rounded-md', 'w-full', 'resize-none', 'h-16', 'overflow-y-auto');
                     textareaObservacoes.value = observacoes;
                     celulaObservacoes.appendChild(textareaObservacoes);
-                    
+
+
                     var tempoGasto = userProjeto ? userProjeto.pivot.tempo_gasto : '';
                     var celulaTempoGasto = linha.insertCell();
                     celulaTempoGasto.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
@@ -415,6 +427,7 @@
                     inputTempoGasto.classList.add('tempo-gasto', 'border', 'border-gray-300', 'rounded-md', 'p-2', 'w-full');
                     inputTempoGasto.value = tempoGasto;
                     celulaTempoGasto.appendChild(inputTempoGasto);
+
                     /* 
                     <td class="border px-4 py-2">
                         <div style="background-color: {{ $projeto->estadoProjeto->cor }}; class="m-auto size-7 rounded-full">
@@ -426,6 +439,8 @@
                     celulaEstadoProjeto.innerHTML =
                         `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full">
                         </div>`;
+
+
                     var celulaAcoes = linha.insertCell(8);
                     celulaAcoes.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
                     celulaAcoes.innerHTML = `
@@ -446,34 +461,44 @@
                             </form>
                         </div>
                         `;
+
                 });
             });
     }
+
     function atualizarTabelaProjetosPendentes(userId) {
         fetch('/filtrar/projetospendentes?colaborador_id=' + userId)
             .then(response => response.json())
             .then(data => {
                 var tbodyPendentes = document.querySelector('#tabelaProjetosPendentes tbody');
                 tbodyPendentes.innerHTML = '';
+
                 data.forEach((projeto) => {
                     var linha = tbodyPendentes.insertRow();
                     linha.setAttribute('data-id', projeto.id);
                     linha.classList.add('border-b'); // Adiciona borda à linha
+
                     var celulas = [];
+
                     for (let i = 0; i < 6; i++) {
                         celulas[i] = linha.insertCell(i);
                         celulas[i].classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap');
                     }
+
                     celulas[0].innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
                     celulas[1].innerHTML = projeto.tipo_cliente ? projeto.tipo_cliente.nome : 'Tipo não especificado';
                     celulas[2].innerHTML = projeto.nome;
+
                     var tarefas = projeto.tarefas.map(tarefa => tarefa.descricao).join(", ");
                     celulas[3].innerHTML = tarefas;
+
+
                     var celulaEstadoProjeto = celulas[4];
                     celulaEstadoProjeto.innerHTML =
                         `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full">
                         </div>`;
                         
+
                     var celulaAcoes = celulas[5];
                     celulaAcoes.innerHTML = `
                 <div style="display: flex; align-items: center;">
@@ -496,32 +521,39 @@
                 });
             });
     }
+
     function atualizarTabelaProjetosComOutrosColaboradores(userId) {
         fetch('/filtrar/projetos-outros-colaboradores/' + userId)
             .then(response => response.json())
             .then(data => {
+
                 var tbodyOutrosColaboradores = document.querySelector('#tabelaProjetosOutrosColaboradores tbody');
                 tbodyOutrosColaboradores.innerHTML = '';
+
                 data.forEach((projeto) => {
                     var linha = tbodyOutrosColaboradores.insertRow();
                     linha.classList.add('border-b'); // Adiciona borda à linha
+
                     var celulas = [];
+
                     for (let i = 0; i < 7; i++) {
                         celulas[i] = linha.insertCell(i);
                         celulas[i].classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap');
                     }
+
                     celulas[0].innerHTML = projeto.cliente.nome;
                     celulas[1].innerHTML = projeto.tipo_cliente ? projeto.tipo_cliente.nome : 'Tipo não especificado';
                     celulas[2].innerHTML = projeto.nome;
+
                     var tarefas = projeto.tarefas.map(tarefa => tarefa.descricao).join(", ");
                     celulas[3].innerHTML = tarefas;
 
                     
-                    
                     // Lista todos os colaboradores associados ao projeto
                     var colaboradores = projeto.users.map(user => user.name).join(", ");
-
                     celulas[4].innerHTML = colaboradores;
+
+
                     /* 
                     <td class="border px-4 py-2">
                         <div style="background-color: {{ $projeto->estadoProjeto->cor }}; class="m-auto size-7 rounded-full">
@@ -533,10 +565,13 @@
                     // celulaEstadoProjeto.innerHTML =
                     //     `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full">
                     //     </div>`;
+
                     var celulaEstadoProjeto = celulas[5];
                     celulaEstadoProjeto.innerHTML =
                         `<div style="background-color: ${projeto.estado_projeto.cor};" class="size-7 rounded-full">
                         </div>`;
+
+
                     var celulaAcoes = celulas[6];
                     celulaAcoes.innerHTML = `
                     <div style="display: flex; align-items: center;">
@@ -559,11 +594,13 @@
                 });
             });
     }
+
     function atualizarTabelas(userId){
         atualizarTabelaProjetosEmAberto(userId);
         atualizarTabelaProjetosPendentes(userId);
         atualizarTabelaProjetosComOutrosColaboradores(userId);
     }
+
     document.addEventListener('DOMContentLoaded', function () {
         var el = document.getElementById('tabelaProjetosAbertos').getElementsByTagName('tbody')[0];
         var sortable = new Sortable(el, {
@@ -574,6 +611,7 @@
                 var item = evt.item;
                 var projetosData = [];
                 var userId = document.getElementById('colaborador').value; // Obtém o user_id do dropdown de colaboradores
+
                 projetosData.push({
                     id: item.getAttribute('data-id'),
                     user_id: userId,
@@ -603,6 +641,7 @@
                 var items = el.getElementsByTagName('tr');
                 var projetosData = [];
                 var userId = document.getElementById('colaborador').value; // Obtém o user_id do dropdown de colaboradores
+
                 for (var i = 0; i < items.length; i++) {
                     projetosData.push({
                         id: items[i].getAttribute('data-id'),
@@ -642,6 +681,7 @@
                 var item = evt.item;
                 var projetosData = [];
                 var userId = document.getElementById('colaborador').value; // Obtém o user_id do dropdown de colaboradores
+
                 projetosData.push({
                     id: item.getAttribute('data-id'),
                     user_id:userId,
@@ -669,13 +709,16 @@
             }
         });
     });
+
     document.getElementById('salvarPrioridades').addEventListener('click', function () {
         var userId = document.getElementById('colaborador').value; // Obter o user_id do dropdown
         var projetosData = [];
+
         document.querySelectorAll('#tabelaProjetosAbertos tbody tr').forEach(function (row) {
             var projetoId = row.getAttribute('data-id');
             var observacoes = row.querySelector('.observacoes').value;
             var tempoGasto = row.querySelector('.tempo-gasto').value;
+
             projetosData.push({
                 id: projetoId,
                 user_id: userId, // Usar o mesmo user_id para todos os projetos
@@ -690,8 +733,7 @@
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
             body: JSON.stringify({ projetos: projetosData })
-        })
-            .then(response => {
+        }).then(response => {
                 if (response.ok) {
                     return response.json();
                 } else {
@@ -705,7 +747,9 @@
                 console.error('Erro ao salvar projetos:', error);
             });
     });
+
     document.getElementById('toggleFerias').addEventListener('change',function(){
-        console.log("changed");
+        var tabelaPrioridadesAberto = document.querySelector('#tabelaProjetosAbertos tbody');
+        tabelaPrioridadesAberto.classList.toggle('disabledTable');
     });
 </script>

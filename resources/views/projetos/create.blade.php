@@ -85,7 +85,7 @@
                 <div class="form-group">
                     <label for="tipo_cliente_id" class="form-label">Tipo de Cliente:</label>
                     <select id="tipo_cliente_id" class="form-select" name="tipo_cliente_id" required>
-                        <option value="">Selecione o Tipo de Cliente</option>
+                        <option value="" selected disabled>Selecione o Tipo de Cliente</option>
                         @foreach($tiposClientes as $tipoCliente)
                             <option value="{{ $tipoCliente->id }}">{{ $tipoCliente->nome }}</option>
                         @endforeach
@@ -100,7 +100,7 @@
                 <div class="form-group">
                     <label for="estado_projeto_id" class="form-label">Estado do Projeto:</label>
                     <select id="estado_projeto_id" class="form-select" name="estado_projeto_id" required>
-                        <option value="">Selecione o Estado do Projeto</option>
+                        <option value="" selected disabled>Selecione o Estado do Projeto</option>
                         @foreach($estadosProjetos as $estadoProjeto)
                             <option value="{{ $estadoProjeto->id }}">{{ $estadoProjeto->nome }}</option>
                         @endforeach
