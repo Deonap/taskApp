@@ -26,6 +26,10 @@
                 border-bottom-width: 1px;
                 font-size: 14px;
             }
+            .disabledTable{
+                pointer-events: none;
+                background-color: rgb(219, 209, 210);
+            }
         </style>
     </head>
     <body>
@@ -97,7 +101,7 @@
                                         <th scope="col">
                                             Projeto
                                         </th>
-                                        <th scope="col" style="font-size: 14px;border-right: 2px solid #bbbaba;">
+                                        <th scope="col">
                                             Prioridade
                                         </th>
                                         <th scope="col">
@@ -115,75 +119,6 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach($projetosEmAberto as $projeto)
-                                        @php
-                                            if($colaboradores[0] && $colaboradores[0]->tipo == "colaborador"){
-                                                $colaboradorProjeto = $colaboradores[0];
-                                            } else{
-                                                $colaboradorProjeto = NULL;
-                                            }
-                                        @endphp
-                                        <tr data-id="{{ $projeto->id }}" data-user-id="{{ optional($projeto->users->first())->id }}">
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b">
-                                                @if($projeto->users->isNotEmpty())
-                                                    {{ $projeto->users->first()->pivot->prioridade }}
-                                                @else
-                                                    {{ 'Sem prioridade definida' }}
-                                                @endif
-                                            </td>
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b">
-                                                {{ $projeto->cliente->nome ?? 'Cliente não especificado' }}
-                                            </td>
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b">
-                                                {{ $projeto->tipoCliente->nome ?? 'Tipo não especificado' }}
-                                            </td>
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b">
-                                                {{ $projeto->nome }}
-                                            </td>
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b w-1/4" style="border-right: 2px solid #bbbaba;">
-                                                <!-- Ajustando a largura da coluna de tarefas -->
-                                                @foreach($projeto->tarefas as $tarefa)
-                                                    <div>
-                                                        {{ $tarefa->descricao }}
-                                                    </div>
-                                                @endforeach
-                                            </td>
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b w-1/4">
-                                                <textarea class="form-input observacoes border border-gray-300 rounded-md w-full resize-none h-16 overflow-hidden text-start hover:cursor-default" rows="3" readonly>
-                                            </textarea>
-                                            </td>
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b w-1/12">
-                                                <input class="border border-gray-300 rounded-md p-2 w-full tempo-gasto text-center" autocomplete="off" pattern="[0-9]{0,4}:[0-5][0-9]" type="text" placeholder="--:--" name="tempoPrevisto">
-                                            </td>
-                                            <td class="border px-4 py-2">
-                                                <div style="background-color: {{ $projeto->estadoProjeto->cor }}; margin: auto;" class="w-7 h-7 rounded-full">
-                                                </div>
-                                            </td>
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b">
-                                                <div class="flex justify-center items-center space-x-4">
-                                                    <!-- Botão Editar -->
-                                                    <a href="{{ route('projetos.edit', $projeto->id) }}" title="Editar">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-darkBlue hover:text-blue-700">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                                        </svg>
-                                                    </a>
-                                            
-                                                    <!-- Botão Excluir -->
-                                                    @if(auth()->user() && auth()->user()->tipo == 'admin')
-                                                        <form action="{{ route('projetos.destroy', $projeto->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-red-700 hover:text-red-500">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                                </svg>
-                                                            </button>
-                                                        </form>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -209,6 +144,12 @@
                                     </th>
                                     <th scope="col">
                                         Prioridade
+                                    </th>
+                                    <th class="opacity-0 hover:cursor-default">
+                                        Observações
+                                    </th>
+                                    <th class="opacity-0 hover:cursor-default">
+                                        Tempo
                                     </th>
                                     <th scope="col">
                                         Estado
@@ -264,6 +205,7 @@
                             </tbody>
                         </table>
                     </div>
+
                     <div id="tabelaProjetosOutrosColaboradores" class="mb-8">
                         <div class="relative mb-4">
                             <div class="flex-none text-white" style="width: 70%; height: 40px; background-color: #641885; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: start; align-items: center;">
@@ -370,6 +312,8 @@
     });
 
     function atualizarTabelaProjetosEmAberto(userId) {
+        var tdClassList = [ 'px-3', 'py-4', 'whitespace-nowrap', 'border', 'border-b'];
+
         fetch('/filtrar/projetos?colaborador_id=' + userId)
             .then(response => response.json())
             .then(data => {
@@ -377,55 +321,99 @@
                 tbody.innerHTML = '';
 
                 data.forEach((projeto) => {
+
                     var linha = tbody.insertRow();
+                    
+                    // <tr data-id="{{ $projeto->id }}">
                     linha.setAttribute('data-id', projeto.id);
 
                     // Encontra o usuário específico e sua prioridade
                     var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
-                    var prioridade = userProjeto ? userProjeto.pivot.prioridade : 'N/A';
+                    var prioridade = userProjeto.pivot.prioridade ? userProjeto.pivot.prioridade : 'N/A';
 
 
-                    var celulaPrioridade = linha.insertCell(0);
-                    celulaPrioridade.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
-                    celulaPrioridade.innerHTML = prioridade;
+                    var celulaN_Prioridade = linha.insertCell(0);
+                    // <td class="border px-3 py-4 whitespace-nowrap border-b">
+                    //     @if($projeto->users->isNotEmpty())
+                    //         {{ $projeto->users->first()->pivot->prioridade }}
+                    //     @else
+                    //         {{ 'Sem prioridade definida' }}
+                    //     @endif
+                    // </td>
+                    celulaN_Prioridade.classList.add(...tdClassList);
+                    celulaN_Prioridade.innerHTML = prioridade;
 
 
-                    var celulaCliente = linha.insertCell(1);
-                    celulaCliente.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
-                    celulaCliente.innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
+                    // <td class="border px-3 py-4 whitespace-nowrap border-b">
+                    //     {{ $projeto->cliente->nome ?? 'Cliente não especificado' }}
+                    // </td>
+                    var celulaNomeCliente = linha.insertCell(1);
+                    celulaNomeCliente.classList.add(...tdClassList);
+                    celulaNomeCliente.innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
 
 
+                    // <td class="border px-3 py-4 whitespace-nowrap border-b">
+                    //     {{ $projeto->tipoCliente->nome ?? 'Tipo não especificado' }}
+                    // </td>
                     var celulaTipoCliente = linha.insertCell(2);
-                    celulaTipoCliente.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
+                    celulaTipoCliente.classList.add(...tdClassList);
                     celulaTipoCliente.innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
 
 
+                    // <td class="border px-3 py-4 whitespace-nowrap border-b">
+                    //     {{ $projeto->nome }}
+                    // </td>
                     var celulaNomeProjeto = linha.insertCell(3);
-                    celulaNomeProjeto.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
+                    celulaNomeProjeto.classList.add(...tdClassList);
                     celulaNomeProjeto.innerHTML = projeto.nome;
 
+
+                    // <td class="border px-3 py-4 whitespace-nowrap border-b w-1/4" style="border-right: 2px solid #bbbaba;">
+                    //     @foreach($projeto->tarefas as $tarefa)
+                    //         <div>
+                    //             {{ $tarefa->descricao }}
+                    //         </div>
+                    //     @endforeach
+                    // </td>
                     var celulaTarefas = linha.insertCell(4);
                     celulaTarefas.innerHTML = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
-                    celulaTarefas.classList.add('border');
+                    celulaTarefas.classList.add(...tdClassList);
 
 
+                    // <td class="border px-3 py-4 whitespace-nowrap border-b w-1/4">
+                    //     <textarea class="form-input observacoes border border-gray-300 rounded-md w-full resize-none h-16 overflow-hidden text-start hover:cursor-default" rows="3" readonly>
+                    //     </textarea>
+                    // </td>
                     var userProjeto = projeto.users.find(user => user.id == userId);
-                    var observacoes = userProjeto ? userProjeto.pivot.observacoes : 'Sem observações';
-                    var celulaObservacoes = linha.insertCell();
-                    celulaObservacoes.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
+                    if(userProjeto){
+                        observacoes = userProjeto.pivot.observacoes ? userProjeto.pivot.observacoes : 'Sem observações';
+                    }
+                    var celulaObservacoes = linha.insertCell(5);
+                    celulaObservacoes.classList.add(...tdClassList);
                     var textareaObservacoes = document.createElement('textarea');
-                    textareaObservacoes.classList.add('observacoes', 'border', 'border-gray-300', 'rounded-md', 'w-full', 'resize-none', 'h-16', 'overflow-y-auto');
+                    textareaObservacoes.classList.add('form-input', 'observacoes', 'w-full', 'resize-none', 'h-16', 'overflow-hidden', 'text-start', 'hover:cursor-default');
                     textareaObservacoes.value = observacoes;
+                    textareaObservacoes.setAttribute('rows', 3);
+                    textareaObservacoes.setAttribute('readonly', true);
                     celulaObservacoes.appendChild(textareaObservacoes);
 
 
-                    var tempoGasto = userProjeto ? userProjeto.pivot.tempo_gasto : '';
-                    var celulaTempoGasto = linha.insertCell();
-                    celulaTempoGasto.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
+                    // <td class="border px-3 py-4 whitespace-nowrap border-b w-1/12">
+                    //     <input class="border border-gray-300 rounded-md p-2 w-full tempo-gasto text-center" autocomplete="off" pattern="[0-9]{0,4}:[0-5][0-9]" type="text" placeholder="--:--" name="tempoPrevisto">
+                    // </td>
+                    var tempoGasto = userProjeto ? userProjeto.pivot.tempo_gasto : '--:--';
+                    var celulaTempoGasto = linha.insertCell(6);
+                    celulaTempoGasto.classList.add(...tdClassList, 'flex');
                     var inputTempoGasto = document.createElement('input');
                     inputTempoGasto.type = 'text';
-                    inputTempoGasto.classList.add('tempo-gasto', 'border', 'border-gray-300', 'rounded-md', 'p-2', 'w-full');
+                    inputTempoGasto.classList.add('tempo-gasto', 'w-[100px]', 'text-center', 'm-auto', 'p-auto', 'border-none');
                     inputTempoGasto.value = tempoGasto;
+                    inputTempoGasto.setAttribute('autocomplete',false);
+                    inputTempoGasto.setAttribute('pattern','[0-9]{0,4}:[0-5][0-9]');
+                    inputTempoGasto.setAttribute('placeholder','--:--');
+                    inputTempoGasto.addEventListener('input', function(){
+                        console.log("yay");
+                    });
                     celulaTempoGasto.appendChild(inputTempoGasto);
 
                     /* 
@@ -435,33 +423,34 @@
                     </td>
                     */
                     var celulaEstadoProjeto = linha.insertCell(7);
-                    celulaEstadoProjeto.classList.add('border', 'px-4', 'py-2');
+                    celulaEstadoProjeto.classList.add(...tdClassList);
                     celulaEstadoProjeto.innerHTML =
                         `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full">
                         </div>`;
 
 
                     var celulaAcoes = linha.insertCell(8);
-                    celulaAcoes.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
+                    celulaAcoes.classList.add();
                     celulaAcoes.innerHTML = `
-                        <div style="display: flex; align-items: center;">
-                            <a href="/projetos/${projeto.id}/edit" class="text-indigo-600 hover:text-indigo-900 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <div class="flex justify-center items-center space-x-4">
+                            <a href="/projetos/${projeto.id}/edit">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-darkBlue hover:text-blue-700">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                 </svg>
                             </a>
-                            <form action="/projetos/${projeto.id}/destroy" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-900">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                </svg>
-                                </button>
-                            </form>
+                            @if(auth()->user() && auth()->user()->tipo == 'admin')
+                                <form action="/projetos/${projeto.id}/destroy" method="POST" class="m-0">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-red-700 hover:text-red-500">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                    </svg>
+                                    </button>
+                                </form>
+                            @endif
                         </div>
                         `;
-
                 });
             });
     }
@@ -615,7 +604,7 @@
                 projetosData.push({
                     id: item.getAttribute('data-id'),
                     user_id: userId,
-                    estado: 6
+                    estado: 1
                 });
                 // Enviar a nova ordem para o servidor
                 fetch('/atualizar/estadoProjeto', {
@@ -685,7 +674,7 @@
                 projetosData.push({
                     id: item.getAttribute('data-id'),
                     user_id:userId,
-                    estado: 7
+                    estado: 2
                 });
                 // Enviar a nova ordem para o servidor
                 fetch('/atualizar/estadoProjeto', {
