@@ -144,14 +144,16 @@
                     </div>
                     <div class="border shadow-md px-4 py-2 border-gray-300 w-fit h-fit max-h-[150px] overflow-y-scroll flex flex-wrap space-y-1">
                         @foreach($users as $user)
-                            <div class="w-1/2 flex items-center">
-                                <label class="flex items-center">
-                                    <input type="checkbox" name="users[]" value="{{$user->id}}" {{in_array($user->id, $projeto->users->pluck('id')->toArray())? 'checked' : ''}}>
-                                    <div class="ml-2">
-                                        {{$user->name}}
-                                    </div>
-                                </label>
-                            </div>
+                            @if($user->tipo == "colaborador")
+                                <div class="w-1/2 flex items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="users[]" value="{{$user->id}}" {{in_array($user->id, $projeto->users->pluck('id')->toArray())? 'checked' : ''}}>
+                                        <div class="ml-2">
+                                            {{$user->name}}
+                                        </div>
+                                    </label>
+                                </div>
+                            @endif
                         @endforeach
                     </div>
                 </div>
@@ -161,13 +163,6 @@
                     <label for="observacoes" class="form-label">Observações:</label>
                     <textarea id="observacoes" name="observacoes" class="form-input" rows="4">{{ $projeto->observacoes }}</textarea>
                 </div>
-
-                <!-- Campo de Tempo Gasto -->
-                <div class="form-group">
-                    <label for="tempo_gasto" class="form-label">Tempo Gasto:</label>
-                    <input id="tempo_gasto" type="text" name="tempo_gasto" class="form-input" value="{{ $projeto->tempo_gasto }}">
-                </div>
-                
     
                 <div class="flex items-center justify-end">
                     <button type="submit" class="bg-darkBlue text-white py-2 px-4 rounded mr-4">

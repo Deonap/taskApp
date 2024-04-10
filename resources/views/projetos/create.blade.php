@@ -138,14 +138,16 @@
                     </div>
                     <div class="border shadow-md px-4 py-2 border-gray-300 w-fit h-fit max-h-[150px] overflow-y-scroll flex flex-wrap space-y-1">
                         @foreach($users as $user)
-                            <div class="w-1/2 flex items-center">
-                                <label class="flex items-center">
-                                    <input type="checkbox" name="users[]" value="{{$user->id}}">
-                                    <div class="ml-2">
-                                        {{$user->name}}
-                                    </div>
-                                </label>
-                            </div>
+                            @if($user->tipo == "colaborador")
+                                <div class="w-1/2 flex items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="users[]" value="{{$user->id}}">
+                                        <div class="ml-2">
+                                            {{$user->name}}
+                                        </div>
+                                    </label>
+                                </div>
+                            @endif
                         @endforeach
                     </div>
                 </div>

@@ -192,4 +192,15 @@ class ProjetoController extends Controller
         return back();
     }
 
+    public function updateObs(Request $request, Projeto $projeto, User $user){
+        $validated = $request->validate([
+            'observacoes' => ' required'
+        ]);
+
+        $pU = ProjetoUser::where('projeto_id', $projeto->id)->where('user_id', $user->id)->first();
+        $pU->observacoes = $validated['observacoes'];
+        $pU->update();
+        return back();
+    }
+
 }

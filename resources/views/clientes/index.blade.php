@@ -28,7 +28,7 @@
                     </div>
                     <div class="flex justify-between items-center my-4">
                         <div>
-                            <input type="text" placeholder="Pesquisar..." class="rounded-md border-gray-300 focus:border-darkBlue"/>
+                            <input id='searchFilter' type="text" placeholder="Pesquisar..." class="rounded-md border-gray-300 focus:border-darkBlue"/>
                         </div>
                         <a href="{{ route('clientes.create') }}" class="bg-darkBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
                             Adicionar
@@ -37,7 +37,7 @@
                 </div>
                 <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 border">
                     <div class="table-responsive">
-                        <table class="table-auto w-full">
+                        <table class="table-auto w-full" id="clientTable">
                             <thead>
                                 <tr class="bg-gray-300">
                                     <th>
@@ -107,3 +107,23 @@
         </x-app-layout>
     </body>
 </html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const filterInput = document.getElementById("searchFilter");
+    const tableRows = document.querySelectorAll("#clientTable tbody tr");
+
+    filterInput.addEventListener("input", function () {
+        const filterValue = this.value.toLowerCase().trim();
+        tableRows.forEach(function (row) {
+            const name = row.querySelector("td:first-child").textContent.toLowerCase();
+            if (name.includes(filterValue)) {
+                row.style.display = "";
+                row.classList.remove("hidden");
+            } else {
+                row.style.display = "none";
+                row.classList.add("hidden");
+            }
+        });
+    });
+});
+</script>
