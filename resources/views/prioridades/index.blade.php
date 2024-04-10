@@ -26,9 +26,9 @@
                 border-bottom-width: 1px;
                 font-size: 14px;
             }
-            .disabledTable{
+            .disabledTable > *, .disabledTable > *{
                 pointer-events: none;
-                background-color: rgb(219, 209, 210);
+                background-color: rgb(207 207 207);
             }
         </style>
     </head>
@@ -49,7 +49,7 @@
                             <div class="flex items-center">
                                 <label for="colaborador" class="block text-sm font-medium "></label>
                                 <div class="relative">
-                                    <select id="colaborador" name="colaborador" class="appearance-none border  rounded-md w-48 py-2 pl-3 pr-10  leading-tight focus:outline-none focus:shadow-outline text-white bg-darkBlue">
+                                    <select id="colaborador" name="colaborador" class="appearance-none border rounded-md w-48 py-2 pl-3 pr-10 leading-tight focus:outline-none focus:shadow-outline text-white bg-darkBlue">
                                         @foreach($colaboradores as $colaborador)
                                             <option value="{{ $colaborador->id }}">{{ $colaborador->name }}</option>
                                         @endforeach
@@ -278,7 +278,7 @@
                         <form action="/projetos/${projeto.id}/${userId}/updateObs" method="POST" class="m-auto justify-center flex flex-wrap">
                             @csrf
                             @method('PUT')
-                            <input value='${observacoes}' title='${observacoes}' onTextChange='this.form.submit()' class="form-input observacoes w-full resize-none h-16 text-start" name='observacoes' autocomplete=off/>
+                            <input value='${observacoes}' title='${observacoes}' onTextChange='this.form.submit()' class="border-none form-input observacoes bg-transparent w-full resize-none h-16 text-start" name='observacoes' autocomplete=off/>
                         </form>
                     `;
                     celulaObservacoes.appendChild(div);
@@ -292,7 +292,7 @@
                         <form action="/projetos/${projeto.id}/${userId}/updateTimeSpent" method="POST" class="m-auto w-[100px] justify-center">
                             @csrf
                             @method('PUT')
-                            <input value='${tempoGasto}' onChange='${this.submit}' class="border border-gray-300 rounded-md p-2 w-full tempo-gasto text-center" autocomplete="off" pattern="[0-9]{0,4}:[0-5][0-9]" type="text" placeholder="${tempoGasto}" name="tempoGasto">
+                            <input value='${tempoGasto}' onChange='${this.submit}' class="border-none bg-transparent rounded-md p-2 w-full tempo-gasto text-center" autocomplete="off" pattern="[0-9]{0,4}:[0-5][0-9]" type="text" placeholder="${tempoGasto}" name="tempoGasto">
                         </form>
                     `;
                     celulaTempoGasto.appendChild(div);
