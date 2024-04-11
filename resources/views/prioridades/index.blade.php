@@ -356,8 +356,7 @@
                         celulas[i] = linha.insertCell(i);
                         celulas[i].classList.add(...tdClassList);
                     }
-                    celulas[0].innerHTML = '1';
-                    celulas[0].classList.add('invisible', 'border-r-0');
+                    celulas[0].classList.add('border-r-0');
                     celulas[1].innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
                     celulas[1].classList.add('border-l-0')
                     celulas[2].innerHTML = projeto.tipo_cliente ? projeto.tipo_cliente.nome : 'Tipo não especificado';
@@ -371,8 +370,7 @@
                     textareaObservacoes.classList.add('form-input', 'observacoes', 'w-full', 'resize-none', 'h-16', 'overflow-hidden', 'text-start', 'hover:cursor-default', 'invisible');
                     celulas[5].classList.add('border-r-0');
                     celulas[5].appendChild(textareaObservacoes);
-                    celulas[6].classList.add('invisible', 'border-l-0');
-                    celulas[6].innerHTML = '--:--';
+                    celulas[6].classList.add('border-l-0');
 
 
                     var celulaEstadoProjeto = celulas[7];
