@@ -220,7 +220,7 @@
             novaTarefaRow.innerHTML = `
             <div class="tarefa-row flex items-center space-x-3">
                 <input type="text" name="tarefas[]" class="shadow appearance-none border rounded w-full py-2 pl-3 pr-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Nome da tarefa" required>
-                <button type="button" class="bg-darkBlue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${!podeRemover ? 'invisible' : ''}">
+                <button type="button" class="bg-red-900 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${!podeRemover ? 'invisible' : ''}">
                     Remover
                 </button>
             </div>
