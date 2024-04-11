@@ -547,6 +547,7 @@
         
         var el2 = document.getElementById('tabelaProjetosPendentes').getElementsByTagName('tbody')[0];
         var sortable2 = new Sortable(el2,{
+            chosenClass: 'chosenDraggable',
             group: 'shared',
             ghostClass: 'bg-gray-300',
             animation: 150,
