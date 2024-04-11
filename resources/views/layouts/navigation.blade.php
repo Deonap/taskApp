@@ -130,7 +130,14 @@
         <div class="nav-item">
             <span class="flex items-center text-white opacity-90 hover:opacity-100 py-4  ml-2 mt-5 text-xl font-bold">
                 <i class="fas fa-tachometer-alt mr-3"></i>
-                Prioridades
+                Prioridades 
+                @if(auth()->user() && auth()->user()->tipo == 'admin' && true)
+                    <div class="ml-1 mb-2 size-2 rounded-full bg-red-500">
+                        <span class="invisible">
+                            a
+                        </span>
+                    </div>
+                @endif
             </span>
             <a href="{{ route('prioridades.index') }}"  class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('prioridades.index') ? 'active' : '' }}">
                 - Definir

@@ -206,6 +206,7 @@
                             </tbody>
                         </table>
                     </div>
+
                     <div class="flex justify-end mb-8">
                         <button id="salvarPrioridades" class="bg-[#0a3857] text-white py-3 px-6 text-lg rounded w-40 mb-4">Guardar</button>
                     </div>
@@ -619,7 +620,6 @@
     });
 
     document.getElementById('toggleFerias').addEventListener('change',function(){
-        var tabelaPrioridadesAberto = document.querySelector('#tabelaProjetosAbertos tbody');
-        tabelaPrioridadesAberto.classList.toggle('disabledTable');
+        document.querySelector('#tabelaProjetosAbertos tbody').classList.toggle('disabledTable');
     });
 </script>
