@@ -26,9 +26,13 @@
                 border-bottom-width: 1px;
                 font-size: 14px;
             }
-            .disabledTable > *, .disabledTable > *{
+            .disabledTable > *{
                 pointer-events: none;
                 background-color: rgb(207 207 207);
+            }
+            .chosenDraggable{
+                background: red;
+                opacity: 1;
             }
         </style>
     </head>
@@ -473,6 +477,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         var el = document.getElementById('tabelaProjetosAbertos').getElementsByTagName('tbody')[0];
         var sortable = new Sortable(el, {
+            chosenClass: 'chosenDraggable',
             group: 'shared',
             ghostClass: 'bg-gray-300',
             animation: 150,
