@@ -132,7 +132,7 @@
                                     <label for="estado_projeto_id" >
                                         Estado
                                     </label>
-                                    <select name="estado_projeto_id" class="shadow appearance-none border rounded py-2 pl-3 pr-8 w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="tipo_cliente_id" name="estado_projeto_id" required>
+                                    <select name="estado_projeto_id" @if(auth()->user()->tipo != 'admin') disabled @endif class="shadow appearance-none border rounded py-2 pl-3 pr-8 w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="tipo_cliente_id" name="estado_projeto_id" required>
                                         <option value="" selected disabled>Selecione o Estado do Projeto</option>
                                         @foreach($estadosProjetos as $estadoProjeto)
                                             <option value="{{ $estadoProjeto->id }}" {{ $projeto->estado_projeto_id == $estadoProjeto->id ? 'selected' : '' }}>{{ $estadoProjeto->nome }}</option>
