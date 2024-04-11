@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProjetoUser extends Model
 {
@@ -18,4 +19,13 @@ class ProjetoUser extends Model
                     ->where('user_id', $this->getAttribute('user_id'));
     }
 
+
+    public function projeto()
+    {
+        return $this->belongsTo(Projeto::class, 'projeto_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(Projeto::class, 'user_id');
+    }
 }

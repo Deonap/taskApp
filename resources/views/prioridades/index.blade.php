@@ -211,6 +211,11 @@
                     </div>
                 </div>
             </div>
+            <a href="/emailTest/{{$colaboradores[0]->id}}">
+                <button class="bg-red-600 p-5">
+                    AAAAAAAAAAA
+                </button>
+            </a>
         </x-app-layout>
     </body>
 </html>

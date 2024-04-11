@@ -8,6 +8,11 @@ use App\Http\Controllers\PrioridadesController;
 use App\Http\Controllers\HistoricoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Mail\projectStatusChanged;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Projeto;
+use App\Models\ProjetoUser;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,19 +41,13 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-
-
-
 Route::resource('clientes', ClienteController::class);
 Route::resource('projetos', ProjetoController::class);
-
 
 Route::resource('estado-projetos', EstadoProjetoController::class);
 Route::resource('tipo-clientes', TipoClienteController::class);
 Route::resource('users', UserController::class);
 Route::put('/users/{id}/updateType', [UserController::class, 'updateType'])->name('users.updateType');
-
-
 
 Route::resource('prioridades', PrioridadesController::class);
 Route::get('/filtrar/projetos', [PrioridadesController::class, 'filtrarProjetos']);
@@ -56,18 +55,13 @@ Route::get('/filtrar/projetospendentes', [PrioridadesController::class, 'filtrar
 Route::get('/filtrar/projetos-outros-colaboradores/{colaboradorId}', [PrioridadesController::class, 'filtrarProjetosComOutrosColaboradores']);
 Route::post('/salvar/projetos', [PrioridadesController::class, 'salvarProjetos']);
 
-
-
-
 Route::get('/historico', [HistoricoController::class, 'index'])->name('historico.index');
 Route::get('/api/historico/projetos-em-aberto', [HistoricoController::class, 'filtrarProjetos']);
 Route::get('/api/historico/projetos-pendentes', [HistoricoController::class, 'filtrarProjetosPendente']);
 Route::get('/api/historico/projetos-com-outros', [HistoricoController::class, 'filtrarProjetosComOutrosColaboradores']);
 
-
 Route::post('/atualizar/prioridades', [PrioridadesController::class, 'atualizarOrdemProjetos']);
 Route::post('/atualizar/estadoProjeto', [PrioridadesController::class, 'atualizarEstadoProjeto']);
-
 
 Route::put('/projetos/{projeto}/colaboradores/atualizar', [ProjetoController::class, 'atualizarColaborador'])->name('projetos.colaboradores.atualizar');
 Route::put('/projetos/{projeto}/{user}/updateTimeSpent', [ProjetoController::class, 'updateTimeSpent']);
@@ -78,3 +72,11 @@ Route::post('/projetos/{projeto}/colaboradores/adicionar', [ProjetoController::c
 
 Route::get('/projetos/{projeto}/colaboradores/disponiveis', [ProjetoController::class, 'buscarColaboradoresDisponiveis']);
 
+Route::get('/emailTest/{user}', function($user) {
+    $user = User::find($user);
+    $admins = User::where('tipo', 'admin')->get();
+    foreach($admins as $a){
+        Mail::to($a->email)->send(new projectStatusChanged($user));
+        return;
+    }
+});

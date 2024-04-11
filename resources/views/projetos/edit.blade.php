@@ -217,7 +217,7 @@
             
                         <div class="flex flex-row-reverse mb-4 px-8">
                             <button type="submit" class="bg-darkBlue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                Adicionar Projeto
+                                Atualizar Projeto
                             </button>
                         </div>
                     </form>
