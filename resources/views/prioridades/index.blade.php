@@ -17,8 +17,8 @@
                 /* px-3 py-1 text-left font-bold text-black uppercase tracking-wider border-b */
                 padding-left: 0.75rem;
                 padding-right: 0.75rem;
-                padding-bottom: 0.25rem;
-                padding-top: 0.25rem;
+                padding-bottom: 0.5rem;
+                padding-top: 0.5rem;
                 text-align: left;
                 font-weight: 700;
                 text-transform: uppercase;
