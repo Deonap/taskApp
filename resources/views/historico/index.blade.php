@@ -52,20 +52,6 @@
                                     <label for="data_semana"></label>
                                     <input type="date" id="data_semana" name="data_semana" class="border rounded-md py-2 px-3"/>
                                 </div>
-                                <div>
-                                    <label for="toggleFerias" class="flex items-center cursor-pointer">
-                                        <div class="mx-3 text-gray-700 font-medium">
-                                            Férias
-                                        </div>
-                                        <div class="relative">
-                                            <input id="toggleFerias" type="checkbox" class="hidden"/>
-                                            <div class="toggle-line w-10 h-4 bg-gray-400 rounded-full shadow-inner transition-colors">
-                                            </div>
-                                            <div class="toggle-dot absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0 transition-transform border" style="top: -4px;">
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -253,18 +239,25 @@
     function atualizarTabelaProjetos(idTabela, projetos) {
         var tbody = document.querySelector(`#${idTabela} tbody`);
         tbody.innerHTML = ''; // Limpa o conteúdo atual da tabela
-        
+
         projetos.forEach((projeto, index) => {
             var linha = tbody.insertRow(); // Insere uma nova linha na tabela
-
+            var userId = document.getElementById('colaborador').value;
             // Adiciona borda a cada célula
             for (let i = 0; i < 8; i++) {
                 var celula = linha.insertCell();
                 celula.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b'); // Adiciona classes de estilo
             }
 
+
+            var u;
+            for(var i = 0; i < projeto.users.length; i++){
+                if(projeto.users[i].id == userId){
+                    u = projeto.users[i];
+                }
+            }
             // Coluna de Número (Prioridade)
-            linha.cells[0].innerHTML = projeto.users && projeto.users.length > 0 ? projeto.users[0].pivot.prioridade : 'N/A';
+            linha.cells[0].innerHTML = u.pivot.prioridade;
 
             // Coluna de Cliente
             linha.cells[1].innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
@@ -284,16 +277,20 @@
             textareaObservacoes.classList.add('form-input', 'observacoes', 'border', 'border-gray-300', 'rounded-md', 'w-full', 'resize-none', 'h-16', 'overflow-y-auto');
             textareaObservacoes.setAttribute('rows', '3');
             textareaObservacoes.readOnly = true;
-            textareaObservacoes.value = projeto.observacoes || '';
+            textareaObservacoes.value = u.pivot.observacoes || '';
             celulaObservacoes.appendChild(textareaObservacoes);
 
             // Coluna de Tempo Gasto
             var celulaTempoGasto = linha.cells[6];
-            var inputTempoGasto = document.createElement('input');
-            inputTempoGasto.type = 'text';
-            inputTempoGasto.classList.add('border', 'border-gray-300', 'rounded-md', 'p-2', 'w-full');
-            //inputTempoGasto.value = projeto.tempo_gasto || '00:00';
-            celulaTempoGasto.appendChild(inputTempoGasto);
+
+            var div = document.createElement('div');
+            var tempoGasto = u.pivot.tempo_gasto;
+            div.innerHTML = 
+            `
+                <input value='${tempoGasto}' disabled class="border-none bg-transparent rounded-md p-2 w-full tempo-gasto text-center" autocomplete="off" pattern="[0-9]{0,4}:[0-5][0-9]" type="text" placeholder="${tempoGasto}" name="tempoGasto">
+            `;
+            celulaTempoGasto.appendChild(div);
+
 
             // Coluna de Estado do Projeto
             var celulaEstadoProjeto = linha.cells[7];
@@ -336,7 +333,6 @@
         });
     }
 
-
     function atualizarTabelaProjetosOutrosColaboradores(projetos) {
         var tbody = document.querySelector('#tabelaProjetosOutrosColaboradores tbody');
         tbody.innerHTML = '';
@@ -344,19 +340,26 @@
             projetos = convertObjectToArray(projetos);
         }
         projetos.forEach(projeto => {
+            
             // Verifica se o projeto tem mais de um colaborador
             if (projeto.users && projeto.users.length > 1) {
                 var linha = tbody.insertRow();
 
-                linha.insertCell().innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
-                linha.insertCell().innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
-                linha.insertCell().innerHTML = projeto.nome;
-                linha.insertCell().innerHTML = projeto.tarefas.map(tarefa => `<div>${tarefa.descricao}</div>`).join("");
-                // Lista os nomes dos colaboradores
-                var colaboradores = projeto.users.map(user => user.name).join(", ");
-                linha.insertCell().innerHTML = colaboradores;
-                linha.insertCell().innerHTML = projeto.estado_projeto ? projeto.estado_projeto.nome : 'Estado não especificado';
+                for (let i = 0; i < 6; i++) {
+                    var celula = linha.insertCell();
+                    celula.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
+                }
 
+                linha.cells[0].innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
+                linha.cells[1].innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
+                linha.cells[2].innerHTML = projeto.nome;
+                linha.cells[3].innerHTML = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
+                // Lista os nomes dos colaboradores
+                var colaboradores = projeto.users.map(user => `<p>${user.name}</p>`).join("");
+                linha.cells[4].innerHTML = colaboradores;
+                linha.cells[5].innerHTML = projeto.estado_projeto ? 
+                `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full"></div>` :
+                'Estado não especificado';
             }
         });
     }
@@ -367,12 +370,6 @@
             ...obj[key]
         }));
     }
-
-
-    document.getElementById('toggleFerias').addEventListener('change',function(){
-        document.querySelector('#tabelaProjetosAbertos tbody').classList.toggle('disabledTable');
-    });
-
 </script>
 
     

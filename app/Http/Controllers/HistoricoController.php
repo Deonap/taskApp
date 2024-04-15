@@ -90,7 +90,7 @@ class HistoricoController extends Controller
         $fimSemana = $request->query('fim_semana');
         $estado = 'Em desenvolvimento'; // Define o estado que você está interessado
 
-        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto'])
+        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users'])
                         ->whereHas('users', function ($query) use ($colaboradorId) {
                             $query->where('id', $colaboradorId);
                         })->whereHas('estadoProjeto', function ($query) use ($estado) {
