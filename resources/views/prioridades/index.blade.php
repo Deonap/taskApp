@@ -31,7 +31,7 @@
                 background-color: rgb(207 207 207);
             }
             .chosenDraggable{
-                background: red;
+                background: rgb(150 150 150);
                 opacity: 1;
             }
         </style>
@@ -217,8 +217,8 @@
                 </div>
             </div>
             <a href="/emailTest/{{$colaboradores[0]->id}}">
-                <button class="bg-red-600 p-5">
-                    AAAAAAAAAAA
+                <button class="bg-darkBlue text-white p-5 rounded">
+                    Enviar notificação
                 </button>
             </a>
         </x-app-layout>
@@ -370,12 +370,8 @@
                     celulas[4].classList.add(...tdClassList);
                     celulas[4].innerHTML = tarefas;
 
-                    var textareaObservacoes = document.createElement('textarea');
-                    textareaObservacoes.classList.add('form-input', 'observacoes', 'w-full', 'resize-none', 'h-16', 'overflow-hidden', 'text-start', 'hover:cursor-default', 'invisible');
                     celulas[5].classList.add('border-r-0');
-                    celulas[5].appendChild(textareaObservacoes);
                     celulas[6].classList.add('border-l-0');
-
 
                     var celulaEstadoProjeto = celulas[7];
                     celulaEstadoProjeto.innerHTML =
@@ -425,7 +421,6 @@
                         celulas[i].classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap');
                     }
 
-                    celulas[0].innerHTML = '1';
                     celulas[0].classList.add('border-r-0', 'invisible');
                     celulas[1].innerHTML = projeto.cliente.nome;
                     celulas[1].classList.add('border-l-0');

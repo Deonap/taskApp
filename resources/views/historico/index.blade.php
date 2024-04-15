@@ -40,13 +40,17 @@
                     <div class="flex justify-between items-center my-4">
                         <div class="flex justify-between mb-4">
                             <div class="flex items-center">
-                                <label for="colaborador" class="block text-sm font-medium "></label>
+                                <label for="colaborador"></label>
                                 <div class="relative">
                                     <select id="colaborador" name="colaborador" class="appearance-none border rounded-md w-48 py-2 pl-3 pr-10 leading-tight focus:outline-none focus:shadow-outline text-white bg-darkBlue">
                                         @foreach($colaboradores as $colaborador)
                                             <option value="{{ $colaborador->id }}">{{ $colaborador->name }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="ml-4">
+                                    <label for="data_semana"></label>
+                                    <input type="date" id="data_semana" name="data_semana" class="border rounded-md py-2 px-3"/>
                                 </div>
                                 <div>
                                     <label for="toggleFerias" class="flex items-center cursor-pointer">
