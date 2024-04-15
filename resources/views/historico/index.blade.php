@@ -58,7 +58,7 @@
                                             Férias
                                         </div>
                                         <div class="relative">
-                                            <input id="toggleFerias" type="checkbox" class="hidden" />
+                                            <input id="toggleFerias" type="checkbox" class="hidden"/>
                                             <div class="toggle-line w-10 h-4 bg-gray-400 rounded-full shadow-inner transition-colors">
                                             </div>
                                             <div class="toggle-dot absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0 transition-transform border" style="top: -4px;">
@@ -77,7 +77,7 @@
                                 <h3 class="text-lg font-semibold">Projetos Em Desenvolvimento</h3>
                             </div>
                             <div class="flex-none ml-4" style="width: 29%; height: 30px; background-color: #f0f1f0; color: black; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: center; align-items: center;">
-                                <p class="text-sm font-medium">
+                                <p id="selectedDateLabel" class="text-sm font-medium">
                                     Data da Semana: {{ \Carbon\Carbon::now()->startOfWeek()->format('d/m/Y') }} - {{ \Carbon\Carbon::now()->endOfWeek()->format('d/m/Y') }}
                                 </p>
                             </div>
@@ -262,7 +262,6 @@
                             </tbody>
                         </table>
                     </div>
-                
                 </div>
             </div>
         </x-app-layout>
@@ -273,6 +272,25 @@
     document.getElementById('colaborador').addEventListener('change', atualizarTabelas);
     document.getElementById('data_semana').addEventListener('change', atualizarTabelas);
 
+    document.getElementById('data_semana').addEventListener('change', function(){
+        var selectedDateLabel = document.getElementById('selectedDateLabel');
+        var date = new Date(this.value);
+        var startDate = new Date(date);
+        var endDate = new Date(date);
+        startDate.setDate(startDate.getDate() - startDate.getDay() + 1); // Get Monday of the week
+        endDate.setDate(endDate.getDate() - endDate.getDay() + 7); // Get Sunday of the week
+        var formattedStartDate = formatDate(startDate);
+        var formattedEndDate = formatDate(endDate);
+        selectedDateLabel.textContent = "Data da Semana: " + formattedStartDate + " - " + formattedEndDate;
+    });
+
+    function formatDate(date) {
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        return (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
+    }
+    
     function atualizarTabelas() {
         var colaboradorId = document.getElementById('colaborador').value;
         var dataSemana = document.getElementById('data_semana').value;
