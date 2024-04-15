@@ -82,7 +82,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="overflow-x-auto">
+                        <div class="">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-[#d5d4d5]">
                                     <tr>
@@ -113,37 +113,6 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach($projetosEmAberto as $projeto)
-                                        <tr data-id="{{ $projeto->id }}" data-user-id="{{ optional($projeto->users->first())->pivot->user_id }}">
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b">
-                                                {{ $projeto->users->first()->pivot->prioridade }}
-                                            </td>
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b">
-                                                {{ $projeto->cliente->nome ?? 'Cliente não especificado' }}
-                                            </td>
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b">
-                                                {{ $projeto->tipoCliente->nome ?? 'Tipo não especificado' }}
-                                            </td>
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b">
-                                                {{ $projeto->nome }}
-                                            </td>
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b w-1/4"> <!-- Ajustando a largura da coluna de tarefas -->
-                                                @foreach($projeto->tarefas as $tarefa)
-                                                    <div>{{ $tarefa->descricao }}</div>
-                                                @endforeach
-                                            </td>
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b w-1/4"> <!-- Ajustando a largura da coluna de observações -->
-                                                <input value='{{$projeto->notas_iniciais}}' title='{{$projeto->notas_iniciais}}' onChange='#' class="border-none form-input bg-transparent w-full resize-none h-16 text-start" name='observacoes' autocomplete='off'/>
-
-                                            </td>
-                                            <td class="border px-3 py-4 whitespace-nowrap border-b w-1/12"> <!-- Reduzindo o tamanho da coluna de tempo gasto -->
-                                                <input type="text" class="border border-gray-300 rounded-md p-2 w-full" value="{{ $projeto->tempo_gasto }}">
-                                            </td>
-                                            <td class="border px-4 py-2">
-                                                <div style="background-color: {{ $projeto->estadoProjeto->cor }};" class="size-6 m-auto rounded-full"></div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -154,7 +123,7 @@
                                 <h3 class="text-lg font-semibold">Projetos Pendentes</h3>
                             </div>
                         </div>
-                        <div class="overflow-x-auto">
+                        <div>
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-[#d5d4d5]">
                                     <tr>
@@ -176,27 +145,6 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach($projetosPendentes as $projeto)
-                                        <tr data-id="{{ $projeto->id }}">
-                                            <td class="border px-6 py-4 whitespace-nowrap">
-                                                {{ $projeto->cliente->nome ?? 'Cliente não especificado' }}
-                                            </td>
-                                            <td class="border px-6 py-4 whitespace-nowrap">
-                                                {{ $projeto->tipoCliente->nome ?? 'Tipo não especificado' }}
-                                            </td>
-                                            <td class="border px-6 py-4 whitespace-nowrap">
-                                                {{ $projeto->nome }}
-                                            </td>
-                                            <td class="border px-6 py-4 whitespace-nowrap">
-                                                @foreach($projeto->tarefas as $tarefa)
-                                                    <div>{{ $tarefa->descricao }}</div>
-                                                @endforeach
-                                            </td>
-                                            <td class="border px-4 py-2">
-                                                <div style="background-color: {{ $projeto->estadoProjeto->cor }};" class="w-4 h-4 rounded-full"></div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -231,34 +179,6 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                @if(isset($projetosComOutros) && count($projetosComOutros) > 0)
-                                    @foreach($projetosComOutros as $projeto)
-                                        <tr data-id="{{ $projeto->id }}">
-                                            <td class="border px-6 py-4 whitespace-nowrap">
-                                                {{ $projeto->cliente->nome ?? 'Cliente não especificado' }}
-                                            </td>
-                                            <td class="border px-6 py-4 whitespace-nowrap">
-                                                {{ $projeto->tipoCliente->nome ?? 'Tipo não especificado' }}
-                                            </td>
-                                            <td class="border px-6 py-4 whitespace-nowrap">
-                                                {{ $projeto->nome }}
-                                            </td>
-                                            <td class="border px-6 py-4 whitespace-nowrap">
-                                                @foreach($projeto->tarefas as $tarefa)
-                                                    <div>{{ $tarefa->descricao }}</div>
-                                                @endforeach
-                                            </td>
-                                            <td class="border px-4 py-2">
-                                                <div style="background-color: {{ $projeto->estadoProjeto->cor }};" class="w-4 h-4 rounded-full"></div>
-                                            </td>
-                                            <td class="border px-6 py-4 whitespace-nowrap">
-                                                @foreach($projeto->users as $user)
-                                                    <div>{{ $user->name }}</div>
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -290,7 +210,7 @@
         var year = date.getFullYear();
         return (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
     }
-    
+
     function atualizarTabelas() {
         var colaboradorId = document.getElementById('colaborador').value;
         var dataSemana = document.getElementById('data_semana').value;
@@ -326,7 +246,7 @@
         // Fetch para projetos com outros colaboradores
         fetch(`/api/historico/projetos-com-outros?colaborador_id=${colaboradorId}&inicio_semana=${inicioSemanaFormatado}&fim_semana=${fimSemanaFormatado}`)
             .then(response => response.json())
-            .then(data => atualizarTabelaProjetosOutrosColaboradores('tabelaProjetosOutrosColaboradores',data))
+            .then(data => atualizarTabelaProjetosOutrosColaboradores(data))
             .catch(error => console.error('Erro ao buscar projetos com outros colaboradores:', error));
     }
 
@@ -401,19 +321,14 @@
                 var celula = linha.insertCell();
                 celula.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
             }
-
             // Coluna de Cliente
             linha.cells[0].innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
-
             // Coluna de Tipo de Cliente
             linha.cells[1].innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
-
             // Coluna de Nome do Projeto
             linha.cells[2].innerHTML = projeto.nome;
-
             // Coluna de Tarefas
             linha.cells[3].innerHTML = projeto.tarefas.map(tarefa => `<div>${tarefa.descricao}</div>`).join("");
-
             // Coluna de Estado do Projeto
             linha.cells[4].innerHTML = projeto.estado_projeto ? 
                 `<div style="background-color: ${projeto.estado_projeto.cor};" class="w-4 h-4 rounded-full"></div>` :
@@ -425,7 +340,9 @@
     function atualizarTabelaProjetosOutrosColaboradores(projetos) {
         var tbody = document.querySelector('#tabelaProjetosOutrosColaboradores tbody');
         tbody.innerHTML = '';
-
+        if(!Array.isArray(projetos)) {
+            projetos = convertObjectToArray(projetos);
+        }
         projetos.forEach(projeto => {
             // Verifica se o projeto tem mais de um colaborador
             if (projeto.users && projeto.users.length > 1) {
@@ -442,6 +359,13 @@
                 linha.insertCell().innerHTML = colaboradores;
             }
         });
+    }
+
+    function convertObjectToArray(obj){
+        return Object.keys(obj).map(key => ({
+            key: key,
+            ...obj[key]
+        }));
     }
 
 
