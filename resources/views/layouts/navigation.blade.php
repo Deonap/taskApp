@@ -129,7 +129,7 @@
         <!-- Prioridades -->
         <div class="nav-item">
             <span class="flex items-center text-white opacity-90 hover:opacity-100 py-4  ml-2 mt-5 text-xl font-bold">
-                <i class="fas fa-tachometer-alt mr-3"></i>
+                <i class="fas fa-thumbtack mr-3"></i>
                 Prioridades 
                 @if(auth()->user() && auth()->user()->tipo == 'admin' && true)
                     <div class="ml-1 mb-2 size-2 rounded-full bg-red-500">

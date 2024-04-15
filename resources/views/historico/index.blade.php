@@ -93,13 +93,13 @@
                                             Cliente
                                         </th>
                                         <th scope="col">
-                                            Tipo de Cliente
+                                            Tipo
                                         </th>
                                         <th scope="col">
-                                            Nome do Projeto
+                                            Projeto
                                         </th>
                                         <th scope="col">
-                                            Tarefas
+                                            Prioridade
                                         </th>
                                         <th scope="col">
                                             Observações
@@ -131,13 +131,13 @@
                                             Cliente
                                         </th>
                                         <th scope="col">
-                                            Tipo de Cliente
+                                            Tipo
                                         </th>
                                         <th scope="col">
-                                            Nome do Projeto
+                                            Projeto
                                         </th>
                                         <th scope="col">
-                                            Tarefas
+                                            Prioridade
                                         </th>
                                         <th scope="col">
                                             Estado
@@ -162,19 +162,19 @@
                                         Cliente
                                     </th>
                                     <th scope="col">
-                                        Tipo de Cliente
+                                        Tipo
                                     </th>
                                     <th scope="col">
-                                        Nome do Projeto
+                                        Projeto
                                     </th>
                                     <th scope="col">
-                                        Tarefas
-                                    </th>
-                                    <th scope="col">
-                                        Estado
+                                        Prioridade
                                     </th>
                                     <th scope="col">
                                         Colaboradores
+                                    </th>
+                                    <th scope="col">
+                                        Estado
                                     </th>
                                 </tr>
                             </thead>
@@ -298,7 +298,7 @@
             // Coluna de Estado do Projeto
             var celulaEstadoProjeto = linha.cells[7];
             celulaEstadoProjeto.innerHTML = projeto.estado_projeto ? 
-                `<div style="background-color: ${projeto.estado_projeto.cor};" class="w-4 h-4 rounded-full"></div>` :
+                `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full"></div>` :
                 'Estado não especificado';
         });
     }
@@ -331,7 +331,7 @@
             linha.cells[3].innerHTML = projeto.tarefas.map(tarefa => `<div>${tarefa.descricao}</div>`).join("");
             // Coluna de Estado do Projeto
             linha.cells[4].innerHTML = projeto.estado_projeto ? 
-                `<div style="background-color: ${projeto.estado_projeto.cor};" class="w-4 h-4 rounded-full"></div>` :
+                `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full"></div>` :
                 'Estado não especificado';
         });
     }
@@ -352,11 +352,11 @@
                 linha.insertCell().innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
                 linha.insertCell().innerHTML = projeto.nome;
                 linha.insertCell().innerHTML = projeto.tarefas.map(tarefa => `<div>${tarefa.descricao}</div>`).join("");
-                linha.insertCell().innerHTML = projeto.estado_projeto ? projeto.estado_projeto.nome : 'Estado não especificado';
-
                 // Lista os nomes dos colaboradores
                 var colaboradores = projeto.users.map(user => user.name).join(", ");
                 linha.insertCell().innerHTML = colaboradores;
+                linha.insertCell().innerHTML = projeto.estado_projeto ? projeto.estado_projeto.nome : 'Estado não especificado';
+
             }
         });
     }

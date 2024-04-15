@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Mail\projectStatusChanged;
 use Illuminate\Support\Facades\Mail;
-use App\Models\Projeto;
-use App\Models\ProjetoUser;
 use App\Models\User;
 
 /*
