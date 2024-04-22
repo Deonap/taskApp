@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\EstadoProjeto;
 use App\Models\TipoCliente;
 use App\Models\Tarefa;
+use App\Models\ProjetoUser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -30,7 +31,17 @@ class PrioridadesController extends Controller
         $corDesenvolvimento = EstadoProjeto::where('nome', 'Em desenvolvimento')->value('cor');
         $corPendente = EstadoProjeto::where('nome', 'Pendente')->value('cor');
 
+        if(auth()->user() && auth()->user()->tipo == 'admin'){
+            ProjetoUser::query()->update(['notificacaoVista' => true]);
+        }
+
+
         return view('prioridades.index', compact('colaboradores', 'projetosEmAberto', 'projetosPendentes', 'projetosComOutros', 'colaboradorId', 'corDesenvolvimento', 'corPendente'));
+    }
+
+
+    public function updateNotifications(){
+
     }
 
     private function filtrarProjetosPorEstadoEColaborador($estadoNome, $colaboradorId)

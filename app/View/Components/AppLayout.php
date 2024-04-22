@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 use Illuminate\View\View;
+use App\Models\ProjetoUser;
 
 class AppLayout extends Component
 {
@@ -12,6 +13,18 @@ class AppLayout extends Component
      */
     public function render(): View
     {
-        return view('layouts.app');
+
+        $projetos = ProjetoUser::all();
+        $notsPorVer = false;
+
+
+        foreach($projetos as $p){
+            if(!$p->notificacaoVista){
+                $notsPorVer = true;
+                break;
+            }
+        }
+
+        return view('layouts.app', compact(['notsPorVer']));
     }
 }
