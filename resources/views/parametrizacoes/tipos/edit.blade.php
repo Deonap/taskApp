@@ -29,7 +29,7 @@
                     <input class="shadow border rounded w-full leading-tight focus:outline-none focus:shadow-outline" id="cor" type="color" name="cor" value="{{ $tipoCliente->cor }}">
                 </div>
                 <div class="flex items-center justify-between">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    <button class="bg-darkBlue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                         Atualizar Tipo
                     </button>
                 </div>
