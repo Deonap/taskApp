@@ -37,11 +37,6 @@ class PrioridadesController extends Controller
         return view('prioridades.index', compact('colaboradores', 'projetosEmAberto', 'projetosPendentes', 'projetosComOutros', 'colaboradorId', 'corDesenvolvimento', 'corPendente'));
     }
 
-
-    public function updateNotifications(){
-
-    }
-
     private function filtrarProjetosPorEstadoEColaborador($estadoNome, $colaboradorId)
     {
         return Projeto::with([

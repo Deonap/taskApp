@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Projeto;
 use App\Models\User;
+use App\Models\EstadoProjeto;
 
 class HistoricoController extends Controller
 {
@@ -24,10 +25,13 @@ class HistoricoController extends Controller
 
         $projetosComOutros = $this->filtrarProjetosComOutrosColaboradores($request);
 
+        $corDesenvolvimento = EstadoProjeto::where('nome', 'Em desenvolvimento')->value('cor');
+        $corPendente = EstadoProjeto::where('nome', 'Pendente')->value('cor');
+
         logger()->info('Request recebido:', $request->all());
         logger()->info('Projetos com outros colaboradores no Index:', $projetosComOutros->toArray());
 
-        return view('historico.index', compact( 'colaboradores', 'inicioSemana', 'fimSemana', 'projetosEmAberto', 'projetosPendentes','projetosComOutros'));
+        return view('historico.index', compact( 'colaboradores', 'inicioSemana', 'fimSemana', 'projetosEmAberto', 'projetosPendentes','projetosComOutros','corDesenvolvimento','corPendente'));
     }
 
     private function filtrarProjetosPorEstadoEColaborador($estadoNome, $colaboradorId, $inicioSemana, $fimSemana)
