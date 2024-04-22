@@ -212,7 +212,7 @@
                     </div>
 
                     <div class="flex justify-end mb-8">
-                        <a href="/emailTest/{{$colaboradores[0]->id}}">
+                        <a href="/emailTest/{{$colaboradores[0]->id}}" id='emailAnchor'>
                             <button id="btnGuardar" class="bg-darkBlue text-white p-5 rounded">
                                 Enviar notificação
                             </button>
@@ -234,6 +234,10 @@
     document.getElementById('colaborador').addEventListener('change', function () {
         var userId = this.value;
         atualizarTabelas(userId);
+
+        var $userId = userId;
+        document.getElementById('emailAnchor').href = '/emailTest/' + $userId;
+
     });
 
     function atualizarTabelaProjetosEmAberto(userId) {
