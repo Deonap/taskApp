@@ -117,7 +117,8 @@ class PrioridadesController extends Controller
             'projetos.*.id' => 'required|integer',
             'projetos.*.user_id' => 'required|integer',
             'projetos.*.observacoes' => 'nullable|string',
-            'projetos.*.tempoGasto' => 'nullable|string'
+            'projetos.*.tempoGasto' => 'nullable|string',
+            'projetos.*.prioridade' => 'nullable|string'
         ]);
 
         foreach ($dados['projetos'] as $dado) {
@@ -126,7 +127,8 @@ class PrioridadesController extends Controller
                 ->where('user_id', $dado['user_id'])
                 ->update([
                     'observacoes' => $dado['observacoes'],
-                    'tempo_gasto' => $dado['tempoGasto']
+                    'tempo_gasto' => $dado['tempoGasto'],
+                    'prioridade' => $dado['prioridade']
                 ]);
 
             if ($update === 0) {

@@ -212,15 +212,15 @@
                     </div>
 
                     <div class="flex justify-end mb-8">
-                        <button id="salvarPrioridades" class="bg-[#0a3857] text-white py-3 px-6 text-lg rounded w-40 mb-4">Guardar</button>
+                        <a href="/emailTest/{{$colaboradores[0]->id}}">
+                            <button id="btnGuardar" class="bg-darkBlue text-white p-5 rounded">
+                                Enviar notificação
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
-            <a href="/emailTest/{{$colaboradores[0]->id}}">
-                <button class="bg-darkBlue text-white p-5 rounded">
-                    Enviar notificação
-                </button>
-            </a>
+            
         </x-app-layout>
     </body>
 </html>
@@ -580,7 +580,7 @@
         });
     });
 
-    document.getElementById('salvarPrioridades').addEventListener('click', function () {
+    document.getElementById('btnGuardar').addEventListener('click', function () {
         var userId = document.getElementById('colaborador').value; // Obter o user_id do dropdown
         var projetosData = [];
 
@@ -588,12 +588,13 @@
             var projetoId = row.getAttribute('data-id');
             var observacoes = row.querySelector('.observacoes').value;
             var tempoGasto = row.querySelector('.tempo-gasto').value;
-
+            var prioridade = row.querySelector('.prioridade').value;
             projetosData.push({
                 id: projetoId,
                 user_id: userId, // Usar o mesmo user_id para todos os projetos
                 observacoes: observacoes,
-                tempoGasto: tempoGasto
+                tempoGasto: tempoGasto,
+                prioridade: prioridade, 
             });
         });
         fetch('/salvar/projetos', {

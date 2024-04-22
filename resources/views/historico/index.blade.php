@@ -14,18 +14,6 @@
                 border-bottom-width: 1px;
                 font-size: 14px;
             }
-            #toggleFerias:checked+.toggle-line {
-                background-color: rgb(10, 56, 87);
-                /* Change this to your desired color when toggle is active */
-            }
-            #toggleFerias:checked+.toggle-line+.toggle-dot {
-                transform: translateX(100%);
-            }
-            .toggle-line,
-            .toggle-dot {
-                transition-duration: 1s;
-                /* Adjust the duration as needed */
-            }
         </style>
     </head>
     <body>
