@@ -159,6 +159,11 @@ class PrioridadesController extends Controller
                     ->where('projeto_id', $projetoId)
                     ->where('user_id', $userId)
                     ->update(['prioridade' => $novaPrioridade]);
+
+                DB::table('projeto_users')
+                ->where('projeto_id', $projetoId)
+                ->where('user_id', $userId)
+                ->update(['notificacaoVista' => false]);
             }
         });
 

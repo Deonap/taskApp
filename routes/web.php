@@ -74,7 +74,6 @@ Route::get('/emailTest/{user}', function($user) {
     $user = User::find($user);
     $admins = User::where('tipo', 'admin')->get();
     foreach($admins as $a){
-        // break;
         Mail::to($a->email)->send(new projectStatusChanged($user));
     }
     return redirect(route('prioridades.index'));
