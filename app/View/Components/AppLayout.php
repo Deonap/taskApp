@@ -13,10 +13,8 @@ class AppLayout extends Component
      */
     public function render(): View
     {
-
         $projetos = ProjetoUser::all();
         $notsPorVer = false;
-
 
         foreach($projetos as $p){
             if(!$p->notificacaoVista){

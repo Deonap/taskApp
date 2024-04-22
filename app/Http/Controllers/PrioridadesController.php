@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Projeto;
 use App\Models\User;
 use App\Models\EstadoProjeto;
-use App\Models\TipoCliente;
-use App\Models\Tarefa;
 use App\Models\ProjetoUser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;

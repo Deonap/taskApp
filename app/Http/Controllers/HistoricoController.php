@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Projeto;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
 
 class HistoricoController extends Controller
 {

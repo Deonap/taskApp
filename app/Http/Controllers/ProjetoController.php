@@ -6,13 +6,9 @@ use App\Models\ProjetoUser;
 use App\Models\TipoCliente;
 use App\Models\Projeto;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ClienteController;
 use App\Models\Cliente;
 use App\Models\User;
 use App\Models\EstadoProjeto;
-use App\Models\Tarefa;
-use Illuminate\Routing\Events\ResponsePrepared;
-use Illuminate\Database\Eloquent\Builder;
 
 class ProjetoController extends Controller
 {
