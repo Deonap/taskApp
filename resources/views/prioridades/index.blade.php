@@ -213,14 +213,13 @@
 
                     <div class="flex justify-end mb-8">
                         <a href="/emailTest/{{$colaboradores[0]->id}}" id='emailAnchor'>
-                            <button id="btnGuardar" class="bg-darkBlue text-white p-5 rounded">
+                            <button id="btnGuardar" class="bg-darkBlue hover:bg-blue-700 text-white p-5 rounded">
                                 Enviar notificação
                             </button>
                         </a>
                     </div>
                 </div>
             </div>
-            
         </x-app-layout>
     </body>
 </html>
