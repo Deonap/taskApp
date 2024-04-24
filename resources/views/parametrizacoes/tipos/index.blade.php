@@ -30,7 +30,7 @@
                         Adicionar
                     </a>
                 </div>
-
+                
                 <div class="bg-white shadow-md rounded px-2 md:px-8 pt-6 pb-8 mb-4 border">
                     <table class="table-auto w-full">
                         <thead>

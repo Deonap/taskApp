@@ -19,14 +19,14 @@
         <div class="md:flex md:flex-row bg-white">
     
             <!-- Navigation Sidebar -->
-            <aside class="w-fit bg-red-300 bg-white" aria-label="Sidebar">
+            <aside class="w-fit h-fit bg-red-300" aria-label="Sidebar">
                 @include('layouts.navigation')
             </aside>
     
             <!-- Page Content -->
-            <div class="flex-1 m-20">
+            <div class="flex-1 mx-10 my-[3.75rem]">
                 <!-- Main Content -->
-                <main class="flex-1 w-fit overflow-y-auto bg-white">
+                <main class="flex-1 w-fit bg-white">
                     {{ $slot }}
                 </main>
             </div>

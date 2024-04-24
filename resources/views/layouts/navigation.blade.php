@@ -175,10 +175,10 @@
                         @endif
                     </span>
                     <div>
-                        <a href="{{ route('prioridades.index') }}"  class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('prioridades.index') ? 'active' : '' }}">
+                        <a href="{{ route('prioridades.index') }}"class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2 nav-item {{ request()->routeIs('prioridades.index') ? 'active' : '' }}">
                             - Definir
                         </a>
-                        <a href="{{ route('historico.index') }}"  class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('historico.index') ? 'active' : '' }}">
+                        <a href="{{ route('historico.index') }}"class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2 nav-item {{ request()->routeIs('historico.index') ? 'active' : '' }}">
                             - Histórico
                         </a>
                     </div>
@@ -190,10 +190,10 @@
                             Clientes
                         </div>
                     </span>
-                    <a href="{{ route('clientes.create') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('clientes.create') ? 'active' : '' }}">
+                    <a href="{{ route('clientes.create') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2 nav-item {{ request()->routeIs('clientes.create') ? 'active' : '' }}">
                         - Adicionar
                     </a>
-                    <a href="{{ route('clientes.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('clientes.*') ? (request()->routeIs('clientes.create') ? '' : 'active') : '' }}">
+                    <a href="{{ route('clientes.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2 nav-item {{ request()->routeIs('clientes.*') ? (request()->routeIs('clientes.create') ? '' : 'active') : '' }}">
                         - Listagem
                     </a>
                 </div>
@@ -204,21 +204,21 @@
                             Parametrizações
                         </div>
                     </span>
-                    <a href="{{ route('tipo-clientes.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('tipo-clientes.*') ? 'active' : '' }}"  >
+                    <a href="{{ route('tipo-clientes.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2 nav-item {{ request()->routeIs('tipo-clientes.*') ? 'active' : '' }}">
                     - Tipo de Cliente
                     </a>
-                    <a href="{{ route('users.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                    <a href="{{ route('users.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2 nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
                     - Níveis de Acesso
                     </a>
-                    <a href="{{ route('estado-projetos.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('estado-projetos.*') ? 'active' : '' }}" >
+                    <a href="{{ route('estado-projetos.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2 nav-item {{ request()->routeIs('estado-projetos.*') ? 'active' : '' }}" >
                         - Estado
                     </a>
                 </div>
             </div>
           </div>
     </div>
-    <div class="hidden md:block w-full">
-        <aside class="relative bg-sidebar shadow-xl w-68 h-fit pr-1 ml-3 mt-3">
+    <div class="hidden md:block w-fit">
+        <aside class="relative bg-sidebar shadow-xl w-fit h-fit pr-1 ml-3 mt-3">
             <div class="p-6">
                 <div class="hover:text-gray-300 mt-8 w-fit">
                     <img src="/images/logo-buzina.png" alt="Logotipo Buzina" class="h-10 resize-none" > <!-- Ajuste a classe de altura conforme necessário -->
@@ -240,26 +240,26 @@
                             </div>
                         @endif
                     </span>
-                    <a href="{{ route('prioridades.index') }}"  class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('prioridades.index') ? 'active' : '' }}">
+                    <a href="{{ route('prioridades.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2 nav-item {{ request()->routeIs('prioridades.index') ? 'active' : '' }}">
                         - Definir
                     </a>
-                    <a href="{{ route('historico.index') }}"  class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('historico.index') ? 'active' : '' }}">
+                    <a href="{{ route('historico.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2 nav-item {{ request()->routeIs('historico.index') ? 'active' : '' }}">
                         - Histórico
                     </a>
                 </div>
 
                 <!-- Clientes -->
                 <div class="nav-item">
-                    <span class="flex items-center text-white opacity-90 hover:opacity-100 py-4  ml-2 text-xl font-bold hover:cursor-default">
+                    <span class="flex items-center text-white opacity-90 hover:opacity-100 py-4 ml-2 text-xl font-bold hover:cursor-default">
                         <i class="fas fa-users"></i>
                         <div class="ml-3">
                             Clientes
                         </div>
                     </span>
-                    <a href="{{ route('clientes.create') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('clientes.create') ? 'active' : '' }}">
+                    <a href="{{ route('clientes.create') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2 nav-item {{ request()->routeIs('clientes.create') ? 'active' : '' }}">
                         - Adicionar
                     </a>
-                    <a href="{{ route('clientes.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('clientes.*') ? (request()->routeIs('clientes.create') ? '' : 'active') : '' }}">
+                    <a href="{{ route('clientes.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2 nav-item {{ request()->routeIs('clientes.*') ? (request()->routeIs('clientes.create') ? '' : 'active') : '' }}">
                         - Listagem
                     </a>
                 </div>
@@ -272,13 +272,13 @@
                             Parametrizações
                         </div>
                     </span>
-                    <a href="{{ route('tipo-clientes.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('tipo-clientes.*') ? 'active' : '' }}"  >
+                    <a href="{{ route('tipo-clientes.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2 nav-item {{ request()->routeIs('tipo-clientes.*') ? 'active' : '' }}">
                     - Tipo de Cliente
                     </a>
-                    <a href="{{ route('users.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                    <a href="{{ route('users.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2 nav-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
                     - Níveis de Acesso
                     </a>
-                    <a href="{{ route('estado-projetos.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2  nav-item {{ request()->routeIs('estado-projetos.*') ? 'active' : '' }}" >
+                    <a href="{{ route('estado-projetos.index') }}" class="rounded-l-full flex items-center text-white opacity-90 hover:opacity-100 py-2 nav-item {{ request()->routeIs('estado-projetos.*') ? 'active' : '' }}" >
                         - Estado
                     </a>
                 </div>

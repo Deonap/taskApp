@@ -46,7 +46,7 @@
                 </div>
                 <div>
                     <div id="tabelaProjetosAbertos" class="mb-8">
-                        <div class="flex items-center text-white  mb-4" style="width: 100%;">
+                        <div class="flex items-center text-white mb-4" style="width: 100%;">
                             <div class="flex-none" style="background-color: {{$corDesenvolvimento}}; width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: start; align-items: center;">
                                 <h3 class="text-lg font-semibold">Projetos Em Desenvolvimento</h3>
                             </div>

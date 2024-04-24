@@ -50,9 +50,9 @@ class HistoricoController extends Controller
 
     //public function filtrarProjetosComOutrosColaboradores(Request $request)
     //{
-    //  $colaboradorId = $request->query('colaborador_id');
-    //  $inicioSemana = Carbon::parse($request->query('inicio_semana'));
-    //  $fimSemana = Carbon::parse($request->query('fim_semana'));
+    // $colaboradorId = $request->query('colaborador_id');
+    // $inicioSemana = Carbon::parse($request->query('inicio_semana'));
+    // $fimSemana = Carbon::parse($request->query('fim_semana'));
 
     //   $projetos = Projeto::whereHas('users', function ($query) use ($colaboradorId) {
     //                      $query->where('id', $colaboradorId);

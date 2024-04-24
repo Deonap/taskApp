@@ -16,18 +16,21 @@
             <div>
                 <div class="flex justify-between items-center mb-4">
                     <div class="flex items-center text-darkBlue">
-                        <h2 class="text-xl font-black ">
+                        <h2 class="hidden md:block text-xl font-black">
                             Clientes >
                         </h2>
-                        <div class="ml-2">
+                        <div class="text-xl font-black md:text-base md:font-normal ml-2 flex">
                             Editar
+                            <div class="ml-2 block md:hidden">
+                                Cliente
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="flex justify-between items-center mb-4">
                     <form action="{{ route('clientes.update', $cliente->id) }}" method="POST">
                         @csrf
-                        <div class="bg-white shadow-md rounded px-8  py-6 mb-4 border">
+                        <div class="bg-white shadow-md rounded px-5 py-6 mb-4 border w-fit">
                             <div class="mb-4">
                                 <div class="flex items-center space-x-3">
                                     <label for="nome">
@@ -36,14 +39,15 @@
                                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nome" autocomplete='off' type="text" name="nome" value={{$cliente->nome}}>
                                 </div>
                             </div>
-                            <div class="mb-4 flex items-center space-x-3">
+
+                            <div class="mb-4 lg:flex lg:items-center">
                                 <div class="flex items-center space-x-3">
                                     <label for="email">
                                         Email
                                     </label>
                                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" autocomplete='off' type="email" name="email" value={{$cliente->email}}>
                                 </div>
-                                <div class="flex items-center space-x-3">    
+                                <div class="flex lg:ml-3 mt-4 lg:mt-0 items-center space-x-3">    
                                     <label for="telefone">
                                         Telefone 
                                     </label>
