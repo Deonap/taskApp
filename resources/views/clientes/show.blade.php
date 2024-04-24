@@ -56,10 +56,14 @@
                             <input disabled class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="telefone" autocomplete='off' type="text" name="telefone" placeholder={{$cliente->telefone}}>
                         </div>
                     </div>
-
                     <div class="my-10">
                         <button id="btnProjetosAbertos" class="bg-darkBlue text-white py-2 px-4 rounded mr-4">
-                            Projetos Abertos/Pendentes
+                            <div class="hidden md:block">
+                                Projetos Abertos/Pendentes
+                            </div>
+                            <div class="block md:hidden">
+                                Projetos Abertos
+                            </div>
                         </button>
                         <button id="btnProjetosConcluidos" class="bg-gray-400 text-white py-2 px-4 rounded">
                             Projetos Concluídos
@@ -178,9 +182,9 @@
                             </table>
                         </div>
                         <div class="block xl:hidden space-y-3 h-fit">
-                            <div class="md:flex md:items-start md:space-x-2">
+                            <div class="md:flex md:items-start space-y-3 md:space-y-0 md:space-x-3">
                                 @foreach($projetosAbertos as $projeto)
-                                    <div class="min-h-full w-3/4 md:w-full flex items-start shadow-md border p-4">
+                                    <div class="min-h-full w-full sm:w-fit flex items-start shadow-md border p-4">
                                         <div>
                                             <div class="flex justify-between items-center">
                                                 <h1 class="font-black">
@@ -211,9 +215,31 @@
                                                 </h2>
                                             </div>
                                             <div class="mt-2 flex items-center">
-                                                <a href="" class="bg-darkBlue text-white py-2 px-4 rounded mr-4">
-                                                    Tarefas
-                                                </a>
+                                                <div>
+                                                    <a class="bg-darkBlue text-white py-2 px-4 rounded mr-4 hover:cursor-pointer" onclick="openModal('modal_{{$projeto->id}}')">
+                                                        Tarefas
+                                                    </a>
+                                                    <div id="modal_{{$projeto->id}}" class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4 m-auto ">
+                                                        <div class="relative top-40 mx-auto shadow-xl rounded-md bg-white w-fit">
+                                                            <div class="flex justify-end p-2">
+                                                                <button onclick="closeModal('modal_{{$projeto->id}}')" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                                                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd">
+                                                                        </path>
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                    
+                                                            <div class="p-6 pt-0 text-center">
+                                                                @foreach($projeto->tarefas as $tarefa)
+                                                                    <div>
+                                                                        {{ $tarefa->descricao }}
+                                                                    </div>  
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="flex items-center">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hourglass" viewBox="0 0 16 16">
                                                         <path d="M2 1.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1-.5-.5m2.5.5v1a3.5 3.5 0 0 0 1.989 3.158c.533.256 1.011.791 1.011 1.491v.702c0 .7-.478 1.235-1.011 1.491A3.5 3.5 0 0 0 4.5 13v1h7v-1a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351v-.702c0-.7.478-1.235 1.011-1.491A3.5 3.5 0 0 0 11.5 3V2z"/>
@@ -247,9 +273,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <div id="tabelaProjetosConcluidos" class="bg-white p-4 rounded shadow-md border mb-8 hidden">
-                        <div class="overflow-x-auto">
+                    <div id="tabelaProjetosConcluidos" class="bg-white p-4 rounded xl:shadow-md xl:border mb-8 hidden">
+                        <div class="hidden xl:block overflow-x-auto">
                             <table class="w-full whitespace-nowrap">
                                 <thead>
                                     <tr class="bg-gray-300">
@@ -291,7 +316,11 @@
                                                 {{ $projeto->nome }}
                                             </td>
                                             <td>
-                                                {{ $projeto->notas_iniciais }}
+                                                @foreach($projeto->tarefas as $tarefa)
+                                                    <div>
+                                                        {{ $tarefa->descricao }}
+                                                    </div>
+                                                @endforeach
                                             </td>
                                             <td class="text-center">
                                                 {{ $projeto->tempo_previsto }}
@@ -360,6 +389,119 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="block xl:hidden space-y-3 h-fit">
+                            <div class="md:flex md:items-start md:space-x-2">
+                                @foreach($projetosConcluidos as $projeto)
+                                    <div class="min-h-fit w-fit sm:w-full flex items-start shadow-md border p-4">
+                                        <div>
+                                            <div class="flex justify-between items-center">
+                                                <h1 class="font-black">
+                                                    {{$projeto->tipoCliente->nome}}
+                                                </h1>
+                                                @if(auth()->user() && auth()->user()->tipo == 'admin')
+                                                    <div class="flex justify-center">
+                                                        <a href="{{ route('projetos.edit', $projeto->id) }}" title="Editar">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-darkBlue hover:text-blue-700">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                            </svg>
+                                                        </a>
+                                                        <form method="POST" action="{{ route('projetos.destroy', $projeto->id) }}" class="m-auto" title="Remover">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" onclick="return confirm('Tem a certeza?')">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-red-700 hover:text-red-500">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                                </svg>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="mt-3">
+                                                <div class="flex justify-between items-center">
+                                                    <h2 class="font-bold">
+                                                        {{$projeto->nome}}
+                                                    </h2>
+                                                    <?php
+                                                        $tempoGasto = $projeto->totTempoGasto();
+
+                                                        $tempoPrevisto = explode(":", $projeto->tempo_previsto);
+                                                        $tempoPrevistoP1 = $tempoPrevisto[0];
+                                                        $tempoPrevistoP2 = $tempoPrevisto[1];
+
+                                                        $tempo_previsto_minutes = intval($tempoPrevistoP1) * 60 + intval($tempoPrevistoP2);
+
+                                                        if ($tempoGasto < $tempo_previsto_minutes) {
+                                                            $bgColor = 'green-300';
+                                                        } elseif ($tempoGasto == $tempo_previsto_minutes) {
+                                                            $bgColor = 'blue-500';
+                                                        } else {
+                                                            $bgColor = 'red-300';
+                                                        }
+                                                    ?>
+                                                    <div class="rounded-full bg-{{$bgColor}} size-6">
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 flex items-center">
+                                                <div>
+                                                    <a class="bg-darkBlue text-white py-2 px-4 rounded mr-4 hover:cursor-pointer" onclick="openModal('modal_{{$projeto->id}}')">
+                                                        Tarefas
+                                                    </a>
+                                                    <div id="modal_{{$projeto->id}}" class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4 m-auto ">
+                                                        <div class="relative top-40 mx-auto shadow-xl rounded-md bg-white w-fit">
+                                                            <div class="flex justify-end p-2">
+                                                                <button onclick="closeModal('modal_{{$projeto->id}}')" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                                                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd">
+                                                                        </path>
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                    
+                                                            <div class="p-6 pt-0 text-center">
+                                                                @foreach($projeto->tarefas as $tarefa)
+                                                                    <div>
+                                                                        {{ $tarefa->descricao }}
+                                                                    </div>  
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hourglass" viewBox="0 0 16 16">
+                                                        <path d="M2 1.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1-.5-.5m2.5.5v1a3.5 3.5 0 0 0 1.989 3.158c.533.256 1.011.791 1.011 1.491v.702c0 .7-.478 1.235-1.011 1.491A3.5 3.5 0 0 0 4.5 13v1h7v-1a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351v-.702c0-.7.478-1.235 1.011-1.491A3.5 3.5 0 0 0 11.5 3V2z"/>
+                                                    </svg>
+                                                    {{$projeto->tempo_previsto}}
+                                                </div>
+                                            </div>
+                                            <div class="mt-1">
+                                                @foreach($projeto->users as $user)
+                                                    <div>
+                                                        <div class="w-fit py-2 mr-4 flex items-center">
+                                                            <div>
+                                                                {{$user->name}}
+                                                            </div>
+                                                            <div class="flex items-center"> 
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class=" ml-4 bi bi-stopwatch" viewBox="0 0 16 16">
+                                                                    <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5z"/>
+                                                                    <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64l.012-.013.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5M8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3"/>
+                                                                </svg>
+                                                                <div>
+                                                                    {{$user->tempoGasto($projeto)}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                     <a href="{{ route('projetos.create', ['cliente_id' => $cliente->id]) }}" class="bg-darkBlue text-white py-2 px-4 rounded mr-4">
                         Adicionar Projeto
@@ -423,4 +565,26 @@
 
         colaboradorCell.innerHTML += html;
     }
+
+    window.openModal = function(modalId) {
+        document.getElementById(modalId).style.display = 'block'
+        document.getElementsByTagName('body')[0].classList.add('overflow-y-hidden')
+    }
+
+    window.closeModal = function(modalId) {
+        document.getElementById(modalId).style.display = 'none'
+        document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
+    }
+
+    // Close all modals when press ESC
+    document.onkeydown = function(event) {
+        event = event || window.event;
+        if (event.keyCode === 27) {
+            document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
+            let modals = document.getElementsByClassName('modal');
+            Array.prototype.slice.call(modals).forEach(i => {
+                i.style.display = 'none'
+            })
+        }
+    };
 </script>
