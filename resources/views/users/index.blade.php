@@ -19,10 +19,10 @@
             <div class="flex-1 m-20">
                 <div class="flex justify-between items-center mb-4">
                     <div class="flex items-center text-darkBlue">
-                        <h2 class="text-xl font-black">
+                        <h2 class="hidden md:block text-xl font-black">
                             Parametrizações >
                         </h2>
-                        <div class="ml-2">
+                        <div class="text-xl font-black md:text-base md:font-normal ml-2">
                             Níveis de Acesso
                         </div>
                     </div>
@@ -33,14 +33,14 @@
                     @endif
                 </div>
             
-                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border">
+                <div class="bg-white shadow-md w-fit h-fit md:w-full rounded px-2 md:px-8 pt-6 pb-8 mb-4 border">
                     <table class="table-auto w-full">
                         <thead>
                             <tr class="bg-gray-300">
-                                <th>Nome</th>
-                                <th>Email</th>
-                                <th>Password</th>
-                                <th>Tipo</th>
+                                <th class="">Nome</th>
+                                <th class="hidden md:table-cell">Email</th>
+                                <th class="hidden md:table-cell">Password</th>
+                                <th class="">Tipo</th>
                                 @if(auth()->user() && auth()->user()->tipo == 'admin')
                                     <th class="text-center">Ações</th>
                                 @endif
@@ -52,10 +52,10 @@
                                 <td>
                                     {{ $user->name }}
                                 </td>
-                                <td>
+                                <td class="hidden md:table-cell">
                                     {{ $user->email }}
                                 </td>
-                                <td>
+                                <td class="hidden md:table-cell">
                                     ********
                                 </td>
                                 <td>

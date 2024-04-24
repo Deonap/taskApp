@@ -6,8 +6,11 @@
             <h2 class="hidden md:block text-xl font-black">
                 Tipo de Cliente >
             </h2>
-            <div class="text-xl font-black md:text-base md:font-normal ml-2">
+            <div class="text-xl font-black md:text-base md:font-normal ml-2 flex">
                 Editar
+                <div class="ml-2 block md:hidden">
+                    Tipo
+                </div>
             </div>
         </div>
     </div>
