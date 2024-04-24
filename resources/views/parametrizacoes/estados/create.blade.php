@@ -3,11 +3,14 @@
     <div class="flex-1 m-20">
         <div class="flex justify-between items-center mb-4">
             <div class="flex items-center text-darkBlue">
-                <h2 class="text-xl font-black ">
+                <h2 class="hidden md:block text-xl font-black">
                     Estado >
                 </h2>
-                <div class="ml-2">
-                    Editar
+                <div class="text-xl font-black md:text-base md:font-normal ml-2 flex">
+                    Criar
+                    <div class="block md:hidden ml-2">
+                        Estado
+                    </div>
                 </div>
             </div>
         </div>
