@@ -184,7 +184,7 @@
                         <div class="block xl:hidden space-y-3 h-fit">
                             <div class="md:flex md:items-start space-y-3 md:space-y-0 md:space-x-3">
                                 @foreach($projetosAbertos as $projeto)
-                                    <div class="min-h-full w-full sm:w-fit flex items-start shadow-md border p-4">
+                                    <div class="min-h-full w-full sm:w-fit flex items-start shadow-lg border-4 p-4">
                                         <div>
                                             <div class="flex justify-between items-center">
                                                 <h1 class="font-black">
@@ -392,7 +392,7 @@
                         <div class="block xl:hidden space-y-3 h-fit">
                             <div class="md:flex md:items-start md:space-x-2">
                                 @foreach($projetosConcluidos as $projeto)
-                                    <div class="min-h-fit w-fit sm:w-full flex items-start shadow-md border p-4">
+                                    <div class="min-h-fit w-fit sm:w-full flex items-start shadow-lg border-4 p-4">
                                         <div>
                                             <div class="flex justify-between items-center">
                                                 <h1 class="font-black">
