@@ -318,7 +318,7 @@
 
 
                     var celulaAcoes = linha.insertCell(8);
-                    celulaAcoes.classList.add();
+                    celulaAcoes.classList.add(...tdClassList);
                     celulaAcoes.innerHTML = `
                         <div class="flex justify-center items-center space-x-4">
                             <a href="/projetos/${projeto.id}/edit">
