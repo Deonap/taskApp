@@ -18,7 +18,7 @@
     </head>
     <body>
         <x-app-layout>
-            <div class="flex-1 m-20">
+            <div>
                 <div>
                     <div class="flex items-center text-darkBlue">
                         <h2 class="text-xl font-black">

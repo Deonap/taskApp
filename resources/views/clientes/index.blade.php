@@ -16,13 +16,13 @@
     </head>
     <body>
         <x-app-layout>
-            <div class="flex-1 m-20">
+            <div>
                 <div>
                     <div class="flex items-center text-darkBlue">
-                        <h2 class="text-xl font-black">
+                        <h2 class="hidden md:block text-xl font-black">
                             Clientes >
                         </h2>
-                        <div class="ml-2">
+                        <div class="text-xl font-black md:text-base md:font-normal ml-2 flex">
                             Listagem
                         </div>
                     </div>

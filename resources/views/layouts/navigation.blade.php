@@ -87,76 +87,76 @@
 
 
     /* Adiciona margens nas laterais do menu para não tocar nas bordas da tela */
-    .bg-sidebar {
-        margin: 10px;
-        margin-top: 30px;
-        margin-left: 20px;
-        
+    .bg-sidebar {        
         border-radius: 16px;
-        padding-left: 20px /* Arredonda os cantos do menu inteiro */
+        
     }
 
     button.flex {
-    padding-left: 1rem; /* Espaço interno à esquerda */
-    padding-right: 1rem; /* Espaço interno à direita */
-    align-items: center; /* Alinha os itens verticalmente no centro */
+        padding-left: 1rem; /* Espaço interno à esquerda */
+        padding-right: 1rem; /* Espaço interno à direita */
+        align-items: center; /* Alinha os itens verticalmente no centro */
     }
 
     /* Ícone de usuário e nome do usuário */
     button svg:first-child {
-    margin-right: 0.5rem; /* Espaço entre o ícone do usuário e o nome */
+        margin-right: 0.5rem; /* Espaço entre o ícone do usuário e o nome */
     }
 
     /* Ícone de seta para baixo */
     button svg:last-child {
-    margin-left: auto; /* Empurra o ícone de seta para a extremidade direita do botão */
+        margin-left: auto; /* Empurra o ícone de seta para a extremidade direita do botão */
     }
 
     /* Dropdown Button */
     .dropbtn {
-    background-color: rgb(10,56,87);
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
+        background-color: rgb(10,56,87);
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
     }
 
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
 
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  background: rgb(10,56,87)
-}
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        background: rgb(10,56,87)
+    }
 
-/* Links inside the dropdown */
-.dropdown-content a {
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
 
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd;}
+    /* Change color of dropdown links on hover */
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
 
         
 </style>
 </head>
 
 <body class="bg-gray-100 font-sans">
-    <div class="block md:hidden">
+    <div class="md:hidden flex justify-end ">
         <div class="dropdown">
             <button class="dropbtn ml-3 mt-3">Menu</button>
             <div class="dropdown-content">
@@ -217,11 +217,11 @@
             </div>
           </div>
     </div>
-    <div class="hidden md:block">
-        <aside class="relative bg-sidebar shadow-xl w-fit h-fit pr-6">
+    <div class="hidden md:block w-full">
+        <aside class="relative bg-sidebar shadow-xl w-68 h-fit pr-1 ml-3 mt-3">
             <div class="p-6">
                 <div class="hover:text-gray-300 mt-8 w-fit">
-                    <img src="/images/logo-buzina.png" alt="Logotipo Buzina" class="h-10" > <!-- Ajuste a classe de altura conforme necessário -->
+                    <img src="/images/logo-buzina.png" alt="Logotipo Buzina" class="h-10 resize-none" > <!-- Ajuste a classe de altura conforme necessário -->
                 </div>
             </div>
             <nav class="text-white text-base font-semibold sm:pt-3 space-y-5">
@@ -284,7 +284,7 @@
                 </div>
             </nav>
             <div class="p-6">
-                <div class="relative" x-data="{ open: false }">
+                <div class="relative w-fit" x-data="{ open: false }">
                     
                     <button @click="open = !open" class="flex items-center w-full px-4 py-2 text-sm font-medium leading-5 text-left text-white transition duration-150 ease-in-out bg-sidebar rounded-md hover:text-gray-300 focus:outline-none focus:shadow-outline-blue">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">

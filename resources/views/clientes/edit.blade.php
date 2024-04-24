@@ -13,7 +13,7 @@
     </head>
     <body>
         <x-app-layout>
-            <div class="flex-1 m-20">
+            <div>
                 <div class="flex justify-between items-center mb-4">
                     <div class="flex items-center text-darkBlue">
                         <h2 class="text-xl font-black ">

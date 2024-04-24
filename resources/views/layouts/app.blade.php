@@ -15,18 +15,18 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased w-full">
         <div class="md:flex md:flex-row bg-white">
     
             <!-- Navigation Sidebar -->
-            <aside class="w-68 bg-white" aria-label="Sidebar">
+            <aside class="w-fit bg-red-300 bg-white" aria-label="Sidebar">
                 @include('layouts.navigation')
             </aside>
     
             <!-- Page Content -->
-            <div class="flex-1 flex flex-col">
+            <div class="flex-1 m-20">
                 <!-- Main Content -->
-                <main class="flex-1 overflow-x-hidden overflow-y-auto bg-white">
+                <main class="flex-1 w-fit overflow-y-auto bg-white">
                     {{ $slot }}
                 </main>
             </div>
