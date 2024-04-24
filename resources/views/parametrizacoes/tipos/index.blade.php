@@ -19,10 +19,10 @@
             <div class="flex-1 m-20">
                 <div class="flex justify-between items-center mb-4">
                     <div class="flex items-center text-darkBlue">
-                        <h2 class="text-xl font-black">
+                        <h2 class="hidden md:block text-xl font-black">
                             Parametrizações >
                         </h2>
-                        <div class="ml-2">
+                        <div class="text-xl font-black md:text-base md:font-normal ml-2">
                             Tipo de Cliente
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     </a>
                 </div>
 
-                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border">
+                <div class="bg-white shadow-md rounded px-2 md:px-8 pt-6 pb-8 mb-4 border">
                     <table class="table-auto w-full">
                         <thead>
                             <tr class="bg-gray-300">

@@ -3,15 +3,15 @@
 <div class="flex-1 m-20">
     <div class="flex justify-between items-center mb-4">
         <div class="flex items-center text-darkBlue">
-            <h2 class="text-xl font-black ">
+            <h2 class="hidden md:block text-xl font-black">
                 Tipo de Cliente >
             </h2>
-            <div class="ml-2">
+            <div class="text-xl font-black md:text-base md:font-normal ml-2">
                 Editar
             </div>
         </div>
     </div>
-    <div class="flex justify-between items-center mb-4">
+    <div class="flex justify-between px-2 md:px-8 items-center mb-4">
         <form action="{{ route('tipo-clientes.update', $tipoCliente->id) }}" method="POST">
             @csrf
             @method('PUT')
