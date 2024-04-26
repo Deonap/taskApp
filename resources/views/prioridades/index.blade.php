@@ -216,42 +216,57 @@
                     </div>
 
                     <div id="tabelaProjetosOutrosColaboradores" class="mb-8">
-                        <div class="relative mb-4">
-                            <div class="flex-none text-white" style="width: 70%; height: 40px; background-color: #641885; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: start; align-items: center;">
-                                <h3 class="text-lg font-semibold">Projetos com Outros Colaboradores</h3>
+                        <div class="hidden xl:block">
+                            <div class="relative mb-4">
+                                <div class="flex-none text-white" style="width: 70%; height: 40px; background-color: #641885; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: start; align-items: center;">
+                                    <h3 class="text-lg font-semibold">Projetos com Outros Colaboradores</h3>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-[#d5d4d5]">
+                                        <th class="opacity-0 hover:cursor-default">
+                                            Nº
+                                        </th>
+                                        <th scope="col">
+                                            Cliente
+                                        </th>
+                                        <th scope="col">
+                                            Tipo
+                                        </th>
+                                        <th scope="col">
+                                            Projeto
+                                        </th>
+                                        <th scope="col">
+                                            Prioridade
+                                        </th>
+                                        <th scope="col">
+                                            Colaboradores
+                                        </th>
+                                        <th scope="col">
+                                            Estado
+                                        </th>
+                                        <th scope="col">
+                                            Ações
+                                        </th>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                            
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-[#d5d4d5]">
-                                <th class="opacity-0 hover:cursor-default">
-                                    Nº
-                                </th>
-                                <th scope="col">
-                                    Cliente
-                                </th>
-                                <th scope="col">
-                                    Tipo
-                                </th>
-                                <th scope="col">
-                                    Projeto
-                                </th>
-                                <th scope="col">
-                                    Prioridade
-                                </th>
-                                <th scope="col">
-                                    Colaboradores
-                                </th>
-                                <th scope="col">
-                                    Estado
-                                </th>
-                                <th scope="col">
-                                    Ações
-                                </th>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                    
-                            </tbody>
-                        </table>
+                        <div class="xl:hidden block">
+                            <div class="flex items-center text-white mb-4 w-fit">
+                                <div class="flex-none w-fit p-4 rounded-[0.2rem]" style="height: 40px; background-color: #641885; display: flex; justify-content: start; align-items: center;">
+                                    <h3 class="text-lg font-semibold">Com outros</h3>
+                                </div>
+                            </div>
+                            <div class="space-y-3 h-fit">
+                                <div id="responsiveComOutros" class="space-y-3">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="flex justify-end mb-8">
@@ -519,6 +534,7 @@
                 tbodyPendentes.innerHTML = '';
 
                 data.forEach((projeto) => {
+                    // Para separação do design para computador / mobile
                     if(true){
                         var linha = tbodyPendentes.insertRow();
                         linha.setAttribute('data-id', projeto.id);
@@ -660,61 +676,178 @@
         fetch('/filtrar/projetos-outros-colaboradores/' + userId)
             .then(response => response.json())
             .then(data => {
-
                 var tbodyOutrosColaboradores = document.querySelector('#tabelaProjetosOutrosColaboradores tbody');
+                var responsiveComOutros = document.getElementById('responsiveComOutros');
+                responsiveComOutros.innerHTML = '';
                 tbodyOutrosColaboradores.innerHTML = '';
 
                 data.forEach((projeto) => {
-                    var linha = tbodyOutrosColaboradores.insertRow();
-                    linha.classList.add('border-b'); // Adiciona borda à linha
+                    // Para separação do design para computador / mobile
+                    if(true){
+                        var linha = tbodyOutrosColaboradores.insertRow();
+                        linha.classList.add('border-b'); // Adiciona borda à linha
 
-                    var celulas = [];
+                        var celulas = [];
 
-                    for (let i = 0; i < 8; i++) {
-                        celulas[i] = linha.insertCell(i);
-                        celulas[i].classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap');
+                        for (let i = 0; i < 8; i++) {
+                            celulas[i] = linha.insertCell(i);
+                            celulas[i].classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap');
+                        }
+
+                        celulas[0].classList.add('border-r-0', 'invisible');
+                        celulas[1].innerHTML = projeto.cliente.nome;
+                        celulas[1].classList.add('border-l-0');
+                        celulas[2].innerHTML = projeto.tipo_cliente ? projeto.tipo_cliente.nome : 'Tipo não especificado';
+                        celulas[3].innerHTML = projeto.nome;
+
+                        var tarefas = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
+                        celulas[4].innerHTML = tarefas;
+
+                        // Lista todos os colaboradores associados ao projeto
+                        var colaboradores = projeto.users.map(user => '<p>'+user.name+'</p>').join("");
+                        celulas[5].innerHTML = colaboradores;
+
+                        var celulaEstadoProjeto = celulas[6];
+                        celulaEstadoProjeto.innerHTML =
+                            `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full">
+                            </div>`;
+
+
+                        var celulaAcoes = celulas[7];
+                        celulaAcoes.innerHTML = `
+                        <div class="flex justify-center items-center space-x-4">
+                            <a href="/projetos/${projeto.id}/edit">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-darkBlue hover:tet-blue-700">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                </svg>
+                            </a>
+                            @if(auth()->user() && auth()->user()->tipo == 'admin')
+                                <form action="/projetos/${projeto.id}/destroy" method="POST" class="m-0">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-900">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-red-700 hover:text-red-500">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+                        `;
                     }
+                    if(true){
+                        var linha1 = `
+                        <div class="mt-3 flex items-start space-x-2">
+                            <h2 class="font-semibold">
+                                Cliente: ${projeto.cliente.nome}
+                            </h2>
+                            :
+                            <h2 class="font-semibold">
+                                ${projeto.tipo_cliente.nome}
+                            </h2>
+                        </div>`
+                        ;
 
-                    celulas[0].classList.add('border-r-0', 'invisible');
-                    celulas[1].innerHTML = projeto.cliente.nome;
-                    celulas[1].classList.add('border-l-0');
-                    celulas[2].innerHTML = projeto.tipo_cliente ? projeto.tipo_cliente.nome : 'Tipo não especificado';
-                    celulas[3].innerHTML = projeto.nome;
-
-                    var tarefas = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
-                    celulas[4].innerHTML = tarefas;
-
-                    // Lista todos os colaboradores associados ao projeto
-                    var colaboradores = projeto.users.map(user => '<p>'+user.name+'</p>').join("");
-                    celulas[5].innerHTML = colaboradores;
-
-                    var celulaEstadoProjeto = celulas[6];
-                    celulaEstadoProjeto.innerHTML =
-                        `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full">
-                        </div>`;
+                        var linha2 = `
+                        <div class="mt-3 flex">
+                            <h2 class="font-semibold">
+                                ${projeto.nome}
+                            </h2>
+                            <div style="background-color: ${projeto.estado_projeto.cor};" class="ml-3 size-6 rounded-full">
+                            </div>
 
 
-                    var celulaAcoes = celulas[7];
-                    celulaAcoes.innerHTML = `
-                    <div class="flex justify-center items-center space-x-4">
-                        <a href="/projetos/${projeto.id}/edit">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-darkBlue hover:tet-blue-700">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                            </svg>
-                        </a>
-                        @if(auth()->user() && auth()->user()->tipo == 'admin')
-                            <form action="/projetos/${projeto.id}/destroy" method="POST" class="m-0">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-900">
+                        </div>
+                        `;
+
+                        var descricaoTarefas = projeto.tarefas.map(tarefa => `<div>${tarefa.descricao}</div>`).join("");
+                        var linha3 = `
+                        <div class="mt-5">
+                            <div>
+                                <a class="bg-darkBlue text-white py-2 px-4 rounded mr-4 hover:cursor-pointer" onclick="openModal('modal_${projeto.id}')">
+                                    Tarefas
+                                </a>
+                                <div id="modal_${projeto.id}" class="modal fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4 m-auto ">
+                                    <div class="relative top-40 mx-auto shadow-xl rounded-md bg-white w-fit">
+                                        <div class="flex justify-end p-2">
+                                            <button onclick="closeModal('modal_${projeto.id}')" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd">
+                                                    </path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div class="p-6 pt-0 text-center">
+                                            <div>
+                                                ${descricaoTarefas}
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        `;
+
+                        var nomeColaboradores = projeto.users.map(user => '<div>'+user.name+'</div>').join("");
+                        var linha4 = `
+                        <div class="mt-5 mb-4 flex items-center">
+                            <div>
+                                <a class="bg-darkBlue text-white py-2 px-4 rounded mr-4 hover:cursor-pointer" onclick="openModal('modal_${projeto.id}/colab')">
+                                    Colaboradores
+                                </a>
+                                <div id="modal_${projeto.id}/colab" class="modal fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4 m-auto ">
+                                    <div class="relative top-40 mx-auto shadow-xl rounded-md bg-white w-fit">
+                                        <div class="flex justify-end p-2">
+                                            <button onclick="closeModal('modal_${projeto.id}/colab')" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd">
+                                                    </path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div class="p-6 pt-0 text-center">
+                                            <div>
+                                                ${nomeColaboradores}
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex space-x-3 mr-5">
+                                <a href="/projetos/${projeto.id}/edit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-darkBlue hover:text-blue-700">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                    </svg>
+                                </a>
+                                <form action="/projetos/${projeto.id}/destroy" method="POST" class="m-0">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-red-700 hover:text-red-500">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                     </svg>
-                                </button>
-                            </form>
-                        @endif
-                    </div>
-                `;
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        `;
+
+
+                        responsiveComOutros.innerHTML += `
+                        <div class="min-h-fit w-fit flex items-start shadow-lg border-4 py-4 pl-4 pr-12 responsiveElement" data-id='${projeto.id}'>
+                            <div class="w-full">
+                                ${linha1}
+                                
+                                ${linha2}
+                                
+                                ${linha3}
+
+                                ${linha4}
+                            </div>
+                        </div>
+                        `;
+                    }
                 });
             });
     }
