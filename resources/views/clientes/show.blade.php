@@ -65,11 +65,11 @@
                                 Projetos Abertos
                             </div>
                         </button>
-                        <button id="btnProjetosConcluidos" class="bg-gray-400 text-white py-2 px-4 rounded">
+                        <button id="btnProjetosConcluidos" class="bg-gray-400 text-white py-2 px-4 rounded mt-5">
                             Projetos Concluídos
                         </button>
                     </div>
-                    <div id="tabelaProjetosAbertos" class="bg-white p-4 rounded xl:shadow-md xl:border mb-8">
+                    <div id="tabelaProjetosAbertos" class="bg-white xl:p-4 rounded xl:shadow-md xl:border mb-8">
                         <div class="hidden xl:block overflow-x-auto">
                             <table class="w-full whitespace-nowrap">
                                 <thead>
@@ -182,10 +182,10 @@
                             </table>
                         </div>
                         <div class="block xl:hidden space-y-3 h-fit">
-                            <div class="md:flex md:items-start space-y-3 md:space-y-0 md:space-x-3">
+                            <div class="sm:flex space-y-3 sm:space-y-0 sm:space-x-3">
                                 @foreach($projetosAbertos as $projeto)
-                                    <div class="min-h-full w-full sm:w-fit flex items-start shadow-lg border-4 p-4">
-                                        <div>
+                                <div class="min-h-fit w-full flex items-start shadow-lg border-4 p-4">
+                                    <div class="w-full">
                                             <div class="flex justify-between items-center">
                                                 <h1 class="font-black">
                                                     {{$projeto->tipoCliente->nome}}
@@ -214,12 +214,12 @@
                                                     {{$projeto->nome}}
                                                 </h2>
                                             </div>
-                                            <div class="mt-2 flex items-center">
+                                            <div class="mt-4 flex items-center">
                                                 <div>
                                                     <a class="bg-darkBlue text-white py-2 px-4 rounded mr-4 hover:cursor-pointer" onclick="openModal('modal_{{$projeto->id}}')">
                                                         Tarefas
                                                     </a>
-                                                    <div id="modal_{{$projeto->id}}" class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4 m-auto ">
+                                                    <div id="modal_{{$projeto->id}}" class="modal fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4 m-auto ">
                                                         <div class="relative top-40 mx-auto shadow-xl rounded-md bg-white w-fit">
                                                             <div class="flex justify-end p-2">
                                                                 <button onclick="closeModal('modal_{{$projeto->id}}')" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
@@ -247,7 +247,7 @@
                                                     {{$projeto->tempo_previsto}}
                                                 </div>
                                             </div>
-                                            <div class="mt-1">
+                                            <div class="mt-3">
                                                 @foreach($projeto->users as $user)
                                                     <div>
                                                         <div class="w-fit py-2 mr-4 flex items-center">
@@ -273,7 +273,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="tabelaProjetosConcluidos" class="bg-white p-4 rounded xl:shadow-md xl:border mb-8 hidden">
+                    <div id="tabelaProjetosConcluidos" class="bg-white xl:p-4 rounded xl:shadow-md xl:border mb-8 hidden">
                         <div class="hidden xl:block overflow-x-auto">
                             <table class="w-full whitespace-nowrap">
                                 <thead>
@@ -390,16 +390,16 @@
                             </table>
                         </div>
                         <div class="block xl:hidden space-y-3 h-fit">
-                            <div class="md:flex md:items-start md:space-x-2">
+                            <div class="sm:flex space-y-3 sm:space-y-0 sm:space-x-3">
                                 @foreach($projetosConcluidos as $projeto)
-                                    <div class="min-h-fit w-fit sm:w-full flex items-start shadow-lg border-4 p-4">
-                                        <div>
+                                <div class="min-h-fit w-full flex items-start shadow-lg border-4 p-4">
+                                    <div class="w-full">
                                             <div class="flex justify-between items-center">
                                                 <h1 class="font-black">
                                                     {{$projeto->tipoCliente->nome}}
                                                 </h1>
                                                 @if(auth()->user() && auth()->user()->tipo == 'admin')
-                                                    <div class="flex justify-center">
+                                                    <div class="flex justify-center space-x-3">
                                                         <a href="{{ route('projetos.edit', $projeto->id) }}" title="Editar">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-darkBlue hover:text-blue-700">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -444,12 +444,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="mt-2 flex items-center">
+                                            <div class="mt-4 flex items-center">
                                                 <div>
                                                     <a class="bg-darkBlue text-white py-2 px-4 rounded mr-4 hover:cursor-pointer" onclick="openModal('modal_{{$projeto->id}}')">
                                                         Tarefas
                                                     </a>
-                                                    <div id="modal_{{$projeto->id}}" class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4 m-auto ">
+                                                    <div id="modal_{{$projeto->id}}" class="modal fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4 m-auto ">
                                                         <div class="relative top-40 mx-auto shadow-xl rounded-md bg-white w-fit">
                                                             <div class="flex justify-end p-2">
                                                                 <button onclick="closeModal('modal_{{$projeto->id}}')" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
@@ -477,7 +477,7 @@
                                                     {{$projeto->tempo_previsto}}
                                                 </div>
                                             </div>
-                                            <div class="mt-1">
+                                            <div class="mt-3">
                                                 @foreach($projeto->users as $user)
                                                     <div>
                                                         <div class="w-fit py-2 mr-4 flex items-center">

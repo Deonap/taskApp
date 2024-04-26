@@ -26,7 +26,7 @@
             <!-- Page Content -->
             <div class="flex-1 mx-10 my-[3.75rem]">
                 <!-- Main Content -->
-                <main class="flex-1 w-fit bg-white">
+                <main class="flex-1 w-full bg-white">
                     {{ $slot }}
                 </main>
             </div>
