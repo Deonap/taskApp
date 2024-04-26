@@ -109,11 +109,7 @@
                                                 {{ $projeto->nome }}
                                             </td>
                                             <td>
-                                                <!-- Descrição de cada tarefa do projeto -->
-                                                @foreach($projeto->tarefas as $tarefa)
-                                                    {{ $tarefa->descricao }}
-                                                    <br>
-                                                @endforeach
+                                                {{$projeto->notas_iniciais}}
                                             </td>
                                             <td class="text-center">
                                                 {{ $projeto->tempo_previsto }}

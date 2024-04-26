@@ -60,7 +60,9 @@
                             @foreach ($clientes as $cliente)
                                 <tr class="border-b border-gray-200">
                                     <td>
-                                        {{ $cliente->nome }}
+                                        <a href="{{ route('clientes.show', $cliente->id) }}" title="Ver">
+                                            {{ $cliente->nome }}
+                                        </a>
                                     </td>
                                     <td class="hidden lg:table-cell">
                                         {{ $cliente->email }}

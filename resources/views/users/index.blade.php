@@ -70,9 +70,9 @@
                                                 $status = 'enabled';
                                             }
                                         ?>
-                                        <select name="tipo" {{$status}} onchange="this.form.submit()" class="pr-10 pl-1 text-left py-1">
-                                            <option value="colaborador" {{ $user->tipo == 'colaborador' ? 'selected' : '' }}>Colaborador</option>
-                                            <option value="admin" {{ $user->tipo == 'admin' ? 'selected' : '' }}>Administrador</option>
+                                        <select name="tipo" {{$status}} onchange="this.form.submit()" class="pr-10 pl-1 text-left py-1 border-none">
+                                            <option value="colaborador" {{ $user->tipo == 'colaborador' ? 'selected' : '' }}>COLAB</option>
+                                            <option value="admin" {{ $user->tipo == 'admin' ? 'selected' : '' }}>ADMIN</option>
                                         </select>
                                     </form>
                                 </td>

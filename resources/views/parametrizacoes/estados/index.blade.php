@@ -47,7 +47,7 @@
                                     {{ $estado->nome }}
                                 </td>
                                 <td>
-                                    <button disabled style="background-color: {{ $estado->cor }};" class="w-4 h-4 rounded-sm"></button>
+                                    <button disabled style="background-color: {{ $estado->cor }};" class="size-6 rounded-sm"></button>
                                 </td>
                                 <td>
                                     <div class="flex justify-center space-x-3">
