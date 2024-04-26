@@ -88,7 +88,7 @@
                     <div id="tabelaProjetosAbertos" class="mb-8">
                         <div class="hidden xl:block">
                             <div class="flex items-center text-white mb-4" style="width: 100%;">
-                                <div class="flex-none" style="width: 70%; height: 40px; background-color: {{$corDesenvolvimento}}; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: start; align-items: center;">
+                                <div class="flex-none bg-darkBlue" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: start; align-items: center;">
                                     <h3 class="text-lg font-semibold">Projetos Em Desenvolvimento</h3>
                                 </div>
                                 <div class="flex-none ml-4" style="width: 29%; height: 30px; background-color: #f0f1f0; color: black; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: center; align-items: center;">
@@ -159,7 +159,7 @@
                     <div id="tabelaProjetosPendentes" class="mb-8">
                         <div class="hidden xl:block">
                             <div class="relative mb-4">
-                                <div class="flex-none text-white w-[70%] h-[40px] p-[1rem] flex items-center" style="background-color: {{$corPendente}}; border-radius: 0.2rem; justify-content: start;">
+                                <div class="flex-none text-white w-[70%] h-[40px] p-[1rem] flex items-center bg-[rgb(249,109,35)]" style="border-radius: 0.2rem; justify-content: start;">
                                     <h3 class="text-lg font-semibold">Projetos Pendentes</h3>
                                 </div>
                             </div>
