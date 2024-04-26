@@ -274,6 +274,7 @@
         tbody.innerHTML = ''; // Limpa o conteúdo atual da tabela
 
         projetos.forEach((projeto, index) => {
+            // Para separação do design para computador / mobile
             if(true){
                 var linha = tbody.insertRow(); // Insere uma nova linha na tabela
                 var userId = document.getElementById('colaborador').value;
@@ -457,6 +458,7 @@
         tbody.innerHTML = ''; // Limpa o conteúdo atual da tabela
 
         projetos.forEach((projeto, index) => {
+            // Para separação do design para computador / mobile
             if(true){
                 var linha = tbody.insertRow(); // Insere uma nova linha na tabela
 
@@ -554,6 +556,7 @@
         projetos.forEach(projeto => {
             // Verifica se o projeto tem mais de um colaborador
             if (projeto.users && projeto.users.length > 1) {
+                // Para separação do design para computador / mobile
                 if(true){
                     var linha = tbody.insertRow();
 
