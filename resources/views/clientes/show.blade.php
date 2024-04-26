@@ -184,8 +184,8 @@
                         <div class="block xl:hidden space-y-3 h-fit">
                             <div class="sm:flex space-y-3 sm:space-y-0 sm:space-x-3">
                                 @foreach($projetosAbertos as $projeto)
-                                <div class="min-h-fit w-full flex items-start shadow-lg border-4 p-4">
-                                    <div class="w-full">
+                                    <div class="min-h-fit w-full flex items-start shadow-lg border-4 p-4">
+                                        <div class="w-full">
                                             <div class="flex justify-between items-center">
                                                 <h1 class="font-black">
                                                     {{$projeto->tipoCliente->nome}}
