@@ -137,7 +137,7 @@
                         </div>
                         <div class="xl:hidden block">
                             <div class="flex items-center text-white mb-4 w-fit">
-                                <div class="flex-none w-fit p-4 rounded-[0.2rem]" style="height: 40px; background-color: {{$corDesenvolvimento}}; display: flex; justify-content: start; align-items: center;">
+                                <div class="flex-none w-fit p-4 rounded-[0.2rem] bg-darkBlue" style="height: 40px; display: flex; justify-content: start; align-items: center;">
                                     <h3 class="text-lg font-semibold">Desenvolvimento</h3>
                                 </div>
                                 <div class="flex-none ml-4 w-fit" style="height: 30px; background-color: #f0f1f0; color: black; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: center; align-items: center;">
@@ -204,7 +204,7 @@
                         </div>
                         <div class="xl:hidden block">
                             <div class="flex items-center text-white mb-4 w-fit">
-                                <div class="flex-none w-fit p-4 rounded-[0.2rem]" style="height: 40px; background-color: {{$corPendente}}; display: flex; justify-content: start; align-items: center;">
+                                <div class="flex-none w-fit p-4 rounded-[0.2rem] bg-[rgb(249,109,35)]" style="height: 40px; display: flex; justify-content: start; align-items: center;">
                                     <h3 class="text-lg font-semibold">Pendentes</h3>
                                 </div>
                             </div>

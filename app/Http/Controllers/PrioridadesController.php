@@ -26,15 +26,12 @@ class PrioridadesController extends Controller
 
         $projetosComOutros = $this->filtrarProjetosComOutrosColaboradores($colaboradorId);
 
-        $corDesenvolvimento = EstadoProjeto::where('nome', 'Em desenvolvimento')->value('cor');
-        $corPendente = EstadoProjeto::where('nome', 'Pendente')->value('cor');
-
         if(auth()->user() && auth()->user()->tipo == 'admin'){
             ProjetoUser::query()->update(['notificacaoVista' => true]);
         }
 
 
-        return view('prioridades.index', compact('colaboradores', 'projetosEmAberto', 'projetosPendentes', 'projetosComOutros', 'colaboradorId', 'corDesenvolvimento', 'corPendente'));
+        return view('prioridades.index', compact('colaboradores', 'projetosEmAberto', 'projetosPendentes', 'projetosComOutros', 'colaboradorId'));
     }
 
     private function filtrarProjetosPorEstadoEColaborador($estadoNome, $colaboradorId)
