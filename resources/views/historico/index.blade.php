@@ -593,8 +593,6 @@
                             </h2>
                             <div style="background-color: ${projeto.estado_projeto.cor};" class="ml-3 size-6 rounded-full">
                             </div>
-
-
                         </div>
                         `;
 
