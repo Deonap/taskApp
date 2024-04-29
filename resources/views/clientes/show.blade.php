@@ -99,7 +99,7 @@
                                         @endif
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-200">
+                                <tbody id="projetosAbertosTbody"class="divide-y divide-gray-200">
                                     @foreach($projetosAbertos as $projeto)
                                         <tr>
                                             <td>
@@ -514,6 +514,9 @@
                     <a href="{{ route('projetos.create', ['cliente_id' => $cliente->id]) }}" class="bg-darkBlue text-white py-2 px-4 rounded mr-4">
                         Adicionar Projeto
                     </a>
+                    <a id="btnAdicionarLinha" class="bg-darkBlue text-white py-2 px-4 rounded mr-4">
+                        aaa
+                    </a>
                 </div>
             </div>
         </x-app-layout>
@@ -595,4 +598,98 @@
             })
         }
     };
+
+    document.getElementById('btnAdicionarLinha').addEventListener('click', () => {
+        console.log("yay");
+        document.getElementById('projetosAbertosTbody').innerHTML += 
+        `
+        <tr>
+            <td>
+                <div class="flex items-end">
+                    <div id="tipoClienteCell/{{$projeto->id}}" class="tipoClienteCell">
+                        <form action="{{route('projetos.tipoCliente.atualizar', $projeto->id)}}" method="POST" class="my-0 py-0">
+                            @csrf
+                            @method('PUT')
+                            <select name="novoTipoCliente" id="{{$projeto->id}}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                <option selected disabled>...</option>
+                                @foreach($tiposCliente as $tC)
+                                    <option value="{{$tC->id}}">{{$tC->nome}}</option>
+                                @endforeach
+                            </select>
+                        </form>
+                    </div>
+                </div>                                                
+            </td>
+            <td>
+                {{ $projeto->nome }}
+            </td>
+            <td>
+                {{$projeto->notas_iniciais}}
+            </td>
+            <td class="text-center">
+                {{ $projeto->tempo_previsto }}
+            </td>
+            <td>
+                <div class="flex items-end">
+                    <div id="colaboradorCell/{{$projeto->id}}" class="colaboradorCell">
+                        @foreach($projeto->users as $user)
+                            <form action="{{ route('projetos.colaboradores.atualizar', $projeto->id) }}" method="POST" class="my-0 py-0">
+                            @csrf
+                            @method('PUT')
+                                <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
+                                    <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" {{$projeto->users->count() == $colaboradores->count() ? 'disabled' : ''}} class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                        @foreach($colaboradores as $colaborador)
+                                            @if(!$projeto->users->contains($colaborador) || $colaborador->id == $user->id)
+                                                <option value="{{$colaborador->id}}/{{$user->id}}" class="w-fit" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->name }}</option>        
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </form>
+                        @endforeach
+                    </div>
+                    <div class="my-0 mx-3 {{$projeto->users->count() == $colaboradores->count() ? 'hidden' : ''}}">
+                        <button id="{{$projeto->id}}"class="btn-adicionar-colaborador">
+                            <!-- + -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+                            </svg>                                                                      
+                        </button>
+                    </div>
+                </div>
+            </td>
+            <td class="text-center">
+                <div>
+                    @foreach($projeto->users as $user)
+                        <div class="text-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
+                            {{ $user->tempoGasto($projeto) }}
+                        </div>
+                    @endforeach
+                </div>
+            </td>
+            @if(auth()->user() && auth()->user()->tipo == 'admin')
+                <td>
+                    <div class="flex justify-center space-x-3">
+                        <a href="{{ route('projetos.edit', $projeto->id) }}" title="Editar">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-darkBlue hover:text-blue-700">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            </svg>
+                        </a>
+                        <form method="POST" action="{{ route('projetos.destroy', $projeto->id) }}" title="Remover">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('Tem a certeza?')">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-red-700 hover:text-red-500">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            @endif
+        </tr>
+        
+        `
+    })
+
 </script>
