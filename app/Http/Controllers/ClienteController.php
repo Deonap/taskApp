@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\TipoCliente;
 
 
 class ClienteController extends Controller
@@ -58,7 +59,10 @@ class ClienteController extends Controller
             }
         }
 
-        return view('clientes.show', compact('cliente', 'projetosAbertos', 'projetosConcluidos', 'colaboradores'));
+        $tiposCliente =  TipoCliente::all();
+
+
+        return view('clientes.show', compact('cliente', 'projetosAbertos', 'projetosConcluidos', 'colaboradores', 'tiposCliente'));
     }
     
     /**

@@ -103,7 +103,19 @@
                                     @foreach($projetosAbertos as $projeto)
                                         <tr>
                                             <td>
-                                                {{ $projeto->tipoCliente->nome }}
+                                                <div class="flex items-end">
+                                                    <div id="tipoClienteCell/{{$projeto->id}}" class="tipoClienteCell">
+                                                        <form action="{{route('projetos.tipoCliente.atualizar', $projeto->id)}}" method="POST" class="my-0 py-0">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <select name="novoTipoCliente" id="{{$projeto->id}}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                                @foreach($tiposCliente as $tC)
+                                                                    <option value="{{$tC->id}}" {{$tC->nome == $projeto->tipoCliente->nome ? "selected" : ""}}>{{$tC->nome}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </form>
+                                                    </div>
+                                                </div>                                                
                                             </td>
                                             <td>
                                                 {{ $projeto->nome }}

@@ -145,6 +145,14 @@ class ProjetoController extends Controller
         return redirect(route('clientes.show', $projeto->cliente_id));
     }
 
+    public function atualizarTipoCliente(Request $request, Projeto $projeto){
+        $novoTipoCliente = $request['novoTipoCliente'];
+
+        $projeto->tipo_cliente_id = $novoTipoCliente;
+        $projeto->update();
+        return redirect(route('clientes.show', $projeto->cliente_id));
+    }
+
     public function adicionarColaborador(Request $request, Projeto $projeto)
     {
         $validated = $request->validate([

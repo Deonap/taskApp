@@ -64,6 +64,8 @@ Route::post('/atualizar/estadoProjeto', [PrioridadesController::class, 'atualiza
 Route::put('/projetos/{projeto}/colaboradores/atualizar', [ProjetoController::class, 'atualizarColaborador'])->name('projetos.colaboradores.atualizar');
 Route::put('/projetos/{projeto}/{user}/updateTimeSpent', [ProjetoController::class, 'updateTimeSpent']);
 Route::put('/projetos/{projeto}/{user}/updateObs', [ProjetoController::class, 'updateObs']);
+Route::put('projetos/{projeto}/tipoCliente/atualizar', [ProjetoController::class,'atualizarTipoCliente'])->name('projetos.tipoCliente.atualizar');
+
 
 // Rota para adicionar um novo colaborador a um projeto
 Route::post('/projetos/{projeto}/colaboradores/adicionar', [ProjetoController::class, 'adicionarColaborador'])->name('projetos.colaboradores.adicionar');
