@@ -38,10 +38,11 @@ class ProjetoController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $validatedData = $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'tipo_cliente_id' => 'required|exists:tipo_clientes,id',
-            'estado_projeto_id' => 'required|exists:estado_projetos,id', // Substitua pelos tipos que você possui
+            'estado_projeto_id' => 'exists:estado_projetos,id', // Substitua pelos tipos que você possui
             'nome' => 'required|max:255',
             'tarefas' => 'required|array',
             'tarefas.*' => 'string', // Assumindo que as tarefas são enviadas como um array
@@ -50,6 +51,9 @@ class ProjetoController extends Controller
             'notas_iniciais' => 'nullable|string',
         ]);
 
+        if (!$request->filled('estado_projeto_id')) {
+            $validatedData['estado_projeto_id'] = 1; // Replace DEFAULT_VALUE_HERE with your default value
+        }
         // Crie o novo projeto com os dados validados
         $projeto = Projeto::create($validatedData);
 
