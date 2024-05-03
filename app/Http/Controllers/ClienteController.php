@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\TipoProjeto;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\TipoCliente;
@@ -53,6 +54,7 @@ class ClienteController extends Controller
         // Buscar colaboradores do tipo 'colaborador'
         $colaboradores = User::where('tipo', 'colaborador')->get();
 
+
         foreach ($projetosAbertos as $projeto) {
             foreach ($projeto->users as $user) {
                 $user->tempoGasto = $projeto->users()->where('user_id', $user->id)->first()->pivot->tempo_gasto;
@@ -60,9 +62,10 @@ class ClienteController extends Controller
         }
 
         $tiposCliente =  TipoCliente::all();
+        $tipoProjeto = TipoProjeto::all();
 
 
-        return view('clientes.show', compact('cliente', 'projetosAbertos', 'projetosConcluidos', 'colaboradores', 'tiposCliente'));
+        return view('clientes.show', compact('cliente', 'projetosAbertos', 'projetosConcluidos', 'colaboradores', 'tiposCliente', 'tipoProjeto'));
     }
     
     /**

@@ -203,7 +203,17 @@
                                                 </div>                                                
                                             </td>
                                             <td>
-                                                {{ $projeto->nome }}
+                                                <div class="flex items-end">
+                                                    <div>
+                                                        <select name="tipo_projeto_id" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                            <option selected disabled>...</option>
+                                                            @foreach($tipoProjeto as $tP)
+                                                                <option value="">{{$tP->nome}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                </div>
                                             </td>
                                             <td>
                                                 {{$projeto->notas_iniciais}}
