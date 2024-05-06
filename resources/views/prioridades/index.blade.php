@@ -68,7 +68,7 @@
                                 </div>
                                 <div>
                                     <label for="toggleFerias" class="flex items-center cursor-pointer">
-                                        <div class="mx-3 text-gray-700 font-medium">
+                                        <div class="mx-3 ml-10 text-gray-700 font-black">
                                             Férias
                                         </div>
                                         <div class="relative">
@@ -147,10 +147,7 @@
                                 </div>
                             </div>
                             <div class="space-y-3 h-fit">
-                                <!-- REMOVER -->
-                                <div class="">
                                 <div id="responsiveDesenvolvimento" class="space-y-3">
-                                </div>
                                 </div>
                             </div>
                         </div>
@@ -373,8 +370,33 @@
 
                         var celulaEstadoProjeto = linha.insertCell(7);
                         celulaEstadoProjeto.classList.add(...tdClassList);
+                        
+                        
+                        var tempoGastoMins = 0;
+                        projeto.users.forEach(user => {
+                            var tempoGasto = user.pivot.tempo_gasto.split(":");
+                            var tempoGastoP1 = parseInt(tempoGasto[0]);
+                            var tempoGastoP2 = parseInt(tempoGasto[1]);
+                            tempoGastoMins += tempoGastoP1 * 60 + tempoGastoP2;
+                        });
+
+                        var tempoPrevisto = projeto.tempo_previsto.split(":");
+                        var tempoPrevistoP1 = parseInt(tempoPrevisto[0]);
+                        var tempoPrevistoP2 = parseInt(tempoPrevisto[1]);
+
+                        var tempoPrevistoMinutes = tempoPrevistoP1 * 60 + tempoPrevistoP2;
+
+                        var bgColor;
+                        if (tempoGastoMins < tempoPrevistoMinutes) {
+                            bgColor = '122,166,77';
+                        } else if (tempoGastoMins === tempoPrevistoMinutes) {
+                            bgColor = '10,57,86';
+                        } else {
+                            bgColor = '231,81,91';
+                        }
+
                         celulaEstadoProjeto.innerHTML =
-                            `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full">
+                            `<div style="background-color: rgb(${bgColor});" class="m-auto size-7 rounded-full">
                             </div>`;
 
 
@@ -560,8 +582,30 @@
                         celulas[6].classList.add('border-l-0');
 
                         var celulaEstadoProjeto = celulas[7];
+                        var tempoGastoMins = 0;
+                        projeto.users.forEach(user => {
+                            var tempoGasto = user.pivot.tempo_gasto.split(":");
+                            var tempoGastoP1 = parseInt(tempoGasto[0]);
+                            var tempoGastoP2 = parseInt(tempoGasto[1]);
+                            tempoGastoMins += tempoGastoP1 * 60 + tempoGastoP2;
+                        });
+
+                        var tempoPrevisto = projeto.tempo_previsto.split(":");
+                        var tempoPrevistoP1 = parseInt(tempoPrevisto[0]);
+                        var tempoPrevistoP2 = parseInt(tempoPrevisto[1]);
+
+                        var tempoPrevistoMinutes = tempoPrevistoP1 * 60 + tempoPrevistoP2;
+
+                        var bgColor;
+                        if (tempoGastoMins < tempoPrevistoMinutes) {
+                            bgColor = '122,166,77';
+                        } else if (tempoGastoMins === tempoPrevistoMinutes) {
+                            bgColor = '10,57,86';
+                        } else {
+                            bgColor = '231,81,91';
+                        }
                         celulaEstadoProjeto.innerHTML =
-                            `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full">
+                            `<div style="background-color: rgb(${bgColor});" class="m-auto size-7 rounded-full">
                             </div>`;
                             
 
@@ -708,8 +752,33 @@
                         celulas[5].innerHTML = colaboradores;
 
                         var celulaEstadoProjeto = celulas[6];
+
+                        var tempoGastoMins = 0;
+                        projeto.users.forEach(user => {
+                            var tempoGasto = user.pivot.tempo_gasto.split(":");
+                            var tempoGastoP1 = parseInt(tempoGasto[0]);
+                            var tempoGastoP2 = parseInt(tempoGasto[1]);
+                            tempoGastoMins += tempoGastoP1 * 60 + tempoGastoP2;
+                        });
+
+                        var tempoPrevisto = projeto.tempo_previsto.split(":");
+                        var tempoPrevistoP1 = parseInt(tempoPrevisto[0]);
+                        var tempoPrevistoP2 = parseInt(tempoPrevisto[1]);
+
+                        var tempoPrevistoMinutes = tempoPrevistoP1 * 60 + tempoPrevistoP2;
+
+                        var bgColor;
+                        if (tempoGastoMins < tempoPrevistoMinutes) {
+                            bgColor = '122,166,77';
+                        } else if (tempoGastoMins === tempoPrevistoMinutes) {
+                            bgColor = '10,57,86';
+                        } else {
+                            bgColor = '231,81,91';
+                        }
+
+
                         celulaEstadoProjeto.innerHTML =
-                            `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full">
+                            `<div style="background-color: rgb(${bgColor});" class="m-auto size-7 rounded-full">
                             </div>`;
 
 
