@@ -150,12 +150,24 @@ class ProjetoController extends Controller
         return redirect(route('clientes.show', $projeto->cliente_id));
     }
 
+    public function atualizarCliente(Request $request, Projeto $projeto){
+        $novoCliente = $request['novoCliente'];
+
+        $projeto->cliente_id = $novoCliente;
+        $projeto->update();
+        return redirect(route('prioridades.index'));
+    }
+
     public function atualizarTipoCliente(Request $request, Projeto $projeto){
         $novoTipoCliente = $request['novoTipoCliente'];
 
         $projeto->tipo_cliente_id = $novoTipoCliente;
         $projeto->update();
-        return redirect(route('clientes.show', $projeto->cliente_id));
+
+        if($request['cliente_id']){
+            return redirect(route('clientes.show', $projeto->cliente_id));
+        }
+        return redirect(route('prioridades.index'));
     }
 
     public function createNewTipoCliente(Request $request)
@@ -164,7 +176,10 @@ class ProjetoController extends Controller
             'nome' => 'required|unique:tipo_clientes|max:255'
         ]);
         TipoCliente::create($validatedData);
-        return redirect(route("clientes.show", $request['cliente_id']));
+        if($request['cliente_id']){
+            return redirect(route("clientes.show", $request['cliente_id']));
+        }
+        return redirect(route('prioridades.index'));
     }
 
     public function createNewTipoProjeto(Request $request)
@@ -173,7 +188,10 @@ class ProjetoController extends Controller
             'nome' => 'required|unique:tipo_projetos|max:255'
         ]);
         TipoProjeto::create($validatedData);
-        return redirect(route("clientes.show", $request['cliente_id']));
+        if($request['cliente_id']){
+            return redirect(route("clientes.show", $request['cliente_id']));
+        }
+        return redirect(route('prioridades.index'));
     }
 
     public function atualizarTipoProjeto(Request $request, Projeto $projeto){
@@ -181,7 +199,10 @@ class ProjetoController extends Controller
 
         $projeto->tipo_projeto_id = $novoTipoProjeto;
         $projeto->update();
-        return redirect(route('clientes.show', $projeto->cliente_id));
+        if($request['cliente_id']){
+            return redirect(route('clientes.show', $projeto->cliente_id));
+        }
+        return redirect(route('prioridades.index'));
     }
 
     public function adicionarColaborador(Request $request, Projeto $projeto)

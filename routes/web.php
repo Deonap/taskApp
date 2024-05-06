@@ -65,6 +65,7 @@ Route::put('/projetos/{projeto}/colaboradores/atualizar', [ProjetoController::cl
 Route::put('/projetos/{projeto}/{user}/updateTimeSpent', [ProjetoController::class, 'updateTimeSpent']);
 Route::put('/projetos/{projeto}/{user}/updateObs', [ProjetoController::class, 'updateObs']);
 Route::put('projetos/{projeto}/tipoCliente/atualizar', [ProjetoController::class,'atualizarTipoCliente'])->name('projetos.tipoCliente.atualizar');
+Route::put('projetos/{projeto}/cliente/atualizar', [ProjetoController::class,'atualizarCliente'])->name('projetos.cliente.atualizar');
 Route::put('projetos/{projeto}/tipoProjeto/atualizar', [ProjetoController::class,'atualizartipoProjeto'])->name('projetos.tipoProjeto.atualizar');
 Route::get('projetos/tipoCliente/create', [ProjetoController::class,'createNewTipoCliente'])->name('projetos.tipoCliente.create');
 Route::get('projetos/tipoProjeto/create', [ProjetoController::class,'createNewtipoProjeto'])->name('projetos.tipoProjeto.create');

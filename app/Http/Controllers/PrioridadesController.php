@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Projeto;
+use App\Models\Cliente;
 use App\Models\User;
-use App\Models\EstadoProjeto;
+use App\Models\TipoCliente;
 use App\Models\ProjetoUser;
+use App\Models\TipoProjeto;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -29,9 +31,11 @@ class PrioridadesController extends Controller
         if(auth()->user() && auth()->user()->tipo == 'admin'){
             ProjetoUser::query()->update(['notificacaoVista' => true]);
         }
+        $clientes = Cliente::all();
+        $tiposCliente = TipoCliente::all();
+        $tiposProjeto = TipoProjeto::all();
 
-
-        return view('prioridades.index', compact('colaboradores', 'projetosEmAberto', 'projetosPendentes', 'projetosComOutros', 'colaboradorId'));
+        return view('prioridades.index', compact('colaboradores', 'projetosEmAberto', 'projetosPendentes', 'projetosComOutros', 'colaboradorId',"clientes",'tiposCliente', 'tiposProjeto'));
     }
 
     private function filtrarProjetosPorEstadoEColaborador($estadoNome, $colaboradorId)
@@ -63,7 +67,7 @@ class PrioridadesController extends Controller
         $colaboradorId = $request->query('colaborador_id');
         $estado = 'Em desenvolvimento'; // Define o estado que você está interessado
 
-        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users'])
+        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'tipoProjeto','cliente', 'estadoProjeto', 'users'])
             ->join('projeto_users', 'projetos.id', '=', 'projeto_users.projeto_id')
             ->where('projeto_users.user_id', $colaboradorId)
             ->whereHas('estadoProjeto', function ($query) use ($estado) {
@@ -73,7 +77,11 @@ class PrioridadesController extends Controller
             ->select('projetos.*') // Evita colunas duplicadas
             ->get();
 
+        $clientes = Cliente::all();
+
         return response()->json($projetos);
+
+        
     }
 
     public function filtrarProjetosPendente(Request $request)
