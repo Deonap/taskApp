@@ -105,16 +105,16 @@
                                             <td>
                                                 <div class="flex items-end">
                                                     <div>
-                                                        <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente" class="my-0 py-0">
+                                                        <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente" class="my-0 py-0 hidden">
                                                             @csrf
                                                             @method('POST')
                                                             <input type="text" name="cliente_id" value="{{$cliente->id}}" class="hidden">
-                                                            <input type="text" class="hidden" id="newTipoClienteInput/{{$projeto->id}}" name="nome" onchange="this.form.submit()">
+                                                            <input type="text" name="nome" id="newTipoClienteInput/{{$projeto->id}}"  onchange="this.form.submit()">
                                                         </form>
                                                         <form action="{{route('projetos.tipoCliente.atualizar', $projeto->id)}}" id="formAlterarTipoCliente" method="POST" class="my-0 py-0">
                                                             @csrf
                                                             @method('PUT')
-                                                            <select name="novoTipoCliente" id="{{$projeto->id}}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                            <select name="novoTipoCliente" id="novoTipoCliente{{$projeto->id}}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                                                 @foreach($tiposCliente as $tC)
                                                                     <option value="{{$tC->id}}" {{$tC->nome == $projeto->tipoCliente->nome ? "selected" : ""}}>{{$tC->nome}}</option>
                                                                 @endforeach
@@ -127,13 +127,20 @@
                                             <td>
                                                 <div class="flex items-end">
                                                     <div>
-                                                        <form action="{{route('projetos.tipoProjeto.atualizar', $projeto->id)}}" method="POST" class="my-0 py-0">
+                                                        <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto" class="my-0 py-0 hidden">
+                                                            @csrf
+                                                            @method('POST')
+                                                            <input type="text" name="cliente_id" value={{$cliente->id}} class="hidden">
+                                                            <input type="text" name="nome" id="newTipoProjetoInput/{{$projeto->id}}" onchange="this.form.submit()">
+                                                        </form>
+                                                        <form action="{{route('projetos.tipoProjeto.atualizar', $projeto->id)}}" id="formAlterarTipoProjeto" method="POST" class="my-0 py-0">
                                                             @csrf
                                                             @method('PUT')
-                                                            <select name="novoTipoProjeto" id="{{$projeto->id}}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                            <select name="novoTipoProjeto" id="novoTipoProjeto/{{$projeto->id}}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                                                 @foreach($tipoProjeto as $tP)
                                                                     <option value="{{$tP->id}}" {{$tP->nome == $projeto->tipoProjeto->nome ? "selected" : ""}}>{{$tP->nome}}</option>
                                                                 @endforeach
+                                                                <option value="-1" class="font-black">Novo</option>
                                                             </select>
                                                         </form>
                                                     </div>
@@ -439,7 +446,7 @@
                                                     } elseif ($tempoGasto == $tempo_previsto_minutes) {
                                                         $bgColor = '10,57,86';
                                                     } else {
-                                                        $bgColor = 'redC';
+                                                        $bgColor = '231,81,91';
                                                     }
                                                 ?>
                                                 <div class="rounded-full size-6" style="background-color:rgb({{$bgColor}})">
@@ -600,15 +607,25 @@
 
     function handleTipoClienteForms(id){
         var select = document.getElementById(id);
-        if(select.value==-1){
+        if(select.value == -1){
             select.classList.add("hidden")
-            var temp = "newTipoClienteInput/" + id;
-            document.getElementById(temp).classList.remove("hidden");
+            document.getElementById("formNovoTipoCliente").classList.remove("hidden");
         }else{
             document.getElementById('formAlterarTipoCliente').submit();
         }
     }
 
+    function handleTipoProjetoForms(id){
+        var select = document.getElementById(id);
+
+        console.log(select.value);
+        if(select.value == -1){
+            select.classList.add("hidden")
+            document.getElementById("formNovoTipoProjeto").classList.remove("hidden");
+        }else{
+            document.getElementById('formAlterarTipoProjeto').submit();
+        }
+    }
     var btnPA = document.getElementById('btnProjetosAbertos');
     var btnPC = document.getElementById('btnProjetosConcluidos');
 

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Cliente;
 use App\Models\User;
 use App\Models\EstadoProjeto;
+use App\Models\TipoProjeto;
 
 class ProjetoController extends Controller
 {
@@ -163,6 +164,15 @@ class ProjetoController extends Controller
             'nome' => 'required|unique:tipo_clientes|max:255'
         ]);
         TipoCliente::create($validatedData);
+        return redirect(route("clientes.show", $request['cliente_id']));
+    }
+
+    public function createNewTipoProjeto(Request $request)
+    {
+        $validatedData = $request->validate([
+            'nome' => 'required|unique:tipo_projetos|max:255'
+        ]);
+        TipoProjeto::create($validatedData);
         return redirect(route("clientes.show", $request['cliente_id']));
     }
 
