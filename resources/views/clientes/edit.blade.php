@@ -36,7 +36,7 @@
                                     <label for="nome">
                                         Nome
                                     </label>
-                                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nome" autocomplete='off' type="text" name="nome" value={{$cliente->nome}}>
+                                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nome" autocomplete='off' type="text" name="nome" value="{{$cliente->nome}}">
                                 </div>
                             </div>
 
@@ -45,13 +45,13 @@
                                     <label for="email">
                                         Email
                                     </label>
-                                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" autocomplete='off' type="email" name="email" value={{$cliente->email}}>
+                                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" autocomplete='off' type="email" name="email" value="{{$cliente->email}}">
                                 </div>
                                 <div class="flex lg:ml-3 mt-4 lg:mt-0 items-center space-x-3">    
                                     <label for="telefone">
-                                        Telefone 
+                                        Telefone
                                     </label>
-                                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="telefone" autocomplete='off' type="text" name="telefone" value={{$cliente->telefone}}>
+                                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="telefone" autocomplete='off' type="text" name="telefone" value="{{$cliente->telefone}}">
                                 </div>
                             </div>
                         </div>

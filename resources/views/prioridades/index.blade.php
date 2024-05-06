@@ -305,9 +305,6 @@
                 responsiveDesenvolvimento.innerHTML = '';
                 tbody.innerHTML = '';
 
-
-                console.log(data);
-
                 data.forEach((projeto) => {
                     // Para separação do design para computador / mobile
                     if(true){
