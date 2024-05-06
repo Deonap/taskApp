@@ -104,21 +104,40 @@
                                         <tr>
                                             <td>
                                                 <div class="flex items-end">
-                                                    <div id="tipoClienteCell/{{$projeto->id}}" class="tipoClienteCell">
-                                                        <form action="{{route('projetos.tipoCliente.atualizar', $projeto->id)}}" method="POST" class="my-0 py-0">
+                                                    <div>
+                                                        <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente" class="my-0 py-0">
+                                                            @csrf
+                                                            @method('POST')
+                                                            <input type="text" name="cliente_id" value="{{$cliente->id}}" class="hidden">
+                                                            <input type="text" class="hidden" id="newTipoClienteInput/{{$projeto->id}}" name="nome" onchange="this.form.submit()">
+                                                        </form>
+                                                        <form action="{{route('projetos.tipoCliente.atualizar', $projeto->id)}}" id="formAlterarTipoCliente" method="POST" class="my-0 py-0">
                                                             @csrf
                                                             @method('PUT')
-                                                            <select name="novoTipoCliente" id="{{$projeto->id}}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                            <select name="novoTipoCliente" id="{{$projeto->id}}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                                                 @foreach($tiposCliente as $tC)
                                                                     <option value="{{$tC->id}}" {{$tC->nome == $projeto->tipoCliente->nome ? "selected" : ""}}>{{$tC->nome}}</option>
                                                                 @endforeach
+                                                                <option value="-1" class="font-black">Novo</option>
                                                             </select>
                                                         </form>
                                                     </div>
                                                 </div>                                                
                                             </td>
                                             <td>
-                                                {{ $projeto->nome }}
+                                                <div class="flex items-end">
+                                                    <div>
+                                                        <form action="{{route('projetos.tipoProjeto.atualizar', $projeto->id)}}" method="POST" class="my-0 py-0">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <select name="novoTipoProjeto" id="{{$projeto->id}}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                                @foreach($tipoProjeto as $tP)
+                                                                    <option value="{{$tP->id}}" {{$tP->nome == $projeto->tipoProjeto->nome ? "selected" : ""}}>{{$tP->nome}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>
                                                 {{$projeto->notas_iniciais}}
@@ -212,7 +231,6 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-
                                                 </div>
                                             </td>
                                             <td>
@@ -417,14 +435,14 @@
                                                     $tempo_previsto_minutes = intval($tempoPrevistoP1) * 60 + intval($tempoPrevistoP2);
 
                                                     if ($tempoGasto < $tempo_previsto_minutes) {
-                                                        $bgColor = 'green-300';
+                                                        $bgColor = '122,166,77';
                                                     } elseif ($tempoGasto == $tempo_previsto_minutes) {
-                                                        $bgColor = 'blue-500';
+                                                        $bgColor = '10,57,86';
                                                     } else {
-                                                        $bgColor = 'red-300';
+                                                        $bgColor = 'redC';
                                                     }
                                                 ?>
-                                                <div class="rounded-full bg-{{$bgColor}} size-6">
+                                                <div class="rounded-full size-6" style="background-color:rgb({{$bgColor}})">
                                                     
                                                 </div>
                                             </td>
@@ -567,11 +585,8 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{{ route('projetos.create', ['cliente_id' => $cliente->id]) }}" class="bg-darkBlue text-white py-2 px-4 rounded mr-4">
+                    <a id="btnAdicionarLinha" class="hover:cursor-pointer bg-darkBlue text-white py-2 px-4 rounded mr-4">
                         Adicionar Projeto
-                    </a>
-                    <a id="btnAdicionarLinha" class="bg-darkBlue text-white py-2 px-4 rounded mr-4">
-                        aaa
                     </a>
                 </div>
             </div>
@@ -582,6 +597,18 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js">
 </script>
 <script>
+
+    function handleTipoClienteForms(id){
+        var select = document.getElementById(id);
+        if(select.value==-1){
+            select.classList.add("hidden")
+            var temp = "newTipoClienteInput/" + id;
+            document.getElementById(temp).classList.remove("hidden");
+        }else{
+            document.getElementById('formAlterarTipoCliente').submit();
+        }
+    }
+
     var btnPA = document.getElementById('btnProjetosAbertos');
     var btnPC = document.getElementById('btnProjetosConcluidos');
 

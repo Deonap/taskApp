@@ -157,6 +157,23 @@ class ProjetoController extends Controller
         return redirect(route('clientes.show', $projeto->cliente_id));
     }
 
+    public function createNewTipoCliente(Request $request)
+    {
+        $validatedData = $request->validate([
+            'nome' => 'required|unique:tipo_clientes|max:255'
+        ]);
+        TipoCliente::create($validatedData);
+        return redirect(route("clientes.show", $request['cliente_id']));
+    }
+
+    public function atualizarTipoProjeto(Request $request, Projeto $projeto){
+        $novoTipoProjeto = $request['novoTipoProjeto'];
+
+        $projeto->tipo_projeto_id = $novoTipoProjeto;
+        $projeto->update();
+        return redirect(route('clientes.show', $projeto->cliente_id));
+    }
+
     public function adicionarColaborador(Request $request, Projeto $projeto)
     {
         $validated = $request->validate([

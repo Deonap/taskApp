@@ -36,6 +36,11 @@ class Projeto extends Model
         return $this->belongsTo(TipoCliente::class, 'tipo_cliente_id');
     }
 
+    public function tipoProjeto()
+    {
+        return $this->belongsTo(TipoProjeto::class, 'tipo_projeto_id');
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'projeto_users')->withPivot('prioridade', 'tempo_gasto', 'observacoes');
