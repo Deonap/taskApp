@@ -16,6 +16,7 @@ class Projeto extends Model
         'cliente_id',
         'tipo_cliente_id',
         'estado_projeto_id',
+        'notas_iniciais',
         'tempo_previsto',
         'observacoes',
         'tempo_gasto'

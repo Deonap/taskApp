@@ -39,7 +39,7 @@ class ProjetoController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
         $validatedData = $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'tipo_cliente_id' => 'required|exists:tipo_clientes,id',

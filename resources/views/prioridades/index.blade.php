@@ -310,7 +310,6 @@
                     if(true){
                         var linha = tbody.insertRow();
                         linha.setAttribute('data-id', projeto.id);
-                        console.log(projeto);
                         // Encontra o usuário específico e sua prioridade
                         var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
                         var prioridade = userProjeto.pivot.prioridade ? userProjeto.pivot.prioridade : 'N/A';
@@ -649,10 +648,64 @@
                             celulas[i].classList.add(...tdClassList);
                         }
                         celulas[0].classList.add('border-r-0');
-                        celulas[1].innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
+                        celulas[1].innerHTML = `
+                        <div class="flex items-end">
+                            <div>
+                                <form action="/projetos/${projeto.id}/cliente/atualizar" method="POST" class="my-0 py-0">
+                                    @csrf
+                                    @method('PUT')
+                                    <select name="novoCliente" id="novoCliente/${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                        @foreach($clientes as $cliente)
+                                            <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
+                                        @endforeach
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        `;
                         celulas[1].classList.add('border-l-0')
-                        celulas[2].innerHTML = projeto.tipo_cliente ? projeto.tipo_cliente.nome : 'Tipo não especificado';
-                        celulas[3].innerHTML = projeto.nome;
+                        celulas[2].innerHTML = `
+                        <div class="flex items-end">
+                            <div>
+                                <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente" class="my-0 py-0 hidden">
+                                    @csrf
+                                    @method('POST')
+                                    <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}"  onchange="${this.submit}">
+                                </form>
+                                <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente" method="POST" class="my-0 py-0">
+                                    @csrf
+                                    @method('PUT')
+                                    <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                        @foreach($tiposCliente as $tC)
+                                            <option value="{{$tC->id}}">{{$tC->nome}}</option>
+                                        @endforeach
+                                        <option value="-1" class="font-black">Novo</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        `;
+                        celulas[3].innerHTML = `
+                        <div class="flex items-end">
+                            <div>
+                                <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto" class="my-0 py-0 hidden">
+                                    @csrf
+                                    @method('POST')
+                                    <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" onchange="${this.submit}">
+                                </form>
+                                <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto" method="POST" class="my-0 py-0">
+                                    @csrf
+                                    @method('PUT')
+                                    <select name="novoTipoProjeto" id="novoTipoProjeto/${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                        @foreach($tiposProjeto as $tP)
+                                            <option value="{{$tP->id}}">{{$tP->nome}}</option>
+                                        @endforeach
+                                        <option value="-1" class="font-black">Novo</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        `;
 
                         var tarefas = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
                         celulas[4].classList.add(...tdClassList);
@@ -710,6 +763,35 @@
                             @endif        
                         </div>
                         `;
+
+                        var select = document.querySelector(`#novoCliente\\/${projeto.id}`);
+                        var options = select.options;
+                        for (var i = 0; i < options.length; i++) {
+                            if (options[i].text === projeto.cliente.nome) {
+                                options[i].selected = true;
+                                break;
+                            }
+                        }
+
+                        var select = document.querySelector(`#novoTipoCliente\\/${projeto.id}`);
+                        var options = select.options;
+                        for (var i = 0; i < options.length; i++) {
+                            if (options[i].text === projeto.tipo_cliente.nome) {
+                                options[i].selected = true;
+                                break;
+                            }
+                        }
+
+                        var select = document.querySelector(`#novoTipoProjeto\\/${projeto.id}`);
+                        var options = select.options;
+                        for (var i = 0; i < options.length; i++) {
+                            if (options[i].text === projeto.tipo_projeto.nome) {
+                                options[i].selected = true;
+                                break;
+                            }
+                        }
+
+
                     }
                     if(true){
                         
@@ -732,8 +814,6 @@
                             </h2>
                             <div style="background-color: ${projeto.estado_projeto.cor};" class="ml-3 size-6 rounded-full">
                             </div>
-
-
                         </div>
                         `;
 
@@ -904,8 +984,6 @@
                             </h2>
                             <div style="background-color: ${projeto.estado_projeto.cor};" class="ml-3 size-6 rounded-full">
                             </div>
-
-
                         </div>
                         `;
 
