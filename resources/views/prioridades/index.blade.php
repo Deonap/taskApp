@@ -26,13 +26,17 @@
                 border-bottom-width: 1px;
                 font-size: 14px;
             }
-            .disabledTable > *{
+            .disabledTable *{
                 pointer-events: none;
                 background-color: rgb(207 207 207);
             }
-            .chosenDraggable{
+            .chosenDraggable * {
                 background: rgb(150 150 150);
                 opacity: 1;
+            }
+            table {
+                width:100%;
+                table-layout: fixed;
             }
         </style>
     </head>
@@ -101,31 +105,31 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[3%]">
                                                 Nº
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[18%]">
                                                 Cliente
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[15%]">
                                                 Tipo
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[15%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[8%]">
                                                 Prioridade
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[17%]">
                                                 Observações
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[8%]">
                                                 Tempo
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[8%]">
                                                 Estado
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[8%]">
                                                 Ações
                                             </th>
                                         </tr>
@@ -164,31 +168,31 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
-                                            <th class="opacity-0 hover:cursor-default">
+                                            <th scope="col" class="opacity-0 hover:cursor-default w-[3%]">
                                                 Nº
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left w-[18%]">
                                                 Cliente
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[15%]">
                                                 Tipo
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[15%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[8%]">
                                                 Prioridade
                                             </th>
-                                            <th class="opacity-0 hover:cursor-default">
+                                            <th scope="col" class="opacity-0 hover:cursor-default w-[17%]">
                                                 Observações
                                             </th>
-                                            <th class="opacity-0 hover:cursor-default">
+                                            <th scope="col" class="opacity-0 hover:cursor-default w-[8%]">
                                                 Tempo
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[8%]">
                                                 Estado
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[8%]">
                                                 Ações
                                             </th>
                                         </tr>
@@ -222,28 +226,28 @@
                             <div class="overflow-x-auto">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
-                                        <th class="opacity-0 hover:cursor-default">
+                                        <th scope="col" class="opacity-0 hover:cursor-default w-[3%]">
                                             Nº
                                         </th>
-                                        <th scope="col">
+                                        <th scope="col" class="text-left w-[18%]">
                                             Cliente
                                         </th>
-                                        <th scope="col">
+                                        <th scope="col" class="text-left border w-[15%]">
                                             Tipo
                                         </th>
-                                        <th scope="col">
+                                        <th scope="col" class="text-left border w-[15%]">
                                             Projeto
                                         </th>
-                                        <th scope="col">
+                                        <th scope="col" class="text-left border w-[8%]">
                                             Prioridade
                                         </th>
-                                        <th scope="col">
+                                        <th scope="col" class="text-left border w-[25%]">
                                             Colaboradores
                                         </th>
-                                        <th scope="col">
+                                        <th scope="col" class="text-left border w-[8%]">
                                             Estado
                                         </th>
-                                        <th scope="col">
+                                        <th scope="col" class="text-left border w-[8%]">
                                             Ações
                                         </th>
                                     </thead>
@@ -347,7 +351,7 @@
                                     @csrf
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
-                                    <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}"  onchange="${this.submit}">
+                                    <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}" class="w-fit" onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
@@ -426,7 +430,6 @@
 
                         var celulaEstadoProjeto = linha.insertCell(7);
                         celulaEstadoProjeto.classList.add(...tdClassList);
-                        
                         
                         var tempoGastoMins = 0;
                         projeto.users.forEach(user => {
@@ -658,6 +661,7 @@
                                 <form action="/projetos/${projeto.id}/cliente/atualizar" method="POST" class="my-0 py-0">
                                     @csrf
                                     @method('PUT')
+                                    <input type="hidden" name="origin" value="prioridades">
                                     <select name="novoCliente" id="novoCliente/${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($clientes as $cliente)
                                             <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
@@ -674,11 +678,13 @@
                                 <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente" class="my-0 py-0 hidden">
                                     @csrf
                                     @method('POST')
+                                    <input type="hidden" name="origin" value="prioridades">
                                     <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}"  onchange="${this.submit}">
                                 </form>
-                                <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente" method="POST" class="my-0 py-0">
+                                <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
                                     @method('PUT')
+                                    <input type="hidden" name="origin" value="prioridades">
                                     <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposCliente as $tC)
                                             <option value="{{$tC->id}}">{{$tC->nome}}</option>
@@ -695,11 +701,13 @@
                                 <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto" class="my-0 py-0 hidden">
                                     @csrf
                                     @method('POST')
+                                    <input type="hidden" name="origin" value="prioridades">
                                     <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" onchange="${this.submit}">
                                 </form>
-                                <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto" method="POST" class="my-0 py-0">
+                                <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
                                     @method('PUT')
+                                    <input type="hidden" name="origin" value="prioridades">
                                     <select name="novoTipoProjeto" id="novoTipoProjeto/${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposProjeto as $tP)
                                             <option value="{{$tP->id}}">{{$tP->nome}}</option>
@@ -779,6 +787,7 @@
 
                         var select = document.querySelector(`#novoTipoCliente\\/${projeto.id}`);
                         var options = select.options;
+
                         for (var i = 0; i < options.length; i++) {
                             if (options[i].text === projeto.tipo_cliente.nome) {
                                 options[i].selected = true;
@@ -794,8 +803,6 @@
                                 break;
                             }
                         }
-
-
                     }
                     if(true){
                         

@@ -59,7 +59,7 @@ class PrioridadesController extends Controller
             $query->where('id', $colaboradorId);
         })->whereHas('users', function ($query) use ($colaboradorId) {
                 $query->where('id', '!=', $colaboradorId);
-            })->with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users'])->get();
+            })->with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])->get();
     }
 
     public function filtrarProjetos(Request $request)
@@ -89,7 +89,7 @@ class PrioridadesController extends Controller
         $colaboradorId = $request->query('colaborador_id');
         $estado = 'Pendente'; // Define o estado que você está interessado
 
-        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users'])
+        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])
             ->whereHas('users', function ($query) use ($colaboradorId) {
                 $query->where('id', $colaboradorId);
             })->whereHas('estadoProjeto', function ($query) use ($estado) {
