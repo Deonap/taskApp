@@ -320,6 +320,7 @@
 
                         var celulaN_Prioridade = linha.insertCell(0);
                         celulaN_Prioridade.classList.add(...tdClassList);
+                        celulaN_Prioridade.classList.add('text-center');
                         celulaN_Prioridade.innerHTML = prioridade;
 
                         var celulaNomeCliente = linha.insertCell(1);
@@ -910,10 +911,71 @@
                         }
 
                         celulas[0].classList.add('border-r-0', 'invisible');
-                        celulas[1].innerHTML = projeto.cliente.nome;
+                        celulas[1].innerHTML = `
+                        <div class="flex items-end">
+                            <div>
+                                <form action="/projetos/${projeto.id}/cliente/atualizar" method="POST" class="my-0 py-0">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="origin" value="prioridades">
+                                    <select name="novoCliente" id="novoCliente/colab/${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                        @foreach($clientes as $cliente)
+                                            <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
+                                        @endforeach
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        `;
                         celulas[1].classList.add('border-l-0');
-                        celulas[2].innerHTML = projeto.tipo_cliente ? projeto.tipo_cliente.nome : 'Tipo não especificado';
-                        celulas[3].innerHTML = projeto.nome;
+                        
+                        celulas[2].innerHTML = `
+                        <div class="flex items-end">
+                            <div>
+                                <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente" class="my-0 py-0 hidden">
+                                    @csrf
+                                    @method('POST')
+                                    <input type="hidden" name="origin" value="prioridades">
+                                    <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}"  onchange="${this.submit}">
+                                </form>
+                                <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/${projeto.id}" method="POST" class="my-0 py-0">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="origin" value="prioridades">
+                                    <select name="novoTipoCliente" id="novoTipoCliente/colab/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                        @foreach($tiposCliente as $tC)
+                                            <option value="{{$tC->id}}">{{$tC->nome}}</option>
+                                        @endforeach
+                                        <option value="-1" class="font-black">Novo</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        `;
+
+                        celulas[3].innerHTML = `
+                        <div class="flex items-end">
+                            <div>
+                                <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto" class="my-0 py-0 hidden">
+                                    @csrf
+                                    @method('POST')
+                                    <input type="hidden" name="origin" value="prioridades">
+                                    <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" onchange="${this.submit}">
+                                </form>
+                                <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/${projeto.id}" method="POST" class="my-0 py-0">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="origin" value="prioridades">
+                                    <select name="novoTipoProjeto" id="novoTipoProjeto/colab/${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                        @foreach($tiposProjeto as $tP)
+                                            <option value="{{$tP->id}}">{{$tP->nome}}</option>
+                                        @endforeach
+                                        <option value="-1" class="font-black">Novo</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        `;
 
                         var tarefas = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
                         celulas[4].innerHTML = tarefas;
@@ -974,6 +1036,34 @@
                             @endif
                         </div>
                         `;
+                        console.log(projeto);
+                        var select = document.querySelector(`#novoCliente\\/colab\\/${projeto.id}`);
+                        var options = select.options;
+                        for (var i = 0; i < options.length; i++) {
+                            if (options[i].text === projeto.cliente.nome) {
+                                options[i].selected = true;
+                                console.log(projeto.cliente.nome)
+                                break;
+                            }
+                        }
+
+                        var select = document.querySelector(`#novoTipoCliente\\/colab\\/${projeto.id}`);
+                        var options = select.options;
+                        for (var i = 0; i < options.length; i++) {
+                            if (options[i].text === projeto.tipo_cliente.nome) {
+                                options[i].selected = true;
+                                break;
+                            }
+                        }
+
+                        var select = document.querySelector(`#novoTipoProjeto\\/colab\\/${projeto.id}`);
+                        var options = select.options;
+                        for (var i = 0; i < options.length; i++) {
+                            if (options[i].text === projeto.tipo_projeto.nome) {
+                                options[i].selected = true;
+                                break;
+                            }
+                        }
                     }
                     if(true){
                         var linha1 = `
