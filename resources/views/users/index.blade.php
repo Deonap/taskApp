@@ -53,14 +53,14 @@
                                     <form action="{{route('users.update', $user->id)}}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <input name="name" value='{{ $user->name }}' onChange="this.form.submit()" class="border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                        <input name="name" value='{{ $user->name }}' onchange="this.form.submit()" class="border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
                                     </form>
                                 </td>
                                 <td class="hidden md:table-cell">
                                     <form action="{{route('users.update', $user->id)}}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <input name="email" value='{{ $user->email }}' onChange="this.form.submit()" class="border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                        <input name="email" value='{{ $user->email }}' onchange="this.form.submit()" class="border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
                                     </form>
                                 </td>
                                 <td class="hidden md:table-cell">
