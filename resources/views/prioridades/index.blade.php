@@ -326,6 +326,7 @@
                                 <form action="/projetos/${projeto.id}/cliente/atualizar" method="POST" class="my-0 py-0">
                                     @csrf
                                     @method('PUT')
+                                    <input type="hidden" name="origin" value="prioridades">
                                     <select name="novoCliente" id="novoCliente/${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($clientes as $cliente)
                                             <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
@@ -345,11 +346,13 @@
                                 <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente" class="my-0 py-0 hidden">
                                     @csrf
                                     @method('POST')
+                                    <input type="hidden" name="origin" value="prioridades">
                                     <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}"  onchange="${this.submit}">
                                 </form>
-                                <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente" method="POST" class="my-0 py-0">
+                                <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
                                     @method('PUT')
+                                    <input type="hidden" name="origin" value="prioridades">
                                     <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposCliente as $tC)
                                             <option value="{{$tC->id}}">{{$tC->nome}}</option>
@@ -369,11 +372,13 @@
                                 <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto" class="my-0 py-0 hidden">
                                     @csrf
                                     @method('POST')
+                                    <input type="hidden" name="origin" value="prioridades">
                                     <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" onchange="${this.submit}">
                                 </form>
-                                <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto" method="POST" class="my-0 py-0">
+                                <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
                                     @method('PUT')
+                                    <input type="hidden" name="origin" value="prioridades">
                                     <select name="novoTipoProjeto" id="novoTipoProjeto/${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposProjeto as $tP)
                                             <option value="{{$tP->id}}">{{$tP->nome}}</option>
@@ -618,7 +623,6 @@
                         </div>
                         `;
                     }
-
                 });
             });
     }
@@ -1380,19 +1384,18 @@
             select.classList.add("hidden")
             document.getElementById("formNovoTipoCliente").classList.remove("hidden");
         }else{
-            document.getElementById('formAlterarTipoCliente').submit();
+            document.getElementById('formAlterarTipoCliente/' + id.split('/')[1]).submit();
         }
     }
 
     function handleTipoProjetoForms(id){
         var select = document.getElementById(id);
 
-        console.log(select.value);
         if(select.value == -1){
             select.classList.add("hidden")
             document.getElementById("formNovoTipoProjeto").classList.remove("hidden");
         }else{
-            document.getElementById('formAlterarTipoProjeto').submit();
+            document.getElementById('formAlterarTipoProjeto/' + id.split('/')[1]).submit();
         }
     }
 </script>

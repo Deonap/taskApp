@@ -164,10 +164,14 @@ class ProjetoController extends Controller
         $projeto->tipo_cliente_id = $novoTipoCliente;
         $projeto->update();
 
-        if($request['cliente_id']){
-            return redirect(route('clientes.show', $projeto->cliente_id));
+        if($request->has('origin')){
+            $origin = $request['origin'];
+            if($origin === 'clientes'){
+                return redirect(route('clientes.show', $projeto->cliente_id));
+            }elseif($origin === 'prioridades'){
+                return redirect(route('prioridades.index'));
+            }
         }
-        return redirect(route('prioridades.index'));
     }
 
     public function createNewTipoCliente(Request $request)
@@ -176,10 +180,14 @@ class ProjetoController extends Controller
             'nome' => 'required|unique:tipo_clientes|max:255'
         ]);
         TipoCliente::create($validatedData);
-        if($request['cliente_id']){
-            return redirect(route("clientes.show", $request['cliente_id']));
+        if($request->has('origin')){
+            $origin = $request['origin'];
+            if($origin === 'clientes'){
+                return redirect(route('clientes.show', $request['cliente_id']));
+            }elseif($origin === 'prioridades'){
+                return redirect(route('prioridades.index'));
+            }
         }
-        return redirect(route('prioridades.index'));
     }
 
     public function createNewTipoProjeto(Request $request)
@@ -188,10 +196,14 @@ class ProjetoController extends Controller
             'nome' => 'required|unique:tipo_projetos|max:255'
         ]);
         TipoProjeto::create($validatedData);
-        if($request['cliente_id']){
-            return redirect(route("clientes.show", $request['cliente_id']));
+        if($request->has('origin')){
+            $origin = $request['origin'];
+            if($origin === 'clientes'){
+                return redirect(route('clientes.show', $request['cliente_id']));
+            }elseif($origin === 'prioridades'){
+                return redirect(route('prioridades.index'));
+            }
         }
-        return redirect(route('prioridades.index'));
     }
 
     public function atualizarTipoProjeto(Request $request, Projeto $projeto){
@@ -199,10 +211,14 @@ class ProjetoController extends Controller
 
         $projeto->tipo_projeto_id = $novoTipoProjeto;
         $projeto->update();
-        if($request['cliente_id']){
-            return redirect(route('clientes.show', $projeto->cliente_id));
+        if($request->has('origin')){
+            $origin = $request['origin'];
+            if($origin === 'clientes'){
+                return redirect(route('clientes.show', $projeto->cliente_id));
+            }elseif($origin === 'prioridades'){
+                return redirect(route('prioridades.index'));
+            }
         }
-        return redirect(route('prioridades.index'));
     }
 
     public function adicionarColaborador(Request $request, Projeto $projeto)
