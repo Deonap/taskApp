@@ -39,13 +39,12 @@ class ProjetoController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $validatedData = $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'tipo_cliente_id' => 'required|exists:tipo_clientes,id',
             'estado_projeto_id' => 'exists:estado_projetos,id', // Substitua pelos tipos que você possui
-            'nome' => 'required|max:255',
-            'tarefas' => 'required|array',
+            'nome' => 'string|max:255',
+            'tarefas' => 'array',
             'tarefas.*' => 'string', // Assumindo que as tarefas são enviadas como um array
             'users' => 'required|array|exists:users,id', // Assumindo que os colaboradores são enviados como um array
             'tempo_previsto' => 'required|string',
@@ -55,20 +54,22 @@ class ProjetoController extends Controller
         if (!$request->filled('estado_projeto_id')) {
             $validatedData['estado_projeto_id'] = 1; // Replace DEFAULT_VALUE_HERE with your default value
         }
+
         // Crie o novo projeto com os dados validados
         $projeto = Projeto::create($validatedData);
 
         // Anexe as tarefas ao projeto
-        $tarefasData = array_map(function ($descricao) {
-            return ['descricao' => $descricao];
-        }, $validatedData['tarefas']);
-
+        if($request->has('tarefas')){
+            $tarefasData = array_map(function ($descricao) {
+                return ['descricao' => $descricao];
+            }, $validatedData['tarefas']);
+        
         $projeto->tarefas()->createMany($tarefasData);
-
+        }
         // Anexe os usuários relacionados ao projeto
         $projeto->users()->sync($validatedData['users']);
 
-        return redirect()->route('clientes.index');
+        return redirect()->route('clientes.show', $projeto->cliente->id);
     }
 
 

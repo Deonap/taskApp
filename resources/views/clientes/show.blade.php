@@ -239,14 +239,14 @@
                                                         <select name="tipo_projeto_id" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                                             <option selected disabled>...</option>
                                                             @foreach($tipoProjeto as $tP)
-                                                                <option value="">{{$tP->nome}}</option>
+                                                                <option value={{$tP->id}}>{{$tP->nome}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                {{$projeto->notas_iniciais}}
+                                                <input type="text" name="notas_iniciais">
                                             </td>
                                             <td class="text-center">
                                                 <input type="text" class="text-center w-fit" placeholder="hh:mm" name="tempo_previsto" pattern="[0-9]{0,4}:[0-5][0-9]">
@@ -255,7 +255,7 @@
                                                 <div class="flex items-end">
                                                     <div>
                                                         <div class="flex items-center p-1">
-                                                            <select name="colaborador" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                            <select name="users[]" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                                                 <option selected disabled value="">...</option>
                                                                 @foreach($colaboradores as $colaborador)
                                                                     <option value="{{$colaborador->id}}" class="w-fit">{{$colaborador->name}}</option>        

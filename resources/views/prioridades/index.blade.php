@@ -1036,13 +1036,12 @@
                             @endif
                         </div>
                         `;
-                        console.log(projeto);
+                        
                         var select = document.querySelector(`#novoCliente\\/colab\\/${projeto.id}`);
                         var options = select.options;
                         for (var i = 0; i < options.length; i++) {
                             if (options[i].text === projeto.cliente.nome) {
                                 options[i].selected = true;
-                                console.log(projeto.cliente.nome)
                                 break;
                             }
                         }
