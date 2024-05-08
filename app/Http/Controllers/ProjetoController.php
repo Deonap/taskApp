@@ -135,7 +135,7 @@ class ProjetoController extends Controller
     {
         $projeto->users()->detach();
         $projeto->delete();
-        return redirect()->route('clientes.index');
+        return redirect()->route('clientes.show', $projeto->cliente->id);
     }
 
     public function atualizarColaborador(Request $request, Projeto $projeto)

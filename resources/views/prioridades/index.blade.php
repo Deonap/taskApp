@@ -31,7 +31,7 @@
                 background-color: rgb(207 207 207);
             }
             .chosenDraggable * {
-                background: rgb(150 150 150);
+                /* background: rgb(150 150 150); */
                 opacity: 1;
             }
             table {
@@ -44,8 +44,8 @@
         <x-app-layout>
             <div>
                 <div>
-                    <div class="items-center text-darkBlue flex">
-                        <div class="hidden xl:block">
+                    <div class="items-center text-darkBlue">
+                        <div class="hidden xl:flex">
                             <h2 class="text-xl font-black">
                                 Prioridades >
                             </h2>
@@ -117,7 +117,7 @@
                                             <th scope="col" class="text-left border w-[15%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col" class="text-left border w-[8%]">
+                                            <th scope="col" class="text-left border border-r-4 border-r-[#A3A2A3] w-[8%]">
                                                 Prioridade
                                             </th>
                                             <th scope="col" class="text-left border w-[17%]">
@@ -180,7 +180,7 @@
                                             <th scope="col" class="text-left border w-[15%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col" class="text-left border w-[8%]">
+                                            <th scope="col" class="text-left border border-r-4 border-r-[#A3A2A3]  w-[8%]">
                                                 Prioridade
                                             </th>
                                             <th scope="col" class="opacity-0 hover:cursor-default w-[17%]">
@@ -238,7 +238,7 @@
                                         <th scope="col" class="text-left border w-[15%]">
                                             Projeto
                                         </th>
-                                        <th scope="col" class="text-left border w-[8%]">
+                                        <th scope="col" class="text-left border border-r-4 border-r-[#A3A2A3] w-[8%]">
                                             Prioridade
                                         </th>
                                         <th scope="col" class="text-left border w-[25%]">
@@ -398,6 +398,7 @@
                         var celulaTarefas = linha.insertCell(4);
                         celulaTarefas.innerHTML = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
                         celulaTarefas.classList.add(...tdClassList);
+                        celulaTarefas.classList.add("border-r-4", 'border-r-[#A3A2A3]');
 
                         var celulaObservacoes = linha.insertCell(5);
                         var userProjeto = projeto.users.find(user => user.id == userId);
@@ -722,6 +723,7 @@
 
                         var tarefas = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
                         celulas[4].classList.add(...tdClassList);
+                        celulas[4].classList.add("border-r-4", 'border-r-[#A3A2A3]');
                         celulas[4].innerHTML = tarefas;
 
                         celulas[5].classList.add('border-r-0');
@@ -978,6 +980,7 @@
                         `;
 
                         var tarefas = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
+                        celulas[4].classList.add("border-r-4", 'border-r-[#A3A2A3]');
                         celulas[4].innerHTML = tarefas;
 
                         // Lista todos os colaboradores associados ao projeto
