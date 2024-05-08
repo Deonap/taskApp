@@ -451,11 +451,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                @foreach($projeto->tarefas as $tarefa)
-                                                    <div>
-                                                        {{ $tarefa->descricao }}
-                                                    </div>
-                                                @endforeach
+                                                {{$projeto->notas_iniciais}}
                                             </td>
                                             <td class="text-center">
                                                 {{ $projeto->tempo_previsto }}
