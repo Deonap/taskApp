@@ -105,7 +105,7 @@
                                             <td>
                                                 <div class="flex items-end">
                                                     <div>
-                                                        <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente" class="my-0 py-0 hidden">
+                                                        <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente/{{$projeto->id}}" class="my-0 py-0 hidden">
                                                             @csrf
                                                             @method('POST')
                                                             <input type="hidden" name="origin" value="clientes">
@@ -129,7 +129,7 @@
                                             <td>
                                                 <div class="flex items-end">
                                                     <div>
-                                                        <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto" class="my-0 py-0 hidden">
+                                                        <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto/{{$projeto->id}}" class="my-0 py-0 hidden">
                                                             @csrf
                                                             @method('POST')
                                                             <input type="hidden" name="origin" value="clientes">
@@ -403,10 +403,52 @@
                                     @foreach($projetosConcluidos as $projeto)
                                         <tr>
                                             <td>
-                                                {{ $projeto->tipoCliente->nome }}
+                                                <div class="flex items-end">
+                                                    <div>
+                                                        <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente/{{$projeto->id}}" class="my-0 py-0 hidden">
+                                                            @csrf
+                                                            @method('POST')
+                                                            <input type="hidden" name="origin" value="clientes">
+                                                            <input type="text" name="cliente_id" value="{{$cliente->id}}" class="hidden">
+                                                            <input type="text" name="nome" id="newTipoClienteInput/{{$projeto->id}}"  onchange="this.form.submit()">
+                                                        </form>
+                                                        <form action="{{route('projetos.tipoCliente.atualizar', $projeto->id)}}" id="formAlterarTipoCliente/{{$projeto->id}}" method="POST" class="my-0 py-0">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <input type="hidden" name="origin" value="clientes">
+                                                            <select name="novoTipoCliente" id="novoTipoCliente/{{$projeto->id}}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                                @foreach($tiposCliente as $tC)
+                                                                    <option value="{{$tC->id}}" {{$tC->nome == $projeto->tipoCliente->nome ? "selected" : ""}}>{{$tC->nome}}</option>
+                                                                @endforeach
+                                                                <option value="-1" class="font-black">Novo</option>
+                                                            </select>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>
-                                                {{ $projeto->nome }}
+                                                <div class="flex items-end">
+                                                    <div>
+                                                        <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto/{{$projeto->id}}" class="my-0 py-0 hidden">
+                                                            @csrf
+                                                            @method('POST')
+                                                            <input type="hidden" name="origin" value="clientes">
+                                                            <input type="text" name="cliente_id" value={{$cliente->id}} class="hidden">
+                                                            <input type="text" name="nome" id="newTipoProjetoInput/{{$projeto->id}}" onchange="this.form.submit()">
+                                                        </form>
+                                                        <form action="{{route('projetos.tipoProjeto.atualizar', $projeto->id)}}" id="formAlterarTipoProjeto/{{$projeto->id}}" method="POST" class="my-0 py-0">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <input type="hidden" name="origin" value="clientes">
+                                                            <select name="novoTipoProjeto" id="novoTipoProjeto/{{$projeto->id}}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                                @foreach($tipoProjeto as $tP)
+                                                                    <option value="{{$tP->id}}" {{$tP->nome == $projeto->tipoProjeto->nome ? "selected" : ""}}>{{$tP->nome}}</option>
+                                                                @endforeach
+                                                                <option value="-1" class="font-black">Novo</option>
+                                                            </select>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>
                                                 @foreach($projeto->tarefas as $tarefa)
@@ -613,7 +655,7 @@
         var select = document.getElementById(id);
         if(select.value == -1){
             select.classList.add("hidden")
-            document.getElementById("formNovoTipoCliente").classList.remove("hidden");
+            document.getElementById("formNovoTipoCliente/" + id.split('/')[1]).classList.remove("hidden");
         }else{
             document.getElementById('formAlterarTipoCliente/' + id.split('/')[1]).submit();
         }
@@ -624,7 +666,7 @@
 
         if(select.value == -1){
             select.classList.add("hidden")
-            document.getElementById("formNovoTipoProjeto").classList.remove("hidden");
+            document.getElementById("formNovoTipoProjeto/" + id.split('/')[1]).classList.remove("hidden");
         }else{
             console.log('formAlterarTipoProjeto/' + id.split('/')[1]);
             document.getElementById('formAlterarTipoProjeto/' + id.split('/')[1]).submit();
