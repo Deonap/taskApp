@@ -44,9 +44,9 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'tipo' => 'required|in:admin,colaborador',
+            'name' => 'max:255',
+            'email' => 'email|unique:users,email,' . $user->id,
+            'tipo' => 'in:admin,colaborador',
             // Não inclua a validação de senha aqui se a senha não puder ser alterada neste formulário
         ]);
 
