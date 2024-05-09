@@ -12,6 +12,10 @@
             form{
                 margin:auto;
             }
+            table{
+                width: 100%;
+                table-layout: fixed;
+            }
         </style>
     </head>
     <body>
@@ -35,19 +39,33 @@
                     <table class="table-auto w-full">
                         <thead>
                             <tr class="bg-gray-300">
-                                <th>Nome</th>
-                                <th>Cor</th>
-                                <th class="text-center">Ações</th>
+                                <th scope="col" class="w-1/3">
+                                    Nome
+                                </th>
+                                <th scope="col" class="w-1/3">
+                                    Cor
+                                </th>
+                                <th scope="col" class="w-1/3 text-center">
+                                    Ações
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($tipos as $tipo)
                             <tr class="border-b">
                                 <td>
-                                    {{ $tipo->nome }}
+                                    <form action="{{route('tipo-clientes.update', $tipo->id)}}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <input name="nome" value='{{ $tipo->nome }}' onchange="this.form.submit()" class="border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                    </form>
                                 </td>
                                 <td>
-                                    <button disabled style="background-color: {{ $tipo->cor }};" class="size-6 rounded-sm"></button>
+                                    <form action="{{route('tipo-clientes.update', $tipo->id)}}" class="ml-2 size-6" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <input class="rounded-sm w-full border-0" id="cor" onchange="this.form.submit()" type="color" name="cor" value="{{ $tipo->cor }}">
+                                    </form>
                                 </td>
                                 <td>
                                     <div class="flex justify-center space-x-3">

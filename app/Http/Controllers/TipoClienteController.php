@@ -59,8 +59,8 @@ class TipoClienteController extends Controller
     public function update(Request $request, TipoCliente $tipoCliente)
     {
         $validatedData = $request->validate([
-            'nome' => 'required|max:255',
-            'cor' => 'required',
+            'nome' => 'string|max:255',
+            'cor' => 'string',
         ]);
         $tipoCliente->update($validatedData);
         return redirect()->route('tipo-clientes.index');

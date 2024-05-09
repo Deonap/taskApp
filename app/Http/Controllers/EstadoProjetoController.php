@@ -59,8 +59,8 @@ class EstadoProjetoController extends Controller
     public function update(Request $request, EstadoProjeto $estadoProjeto)
     {
         $validatedData = $request->validate([
-            'nome' => 'required|max:255',
-            'cor' => 'required',
+            'nome' => 'string|max:255',
+            'cor' => 'string',
         ]);
         $estadoProjeto->update($validatedData);
         return redirect()->route('estado-projetos.index');
