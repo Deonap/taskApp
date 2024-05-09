@@ -113,7 +113,7 @@ class HistoricoController extends Controller
         // Aqui, você não precisa declarar novamente $inicioSemana e $fimSemana porque eles serão pegos da query string.
         
 
-        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto'])
+        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users'])
                         ->whereHas('users', function ($query) use ($colaboradorId) {
                             $query->where('id', $colaboradorId);
                         })->whereHas('estadoProjeto', function ($query) use ($estado) {

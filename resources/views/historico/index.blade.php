@@ -304,7 +304,7 @@
                 var linha = tbody.insertRow(); // Insere uma nova linha na tabela
                 var userId = document.getElementById('colaborador').value;
                 // Adiciona borda a cada célula
-                for (let i = 0; i < 8; i++) {
+                for (let i = 0; i < 9; i++) {
                     var celula = linha.insertCell();
                     celula.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap'); // Adiciona classes de estilo
                 }
@@ -318,7 +318,7 @@
                 }
                 // Coluna de Número (Prioridade)
                 linha.cells[0].innerHTML = u.pivot.prioridade;
-
+                linha.cells[0].classList.add('text-center')
                 // Coluna de Cliente
                 linha.cells[1].innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
 
@@ -354,10 +354,37 @@
 
                 // Coluna de Estado do Projeto
                 var celulaEstadoProjeto = linha.cells[7];
-                celulaEstadoProjeto.classList.remove('border');
-                celulaEstadoProjeto.innerHTML = projeto.estado_projeto ? 
-                    `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full"></div>` :
-                    'Estado não especificado';
+                celulaEstadoProjeto.classList.add('border-r-0');
+                var tempoGastoMins = 0;
+                projeto.users.forEach(user => {
+                    var tempoGasto = user.pivot.tempo_gasto.split(":");
+                    var tempoGastoP1 = parseInt(tempoGasto[0]);
+                    var tempoGastoP2 = parseInt(tempoGasto[1]);
+                    tempoGastoMins += tempoGastoP1 * 60 + tempoGastoP2;
+                });
+
+                var tempoPrevisto = projeto.tempo_previsto.split(":");
+                var tempoPrevistoP1 = parseInt(tempoPrevisto[0]);
+                var tempoPrevistoP2 = parseInt(tempoPrevisto[1]);
+
+                var tempoPrevistoMinutes = tempoPrevistoP1 * 60 + tempoPrevistoP2;
+
+                var bgColor;
+                if (tempoGastoMins < tempoPrevistoMinutes) {
+                    bgColor = '122,166,77';
+                } else if (tempoGastoMins === tempoPrevistoMinutes) {
+                    bgColor = '10,57,86';
+                } else {
+                    bgColor = '231,81,91';
+                }
+
+                celulaEstadoProjeto.innerHTML = `
+                <div style="background-color: rgb(${bgColor});" class="m-auto size-7 rounded-full">
+                </div>
+                `;
+
+                linha.cells[8].classList.add("border-l-0");
+
             }
             if(true){
                 var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
@@ -494,7 +521,7 @@
                     celula.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap');
                 }
                 // Coluna invisivel
-                linha.cells[0].classList.remove('border');
+                linha.cells[0].classList.add('border-r-0');
                 // Coluna de Cliente
                 linha.cells[1].innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
                 linha.cells[1].classList.add('border-l-0');
@@ -505,16 +532,40 @@
                 // Coluna de Tarefas
                 linha.cells[4].innerHTML = projeto.tarefas.map(tarefa => `<div>${tarefa.descricao}</div>`).join("");
                 // Coluna invisivel
-                linha.cells[5].classList.remove('border');
+                linha.cells[5].classList.add('border', 'border-l-0', 'border-r-0');
                 // Coluna invisivel
-                linha.cells[6].classList.remove('border');
+                linha.cells[6].classList.add('border', 'border-l-0', 'border-r-0');
                 // Coluna de Estado do Projeto
                 linha.cells[7].classList.add('border-r-0')
-                linha.cells[7].innerHTML = projeto.estado_projeto ? 
-                    `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full"></div>` :
-                    'Estado não especificado';
+                var tempoGastoMins = 0;
+                projeto.users.forEach(user => {
+                    var tempoGasto = user.pivot.tempo_gasto.split(":");
+                    var tempoGastoP1 = parseInt(tempoGasto[0]);
+                    var tempoGastoP2 = parseInt(tempoGasto[1]);
+                    tempoGastoMins += tempoGastoP1 * 60 + tempoGastoP2;
+                });
+
+                var tempoPrevisto = projeto.tempo_previsto.split(":");
+                var tempoPrevistoP1 = parseInt(tempoPrevisto[0]);
+                var tempoPrevistoP2 = parseInt(tempoPrevisto[1]);
+
+                var tempoPrevistoMinutes = tempoPrevistoP1 * 60 + tempoPrevistoP2;
+
+                var bgColor;
+                if (tempoGastoMins < tempoPrevistoMinutes) {
+                    bgColor = '122,166,77';
+                } else if (tempoGastoMins === tempoPrevistoMinutes) {
+                    bgColor = '10,57,86';
+                } else {
+                    bgColor = '231,81,91';
+                }
+
+                linha.cells[7].innerHTML = `
+                <div style="background-color: rgb(${bgColor});" class="m-auto size-7 rounded-full">
+                </div>
+                `;
                 // Coluna invisivel
-                linha.cells[8].classList.remove('border');
+                linha.cells[8].classList.add('border-l-0');
             }
             if(true){
                 var linha1 = `
@@ -600,7 +651,7 @@
                         var celula = linha.insertCell();
                         celula.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
                     }
-                    linha.cells[0].classList.remove('border');
+                    linha.cells[0].classList.add('border-r-0');
                     linha.cells[1].innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
                     linha.cells[1].classList.add('border-l-0');
                     linha.cells[2].innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
@@ -610,10 +661,35 @@
                     var colaboradores = projeto.users.map(user => `<p>${user.name}</p>`).join("");
                     linha.cells[5].innerHTML = colaboradores;
                     linha.cells[6].classList.add('border-r-0');
-                    linha.cells[6].innerHTML = projeto.estado_projeto ? 
-                    `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full"></div>` :
-                    'Estado não especificado';
-                    linha.cells[7].classList.remove('border');
+                    
+                    var tempoGastoMins = 0;
+                    console.log(projeto);
+                    projeto.users.forEach(user => {
+                        var tempoGasto = user.pivot.tempo_gasto.split(":");
+                        var tempoGastoP1 = parseInt(tempoGasto[0]);
+                        var tempoGastoP2 = parseInt(tempoGasto[1]);
+                        tempoGastoMins += tempoGastoP1 * 60 + tempoGastoP2;
+                    });
+
+                    var tempoPrevisto = projeto.tempo_previsto.split(":");
+                    var tempoPrevistoP1 = parseInt(tempoPrevisto[0]);
+                    var tempoPrevistoP2 = parseInt(tempoPrevisto[1]);
+
+                    var tempoPrevistoMinutes = tempoPrevistoP1 * 60 + tempoPrevistoP2;
+
+                    var bgColor;
+                    if (tempoGastoMins < tempoPrevistoMinutes) {
+                        bgColor = '122,166,77';
+                    } else if (tempoGastoMins === tempoPrevistoMinutes) {
+                        bgColor = '10,57,86';
+                    } else {
+                        bgColor = '231,81,91';
+                    }
+                    linha.cells[6].innerHTML = `
+                    <div style="background-color: rgb(${bgColor});" class="m-auto size-7 rounded-full">
+                    </div>
+                    `;
+                    linha.cells[7].classList.add('border-l-0');
                 }
                 if(true){
                         var linha1 = `
