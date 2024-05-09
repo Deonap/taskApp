@@ -393,23 +393,30 @@
                 // Coluna de Observações
                 var celulaObservacoes = linha.cells[5];
                 var textareaObservacoes = document.createElement('textarea');
-                textareaObservacoes.classList.add('form-input', 'observacoes', 'border', 'border-gray-300', 'rounded-md', 'w-full', 'resize-none', 'h-16', 'overflow-y-auto');
-                textareaObservacoes.setAttribute('rows', '3');
-                textareaObservacoes.readOnly = true;
-                textareaObservacoes.value = u.pivot.observacoes || '';
-                celulaObservacoes.appendChild(textareaObservacoes);
+                var div = document.createElement('div');
+                var content = u.pivot.observacoes || "";
+                div.innerHTML = `   
+                <form action="/projetos/${projeto.id}/${userId}/updateObs" method="POST" class="m-auto justify-center flex flex-wrap">
+                    @csrf
+                    @method('PUT')
+                    <input value='${content}' title='${content}' onTextChange='this.form.submit()' class="border-none form-input observacoes bg-transparent w-full resize-none h-16 text-start" name='observacoes' autocomplete=off/>
+                </form>
+                `;
+                celulaObservacoes.appendChild(div);
 
                 // Coluna de Tempo Gasto
                 var celulaTempoGasto = linha.cells[6];
 
                 var div = document.createElement('div');
                 var tempoGasto = u.pivot.tempo_gasto;
-                div.innerHTML = 
-                `
-                    <input value='${tempoGasto}' disabled class="border-none bg-transparent rounded-md p-2 w-full tempo-gasto text-center" autocomplete="off" pattern="[0-9]{0,4}:[0-5][0-9]" type="text" placeholder="${tempoGasto}" name="tempoGasto">
+                div.innerHTML = `
+                <form action="/projetos/${projeto.id}/${userId}/updateTimeSpent" method="POST" class="m-auto w-[100px] justify-center">
+                    @csrf
+                    @method('PUT')
+                    <input value='${tempoGasto}' onChange='${this.submit}' class="border-none bg-transparent rounded-md p-2 w-full tempo-gasto text-center" autocomplete="off" pattern="[0-9]{0,4}:[0-5][0-9]" type="text" placeholder="${tempoGasto}" name="tempoGasto">
+                </form>
                 `;
                 celulaTempoGasto.appendChild(div);
-
 
                 // Coluna de Estado do Projeto
                 var celulaEstadoProjeto = linha.cells[7];
