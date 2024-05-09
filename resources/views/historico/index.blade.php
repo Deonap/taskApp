@@ -14,6 +14,10 @@
                 border-bottom-width: 1px;
                 font-size: 14px;
             }
+            table{
+                width: 100%;
+                table-layout: fixed;
+            }
         </style>
     </head>
     <body>
@@ -57,33 +61,36 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="overflow-x-auto">
+                            <div>
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[3%]">
                                                 Nº
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[18%]">
                                                 Cliente
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[15%]">
                                                 Tipo
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[15%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[8%]">
                                                 Prioridade
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[17%]">
                                                 Observações
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[8%]">
                                                 Tempo
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left w-[8%]">
                                                 Estado
+                                            </th>
+                                            <th scope="col" class="opacity-0 hover:cursor-none w-[8%]">
+                                                
                                             </th>
                                         </tr>
                                     </thead>
@@ -113,24 +120,36 @@
                                     <h3 class="text-lg font-semibold">Projetos Pendentes</h3>
                                 </div>
                             </div>
-                            <div class="overflow-x-auto">
+                            <div>
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left w-[3%]">
+
+                                            </th>
+                                            <th scope="col" class="text-left border border-l-0 w-[18%]">
                                                 Cliente
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[15%]">
                                                 Tipo
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[15%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left border w-[8%]">
                                                 Prioridade
                                             </th>
-                                            <th scope="col">
+                                            <th scope="col" class="text-left w-[17%]">
+
+                                            </th>
+                                            <th scope="col" class="text-left w-[8%]">
+
+                                            </th>
+                                            <th scope="col" class="text-left border border-r-0 w-[8%]">
                                                 Estado
+                                            </th>
+                                            <th scope="col" class="text-left w-[8%]">
+
                                             </th>
                                         </tr>
                                     </thead>
@@ -163,23 +182,29 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-[#d5d4d5]">
                                     <tr>
-                                        <th scope="col">
+                                        <th scope="col" class="text-left w-[3%]">
+
+                                        </th>
+                                        <th scope="col" class="text-left border border-l-0 w-[18%]">
                                             Cliente
                                         </th>
-                                        <th scope="col">
+                                        <th scope="col" class="text-left border w-[15%]">
                                             Tipo
                                         </th>
-                                        <th scope="col">
+                                        <th scope="col" class="text-left border w-[15%]">
                                             Projeto
                                         </th>
-                                        <th scope="col">
+                                        <th scope="col" class="text-left border w-[8%]">
                                             Prioridade
                                         </th>
-                                        <th scope="col">
+                                        <th scope="col" class="text-left border w-[25%]">
                                             Colaboradores
                                         </th>
-                                        <th scope="col">
+                                        <th scope="col" class="text-left border border-r-0 w-[8%]">
                                             Estado
+                                        </th>
+                                        <th scope="col" class="text-left w-[8%]">
+
                                         </th>
                                     </tr>
                                 </thead>
@@ -281,7 +306,7 @@
                 // Adiciona borda a cada célula
                 for (let i = 0; i < 8; i++) {
                     var celula = linha.insertCell();
-                    celula.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b'); // Adiciona classes de estilo
+                    celula.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap'); // Adiciona classes de estilo
                 }
 
 
@@ -329,6 +354,7 @@
 
                 // Coluna de Estado do Projeto
                 var celulaEstadoProjeto = linha.cells[7];
+                celulaEstadoProjeto.classList.remove('border');
                 celulaEstadoProjeto.innerHTML = projeto.estado_projeto ? 
                     `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full"></div>` :
                     'Estado não especificado';
@@ -463,22 +489,32 @@
                 var linha = tbody.insertRow(); // Insere uma nova linha na tabela
 
                 // Adiciona borda a cada célula
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < 9; i++) {
                     var celula = linha.insertCell();
-                    celula.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
+                    celula.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap');
                 }
+                // Coluna invisivel
+                linha.cells[0].classList.remove('border');
                 // Coluna de Cliente
-                linha.cells[0].innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
+                linha.cells[1].innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
+                linha.cells[1].classList.add('border-l-0');
                 // Coluna de Tipo de Cliente
-                linha.cells[1].innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
+                linha.cells[2].innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
                 // Coluna de Nome do Projeto
-                linha.cells[2].innerHTML = projeto.nome;
+                linha.cells[3].innerHTML = projeto.nome;
                 // Coluna de Tarefas
-                linha.cells[3].innerHTML = projeto.tarefas.map(tarefa => `<div>${tarefa.descricao}</div>`).join("");
+                linha.cells[4].innerHTML = projeto.tarefas.map(tarefa => `<div>${tarefa.descricao}</div>`).join("");
+                // Coluna invisivel
+                linha.cells[5].classList.remove('border');
+                // Coluna invisivel
+                linha.cells[6].classList.remove('border');
                 // Coluna de Estado do Projeto
-                linha.cells[4].innerHTML = projeto.estado_projeto ? 
+                linha.cells[7].classList.add('border-r-0')
+                linha.cells[7].innerHTML = projeto.estado_projeto ? 
                     `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full"></div>` :
                     'Estado não especificado';
+                // Coluna invisivel
+                linha.cells[8].classList.remove('border');
             }
             if(true){
                 var linha1 = `
@@ -560,21 +596,24 @@
                 if(true){
                     var linha = tbody.insertRow();
 
-                    for (let i = 0; i < 6; i++) {
+                    for (let i = 0; i < 8; i++) {
                         var celula = linha.insertCell();
                         celula.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap', 'border-b');
                     }
-
-                    linha.cells[0].innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
-                    linha.cells[1].innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
-                    linha.cells[2].innerHTML = projeto.nome;
-                    linha.cells[3].innerHTML = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
+                    linha.cells[0].classList.remove('border');
+                    linha.cells[1].innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
+                    linha.cells[1].classList.add('border-l-0');
+                    linha.cells[2].innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
+                    linha.cells[3].innerHTML = projeto.nome;
+                    linha.cells[4].innerHTML = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
                     // Lista os nomes dos colaboradores
                     var colaboradores = projeto.users.map(user => `<p>${user.name}</p>`).join("");
-                    linha.cells[4].innerHTML = colaboradores;
-                    linha.cells[5].innerHTML = projeto.estado_projeto ? 
+                    linha.cells[5].innerHTML = colaboradores;
+                    linha.cells[6].classList.add('border-r-0');
+                    linha.cells[6].innerHTML = projeto.estado_projeto ? 
                     `<div style="background-color: ${projeto.estado_projeto.cor};" class="m-auto size-7 rounded-full"></div>` :
                     'Estado não especificado';
+                    linha.cells[7].classList.remove('border');
                 }
                 if(true){
                         var linha1 = `

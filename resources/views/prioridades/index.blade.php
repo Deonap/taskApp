@@ -101,7 +101,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="overflow-x-auto">
+                            <div>
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
@@ -164,7 +164,7 @@
                                     <h3 class="text-lg font-semibold">Projetos Pendentes</h3>
                                 </div>
                             </div>
-                            <div class="overflow-x-auto">
+                            <div>
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
@@ -223,7 +223,7 @@
                                     <h3 class="text-lg font-semibold">Projetos com Outros Colaboradores</h3>
                                 </div>
                             </div>
-                            <div class="overflow-x-auto">
+                            <div>
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <th scope="col" class="opacity-0 hover:cursor-default w-[3%]">
