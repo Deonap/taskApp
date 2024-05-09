@@ -7,6 +7,9 @@ use Carbon\Carbon;
 use App\Models\Projeto;
 use App\Models\User;
 use App\Models\EstadoProjeto;
+use App\Models\Cliente;
+use App\Models\TipoCliente;
+use App\Models\TipoProjeto;
 
 class HistoricoController extends Controller
 {
@@ -28,7 +31,11 @@ class HistoricoController extends Controller
         logger()->info('Request recebido:', $request->all());
         logger()->info('Projetos com outros colaboradores no Index:', $projetosComOutros->toArray());
 
-        return view('historico.index', compact( 'colaboradores', 'inicioSemana', 'fimSemana', 'projetosEmAberto', 'projetosPendentes','projetosComOutros'));
+        $clientes= Cliente::all();
+        $tiposCliente= TipoCliente::all();
+        $tiposProjeto = TipoProjeto::all();
+
+        return view('historico.index', compact( 'colaboradores', 'inicioSemana', 'fimSemana', 'projetosEmAberto', 'projetosPendentes','projetosComOutros', 'clientes', 'tiposCliente', 'tiposProjeto'));
     }
 
     private function filtrarProjetosPorEstadoEColaborador($estadoNome, $colaboradorId, $inicioSemana, $fimSemana)
@@ -69,7 +76,7 @@ class HistoricoController extends Controller
         $inicioSemana = $request->query('inicio_semana');
         $fimSemana = $request->query('fim_semana');
 
-        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users'])
+        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])
                         ->whereHas('users', function ($query) use ($colaboradorId) {
                             $query->where('id', $colaboradorId);
                         })->whereBetween('updated_at', [$inicioSemana, $fimSemana])
@@ -90,7 +97,7 @@ class HistoricoController extends Controller
         $fimSemana = $request->query('fim_semana');
         $estado = 'Em desenvolvimento'; // Define o estado que você está interessado
 
-        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users'])
+        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])
                         ->whereHas('users', function ($query) use ($colaboradorId) {
                             $query->where('id', $colaboradorId);
                         })->whereHas('estadoProjeto', function ($query) use ($estado) {
@@ -113,7 +120,7 @@ class HistoricoController extends Controller
         // Aqui, você não precisa declarar novamente $inicioSemana e $fimSemana porque eles serão pegos da query string.
         
 
-        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users'])
+        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])
                         ->whereHas('users', function ($query) use ($colaboradorId) {
                             $query->where('id', $colaboradorId);
                         })->whereHas('estadoProjeto', function ($query) use ($estado) {

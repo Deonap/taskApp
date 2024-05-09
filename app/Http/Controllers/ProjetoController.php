@@ -171,6 +171,8 @@ class ProjetoController extends Controller
                 return redirect(route('clientes.show', $projeto->cliente_id));
             }elseif($origin === 'prioridades'){
                 return redirect(route('prioridades.index'));
+            }elseif($origin === 'historico'){
+                return redirect(route('historico.index'));
             }
         }
     }
@@ -187,6 +189,8 @@ class ProjetoController extends Controller
                 return redirect(route('clientes.show', $request['cliente_id']));
             }elseif($origin === 'prioridades'){
                 return redirect(route('prioridades.index'));
+            }elseif($origin === 'historico'){
+                return redirect(route('historico.index'));
             }
         }
     }
@@ -203,6 +207,8 @@ class ProjetoController extends Controller
                 return redirect(route('clientes.show', $request['cliente_id']));
             }elseif($origin === 'prioridades'){
                 return redirect(route('prioridades.index'));
+            }elseif($origin === 'historico'){
+                return redirect(route('historico.index'));
             }
         }
     }
@@ -218,6 +224,8 @@ class ProjetoController extends Controller
                 return redirect(route('clientes.show', $projeto->cliente_id));
             }elseif($origin === 'prioridades'){
                 return redirect(route('prioridades.index'));
+            }elseif($origin === 'historico'){
+                return redirect(route('historico.index'));
             }
         }
     }

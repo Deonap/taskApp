@@ -77,7 +77,7 @@
                                             <th scope="col" class="text-left border w-[15%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col" class="text-left border w-[8%]">
+                                            <th scope="col" class="text-left border border-r-4 border-r-[#A3A2A3] w-[8%]">
                                                 Prioridade
                                             </th>
                                             <th scope="col" class="text-left border w-[17%]">
@@ -136,7 +136,7 @@
                                             <th scope="col" class="text-left border w-[15%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col" class="text-left border w-[8%]">
+                                            <th scope="col" class="text-left border border-r-4 border-r-[#A3A2A3] w-[8%]">
                                                 Prioridade
                                             </th>
                                             <th scope="col" class="text-left w-[17%]">
@@ -194,7 +194,7 @@
                                         <th scope="col" class="text-left border w-[15%]">
                                             Projeto
                                         </th>
-                                        <th scope="col" class="text-left border w-[8%]">
+                                        <th scope="col" class="text-left border border-r-4 border-r-[#A3A2A3] w-[8%]">
                                             Prioridade
                                         </th>
                                         <th scope="col" class="text-left border w-[25%]">
@@ -320,17 +320,76 @@
                 linha.cells[0].innerHTML = u.pivot.prioridade;
                 linha.cells[0].classList.add('text-center')
                 // Coluna de Cliente
-                linha.cells[1].innerHTML = projeto.cliente && projeto.cliente.nome ? projeto.cliente.nome : 'Cliente não especificado';
+                linha.cells[1].innerHTML = `
+                <div class="flex items-end">
+                    <div>
+                        <form action="/projetos/${projeto.id}/cliente/atualizar" method="POST" class="my-0 py-0">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" name="origin" value="historico">
+                            <select name="novoCliente" id="novoCliente/${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                @foreach($clientes as $cliente)
+                                    <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
+                                @endforeach
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                `;
 
                 // Coluna de Tipo de Cliente
-                linha.cells[2].innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
+                linha.cells[2].innerHTML = `
+                <div class="flex items-end">
+                    <div>
+                        <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente" class="my-0 py-0 hidden">
+                            @csrf
+                            @method('POST')
+                            <input type="hidden" name="origin" value="historico">
+                            <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}" class="w-fit" onchange="${this.submit}">
+                        </form>
+                        <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/${projeto.id}" method="POST" class="my-0 py-0">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" name="origin" value="historico">
+                            <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                @foreach($tiposCliente as $tC)
+                                    <option value="{{$tC->id}}">{{$tC->nome}}</option>
+                                @endforeach
+                                <option value="-1" class="font-black">Novo</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                `;
 
                 // Coluna de Nome do Projeto
-                linha.cells[3].innerHTML = projeto.nome;
+                linha.cells[3].innerHTML = `
+                <div class="flex items-end">
+                    <div>
+                        <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto" class="my-0 py-0 hidden">
+                            @csrf
+                            @method('POST')
+                            <input type="hidden" name="origin" value="historico">
+                            <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" onchange="${this.submit}">
+                        </form>
+                        <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/${projeto.id}" method="POST" class="my-0 py-0">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" name="origin" value="historico">
+                            <select name="novoTipoProjeto" id="novoTipoProjeto/${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                @foreach($tiposProjeto as $tP)
+                                    <option value="{{$tP->id}}">{{$tP->nome}}</option>
+                                @endforeach
+                                <option value="-1" class="font-black">Novo</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                `;
 
                 // Coluna de Tarefas
                 linha.cells[4].innerHTML = projeto.tarefas.map(tarefa => `<div>${tarefa.descricao}</div>`).join("");
-
+                linha.cells[4].classList.add('border-r-4','border-r-[#A3A2A3]');
                 // Coluna de Observações
                 var celulaObservacoes = linha.cells[5];
                 var textareaObservacoes = document.createElement('textarea');
@@ -384,6 +443,34 @@
                 `;
 
                 linha.cells[8].classList.add("border-l-0");
+
+                var select = document.querySelector(`#novoCliente\\/${projeto.id}`);
+                var options = select.options;
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].text === projeto.cliente.nome) {
+                        options[i].selected = true;
+                        break;
+                    }
+                }
+
+                var select = document.querySelector(`#novoTipoCliente\\/${projeto.id}`);
+                var options = select.options;
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].text === projeto.tipo_cliente.nome) {
+                        options[i].selected = true;
+                        break;
+                    }
+                }
+                
+                var select = document.querySelector(`#novoTipoProjeto\\/${projeto.id}`);
+                var options = select.options;
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].text === projeto.tipo_projeto.nome) {
+                        options[i].selected = true;
+                        break;
+                    }
+                }
+
 
             }
             if(true){
@@ -531,6 +618,7 @@
                 linha.cells[3].innerHTML = projeto.nome;
                 // Coluna de Tarefas
                 linha.cells[4].innerHTML = projeto.tarefas.map(tarefa => `<div>${tarefa.descricao}</div>`).join("");
+                linha.cells[4].classList.add('border-r-4', 'border-r-[#A3A2A3]');
                 // Coluna invisivel
                 linha.cells[5].classList.add('border', 'border-l-0', 'border-r-0');
                 // Coluna invisivel
@@ -657,13 +745,13 @@
                     linha.cells[2].innerHTML = projeto.tipo_cliente && projeto.tipo_cliente.nome ? projeto.tipo_cliente.nome : 'Tipo não especificado';
                     linha.cells[3].innerHTML = projeto.nome;
                     linha.cells[4].innerHTML = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
+                    linha.cells[4].classList.add('border-r-4', 'border-r-[#A3A2A3]');
                     // Lista os nomes dos colaboradores
                     var colaboradores = projeto.users.map(user => `<p>${user.name}</p>`).join("");
                     linha.cells[5].innerHTML = colaboradores;
                     linha.cells[6].classList.add('border-r-0');
                     
                     var tempoGastoMins = 0;
-                    console.log(projeto);
                     projeto.users.forEach(user => {
                         var tempoGasto = user.pivot.tempo_gasto.split(":");
                         var tempoGastoP1 = parseInt(tempoGasto[0]);
@@ -817,6 +905,28 @@
             })
         }
     };
+
+    function handleTipoClienteForms(id){
+        var select = document.getElementById(id);
+        if(select.value == -1){
+            select.classList.add("hidden")
+            document.getElementById("formNovoTipoCliente").classList.remove("hidden");
+        }else{
+            document.getElementById('formAlterarTipoCliente/' + id.split('/')[1]).submit();
+        }
+    }
+
+    function handleTipoProjetoForms(id){
+        var select = document.getElementById(id);
+
+        if(select.value == -1){
+            select.classList.add("hidden")
+            document.getElementById("formNovoTipoProjeto").classList.remove("hidden");
+        }else{
+            document.getElementById('formAlterarTipoProjeto/' + id.split('/')[1]).submit();
+        }
+    }
+
 </script>
 
     
