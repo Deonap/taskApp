@@ -348,7 +348,7 @@
                         celulaTipoCliente.innerHTML = `
                         <div class="flex items-end">
                             <div>
-                                <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente" class="my-0 py-0 hidden">
+                                <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente/${projeto.id}" class="my-0 py-0 hidden">
                                     @csrf
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
@@ -374,7 +374,7 @@
                         celulaTipoProjeto.innerHTML = `
                         <div class="flex items-end">
                             <div>
-                                <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto" class="my-0 py-0 hidden">
+                                <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto/${projeto.id}" class="my-0 py-0 hidden">
                                     @csrf
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
@@ -677,7 +677,7 @@
                         celulas[2].innerHTML = `
                         <div class="flex items-end">
                             <div>
-                                <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente" class="my-0 py-0 hidden">
+                                <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente/${projeto.id}" class="my-0 py-0 hidden">
                                     @csrf
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
@@ -700,7 +700,7 @@
                         celulas[3].innerHTML = `
                         <div class="flex items-end">
                             <div>
-                                <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto" class="my-0 py-0 hidden">
+                                <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto/${projeto.id}" class="my-0 py-0 hidden">
                                     @csrf
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
@@ -920,7 +920,7 @@
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="origin" value="prioridades">
-                                    <select name="novoCliente" id="novoCliente/colab/${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                    <select name="novoCliente" id="novoCliente/colab${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($clientes as $cliente)
                                             <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
                                         @endforeach
@@ -934,17 +934,17 @@
                         celulas[2].innerHTML = `
                         <div class="flex items-end">
                             <div>
-                                <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente" class="my-0 py-0 hidden">
+                                <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente/colab${projeto.id}" class="my-0 py-0 hidden">
                                     @csrf
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
                                     <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}"  onchange="${this.submit}">
                                 </form>
-                                <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/${projeto.id}" method="POST" class="my-0 py-0">
+                                <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/colab${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="origin" value="prioridades">
-                                    <select name="novoTipoCliente" id="novoTipoCliente/colab/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                    <select name="novoTipoCliente" id="novoTipoCliente/colab${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposCliente as $tC)
                                             <option value="{{$tC->id}}">{{$tC->nome}}</option>
                                         @endforeach
@@ -958,17 +958,17 @@
                         celulas[3].innerHTML = `
                         <div class="flex items-end">
                             <div>
-                                <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto" class="my-0 py-0 hidden">
+                                <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto/colab${projeto.id}" class="my-0 py-0 hidden">
                                     @csrf
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
                                     <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" onchange="${this.submit}">
                                 </form>
-                                <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/${projeto.id}" method="POST" class="my-0 py-0">
+                                <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/colab${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="origin" value="prioridades">
-                                    <select name="novoTipoProjeto" id="novoTipoProjeto/colab/${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                    <select name="novoTipoProjeto" id="novoTipoProjeto/colab${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposProjeto as $tP)
                                             <option value="{{$tP->id}}">{{$tP->nome}}</option>
                                         @endforeach
@@ -1040,7 +1040,7 @@
                         </div>
                         `;
                         
-                        var select = document.querySelector(`#novoCliente\\/colab\\/${projeto.id}`);
+                        var select = document.querySelector(`#novoCliente\\/colab${projeto.id}`);
                         var options = select.options;
                         for (var i = 0; i < options.length; i++) {
                             if (options[i].text === projeto.cliente.nome) {
@@ -1049,7 +1049,7 @@
                             }
                         }
 
-                        var select = document.querySelector(`#novoTipoCliente\\/colab\\/${projeto.id}`);
+                        var select = document.querySelector(`#novoTipoCliente\\/colab${projeto.id}`);
                         var options = select.options;
                         for (var i = 0; i < options.length; i++) {
                             if (options[i].text === projeto.tipo_cliente.nome) {
@@ -1058,7 +1058,7 @@
                             }
                         }
 
-                        var select = document.querySelector(`#novoTipoProjeto\\/colab\\/${projeto.id}`);
+                        var select = document.querySelector(`#novoTipoProjeto\\/colab${projeto.id}`);
                         var options = select.options;
                         for (var i = 0; i < options.length; i++) {
                             if (options[i].text === projeto.tipo_projeto.nome) {
@@ -1481,7 +1481,7 @@
         var select = document.getElementById(id);
         if(select.value == -1){
             select.classList.add("hidden")
-            document.getElementById("formNovoTipoCliente").classList.remove("hidden");
+            document.getElementById("formNovoTipoCliente/" + id.split('/')[1]).classList.remove("hidden");
         }else{
             document.getElementById('formAlterarTipoCliente/' + id.split('/')[1]).submit();
         }
@@ -1492,8 +1492,9 @@
 
         if(select.value == -1){
             select.classList.add("hidden")
-            document.getElementById("formNovoTipoProjeto").classList.remove("hidden");
+            document.getElementById("formNovoTipoProjeto/" + id.split('/')[1]).classList.remove("hidden");
         }else{
+            console.log('formAlterarTipoProjeto/' + id.split('/')[1]);
             document.getElementById('formAlterarTipoProjeto/' + id.split('/')[1]).submit();
         }
     }

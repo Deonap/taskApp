@@ -910,7 +910,7 @@
         var select = document.getElementById(id);
         if(select.value == -1){
             select.classList.add("hidden")
-            document.getElementById("formNovoTipoCliente").classList.remove("hidden");
+            document.getElementById("formNovoTipoCliente/" + id.split('/')[1]).classList.remove("hidden");
         }else{
             document.getElementById('formAlterarTipoCliente/' + id.split('/')[1]).submit();
         }
@@ -921,12 +921,12 @@
 
         if(select.value == -1){
             select.classList.add("hidden")
-            document.getElementById("formNovoTipoProjeto").classList.remove("hidden");
+            document.getElementById("formNovoTipoProjeto/" + id.split('/')[1]).classList.remove("hidden");
         }else{
+            console.log('formAlterarTipoProjeto/' + id.split('/')[1]);
             document.getElementById('formAlterarTipoProjeto/' + id.split('/')[1]).submit();
         }
     }
-
 </script>
 
     
