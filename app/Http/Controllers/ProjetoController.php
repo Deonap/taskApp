@@ -59,12 +59,12 @@ class ProjetoController extends Controller
         $projeto = Projeto::create($validatedData);
 
         // Anexe as tarefas ao projeto
-        if($request->has('tarefas')){
+        if ($request->has('tarefas')) {
             $tarefasData = array_map(function ($descricao) {
                 return ['descricao' => $descricao];
             }, $validatedData['tarefas']);
-        
-        $projeto->tarefas()->createMany($tarefasData);
+
+            $projeto->tarefas()->createMany($tarefasData);
         }
         // Anexe os usuários relacionados ao projeto
         $projeto->users()->sync($validatedData['users']);
@@ -147,11 +147,18 @@ class ProjetoController extends Controller
 
         $projeto->users()->where('id', $oldColaboradorId)->detach($oldColaboradorId);
         $projeto->users()->attach($novoColaboradorId);
-
-        return redirect(route('clientes.show', $projeto->cliente_id));
+        if ($request->has('origin')) {
+            $origin = $request['origin'];
+            if ($origin === 'clientes') {
+                return redirect(route('clientes.show', $projeto->cliente_id));
+            } elseif ($origin === 'prioridades') {
+                return redirect(route('prioridades.index'));
+            }
+        }
     }
 
-    public function atualizarCliente(Request $request, Projeto $projeto){
+    public function atualizarCliente(Request $request, Projeto $projeto)
+    {
         $novoCliente = $request['novoCliente'];
 
         $projeto->cliente_id = $novoCliente;
@@ -159,19 +166,20 @@ class ProjetoController extends Controller
         return redirect(route('prioridades.index'));
     }
 
-    public function atualizarTipoCliente(Request $request, Projeto $projeto){
+    public function atualizarTipoCliente(Request $request, Projeto $projeto)
+    {
         $novoTipoCliente = $request['novoTipoCliente'];
 
         $projeto->tipo_cliente_id = $novoTipoCliente;
         $projeto->update();
 
-        if($request->has('origin')){
+        if ($request->has('origin')) {
             $origin = $request['origin'];
-            if($origin === 'clientes'){
+            if ($origin === 'clientes') {
                 return redirect(route('clientes.show', $projeto->cliente_id));
-            }elseif($origin === 'prioridades'){
+            } elseif ($origin === 'prioridades') {
                 return redirect(route('prioridades.index'));
-            }elseif($origin === 'historico'){
+            } elseif ($origin === 'historico') {
                 return redirect(route('historico.index'));
             }
         }
@@ -183,13 +191,13 @@ class ProjetoController extends Controller
             'nome' => 'required|unique:tipo_clientes|max:255'
         ]);
         TipoCliente::create($validatedData);
-        if($request->has('origin')){
+        if ($request->has('origin')) {
             $origin = $request['origin'];
-            if($origin === 'clientes'){
+            if ($origin === 'clientes') {
                 return redirect(route('clientes.show', $request['cliente_id']));
-            }elseif($origin === 'prioridades'){
+            } elseif ($origin === 'prioridades') {
                 return redirect(route('prioridades.index'));
-            }elseif($origin === 'historico'){
+            } elseif ($origin === 'historico') {
                 return redirect(route('historico.index'));
             }
         }
@@ -201,30 +209,31 @@ class ProjetoController extends Controller
             'nome' => 'required|unique:tipo_projetos|max:255'
         ]);
         TipoProjeto::create($validatedData);
-        if($request->has('origin')){
+        if ($request->has('origin')) {
             $origin = $request['origin'];
-            if($origin === 'clientes'){
+            if ($origin === 'clientes') {
                 return redirect(route('clientes.show', $request['cliente_id']));
-            }elseif($origin === 'prioridades'){
+            } elseif ($origin === 'prioridades') {
                 return redirect(route('prioridades.index'));
-            }elseif($origin === 'historico'){
+            } elseif ($origin === 'historico') {
                 return redirect(route('historico.index'));
             }
         }
     }
 
-    public function atualizarTipoProjeto(Request $request, Projeto $projeto){
+    public function atualizarTipoProjeto(Request $request, Projeto $projeto)
+    {
         $novoTipoProjeto = $request['novoTipoProjeto'];
 
         $projeto->tipo_projeto_id = $novoTipoProjeto;
         $projeto->update();
-        if($request->has('origin')){
+        if ($request->has('origin')) {
             $origin = $request['origin'];
-            if($origin === 'clientes'){
+            if ($origin === 'clientes') {
                 return redirect(route('clientes.show', $projeto->cliente_id));
-            }elseif($origin === 'prioridades'){
+            } elseif ($origin === 'prioridades') {
                 return redirect(route('prioridades.index'));
-            }elseif($origin === 'historico'){
+            } elseif ($origin === 'historico') {
                 return redirect(route('historico.index'));
             }
         }
@@ -260,7 +269,8 @@ class ProjetoController extends Controller
         return response()->json($colaboradoresDisponiveis);
     }
 
-    public function updateTimeSpent(Request $request, Projeto $projeto, User $user){
+    public function updateTimeSpent(Request $request, Projeto $projeto, User $user)
+    {
 
         $validated = $request->validate([
             'tempoGasto' => ' required'
@@ -273,7 +283,8 @@ class ProjetoController extends Controller
         return back();
     }
 
-    public function updateObs(Request $request, Projeto $projeto, User $user){
+    public function updateObs(Request $request, Projeto $projeto, User $user)
+    {
         $validated = $request->validate([
             'observacoes' => ' required'
         ]);

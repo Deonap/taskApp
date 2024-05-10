@@ -123,13 +123,13 @@
                                             <th scope="col" class="text-left border w-[17%]">
                                                 Observações
                                             </th>
-                                            <th scope="col" class="text-left border w-[8%]">
+                                            <th scope="col" class="text-center border w-[8%]">
                                                 Tempo
                                             </th>
-                                            <th scope="col" class="text-left border w-[8%]">
+                                            <th scope="col" class="text-center border w-[8%]">
                                                 Estado
                                             </th>
-                                            <th scope="col" class="text-left border w-[8%]">
+                                            <th scope="col" class="text-center border w-[8%]">
                                                 Ações
                                             </th>
                                         </tr>
@@ -189,10 +189,10 @@
                                             <th scope="col" class="opacity-0 hover:cursor-default w-[8%]">
                                                 Tempo
                                             </th>
-                                            <th scope="col" class="text-left border w-[8%]">
+                                            <th scope="col" class="text-center border w-[8%]">
                                                 Estado
                                             </th>
-                                            <th scope="col" class="text-left border w-[8%]">
+                                            <th scope="col" class="text-center border w-[8%]">
                                                 Ações
                                             </th>
                                         </tr>
@@ -244,10 +244,10 @@
                                         <th scope="col" class="text-left border w-[25%]">
                                             Colaboradores
                                         </th>
-                                        <th scope="col" class="text-left border w-[8%]">
+                                        <th scope="col" class="text-center border w-[8%]">
                                             Estado
                                         </th>
-                                        <th scope="col" class="text-left border w-[8%]">
+                                        <th scope="col" class="text-center border w-[8%]">
                                             Ações
                                         </th>
                                     </thead>
@@ -300,7 +300,7 @@
 
     function atualizarTabelaProjetosEmAberto(userId) {
         var tdClassList = [ 'px-3', 'py-4', 'whitespace-nowrap', 'border', 'border-b'];
-
+        
         fetch('/filtrar/projetos?colaborador_id=' + userId)
             .then(response => response.json())
             .then(data => {
@@ -638,6 +638,7 @@
         fetch('/filtrar/projetospendentes?colaborador_id=' + userId)
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 var tbodyPendentes = document.querySelector('#tabelaProjetosPendentes tbody');
                 var responsivePendentes = document.getElementById('responsivePendentes');
                 responsivePendentes.innerHTML = '';
@@ -894,12 +895,14 @@
         fetch('/filtrar/projetos-outros-colaboradores/' + userId)
             .then(response => response.json())
             .then(data => {
+                console.log(data);
+
+
                 var tbodyOutrosColaboradores = document.querySelector('#tabelaProjetosOutrosColaboradores tbody');
                 var responsiveComOutros = document.getElementById('responsiveComOutros');
                 responsiveComOutros.innerHTML = '';
                 tbodyOutrosColaboradores.innerHTML = '';
-
-                data.forEach((projeto) => {
+                data.projetos.forEach((projeto) => {
                     // Para separação do design para computador / mobile
                     if(true){
                         var linha = tbodyOutrosColaboradores.insertRow();
@@ -983,9 +986,59 @@
                         celulas[4].classList.add("border-r-4", 'border-r-[#A3A2A3]');
                         celulas[4].innerHTML = tarefas;
 
-                        // Lista todos os colaboradores associados ao projeto
-                        var colaboradores = projeto.users.map(user => '<p>'+user.name+'</p>').join("");
-                        celulas[5].innerHTML = colaboradores;
+
+
+                        var disabled = projeto.users.length == data.colaboradores.length ? "disabled" : "";
+                        var selectColabs = `
+                        <div class="flex items-end">
+                            <div id="colaboradorCell/:id" class="colaboradorCell">`;
+                        projeto.users.forEach(u => {
+                            selectColabs += `    
+                                <form action="{{ route('projetos.colaboradores.atualizar', ':id') }}" method="POST" class="my-0 py-0" >
+                                @csrf
+                                @method('PUT')
+                                    <input type="hidden" name="origin" value="prioridades">
+                                    <div class="flex items-center p-1">
+                                        <select name="novoColaborador" id=:id onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none" :disabled>
+                                `;
+
+                                data.colaboradores.forEach(c => {
+
+
+                                    var userExists = projeto.users.some(user => user.id === c.id);
+                                    var isSelected = u.id === c.id;
+
+                                    if (!userExists || isSelected) {
+                                        selectColabs += `
+                                            <option value='${c.id}/${u.id}' class="w-fit" ${isSelected ? ' selected' : ''}>
+                                                ${c.name}
+                                            </option>`;
+                                    }
+                                });
+
+                                selectColabs += `
+                                        </select>
+                                    </div>
+                                </form>`;
+                        });
+                        selectColabs += `
+                            </div>
+                        </div>
+                        `;
+                        selectColabs = selectColabs.replaceAll(':id', projeto.id);
+                        selectColabs = selectColabs.replaceAll(':disabled', disabled);
+
+                        celulas[5].innerHTML = selectColabs;
+
+
+
+
+
+
+
+
+
+
 
                         var celulaEstadoProjeto = celulas[6];
 

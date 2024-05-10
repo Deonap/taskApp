@@ -163,6 +163,7 @@
                                                             <form action="{{ route('projetos.colaboradores.atualizar', $projeto->id) }}" method="POST" class="my-0 py-0">
                                                             @csrf
                                                             @method('PUT')
+                                                                <input type="hidden" name="origin" value="clientes">
                                                                 <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
                                                                     <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" {{$projeto->users->count() == $colaboradores->count() ? 'disabled' : ''}} class="w-fit pl-2 pr-8 border-none focus:border-none">
                                                                         @foreach($colaboradores as $colaborador)

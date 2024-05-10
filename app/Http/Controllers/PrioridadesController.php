@@ -55,11 +55,14 @@ class PrioridadesController extends Controller
     public function filtrarProjetosComOutrosColaboradores($colaboradorId)
     {
         // Busca projetos que incluem o colaborador selecionado
-        return Projeto::whereHas('users', function ($query) use ($colaboradorId) {
+        $projetos = Projeto::whereHas('users', function ($query) use ($colaboradorId) {
             $query->where('id', $colaboradorId);
         })->whereHas('users', function ($query) use ($colaboradorId) {
                 $query->where('id', '!=', $colaboradorId);
             })->with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])->get();
+
+        $colaboradores = User::where('tipo','=', 'colaborador')->get();
+        return response()->json(['projetos' => $projetos, 'colaboradores' => $colaboradores]);
     }
 
     public function filtrarProjetos(Request $request)
@@ -76,8 +79,6 @@ class PrioridadesController extends Controller
             ->orderByRaw('ISNULL(projeto_users.prioridade), projeto_users.prioridade')
             ->select('projetos.*') // Evita colunas duplicadas
             ->get();
-
-        $clientes = Cliente::all();
 
         return response()->json($projetos);
 
