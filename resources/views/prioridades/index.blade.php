@@ -638,7 +638,6 @@
         fetch('/filtrar/projetospendentes?colaborador_id=' + userId)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 var tbodyPendentes = document.querySelector('#tabelaProjetosPendentes tbody');
                 var responsivePendentes = document.getElementById('responsivePendentes');
                 responsivePendentes.innerHTML = '';
@@ -895,9 +894,6 @@
         fetch('/filtrar/projetos-outros-colaboradores/' + userId)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-
-
                 var tbodyOutrosColaboradores = document.querySelector('#tabelaProjetosOutrosColaboradores tbody');
                 var responsiveComOutros = document.getElementById('responsiveComOutros');
                 responsiveComOutros.innerHTML = '';
@@ -1547,7 +1543,6 @@
             select.classList.add("hidden")
             document.getElementById("formNovoTipoProjeto/" + id.split('/')[1]).classList.remove("hidden");
         }else{
-            console.log('formAlterarTipoProjeto/' + id.split('/')[1]);
             document.getElementById('formAlterarTipoProjeto/' + id.split('/')[1]).submit();
         }
     }
