@@ -12,6 +12,10 @@
             form{
                 margin:auto;
             }
+            table{
+                table-layout: fixed;
+                width: 100%
+            }
         </style>
     </head>
     <body>
@@ -27,9 +31,9 @@
                         </div>
                     </div>
                     @if(auth()->user() && auth()->user()->tipo == 'admin')
-                        <a href="{{ route('users.create') }}" class="bg-darkBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
+                        <button id="btnAdicionarLinha" class="bg-darkBlue hover:cursor-pointer hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
                             Adicionar
-                        </a>
+                        </button>
                     @endif
                 </div>
             
@@ -37,12 +41,12 @@
                     <table class="table-auto w-full">
                         <thead>
                             <tr class="bg-gray-300">
-                                <th class="">Nome</th>
-                                <th class="hidden md:table-cell">Email</th>
-                                <th class="hidden md:table-cell">Password</th>
-                                <th class="">Tipo</th>
+                                <th scope="col" class="w-[25%]">Nome</th>
+                                <th scope="col" class="w-[25%]">Email</th>
+                                <th scope="col" class="w-[20%]">Password</th>
+                                <th scope="col" class="w-[15%]">Tipo</th>
                                 @if(auth()->user() && auth()->user()->tipo == 'admin')
-                                    <th class="text-center">Ações</th>
+                                    <th scope="col" class="w-[15%] text-center">Ações</th>
                                 @endif
                             </tr>
                         </thead>
@@ -56,14 +60,14 @@
                                         <input name="name" value='{{ $user->name }}' onchange="this.form.submit()" class="border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
                                     </form>
                                 </td>
-                                <td class="hidden md:table-cell">
+                                <td>
                                     <form action="{{route('users.update', $user->id)}}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <input name="email" value='{{ $user->email }}' onchange="this.form.submit()" class="border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
                                     </form>
                                 </td>
-                                <td class="hidden md:table-cell">
+                                <td>
                                     ********
                                 </td>
                                 <td>
@@ -108,6 +112,37 @@
                                 @endif
                             </tr>
                             @endforeach
+                            <tr id="newUserRow" class="hidden border-b border-gray-200">
+                                <form method="POST" action="{{ route('users.store') }}" autocomplete="off">
+                                @csrf
+                                    <td>
+                                        <input name="name" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                    </td>
+                                    <td>
+                                        <input name="email" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                    </td>
+                                    <td>
+                                        <input name="password" class="bg-transparent rounded-md p-2" autocomplete="off" type="password" >
+                                    </td>
+                                    <td>
+                                        <?php 
+                                            if(auth()->user() && auth()->user()->tipo != 'admin'){
+                                                # disabled
+                                                $status = 'enabled';
+                                            }else{
+                                                $status = 'enabled';
+                                            }
+                                        ?>
+                                        <select name="tipo" {{$status}} class="pr-10 pl-1 text-left py-1 border-none">
+                                            <option value="colaborador" {{ $user->tipo == 'colaborador' ? 'selected' : '' }}>COLAB</option>
+                                            <option value="admin" {{ $user->tipo == 'admin' ? 'selected' : '' }}>ADMIN</option>
+                                        </select>
+                                    </td>
+                                    <td class="flex items-center ">
+                                        <button type="submit" onclick="this.form.submit()" class="m-auto font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">Adicionar</button>
+                                    </td>
+                                </form>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -115,3 +150,8 @@
         </x-app-layout>
     </body>
 </html>
+<script>
+    document.getElementById('btnAdicionarLinha').addEventListener('click', () => {
+        document.getElementById('newUserRow').classList.remove("hidden");
+    })
+</script>

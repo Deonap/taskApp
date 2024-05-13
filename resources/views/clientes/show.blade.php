@@ -20,6 +20,10 @@
         td{
             padding: 0.75rem 1.5rem 0.75rem 1.5rem;
         }
+        table{
+            table-layout: fixed;
+            width: 100%;
+        }
         </style>
     </head>
     <body>
@@ -74,26 +78,26 @@
                             <table class="w-full whitespace-nowrap">
                                 <thead>
                                     <tr class="bg-gray-300">
-                                        <th>
+                                        <th scope="col" class="w-[15%]">
                                             Tipo
                                         </th>
-                                        <th>
+                                        <th scope="col" class="w-[15%]">
                                             Projeto
                                         </th>
-                                        <th>
+                                        <th scope="col" class="w-[20%]">
                                             Notas Iniciais
                                         </th>
-                                        <th>
+                                        <th scope="col" class="w-[12%]">
                                             Tempo Previsto
                                         </th>
-                                        <th>
+                                        <th scope="col" class="w-[18%]">
                                             Colaborador
                                         </th>
-                                        <th>
+                                        <th scope="col" class="w-[10%]">
                                             Tempo Investido
                                         </th>
                                         @if(auth()->user() && auth()->user()->tipo == 'admin')
-                                            <th class="text-center">
+                                            <th scope="col" class="w-[10%] text-center">
                                                 Ações
                                             </th>
                                         @endif
@@ -224,7 +228,7 @@
                                             <td>
                                                 <div class="flex items-end">
                                                     <div>
-                                                        <select name="tipo_cliente_id" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                        <select name="tipo_cliente_id" class="w-fit pl-2 pr-8 py-2">
                                                             <option selected disabled>...</option>
                                                             @foreach($tiposCliente as $tC)
                                                                 <option value="{{$tC->id}}">{{$tC->nome}}</option>
@@ -236,7 +240,7 @@
                                             <td>
                                                 <div class="flex items-end">
                                                     <div>
-                                                        <select name="tipo_projeto_id" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                        <select name="tipo_projeto_id" class="w-fit pl-2 pr-8 py-2">
                                                             <option selected disabled>...</option>
                                                             @foreach($tipoProjeto as $tP)
                                                                 <option value={{$tP->id}}>{{$tP->nome}}</option>
@@ -248,14 +252,14 @@
                                             <td>
                                                 <input type="text" name="notas_iniciais">
                                             </td>
-                                            <td class="text-center">
-                                                <input type="text" class="text-center w-fit" placeholder="hh:mm" name="tempo_previsto" pattern="[0-9]{0,4}:[0-5][0-9]">
+                                            <td class="text-center w-full">
+                                                <input type="text" class="text-center w-full" placeholder="hh:mm" name="tempo_previsto" pattern="[0-9]{0,4}:[0-5][0-9]">
                                             </td>
                                             <td>
                                                 <div class="flex items-end">
                                                     <div>
                                                         <div class="flex items-center p-1">
-                                                            <select name="users[]" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                            <select name="users[]" class="w-fit pl-2 pr-8 py-2">
                                                                 <option selected disabled value="">...</option>
                                                                 @foreach($colaboradores as $colaborador)
                                                                     <option value="{{$colaborador->id}}" class="w-fit">{{$colaborador->name}}</option>        
@@ -268,7 +272,7 @@
                                             <td class="text-center">
                                             </td>
                                             <td class="flex items-center">
-                                                <button type="submit" onclick="document.getElementById('formNewProject').submit()" class="m-auto font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">Adicionar</button>
+                                                <button type="submit" onclick="this.form.submit()" class="m-auto font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">Adicionar</button>
                                             </td>
                                         </form>
                                     </tr>

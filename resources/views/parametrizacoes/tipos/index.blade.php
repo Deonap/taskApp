@@ -30,9 +30,9 @@
                             Tipo de Cliente
                         </div>
                     </div>
-                    <a href="{{ route('tipo-clientes.create') }}" class="bg-darkBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
+                    <btn id="btnAdicionarLinha" class="bg-darkBlue hover:bg-blue-700 hover:cursor-pointer text-white font-semibold py-2 px-4 rounded-md shadow-md">
                         Adicionar
-                    </a>
+                    </btn>
                 </div>
                 
                 <div class="bg-white shadow-md rounded px-2 md:px-8 pt-6 pb-8 mb-4 border">
@@ -64,7 +64,7 @@
                                     <form action="{{route('tipo-clientes.update', $tipo->id)}}" class="ml-2 size-6" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <input class="rounded-sm w-full border-0" id="cor" onchange="this.form.submit()" type="color" name="cor" value="{{ $tipo->cor }}">
+                                        <input class="w-full" id="cor" onchange="this.form.submit()" type="color" name="cor" value="{{ $tipo->cor }}">
                                     </form>
                                 </td>
                                 <td>
@@ -75,7 +75,7 @@
                                             </svg>
                                         </a>
                                         @if(auth()->user() && auth()->user()->tipo == 'admin')
-                                            <form action="{{ route('tipo-clientes.destroy', $tipo->id) }}" method="POST" onsubmit="return confirm('Tem certeza?')">
+                                            <form action="{{ route('tipo-clientes.destroy', $tipo->id) }}" method="POST" onsubmit="return confirm('Tem a certeza?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit">
@@ -89,6 +89,22 @@
                                 </td>
                             </tr>
                             @endforeach
+                            <tr class="hidden" id="newTypeRow">
+                                <form method="POST" action="{{ route('tipo-clientes.store') }}" autocomplete="off">
+                                @csrf
+                                    <td>
+                                        <input name="nome" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                    </td>
+                                    <td>
+                                        <div class="ml-2 size-6">
+                                            <input class="w-full" id="cor" value="#000000" type="color" name="cor">
+                                        </div>
+                                    </td>
+                                    <td class="flex items-center">
+                                        <button type="submit" onclick="this.form.submit()" class="m-auto font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">Adicionar</button>
+                                    </td>
+                                </form>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -96,3 +112,8 @@
         </x-app-layout>
     </body>
 </html>
+<script>
+    document.getElementById('btnAdicionarLinha').addEventListener('click', () => {
+        document.getElementById('newTypeRow').classList.remove("hidden");
+    })
+</script>
