@@ -999,12 +999,10 @@
                                 `;
 
                                 data.colaboradores.forEach(c => {
-
-
-                                    var userExists = projeto.users.some(user => user.id === c.id);
+                                    var userIsColaborator = projeto.users.some(user => user.id === c.id);
                                     var isSelected = u.id === c.id;
 
-                                    if (!userExists || isSelected) {
+                                    if (!userIsColaborator || isSelected) {
                                         selectColabs += `
                                             <option value='${c.id}/${u.id}' class="w-fit" ${isSelected ? ' selected' : ''}>
                                                 ${c.name}
@@ -1025,16 +1023,6 @@
                         selectColabs = selectColabs.replaceAll(':disabled', disabled);
 
                         celulas[5].innerHTML = selectColabs;
-
-
-
-
-
-
-
-
-
-
 
                         var celulaEstadoProjeto = celulas[6];
 

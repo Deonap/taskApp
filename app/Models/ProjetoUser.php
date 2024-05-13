@@ -9,7 +9,7 @@ class ProjetoUser extends Model
 {
     use HasFactory;
     protected $fillable = ['projeto_id', 'user_id', 'prioridade', 'tempo_gasto'];
-    protected $primaryKey = ['projeto_id','user_id'];
+    protected $primaryKey = ['projeto_id', 'user_id'];
     public $incrementing = false;
 
     protected function setKeysForSaveQuery($query)
@@ -17,7 +17,6 @@ class ProjetoUser extends Model
         return $query->where('projeto_id', $this->getAttribute('projeto_id'))
                     ->where('user_id', $this->getAttribute('user_id'));
     }
-
 
     public function projeto()
     {

@@ -35,7 +35,7 @@ class PrioridadesController extends Controller
         $tiposCliente = TipoCliente::all();
         $tiposProjeto = TipoProjeto::all();
 
-        return view('prioridades.index', compact('colaboradores', 'projetosEmAberto', 'projetosPendentes', 'projetosComOutros', 'colaboradorId','clientes','tiposCliente', 'tiposProjeto'));
+        return view('prioridades.index', compact('colaboradores', 'projetosEmAberto', 'projetosPendentes', 'projetosComOutros', 'colaboradorId', 'clientes', 'tiposCliente', 'tiposProjeto'));
     }
 
     private function filtrarProjetosPorEstadoEColaborador($estadoNome, $colaboradorId)
@@ -61,7 +61,7 @@ class PrioridadesController extends Controller
                 $query->where('id', '!=', $colaboradorId);
             })->with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])->get();
 
-        $colaboradores = User::where('tipo','=', 'colaborador')->get();
+        $colaboradores = User::where('tipo', '=', 'colaborador')->get();
         return response()->json(['projetos' => $projetos, 'colaboradores' => $colaboradores]);
     }
 
@@ -70,7 +70,7 @@ class PrioridadesController extends Controller
         $colaboradorId = $request->query('colaborador_id');
         $estado = 'Em desenvolvimento'; // Define o estado que você está interessado
 
-        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'tipoProjeto','cliente', 'estadoProjeto', 'users'])
+        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'tipoProjeto', 'cliente', 'estadoProjeto', 'users'])
             ->join('projeto_users', 'projetos.id', '=', 'projeto_users.projeto_id')
             ->where('projeto_users.user_id', $colaboradorId)
             ->whereHas('estadoProjeto', function ($query) use ($estado) {

@@ -23,7 +23,7 @@ class HistoricoController extends Controller
         $fimSemana = Carbon::parse($dataSelecionada)->endOfWeek();
         logger()->info('Request recebido:', $request->all());
         // Faça as consultas aqui para buscar os dados das tabelas
-        $projetosEmAberto = $this->filtrarProjetosPorEstadoEColaborador('Em desenvolvimento',$colaboradorId, $inicioSemana, $fimSemana);
+        $projetosEmAberto = $this->filtrarProjetosPorEstadoEColaborador('Em desenvolvimento', $colaboradorId, $inicioSemana, $fimSemana);
         $projetosPendentes = $this->filtrarProjetosPorEstadoEColaborador('Pendente', $colaboradorId, $inicioSemana, $fimSemana);
 
         $projetosComOutros = $this->filtrarProjetosComOutrosColaboradores($request);
@@ -35,7 +35,7 @@ class HistoricoController extends Controller
         $tiposCliente= TipoCliente::all();
         $tiposProjeto = TipoProjeto::all();
 
-        return view('historico.index', compact( 'colaboradores', 'inicioSemana', 'fimSemana', 'projetosEmAberto', 'projetosPendentes','projetosComOutros', 'clientes', 'tiposCliente', 'tiposProjeto'));
+        return view('historico.index', compact( 'colaboradores', 'inicioSemana', 'fimSemana', 'projetosEmAberto', 'projetosPendentes', 'projetosComOutros', 'clientes', 'tiposCliente', 'tiposProjeto'));
     }
 
     private function filtrarProjetosPorEstadoEColaborador($estadoNome, $colaboradorId, $inicioSemana, $fimSemana)
@@ -52,24 +52,6 @@ class HistoricoController extends Controller
         ->get();
     }
 
-    //public function filtrarProjetosComOutrosColaboradores(Request $request)
-    //{
-    // $colaboradorId = $request->query('colaborador_id');
-    // $inicioSemana = Carbon::parse($request->query('inicio_semana'));
-    // $fimSemana = Carbon::parse($request->query('fim_semana'));
-
-    //   $projetos = Projeto::whereHas('users', function ($query) use ($colaboradorId) {
-    //                      $query->where('id', $colaboradorId);
-    //                  })
-    //                  ->whereHas('users', function ($query) use ($colaboradorId) {
-    //                      $query->where('id', '!=', $colaboradorId);
-    //                   })
-    //                  ->whereBetween('updated_at', [$inicioSemana, $fimSemana])
-    //                  ->with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users'])
-    //                   ->get();
-    //
-    //   return response()->json($projetos);
-    //}
     public function filtrarProjetosComOutrosColaboradores(Request $request)
     {
         $colaboradorId = $request->query('colaborador_id');
@@ -89,7 +71,6 @@ class HistoricoController extends Controller
         return $projetos;
     }
 
-
     public function filtrarProjetos(Request $request)
     {
         $colaboradorId = $request->query('colaborador_id');
@@ -108,18 +89,13 @@ class HistoricoController extends Controller
         return response()->json($projetos);
     }
 
-
-
     public function filtrarProjetosPendente(Request $request)
     {
         $colaboradorId = $request->query('colaborador_id');
         $inicioSemana = $request->query('inicio_semana');
         $fimSemana = $request->query('fim_semana');
         $estado = 'Pendente'; // Define o estado que você está interessado
-
-        // Aqui, você não precisa declarar novamente $inicioSemana e $fimSemana porque eles serão pegos da query string.
         
-
         $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])
                         ->whereHas('users', function ($query) use ($colaboradorId) {
                             $query->where('id', $colaboradorId);
