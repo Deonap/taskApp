@@ -30,14 +30,16 @@
                             Níveis de Acesso
                         </div>
                     </div>
-                    @if(auth()->user() && auth()->user()->tipo == 'admin')
-                        <button id="btnAdicionarLinha" class="bg-darkBlue hover:cursor-pointer hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
-                            Adicionar
-                        </button>
-                    @endif
+                    <div>
+                        @if(auth()->user() && auth()->user()->tipo == 'admin')
+                            <button id="btnAdicionarLinha" class="bg-darkBlue hover:cursor-pointer hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
+                                Adicionar
+                            </button>
+                        @endif
+                    </div>
                 </div>
             
-                <div class="bg-white shadow-md w-fit h-fit md:w-full rounded px-2 md:px-8 pt-6 pb-8 mb-4 border">
+                <div>
                     <table class="table-auto w-full">
                         <thead>
                             <tr class="bg-gray-300">
@@ -98,7 +100,7 @@
                                                 </svg>
                                             </a>
                                             <!-- Botão apagar -->
-                                            <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                                            <form action="{{ route('users.destroy', $user->id) }}" onsubmit="return confirm('Tem a certeza?')" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit">

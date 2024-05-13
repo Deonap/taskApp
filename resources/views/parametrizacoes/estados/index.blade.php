@@ -35,12 +35,14 @@
                         Estado
                     </div>
                 </div>
-                <button id="btnAdicionarLinha" class="bg-darkBlue hover:cursor-pointer hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
-                    Adicionar
-                </button>
+                <div>
+                    <button id="btnAdicionarLinha" class="bg-darkBlue hover:cursor-pointer hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
+                        Adicionar
+                    </button>
+                </div>
             </div>
 
-            <div class="bg-white shadow-md rounded px-2 md:px-8 pt-6 pb-8 mb-4 border">
+            <div>
                 <table class="table-auto w-full">
                     <thead>
                         <tr class="bg-gray-300">

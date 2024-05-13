@@ -30,12 +30,14 @@
                         <div>
                             <input id='searchFilter' type="text" placeholder="Pesquisar..." class="rounded-md border-gray-300 focus:border-darkBlue"/>
                         </div>
-                        <a href="{{ route('clientes.create') }}" class="bg-darkBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
-                            Adicionar
-                        </a>
+                        <div>
+                            <a href="{{ route('clientes.create') }}" class="bg-darkBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
+                                Adicionar
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-white shadow-md rounded px-2 md:px-8 pt-6 pb-8 my-4 border">
+                <div>
                     <table class="table-auto w-full overflow-x-auto" id="clientTable">
                         <thead>
                             <tr class="bg-gray-300">

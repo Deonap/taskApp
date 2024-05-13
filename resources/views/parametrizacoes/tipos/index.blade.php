@@ -30,12 +30,14 @@
                             Tipo de Cliente
                         </div>
                     </div>
-                    <btn id="btnAdicionarLinha" class="bg-darkBlue hover:bg-blue-700 hover:cursor-pointer text-white font-semibold py-2 px-4 rounded-md shadow-md">
-                        Adicionar
-                    </btn>
+                    <div>
+                        <btn id="btnAdicionarLinha" class="bg-darkBlue hover:bg-blue-700 hover:cursor-pointer text-white font-semibold py-2 px-4 rounded-md shadow-md">
+                            Adicionar
+                        </btn>
+                    </div>
                 </div>
                 
-                <div class="bg-white shadow-md rounded px-2 md:px-8 pt-6 pb-8 mb-4 border">
+                <div class="mt-4">
                     <table class="table-auto w-full">
                         <thead>
                             <tr class="bg-gray-300">

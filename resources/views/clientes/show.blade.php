@@ -73,7 +73,7 @@
                             Projetos Concluídos
                         </button>
                     </div>
-                    <div id="tabelaProjetosAbertos" class="bg-white xl:p-4 rounded xl:shadow-md xl:border mb-8">
+                    <div id="tabelaProjetosAbertos">
                         <div class="hidden xl:block overflow-x-auto">
                             <table class="w-full whitespace-nowrap">
                                 <thead>
@@ -81,19 +81,19 @@
                                         <th scope="col" class="w-[15%]">
                                             Tipo
                                         </th>
-                                        <th scope="col" class="w-[15%]">
+                                        <th scope="col" class="w-[13%]">
                                             Projeto
                                         </th>
-                                        <th scope="col" class="w-[20%]">
+                                        <th scope="col" class="w-[14%]">
                                             Notas Iniciais
                                         </th>
-                                        <th scope="col" class="w-[12%]">
+                                        <th scope="col" class="text-center w-[13%]">
                                             Tempo Previsto
                                         </th>
-                                        <th scope="col" class="w-[18%]">
+                                        <th scope="col" class="w-[20%]">
                                             Colaborador
                                         </th>
-                                        <th scope="col" class="w-[10%]">
+                                        <th scope="col" class="text-center w-[15%]">
                                             Tempo Investido
                                         </th>
                                         @if(auth()->user() && auth()->user()->tipo == 'admin')
@@ -371,34 +371,34 @@
                             </div>
                         </div>
                     </div>
-                    <div id="tabelaProjetosConcluidos" class="bg-white xl:p-4 rounded xl:shadow-md xl:border mb-8 hidden">
+                    <div id="tabelaProjetosConcluidos" class="hidden">
                         <div class="hidden xl:block overflow-x-auto">
                             <table class="w-full whitespace-nowrap">
                                 <thead>
                                     <tr class="bg-gray-300">
-                                        <th>
+                                        <th scope="col" class="w-[15%]">
                                             Tipo
                                         </th>
-                                        <th>
+                                        <th scope="col" class="w-[13%]">
                                             Projeto
                                         </th>
-                                        <th>
+                                        <th scope="col" class="w-[14%]">
                                             Notas Iniciais
                                         </th>
-                                        <th class="text-center">
+                                        <th class="text-center w-[13%]">
                                             Tempo Previsto
                                         </th>
-                                        <th>
+                                        <th scope="col" class="w-[20%]">
                                             Colaborador
                                         </th>
-                                        <th class="text-center">
+                                        <th class="text-center w-[15%]">
                                             Tempo Investido
                                         </th>
-                                        <th>
+                                        <th scope="col" class="w-[0%]">
 
                                         </th>
                                         @if(auth()->user() && auth()->user()->tipo == 'admin')
-                                            <th class="text-center">
+                                            <th class="text-center w-[10%]">
                                                 Ações
                                             </th>
                                         @endif
@@ -471,34 +471,37 @@
                                                     @endif
                                                 @endforeach
                                             </td>
-                                            <td class="text-center">
-                                                @foreach($projeto->users as $user)
-                                                    <div class="text-center @if(!$loop->last) border-b border-gray-400 @endif">
-                                                        {{$user->tempoGasto($projeto)}}
+                                            <td>
+                                                <div class="flex justify-center space-x-3">
+                                                    <div>
+                                                        @foreach($projeto->users as $user)
+                                                            <div class="text-center @if(!$loop->last) border-b border-gray-400 @endif">
+                                                                {{$user->tempoGasto($projeto)}}
+                                                            </div>
+                                                        @endforeach
                                                     </div>
-                                                @endforeach
+                                                    <?php
+                                                        $tempoGasto = $projeto->totTempoGasto();
+
+                                                        $tempoPrevisto = explode(":", $projeto->tempo_previsto);
+                                                        $tempoPrevistoP1 = $tempoPrevisto[0];
+                                                        $tempoPrevistoP2 = $tempoPrevisto[1];
+
+                                                        $tempo_previsto_minutes = intval($tempoPrevistoP1) * 60 + intval($tempoPrevistoP2);
+
+                                                        if ($tempoGasto < $tempo_previsto_minutes) {
+                                                            $bgColor = '122,166,77';
+                                                        } elseif ($tempoGasto == $tempo_previsto_minutes) {
+                                                            $bgColor = '10,57,86';
+                                                        } else {
+                                                            $bgColor = '231,81,91';
+                                                        }
+                                                    ?>
+                                                    <div class="rounded-full size-6 m-auto" style="background-color:rgb({{$bgColor}})">
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>
-                                                <?php
-                                                    $tempoGasto = $projeto->totTempoGasto();
-
-                                                    $tempoPrevisto = explode(":", $projeto->tempo_previsto);
-                                                    $tempoPrevistoP1 = $tempoPrevisto[0];
-                                                    $tempoPrevistoP2 = $tempoPrevisto[1];
-
-                                                    $tempo_previsto_minutes = intval($tempoPrevistoP1) * 60 + intval($tempoPrevistoP2);
-
-                                                    if ($tempoGasto < $tempo_previsto_minutes) {
-                                                        $bgColor = '122,166,77';
-                                                    } elseif ($tempoGasto == $tempo_previsto_minutes) {
-                                                        $bgColor = '10,57,86';
-                                                    } else {
-                                                        $bgColor = '231,81,91';
-                                                    }
-                                                ?>
-                                                <div class="rounded-full size-6" style="background-color:rgb({{$bgColor}})">
-                                                    
-                                                </div>
                                             </td>
                                             @if(auth()->user() && auth()->user()->tipo == 'admin')
                                             <td>
@@ -639,9 +642,11 @@
                             </div>
                         </div>
                     </div>
-                    <a id="btnAdicionarLinha" class="hover:cursor-pointer bg-darkBlue text-white py-2 px-4 rounded mr-4">
-                        Adicionar Projeto
-                    </a>
+                    <div class="mt-4">
+                        <a id="btnAdicionarLinha" class="hover:cursor-pointer bg-darkBlue text-white py-2 px-4 rounded mr-4">
+                            Adicionar Projeto
+                        </a>
+                    </div>
                 </div>
             </div>
         </x-app-layout>
