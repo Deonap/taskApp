@@ -490,14 +490,14 @@
                                                         $tempo_previsto_minutes = intval($tempoPrevistoP1) * 60 + intval($tempoPrevistoP2);
 
                                                         if ($tempoGasto < $tempo_previsto_minutes) {
-                                                            $bgColor = '122,166,77';
+                                                            $bgColor = 'greenStatus';
                                                         } elseif ($tempoGasto == $tempo_previsto_minutes) {
-                                                            $bgColor = '10,57,86';
+                                                            $bgColor = 'blueStatus';
                                                         } else {
-                                                            $bgColor = '231,81,91';
+                                                            $bgColor = 'redStatus';
                                                         }
                                                     ?>
-                                                    <div class="rounded-full size-6 m-auto" style="background-color:rgb({{$bgColor}})">
+                                                    <div class="bg-{{$bgColor}} rounded-full size-6 m-auto">
                                                     </div>
                                                 </div>
                                             </td>

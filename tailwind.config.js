@@ -17,6 +17,12 @@ export default {
         },
         colors: {
             'darkBlue': 'rgb(10,56,87)',
+            'projetosDesenvolvimentoBanner' : 'rgb(10,56,87)',
+            'projetosPendentesBanner' : 'rgb(249,109,35)',
+            'projetosOutrosColabBanner' : 'rgb(100,24,133)',
+            'greenStatus' : 'rgb(122,166,77)',
+            'blueStatus' : 'rgb(10,57,86)',
+            'redStatus' : 'rgb(231,81,91)'
         }
     },
 
