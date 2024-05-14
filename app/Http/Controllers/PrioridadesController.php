@@ -80,9 +80,7 @@ class PrioridadesController extends Controller
             ->select('projetos.*') // Evita colunas duplicadas
             ->get();
 
-        return response()->json($projetos);
-
-        
+        return response()->json($projetos);        
     }
 
     public function filtrarProjetosPendente(Request $request)

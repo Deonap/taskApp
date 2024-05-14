@@ -91,7 +91,6 @@
                                         </label>
                                     </form>
                                 </div>
-                                
                                 <script>
                                     var selectColab = document.getElementById('colaborador');
                                     selectColab.addEventListener('change', function(){
