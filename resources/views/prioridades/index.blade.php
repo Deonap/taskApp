@@ -363,6 +363,7 @@
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <select name="novoCliente" id="novoCliente/${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($clientes as $cliente)
                                             <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
@@ -383,12 +384,14 @@
                                     @csrf
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}" class="w-fit" onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposCliente as $tC)
                                             <option value="{{$tC->id}}">{{$tC->nome}}</option>
@@ -409,12 +412,14 @@
                                     @csrf
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <select name="novoTipoProjeto" id="novoTipoProjeto/${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposProjeto as $tP)
                                             <option value="{{$tP->id}}">{{$tP->nome}}</option>
@@ -675,6 +680,7 @@
                     // Para separação do design para computador / mobile
                     if(true){
                         var linha = tbodyPendentes.insertRow();
+                        var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
                         linha.setAttribute('data-id', projeto.id);
                         linha.classList.add('border-b'); // Adiciona borda à linha
 
@@ -692,6 +698,7 @@
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <select name="novoCliente" id="novoCliente/${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($clientes as $cliente)
                                             <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
@@ -709,12 +716,14 @@
                                     @csrf
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}"  onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposCliente as $tC)
                                             <option value="{{$tC->id}}">{{$tC->nome}}</option>
@@ -732,12 +741,14 @@
                                     @csrf
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <select name="novoTipoProjeto" id="novoTipoProjeto/${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposProjeto as $tP)
                                             <option value="{{$tP->id}}">{{$tP->nome}}</option>
@@ -929,6 +940,7 @@
                     if(true){
                         var linha = tbodyOutrosColaboradores.insertRow();
                         linha.classList.add('border-b'); // Adiciona borda à linha
+                        var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
 
                         var celulas = [];
 
@@ -945,6 +957,7 @@
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <select name="novoCliente" id="novoCliente/colab${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($clientes as $cliente)
                                             <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
@@ -963,12 +976,14 @@
                                     @csrf
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}"  onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/colab${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <select name="novoTipoCliente" id="novoTipoCliente/colab${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposCliente as $tC)
                                             <option value="{{$tC->id}}">{{$tC->nome}}</option>
@@ -987,12 +1002,14 @@
                                     @csrf
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/colab${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <select name="novoTipoProjeto" id="novoTipoProjeto/colab${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposProjeto as $tP)
                                             <option value="{{$tP->id}}">{{$tP->nome}}</option>
@@ -1020,6 +1037,7 @@
                                 @csrf
                                 @method('PUT')
                                     <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
                                     <div class="flex items-center p-1">
                                         <select name="novoColaborador" id=:id onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none" :disabled>
                                 `;

@@ -48,7 +48,7 @@ Route::resource('users', UserController::class);
 Route::put('/users/{id}/updateType', [UserController::class, 'updateType'])->name('users.updateType');
 Route::put('/users/toggleFerias/{id}', [UserController::class, 'toggleFerias'])->name('users.toggleFerias');
 
-Route::resource('prioridades', PrioridadesController::class);
+Route::get('/prioridades/{id?}', [PrioridadesController::class, 'index'])->name('prioridades.index');
 Route::get('/filtrar/projetos', [PrioridadesController::class, 'filtrarProjetos']);
 Route::get('/filtrar/projetospendentes', [PrioridadesController::class, 'filtrarProjetosPendente']);
 Route::get('/filtrar/projetos-outros-colaboradores/{colaboradorId}', [PrioridadesController::class, 'filtrarProjetosComOutrosColaboradores']);
