@@ -2,7 +2,7 @@
     <head>
         <style>
             #toggleFerias:checked+.toggle-line {
-                background-color: rgb(10, 56, 87);
+                background-color: rgb(10,56,87);
                 /* Change this to your desired color when toggle is active */
             }
             #toggleFerias:checked+.toggle-line+.toggle-dot {
@@ -73,20 +73,39 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div>
-                                    <label for="toggleFerias" class="flex items-center cursor-pointer">
-                                        <div class="mx-3 ml-10 text-gray-700 font-black">
-                                            Férias
-                                        </div>
-                                        <div class="relative">
-                                            <input id="toggleFerias" type="checkbox" class="hidden" />
-                                            <div class="toggle-line w-10 h-4 bg-gray-400 rounded-full shadow-inner transition-colors">
+                                <div class="ml-[3.75rem]">
+                                    <form action="" id="formToggleFerias" method="POST" class="m-auto">
+                                        @csrf
+                                        @method('PUT')
+                                        <label for="toggleFerias" class="flex items-center cursor-pointer">
+                                            <div class="mr-3 text-gray-700 font-black">
+                                                Férias
                                             </div>
-                                            <div class="toggle-dot absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0 transition-transform border" style="top: -4px;">
+                                            <div class="relative">
+                                                <input name="toggleFerias" value="1" id="toggleFerias" onchange="this.form.submit()" type="checkbox" class="hidden" />
+                                                <div class="toggle-line w-10 h-4 bg-gray-400 rounded-full shadow-inner transition-colors">
+                                                </div>
+                                                <div class="toggle-dot absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0 transition-transform border" style="top: -4px;">
+                                                </div>
                                             </div>
-                                        </div>
-                                    </label>
+                                        </label>
+                                    </form>
                                 </div>
+                                
+                                <script>
+                                    var selectColab = document.getElementById('colaborador');
+                                    selectColab.addEventListener('change', function(){
+                                        var options = this.options;
+                                        var selectedValue = options[this.selectedIndex].value;
+                                        document.getElementById('formToggleFerias').action = "{{route('users.toggleFerias', '')}}/" + selectedValue;
+                                    });
+                                    document.addEventListener('DOMContentLoaded', function(){
+                                        var selectColab = document.getElementById('colaborador');
+                                        var options = selectColab.options;
+                                        var selectedValue = options[selectColab.selectedIndex].value;
+                                        document.getElementById('formToggleFerias').action = "{{route('users.toggleFerias', '')}}/" + selectedValue;
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -320,6 +339,16 @@
                         // Encontra o usuário específico e sua prioridade
                         var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
                         var prioridade = userProjeto.pivot.prioridade ? userProjeto.pivot.prioridade : 'N/A';
+
+                        if(userProjeto.vacation){
+                            document.getElementById('toggleFerias').checked = true;
+                            document.querySelector('#tabelaProjetosAbertos tbody').classList.add('disabledTable');
+                            document.getElementById('responsiveDesenvolvimento').classList.add('disabledTable');
+                        }else{
+                            document.getElementById('toggleFerias').checked = false;
+                            document.querySelector('#tabelaProjetosAbertos tbody').classList.remove('disabledTable');
+                            document.getElementById('responsiveDesenvolvimento').classList.remove('disabledTable');
+                        }
 
                         var celulaN_Prioridade = linha.insertCell(0);
                         celulaN_Prioridade.classList.add(...tdClassList);

@@ -73,5 +73,14 @@ class UserController extends Controller
         return back()->with('success', 'Tipo de usuário atualizado com sucesso!');
     }
 
-
+    public function toggleFerias(Request $request, $id){
+        $user = User::findOrFail($id);
+        if ($request->has('toggleFerias')) {
+            $user->vacation = true;
+        } else{
+            $user->vacation = false;
+        }
+        $user->save();
+        return redirect()->route('prioridades.index');
+    }
 }

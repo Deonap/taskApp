@@ -46,6 +46,7 @@ Route::resource('estado-projetos', EstadoProjetoController::class);
 Route::resource('tipo-clientes', TipoClienteController::class);
 Route::resource('users', UserController::class);
 Route::put('/users/{id}/updateType', [UserController::class, 'updateType'])->name('users.updateType');
+Route::put('/users/toggleFerias/{id}', [UserController::class, 'toggleFerias'])->name('users.toggleFerias');
 
 Route::resource('prioridades', PrioridadesController::class);
 Route::get('/filtrar/projetos', [PrioridadesController::class, 'filtrarProjetos']);
