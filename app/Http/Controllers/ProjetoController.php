@@ -140,6 +140,7 @@ class ProjetoController extends Controller
 
     public function atualizarColaborador(Request $request, Projeto $projeto)
     {
+        dd($request);
         $aux = explode('/', $request['novoColaborador']);
 
         $novoColaboradorId = $aux[0];

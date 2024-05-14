@@ -69,7 +69,7 @@
                                 <div class="relative">
                                     <select id="colaborador" name="colaborador" class="appearance-none border rounded-md w-48 py-2 pl-3 pr-10 leading-tight focus:outline-none focus:shadow-outline text-white bg-darkBlue">
                                         @foreach($colaboradores as $colaborador)
-                                            <option value="{{ $colaborador->id }}">{{ $colaborador->name }}</option>
+                                            <option {{$selectedUser == $colaborador->id ? "selected" : ""}} value="{{ $colaborador->id }}">{{ $colaborador->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

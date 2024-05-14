@@ -16,7 +16,7 @@ class PrioridadesController extends Controller
 {
     // Dentro da classe PrioridadesController
 
-    public function index()
+    public function index($selectedUser = null)
     {
         $colaboradores = User::where('tipo', 'colaborador')->get();
 
@@ -35,7 +35,7 @@ class PrioridadesController extends Controller
         $tiposCliente = TipoCliente::all();
         $tiposProjeto = TipoProjeto::all();
 
-        return view('prioridades.index', compact('colaboradores', 'projetosEmAberto', 'projetosPendentes', 'projetosComOutros', 'colaboradorId', 'clientes', 'tiposCliente', 'tiposProjeto'));
+        return view('prioridades.index', compact('selectedUser', 'colaboradores', 'projetosEmAberto', 'projetosPendentes', 'projetosComOutros', 'colaboradorId', 'clientes', 'tiposCliente', 'tiposProjeto'));
     }
 
     private function filtrarProjetosPorEstadoEColaborador($estadoNome, $colaboradorId)
