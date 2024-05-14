@@ -437,15 +437,15 @@
 
                 var bgColor;
                 if (tempoGastoMins < tempoPrevistoMinutes) {
-                    bgColor = 'greenStatus';
+                    bgColor = 'bg-greenStatus';
                 } else if (tempoGastoMins === tempoPrevistoMinutes) {
-                    bgColor = 'blueStatus';
+                    bgColor = 'bg-blueStatus';
                 } else {
-                    bgColor = 'redStatus';
+                    bgColor = 'bg-redStatus';
                 }
 
                 celulaEstadoProjeto.innerHTML = `
-                <div class="bg-${bgColor} m-auto size-7 rounded-full">
+                <div class="${bgColor} m-auto size-7 rounded-full">
                 </div>
                 `;
 
@@ -708,15 +708,15 @@
 
                 var bgColor;
                 if (tempoGastoMins < tempoPrevistoMinutes) {
-                    bgColor = 'greenStatus';
+                    bgColor = 'bg-greenStatus';
                 } else if (tempoGastoMins === tempoPrevistoMinutes) {
-                    bgColor = 'blueStatus';
+                    bgColor = 'bg-blueStatus';
                 } else {
-                    bgColor = 'redStatus';
+                    bgColor = 'bg-redStatus';
                 }
 
                 linha.cells[7].innerHTML = `
-                <div class="bg-${bgColor} m-auto size-7 rounded-full">
+                <div class="${bgColor} m-auto size-7 rounded-full">
                 </div>
                 `;
                 // Coluna invisivel
@@ -923,14 +923,14 @@
 
                     var bgColor;
                     if (tempoGastoMins < tempoPrevistoMinutes) {
-                        bgColor = 'greenStatus';
+                        bgColor = 'bg-greenStatus';
                     } else if (tempoGastoMins === tempoPrevistoMinutes) {
-                        bgColor = 'blueStatus';
+                        bgColor = 'bg-blueStatus';
                     } else {
-                        bgColor = 'redStatus';
+                        bgColor = 'bg-redStatus';
                     }
                     linha.cells[6].innerHTML = `
-                    <div class="bg-${bgColor} m-auto size-7 rounded-full">
+                    <div class="${bgColor} m-auto size-7 rounded-full">
                     </div>
                     `;
                     linha.cells[7].classList.add('border-l-0');
