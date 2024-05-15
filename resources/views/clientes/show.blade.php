@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <div class="my-10">
-                        <button id="btnProjetosAbertos" class="bg-darkBlue text-white py-2 px-4 rounded mr-4">
+                        <button id="btnProjetosAbertos" class="{{$window == 'projetosAbertos' ? 'bg-darkBlue' : 'bg-gray-400'}} text-white py-2 px-4 rounded mr-4">
                             <div class="hidden md:block">
                                 Projetos Abertos/Pendentes
                             </div>
@@ -69,11 +69,11 @@
                                 Projetos Abertos
                             </div>
                         </button>
-                        <button id="btnProjetosConcluidos" class="bg-gray-400 text-white py-2 px-4 rounded mt-5">
+                        <button id="btnProjetosConcluidos" class="{{$window == 'projetosConcluidos' ? 'bg-darkBlue' : 'bg-gray-400'}} text-white py-2 px-4 rounded mt-5">
                             Projetos Concluídos
                         </button>
                     </div>
-                    <div id="tabelaProjetosAbertos">
+                    <div id="tabelaProjetosAbertos" class="{{$window == 'projetosAbertos' ? '' : 'hidden' }}">
                         <div class="hidden xl:block overflow-x-auto">
                             <table class="w-full whitespace-nowrap">
                                 <thead>
@@ -113,6 +113,7 @@
                                                             @csrf
                                                             @method('POST')
                                                             <input type="hidden" name="origin" value="clientes">
+                                                            <input type="hidden" name="window" value="projetosAbertos">
                                                             <input type="text" name="cliente_id" value="{{$cliente->id}}" class="hidden">
                                                             <input type="text" name="nome" id="newTipoClienteInput/{{$projeto->id}}"  onchange="this.form.submit()">
                                                         </form>
@@ -120,6 +121,7 @@
                                                             @csrf
                                                             @method('PUT')
                                                             <input type="hidden" name="origin" value="clientes">
+                                                            <input type="hidden" name="window" value="projetosAbertos">
                                                             <select name="novoTipoCliente" id="novoTipoCliente/{{$projeto->id}}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                                                 @foreach($tiposCliente as $tC)
                                                                     <option value="{{$tC->id}}" {{$tC->nome == $projeto->tipoCliente->nome ? "selected" : ""}}>{{$tC->nome}}</option>
@@ -137,6 +139,8 @@
                                                             @csrf
                                                             @method('POST')
                                                             <input type="hidden" name="origin" value="clientes">
+                                                            <input type="hidden" name="window" value="projetosAbertos">
+
                                                             <input type="text" name="cliente_id" value={{$cliente->id}} class="hidden">
                                                             <input type="text" name="nome" id="newTipoProjetoInput/{{$projeto->id}}" onchange="this.form.submit()">
                                                         </form>
@@ -144,6 +148,7 @@
                                                             @csrf
                                                             @method('PUT')
                                                             <input type="hidden" name="origin" value="clientes">
+                                                            <input type="hidden" name="window" value="projetosAbertos">
                                                             <select name="novoTipoProjeto" id="novoTipoProjeto/{{$projeto->id}}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                                                 @foreach($tipoProjeto as $tP)
                                                                     <option value="{{$tP->id}}" {{$tP->nome == $projeto->tipoProjeto->nome ? "selected" : ""}}>{{$tP->nome}}</option>
@@ -168,6 +173,7 @@
                                                             @csrf
                                                             @method('PUT')
                                                                 <input type="hidden" name="origin" value="clientes">
+                                                                <input type="hidden" name="window" value="projetosAbertos">
                                                                 <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
                                                                     <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" {{$projeto->users->count() == $colaboradores->count() ? 'disabled' : ''}} class="w-fit pl-2 pr-10 border-none focus:border-none">
                                                                         @foreach($colaboradores as $colaborador)
@@ -371,7 +377,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="tabelaProjetosConcluidos" class="hidden">
+                    <div id="tabelaProjetosConcluidos" class="{{$window == 'projetosConcluidos' ? '' : 'hidden' }}">
                         <div class="hidden xl:block overflow-x-auto">
                             <table class="w-full whitespace-nowrap">
                                 <thead>
@@ -414,6 +420,7 @@
                                                             @csrf
                                                             @method('POST')
                                                             <input type="hidden" name="origin" value="clientes">
+                                                            <input type="hidden" name="window" value="projetosConcluidos">
                                                             <input type="text" name="cliente_id" value="{{$cliente->id}}" class="hidden">
                                                             <input type="text" name="nome" id="newTipoClienteInput/{{$projeto->id}}"  onchange="this.form.submit()">
                                                         </form>
@@ -421,6 +428,7 @@
                                                             @csrf
                                                             @method('PUT')
                                                             <input type="hidden" name="origin" value="clientes">
+                                                            <input type="hidden" name="window" value="projetosConcluidos">
                                                             <select name="novoTipoCliente" id="novoTipoCliente/{{$projeto->id}}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                                                 @foreach($tiposCliente as $tC)
                                                                     <option value="{{$tC->id}}" {{$tC->nome == $projeto->tipoCliente->nome ? "selected" : ""}}>{{$tC->nome}}</option>
@@ -438,6 +446,7 @@
                                                             @csrf
                                                             @method('POST')
                                                             <input type="hidden" name="origin" value="clientes">
+                                                            <input type="hidden" name="window" value="projetosConcluidos">
                                                             <input type="text" name="cliente_id" value={{$cliente->id}} class="hidden">
                                                             <input type="text" name="nome" id="newTipoProjetoInput/{{$projeto->id}}" onchange="this.form.submit()">
                                                         </form>
@@ -445,6 +454,7 @@
                                                             @csrf
                                                             @method('PUT')
                                                             <input type="hidden" name="origin" value="clientes">
+                                                            <input type="hidden" name="window" value="projetosConcluidos">
                                                             <select name="novoTipoProjeto" id="novoTipoProjeto/{{$projeto->id}}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                                                 @foreach($tipoProjeto as $tP)
                                                                     <option value="{{$tP->id}}" {{$tP->nome == $projeto->tipoProjeto->nome ? "selected" : ""}}>{{$tP->nome}}</option>

@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::resource('clientes', ClienteController::class);
+Route::get('/clientes/{cliente}/{window?}', [ClienteController::class, 'show'])->name('clientes.show');
 Route::resource('projetos', ProjetoController::class);
 
 Route::resource('estado-projetos', EstadoProjetoController::class);

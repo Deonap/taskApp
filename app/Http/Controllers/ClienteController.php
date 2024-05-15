@@ -45,7 +45,7 @@ class ClienteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Cliente $cliente)
+    public function show(Cliente $cliente, $window = 'projetosAbertos')
     {
         // Buscar projetos relacionados ao cliente
         $projetosAbertos = $cliente->projetos()->where('estado_projeto_id', '!=', 5)->get();
@@ -63,7 +63,7 @@ class ClienteController extends Controller
         $tiposCliente =  TipoCliente::all();
         $tipoProjeto = TipoProjeto::all();
 
-        return view('clientes.show', compact('cliente', 'projetosAbertos', 'projetosConcluidos', 'colaboradores', 'tiposCliente', 'tipoProjeto'));
+        return view('clientes.show', compact('cliente', 'projetosAbertos', 'projetosConcluidos', 'colaboradores', 'tiposCliente', 'tipoProjeto', 'window'));
     }
     
     /**

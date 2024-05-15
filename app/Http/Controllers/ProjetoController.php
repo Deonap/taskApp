@@ -150,7 +150,7 @@ class ProjetoController extends Controller
         if ($request->has('origin')) {
             $origin = $request['origin'];
             if ($origin === 'clientes') {
-                return redirect(route('clientes.show', $projeto->cliente_id));
+                return redirect(route('clientes.show', ['cliente' => $projeto->cliente_id, 'window' => $request['window']]));
             } elseif ($origin === 'prioridades') {
                 return redirect(route('prioridades.index', $request['user']));
             }
@@ -176,7 +176,7 @@ class ProjetoController extends Controller
         if ($request->has('origin')) {
             $origin = $request['origin'];
             if ($origin === 'clientes') {
-                return redirect(route('clientes.show', $projeto->cliente_id));
+                return redirect(route('clientes.show', ['cliente' => $projeto->cliente_id, 'window' => $request['window']]));
             } elseif ($origin === 'prioridades') {
                 return redirect(route('prioridades.index', $request['user']));
             } elseif ($origin === 'historico') {
@@ -194,7 +194,7 @@ class ProjetoController extends Controller
         if ($request->has('origin')) {
             $origin = $request['origin'];
             if ($origin === 'clientes') {
-                return redirect(route('clientes.show', $request['cliente_id']));
+                return redirect(route('clientes.show', ['cliente' => $request['cliente_id'], 'window' => $request['window']]));
             } elseif ($origin === 'prioridades') {
                 return redirect(route('prioridades.index', $request['user']));
             } elseif ($origin === 'historico') {
@@ -212,7 +212,7 @@ class ProjetoController extends Controller
         if ($request->has('origin')) {
             $origin = $request['origin'];
             if ($origin === 'clientes') {
-                return redirect(route('clientes.show', $request['cliente_id']));
+                return redirect(route('clientes.show', ['cliente' => $request['cliente_id'], 'window' => $request['window']]));
             } elseif ($origin === 'prioridades') {
                 return redirect(route('prioridades.index', $request['user']));
             } elseif ($origin === 'historico') {
@@ -230,7 +230,7 @@ class ProjetoController extends Controller
         if ($request->has('origin')) {
             $origin = $request['origin'];
             if ($origin === 'clientes') {
-                return redirect(route('clientes.show', $projeto->cliente_id));
+                return redirect(route('clientes.show', ['cliente' => $projeto->cliente_id, 'window' => $request['window']]));
             } elseif ($origin === 'prioridades') {
                 return redirect(route('prioridades.index', $request['user']));
             } elseif ($origin === 'historico') {
