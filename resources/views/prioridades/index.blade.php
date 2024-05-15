@@ -691,6 +691,7 @@
                             celulas[i].classList.add(...tdClassList);
                         }
                         celulas[0].classList.add('border-r-0');
+                        
                         celulas[1].innerHTML = `
                         <div class="flex items-end">
                             <div>
@@ -708,7 +709,9 @@
                             </div>
                         </div>
                         `;
-                        celulas[1].classList.add('border-l-0')
+
+                        celulas[1].classList.add('border-l-0');
+
                         celulas[2].innerHTML = `
                         <div class="flex items-end">
                             <div>
@@ -734,6 +737,7 @@
                             </div>
                         </div>
                         `;
+
                         celulas[3].innerHTML = `
                         <div class="flex items-end">
                             <div>
@@ -795,7 +799,6 @@
                             `<div class="${bgColor} m-auto size-7 rounded-full">
                             </div>`;
                             
-
                         var celulaAcoes = celulas[8];
                         celulaAcoes.innerHTML = `
                         <div class="flex justify-center items-center space-x-4">
@@ -1025,8 +1028,6 @@
                         celulas[4].classList.add("border-r-4", 'border-r-[#A3A2A3]');
                         celulas[4].innerHTML = tarefas;
 
-
-
                         var disabled = projeto.users.length == data.colaboradores.length ? "disabled" : "";
                         var selectColabs = `
                         <div class="flex items-end">
@@ -1093,11 +1094,9 @@
                             bgColor = 'bg-redStatus';
                         }
 
-
                         celulaEstadoProjeto.innerHTML =
                             `<div class="${bgColor} m-auto size-7 rounded-full">
                             </div>`;
-
 
                         var celulaAcoes = celulas[7];
                         celulaAcoes.innerHTML = `
@@ -1444,10 +1443,6 @@
                         console.error('Erro ao atualizar a ordem:', error);
                     });
             }
-        
-        
-        
-        
         });
 
         var el4 = document.getElementById('responsivePendentes');
