@@ -14,8 +14,7 @@ class ProjetoUser extends Model
 
     protected function setKeysForSaveQuery($query)
     {
-        return $query->where('projeto_id', $this->getAttribute('projeto_id'))
-                    ->where('user_id', $this->getAttribute('user_id'));
+        return $query->where(['projeto_id' => $this->getAttribute('projeto_id'), 'user_id' => $this->getAttribute('user_id')]);
     }
 
     public function projeto()

@@ -289,7 +289,7 @@ class ProjetoController extends Controller
             'observacoes' => ' required'
         ]);
 
-        $pU = ProjetoUser::where('projeto_id', $projeto->id)->where('user_id', $user->id)->first();
+        $pU = ProjetoUser::where(['projeto_id' => $projeto->id, 'user_id' => $user->id])->first();
         $pU->observacoes = $validated['observacoes'];
         $pU->update();
         return back();

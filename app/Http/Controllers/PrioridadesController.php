@@ -122,8 +122,7 @@ class PrioridadesController extends Controller
 
         foreach ($dados['projetos'] as $dado) {
             $update = DB::table('projeto_users')
-                ->where('projeto_id', $dado['id'])
-                ->where('user_id', $dado['user_id'])
+                ->where(['projeto_id' => $dado['id'], 'user_id' => $dado['user_id']])
                 ->update([
                     'observacoes' => $dado['observacoes'],
                     'tempo_gasto' => $dado['tempoGasto'],
@@ -155,13 +154,11 @@ class PrioridadesController extends Controller
                 $novaPrioridade = $projeto['prioridade'];
 
                 DB::table('projeto_users')
-                    ->where('projeto_id', $projetoId)
-                    ->where('user_id', $userId)
+                    ->where(['projeto_id' => $projetoId, 'user_id' => $userId])
                     ->update(['prioridade' => $novaPrioridade]);
 
                 DB::table('projeto_users')
-                ->where('projeto_id', $projetoId)
-                ->where('user_id', $userId)
+                ->where(['projeto_id' => $projetoId, 'user_id' => $userId])
                 ->update(['notificacaoVista' => false]);
             }
         });
@@ -188,7 +185,7 @@ class PrioridadesController extends Controller
                     ->where('id', $projetoId)
                     ->update(['estado_projeto_id' => $estado]);
 
-                DB::table('projeto_users')->where('projeto_id', $projetoId)->where('user_id', $userId)->update(['prioridade' => NULL]);
+                DB::table('projeto_users')->where(['projeto_id' => $projetoId, 'user_id' => $userId])->update(['prioridade' => NULL]);
 
             }
         });
