@@ -56,7 +56,7 @@
                             </div>
                             
                         </div>
-                        <div class="flex flex-row-reverse mb-4 px-8">
+                        <div class="flex flex-row-reverse mb-4">
                             <button class="bg-darkBlue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                                 Guardar
                             </button>

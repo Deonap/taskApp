@@ -56,7 +56,7 @@
                                 <th class="table-cell lg:hidden">
                                     Contacto
                                 </th>
-                                <th class="text-center">
+                                <th class="text-right pr-[5rem]">
                                     Ações
                                 </th>
                             </tr>
@@ -79,7 +79,7 @@
                                         {{ $cliente->telefone }}
                                     </td>
                                     <td>
-                                        <div class="flex justify-center items-center space-x-4">
+                                        <div class="flex justify-end pr-[2rem] space-x-3">
                                             <!-- Botão Visualizar -->
                                             <a href="{{ route('clientes.show', $cliente->id) }}" title="Ver">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-green-800 hover:text-green-500">
