@@ -191,14 +191,14 @@
                                                             </form>
                                                         @endforeach
                                                     </div>
-                                                    {{-- <div class="my-0 mx-3 {{$projeto->users->count() == $colaboradores->count() ? 'hidden' : ''}}">
+                                                    <div class="my-0 mx-3 {{$projeto->users->count() == $colaboradores->count() ? 'hidden' : ''}}">
                                                         <button id="{{$projeto->id}}"class="btn-adicionar-colaborador">
                                                             <!-- + -->
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                                                                 <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
                                                             </svg>                                                                      
                                                         </button>
-                                                    </div> --}}
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td class="text-center">
@@ -510,8 +510,8 @@
                                                             $bgColor = 'redStatus';
                                                         }
                                                     ?>
-                                                    {{-- <div class="bg-{{$bgColor}} rounded-full size-6 m-auto">
-                                                    </div> --}}
+                                                    <div class="bg-{{$bgColor}} rounded-full size-6 m-auto">
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td>
