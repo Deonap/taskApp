@@ -49,7 +49,12 @@
                                         <div>
                                             Nome
                                         </div>
-                                        <div class="m-auto" id="sortByNameAsc">
+                                        <div class="m-auto" id="sortByDefault">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5 7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+                                            </svg>
+                                        </div>
+                                        <div class="m-auto hidden" id="sortByNameAsc">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
                                             </svg>
@@ -149,11 +154,18 @@
             });
         });
     });
+    
     function sortByName(){
+        var defaultSort = document.getElementById('sortByDefault');
         var asc = document.getElementById('sortByNameAsc');
         var desc = document.getElementById('sortByNameDesc');
         var table = document.getElementById('clientTable');
         var shouldSwitch, x, y;
+
+        if(!defaultSort.classList.contains("hidden")){
+            defaultSort.classList.add('hidden');
+            asc.classList.remove("hidden");
+        }
 
         var switching = true;
         while(switching){
