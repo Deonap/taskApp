@@ -48,7 +48,7 @@
                                 <th scope="col" class="w-[25%]">Email</th>
                                 <th scope="col" class="w-[20%]">Password</th>
                                 <th scope="col" class="w-[15%]">Tipo</th>
-                                <th scope="col" class="w-[15%] text-center">Ações</th>
+                                <th scope="col" class="w-[15%] text-right pr-[5rem]">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -89,8 +89,8 @@
                                         </select>
                                     </form>
                                 </td>
-                                <td class="flex justify-center">
-                                    <div class="flex justify-center space-x-3 w-fit my-2 {{$hasPermissions ? "" : "hover:cursor-not-allowed"}}">
+                                <td>
+                                    <div class="flex justify-end pr-[3rem] space-x-3 {{$hasPermissions ? "" : "hover:cursor-not-allowed"}}">
                                         <!-- Botão editar -->
                                         <a href="{{ route('users.edit', $user->id) }}" title="Editar" class="{{$hasPermissions ? "" : "pointer-events-none"}}">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-darkBlue hover:text-blue-700">
@@ -137,8 +137,8 @@
                                             <option value="admin" {{ $user->tipo == 'admin' ? 'selected' : '' }}>ADMIN</option>
                                         </select>
                                     </td>
-                                    <td class="flex items-center ">
-                                        <button type="submit" onclick="this.form.submit()" class="m-auto font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">Adicionar</button>
+                                    <td class="flex justify-end pr-[3rem]">
+                                        <button type="submit" onclick="this.form.submit()" class="font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">Adicionar</button>
                                     </td>
                                 </form>
                             </tr>
