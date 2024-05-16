@@ -13,8 +13,8 @@
                 margin:auto;
             }
             table{
-                width: 100%;
                 table-layout: fixed;
+                width: 100%;
             }
         </style>
     </head>
@@ -34,13 +34,13 @@
                         </div>
                     </div>
                     <div>
-                        <btn id="btnAdicionarLinha" class="bg-darkBlue hover:bg-blue-700 hover:cursor-pointer text-white font-semibold py-2 px-4 rounded-md shadow-md">
+                        <button id="btnAdicionarLinha" class="bg-darkBlue hover:bg-blue-700 hover:cursor-pointer text-white font-semibold py-2 px-4 rounded-md shadow-md">
                             Adicionar
-                        </btn>
+                        </button>
                     </div>
                 </div>
                 
-                <div class="mt-4">
+                <div>
                     <table class="table-auto w-full">
                         <thead>
                             <tr class="bg-gray-300">
