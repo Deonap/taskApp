@@ -45,7 +45,21 @@
                         <thead>
                             <tr class="bg-gray-300">
                                 <th>
-                                    Nome
+                                    <div class="flex space-x-3 hover:cursor-pointer w-fit" onclick="sortByName()">
+                                        <div>
+                                            Nome
+                                        </div>
+                                        <div class="m-auto" id="sortByNameAsc">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+                                            </svg>
+                                        </div>
+                                        <div class="m-auto hidden" id="sortByNameDesc">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+                                            </svg>
+                                        </div>
+                                    </div>
                                 </th>
                                 <th class="hidden lg:table-cell">
                                     Email
@@ -118,21 +132,57 @@
 </html>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-    const filterInput = document.getElementById("searchFilter");
-    const tableRows = document.querySelectorAll("#clientTable tbody tr");
+        const filterInput = document.getElementById("searchFilter");
+        const tableRows = document.querySelectorAll("#clientTable tbody tr");
 
-    filterInput.addEventListener("input", function () {
-        const filterValue = this.value.toLowerCase().trim();
-        tableRows.forEach(function (row) {
-            const name = row.querySelector("td:first-child").textContent.toLowerCase();
-            if (name.includes(filterValue)) {
-                row.style.display = "";
-                row.classList.remove("hidden");
-            } else {
-                row.style.display = "none";
-                row.classList.add("hidden");
-            }
+        filterInput.addEventListener("input", function () {
+            const filterValue = this.value.toLowerCase().trim();
+            tableRows.forEach(function (row) {
+                const name = row.querySelector("td:first-child").textContent.toLowerCase();
+                if (name.includes(filterValue)) {
+                    row.style.display = "";
+                    row.classList.remove("hidden");
+                } else {
+                    row.style.display = "none";
+                    row.classList.add("hidden");
+                }
+            });
         });
     });
-});
+    function sortByName(){
+        var asc = document.getElementById('sortByNameAsc');
+        var desc = document.getElementById('sortByNameDesc');
+        var table = document.getElementById('clientTable');
+        var shouldSwitch, x, y;
+
+        var switching = true;
+        while(switching){
+            switching = false;
+            rows = table.rows;
+            for(var i = 1; i < rows.length - 1; i++){
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName('a')[0].textContent.toLowerCase().trim();
+                y = rows[i + 1].getElementsByTagName('a')[0].textContent.toLowerCase().trim();
+                if(desc.classList.contains('hidden')){
+                   if(x > y){
+                        shouldSwitch = true;
+                        break;
+                    }
+                }else{
+                    if(x < y){
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+
+            if(shouldSwitch){
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+        
+        asc.classList.toggle('hidden');
+        desc.classList.toggle('hidden');
+    }
 </script>
