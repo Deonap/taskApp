@@ -24,9 +24,14 @@
             </aside>
     
             <!-- Page Content -->
-            <div class="flex-1 mx-10 my-[3.75rem]">
+            <div class="flex-1 mx-10 mt-[3.75rem]">
+
+                <div class="relative w-full text-white text-end">
+                    @include('users.logout')
+                </div>
+
                 <!-- Main Content -->
-                <main class="flex-1 w-full bg-white">
+                <main class="flex-1 w-full">
                     {{ $slot }}
                 </main>
             </div>
