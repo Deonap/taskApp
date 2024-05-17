@@ -84,9 +84,9 @@ class ClienteController extends Controller
     public function update(Request $request, Cliente $cliente)
     {
         $validatedData = $request->validate([
-            'nome' => 'required|max:255',
-            'email' => 'required|email',
-            'telefone' => 'required',
+            'nome' => 'string|max:255',
+            'email' => 'email',
+            'telefone' => 'numeric',
         ]);
         $cliente->update($validatedData);
         return redirect()->route('clientes.index');

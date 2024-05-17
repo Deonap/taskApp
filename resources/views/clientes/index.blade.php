@@ -1,16 +1,23 @@
 <html lang="en">    
     <head>
         <style>
-            th{
+            th {
                 padding: 0.5rem 1rem 0.5rem 1rem;
                 text-align: left;
                 font-weight: 800;
             }
-            td{
+
+            td {
                 padding: 0.5rem 1rem 0.5rem 1rem;
             }
-            form{
+
+            form {
                 margin: auto;
+            }
+            
+            table {
+                width: 100%;
+                table-layout: fixed;
             }
         </style>
     </head>
@@ -40,11 +47,12 @@
                         </div>
                     </div>
                 </div>
+
                 <div>
-                    <table class="table-auto w-full overflow-x-auto" id="clientTable">
+                    <table class="table-auto w-full" id="clientTable">
                         <thead>
                             <tr class="bg-gray-300">
-                                <th>
+                                <th scope="col" class="1/4">
                                     <div class="flex space-x-3 hover:cursor-pointer w-fit" onclick="sortByName()">
                                         <div>
                                             Nome
@@ -66,16 +74,13 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th class="hidden lg:table-cell">
+                                <th scope="col" class="w-1/4">
                                     Email
                                 </th>
-                                <th class="hidden lg:table-cell">
+                                <th scope="col" class="w-1/4">
                                     Telefone
                                 </th>
-                                <th class="table-cell lg:hidden">
-                                    Contacto
-                                </th>
-                                <th class="text-right pr-[5rem]">
+                                <th scope="col" class="w-1/4 text-right pr-[5rem]">
                                     Ações
                                 </th>
                             </tr>
@@ -84,18 +89,25 @@
                             @foreach ($clientes as $cliente)
                                 <tr class="border-b border-gray-200">
                                     <td>
-                                        <a href="{{ route('clientes.show', $cliente->id) }}" title="Ver">
-                                            {{ $cliente->nome }}
-                                        </a>
+                                        <div class="p-2">
+                                            <a href="{{ route('clientes.show', $cliente->id) }}" title="Ver">
+                                                {{ $cliente->nome }}
+                                            </a>
+                                        </div>
                                     </td>
                                     <td class="hidden lg:table-cell">
-                                        {{ $cliente->email }}
+                                        <form action="{{ route('clientes.update', $cliente->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input name="email" value='{{ $cliente->email }}' class="border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                        </form>
                                     </td>
                                     <td class="hidden lg:table-cell">
-                                        {{ $cliente->telefone }}
-                                    </td>
-                                    <td class="table-cell lg:hidden">
-                                        {{ $cliente->telefone }}
+                                        <form action="{{ route('clientes.update', $cliente->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input name="telefone" value='{{ $cliente->telefone }}' class="border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                        </form>
                                     </td>
                                     <td>
                                         <div class="flex justify-end pr-[2rem] space-x-3">
