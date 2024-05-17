@@ -16,7 +16,7 @@
     </head>
     
     <body class="font-sans antialiased w-full">
-        <div class="md:flex md:flex-row bg-white">
+        <div class="md:flex md:flex-row">
     
             <!-- Navigation Sidebar -->
             <aside class="w-fit h-fit" aria-label="Sidebar">

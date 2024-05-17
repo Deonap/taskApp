@@ -41,7 +41,7 @@
                         <h2 class="hidden md:block text-xl font-black">
                             Clientes >
                         </h2>
-                        <div class="text-xl font-black md:text-base md:font-normal ml-2 flex">
+                        <div class="text-xl font-black md:text-base md:font-normal ml-2">
                             Ver Cliente
                         </div>
                     </div>

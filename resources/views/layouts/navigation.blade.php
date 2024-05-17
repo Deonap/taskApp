@@ -8,7 +8,8 @@
         font-family: 'Open Sans', sans-serif;
     }
     .bg-sidebar {
-        background: #0a3857; /* Azul médio para fundo do menu lateral */
+        background: rgb(10,56,87); /* Azul médio para fundo do menu lateral */
+        border-radius: 16px;         /* Adiciona margens nas laterais do menu para não tocar nas bordas da tela */
     }
 
     .cta-btn {
@@ -33,8 +34,6 @@
         transition: background-color 0.3s;
         padding-left: 20px;
         width: 180px;
-        
-        
     }
 
     .nav-item a:hover, .nav-item a.active {
@@ -84,13 +83,6 @@
     }
 
     /* Ajuste no padding para manter os itens do menu centralizados verticalmente após adicionar margens */
-
-
-    /* Adiciona margens nas laterais do menu para não tocar nas bordas da tela */
-    .bg-sidebar {        
-        border-radius: 16px;
-        
-    }
 
     button.flex {
         padding-left: 1rem; /* Espaço interno à esquerda */
@@ -218,7 +210,7 @@
           </div>
     </div>
     <div class="hidden md:block w-fit">
-        <aside class="relative bg-sidebar shadow-xl w-fit h-fit pr-1 ml-3 mt-3">
+        <aside class="relative bg-sidebar w-fit h-fit pr-1 ml-3 mt-3">
             <div class="p-6">
                 <div class="hover:text-gray-300 mt-8 w-fit">
                     <img src="/images/logo-buzina.png" alt="Logotipo Buzina" class="h-10 resize-none" > <!-- Ajuste a classe de altura conforme necessário -->
