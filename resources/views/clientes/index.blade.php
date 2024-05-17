@@ -115,7 +115,7 @@
                                             </a>
                                     
                                             <!-- Botão Excluir -->
-                                            <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST">
+                                            <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" onsubmit="return confirm('Tem a certeza?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" {{$hasPermissions ? "" : 'disabled'}} class="disabled:cursor-not-allowed">

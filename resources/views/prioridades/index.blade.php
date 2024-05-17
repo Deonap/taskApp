@@ -126,19 +126,19 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
-                                            <th scope="col" class="text-left border w-[3%]">
+                                            <th scope="col" class="text-left border w-[4%]">
                                                 Nº
                                             </th>
-                                            <th scope="col" class="text-left border w-[18%]">
+                                            <th scope="col" class="text-left border w-[13%]">
                                                 Cliente
                                             </th>
-                                            <th scope="col" class="text-left border w-[15%]">
+                                            <th scope="col" class="text-left border w-[12%]">
                                                 Tipo
                                             </th>
-                                            <th scope="col" class="text-left border w-[15%]">
+                                            <th scope="col" class="text-left border w-[12%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col" class="text-left border border-r-4 border-r-[#A3A2A3] w-[8%]">
+                                            <th scope="col" class="text-left border border-r-4 border-r-[#A3A2A3] w-[18%]">
                                                 Prioridade
                                             </th>
                                             <th scope="col" class="text-left border w-[17%]">
