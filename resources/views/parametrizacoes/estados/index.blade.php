@@ -28,19 +28,22 @@
 <body>
     <x-app-layout>
         <div>
-            <div class="flex justify-between items-center mb-4">
+
+            <div>
                 <div class="flex items-center text-darkBlue">
                     <h2 class="hidden md:block text-xl font-black">
                         Parametrizações >
                     </h2>
-                    <div class="text-xl font-black md:text-base md:font-normal ml-2">
+                    <div class="text-xl font-black md:text-base md:font-normal ml-2 flex">
                         Estado
                     </div>
                 </div>
-                <div>
-                    <button id="btnAdicionarLinha" class="bg-darkBlue hover:cursor-pointer hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
-                        Adicionar
-                    </button>
+                <div class="flex justify-end items-right mb-4 mt-[1.75rem]">
+                    <div>
+                        <button id="btnAdicionarLinha" class="bg-darkBlue hover:cursor-pointer hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md disabled:cursor-not-allowed disabled:hover:bg-darkBlue" {{$hasPermissions ? "" : "disabled"}}>
+                            Adicionar
+                        </button>
+                    </div>
                 </div>
             </div>
 

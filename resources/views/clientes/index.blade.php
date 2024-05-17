@@ -29,14 +29,14 @@
                             Listagem
                         </div>
                     </div>
-                    <div class="flex justify-between items-center my-4">
+                    <div class="flex justify-between items-center mb-4 mt-[1.75rem]">
                         <div>
-                            <input id='searchFilter' type="text" placeholder="Pesquisar..." class="rounded-md border-gray-300 focus:border-darkBlue"/>
+                            <input id='searchFilter' type="text" placeholder="Pesquisar..." class="rounded-md border-gray-300 focus:border-darkBlue h-[40px]"/>
                         </div>
                         <div>
-                            <a href="{{ route('clientes.create') }}" class="bg-darkBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
+                            <button href="{{ route('clientes.create') }}" class="bg-darkBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
                                 Adicionar
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
