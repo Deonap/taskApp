@@ -77,6 +77,7 @@
                                     <form action="" id="formToggleFerias" method="POST" class="m-auto">
                                         @csrf
                                         @method('PUT')
+                                        <input id="redirectToggleFeriasUser" type="hidden" name="user" value="">
                                         <label for="toggleFerias" class="flex items-center cursor-pointer">
                                             <div class="mr-3 text-gray-700 font-black">
                                                 Férias
@@ -97,12 +98,14 @@
                                         var options = this.options;
                                         var selectedValue = options[this.selectedIndex].value;
                                         document.getElementById('formToggleFerias').action = "{{route('users.toggleFerias', '')}}/" + selectedValue;
+                                        document.getElementById('redirectToggleFeriasUser').value = selectedValue;
                                     });
                                     document.addEventListener('DOMContentLoaded', function(){
                                         var selectColab = document.getElementById('colaborador');
                                         var options = selectColab.options;
                                         var selectedValue = options[selectColab.selectedIndex].value;
                                         document.getElementById('formToggleFerias').action = "{{route('users.toggleFerias', '')}}/" + selectedValue;
+                                        document.getElementById('redirectToggleFeriasUser').value = selectedValue;
                                     });
                                 </script>
                             </div>
@@ -319,6 +322,27 @@
 
     });
 
+    function handlePageReload(userProjeto) {
+        const toggleFerias = document.getElementById('toggleFerias');
+        const tabelaProjetosAbertosTbody = document.querySelector('#tabelaProjetosAbertos tbody');
+        const responsiveDesenvolvimento = document.getElementById('responsiveDesenvolvimento');
+        const disabledClass = 'disabledTable';
+
+        toggleFerias.checked = userProjeto.vacation;
+
+        if (userProjeto.vacation) {
+            if (!tabelaProjetosAbertosTbody.classList.contains(disabledClass)) {
+                tabelaProjetosAbertosTbody.classList.add(disabledClass);
+                responsiveDesenvolvimento.classList.add(disabledClass);
+            }
+        } else {
+            if (tabelaProjetosAbertosTbody.classList.contains(disabledClass)) {
+                tabelaProjetosAbertosTbody.classList.remove(disabledClass);
+                responsiveDesenvolvimento.classList.remove(disabledClass);
+            }
+        }
+    }
+
     function atualizarTabelaProjetosEmAberto(userId) {
         var tdClassList = [ 'px-3', 'py-4', 'whitespace-nowrap', 'border', 'border-b'];
         
@@ -339,15 +363,7 @@
                         var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
                         var prioridade = userProjeto.pivot.prioridade ? userProjeto.pivot.prioridade : 'N/A';
 
-                        if(userProjeto.vacation){
-                            document.getElementById('toggleFerias').checked = true;
-                            document.querySelector('#tabelaProjetosAbertos tbody').classList.add('disabledTable');
-                            document.getElementById('responsiveDesenvolvimento').classList.add('disabledTable');
-                        }else{
-                            document.getElementById('toggleFerias').checked = false;
-                            document.querySelector('#tabelaProjetosAbertos tbody').classList.remove('disabledTable');
-                            document.getElementById('responsiveDesenvolvimento').classList.remove('disabledTable');
-                        }
+                        handlePageReload(userProjeto);
 
                         var celulaN_Prioridade = linha.insertCell(0);
                         celulaN_Prioridade.classList.add(...tdClassList);
@@ -684,6 +700,8 @@
                         linha.setAttribute('data-id', projeto.id);
                         linha.classList.add('border-b'); // Adiciona borda à linha
 
+                        handlePageReload(userProjeto);
+
                         var celulas = [];
 
                         for (let i = 0; i < 9; i++) {
@@ -944,6 +962,8 @@
                         var linha = tbodyOutrosColaboradores.insertRow();
                         linha.classList.add('border-b'); // Adiciona borda à linha
                         var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
+
+                        handlePageReload(userProjeto);
 
                         var celulas = [];
 

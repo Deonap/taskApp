@@ -81,6 +81,6 @@ class UserController extends Controller
             $user->vacation = false;
         }
         $user->save();
-        return redirect()->route('prioridades.index');
+        return redirect(route('prioridades.index', $request['user']));
     }
 }
