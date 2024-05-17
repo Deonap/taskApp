@@ -239,7 +239,7 @@ class ProjetoController extends Controller
         }
     }
 
-    public function adicionarColaborador(Request $request, Projeto $projeto)
+    public function adicionarColaborador(Request $request, Projeto $projeto, $window = 'null')
     {
         $validated = $request->validate([
             'novoColaboradorId' => 'required|exists:users,id',
@@ -256,7 +256,7 @@ class ProjetoController extends Controller
         $pU->user_id = $novoColaboradorId;
         $pU->save();
 
-        return redirect()->route('clientes.show', $projeto->cliente_id);
+        return redirect(route('clientes.show', ['cliente' => $projeto->cliente_id, 'window' => $request['window']]));
     }
 
 

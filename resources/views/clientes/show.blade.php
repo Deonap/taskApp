@@ -192,7 +192,7 @@
                                                         @endforeach
                                                     </div>
                                                     <div class="my-0 mx-3 {{$projeto->users->count() == $colaboradores->count() ? 'hidden' : ''}}">
-                                                        <button id="{{$projeto->id}}"class="btn-adicionar-colaborador">
+                                                        <button id="{{$projeto->id}}"class="btn-adicionar-colaborador" data-origin="projetosAbertos">
                                                             <!-- + -->
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                                                                 <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
@@ -479,14 +479,35 @@
                                                 {{ $projeto->tempo_previsto }}
                                             </td>
                                             <td>
-                                                @foreach($projeto->users as $user)
-                                                    @if(!$loop->last)
-                                                        {{$user->name}}
-                                                        <br>
-                                                    @else
-                                                        {{$user->name}}
-                                                    @endif
-                                                @endforeach
+                                                <div class="flex items-end">
+                                                    <div id="colaboradorCell/{{$projeto->id}}" class="colaboradorCell">
+                                                        @foreach($projeto->users as $user)
+                                                            <form action="{{ route('projetos.colaboradores.atualizar', $projeto->id) }}" method="POST" class="my-0 py-0">
+                                                            @csrf
+                                                            @method('PUT')
+                                                                <input type="hidden" name="origin" value="clientes">
+                                                                <input type="hidden" name="window" value="projetosConcluidos">
+                                                                <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
+                                                                    <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" {{$projeto->users->count() == $colaboradores->count() ? 'disabled' : ''}} class="w-fit pl-2 pr-10 border-none focus:border-none">
+                                                                        @foreach($colaboradores as $colaborador)
+                                                                            @if(!$projeto->users->contains($colaborador) || $colaborador->id == $user->id)
+                                                                                <option value="{{$colaborador->id}}/{{$user->id}}" class="w-fit" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->name }}</option>        
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </form>
+                                                        @endforeach
+                                                    </div>
+                                                    <div class="my-0 mx-3 {{$projeto->users->count() == $colaboradores->count() ? 'hidden' : ''}}">
+                                                        <button id="{{$projeto->id}}" class="btn-adicionar-colaborador" data-origin="projetosConcluidos">
+                                                            <!-- + -->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                                                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+                                                            </svg>                                                                      
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>
                                                 <div class="flex justify-center space-x-3">
@@ -546,8 +567,8 @@
                         <div class="block xl:hidden space-y-3 h-fit">
                             <div class="sm:flex space-y-3 sm:space-y-0 sm:space-x-3">
                                 @foreach($projetosConcluidos as $projeto)
-                                <div class="min-h-fit w-full flex items-start shadow-lg border-4 p-4">
-                                    <div class="w-full">
+                                    <div class="min-h-fit w-full flex items-start shadow-lg border-4 p-4">
+                                        <div class="w-full">
                                             <div class="flex justify-between items-center">
                                                 <h1 class="font-black">
                                                     {{$projeto->tipoCliente->nome}}
@@ -693,33 +714,34 @@
             document.getElementById('formAlterarTipoProjeto/' + id.split('/')[1]).submit();
         }
     }
+
     var btnPA = document.getElementById('btnProjetosAbertos');
     var btnPC = document.getElementById('btnProjetosConcluidos');
 
-    document.getElementById('btnProjetosAbertos').addEventListener('click', () => {
-        btnPA.classList.add('bg-darkBlue');
-        btnPA.classList.remove('bg-gray-400');
-        btnPC.classList.add('bg-gray-400');
-        btnPC.classList.remove('bg-darkBlue');
-
-        document.getElementById('tabelaProjetosAbertos').classList.remove('hidden');
-        document.getElementById('tabelaProjetosConcluidos').classList.add('hidden');
+    btnPA.addEventListener('click', () => {
+        toggleTables(btnPA, btnPC, 'tabelaProjetosAbertos', 'tabelaProjetosConcluidos');
     });
 
-    document.getElementById('btnProjetosConcluidos').addEventListener('click', () => {
-        btnPC.classList.add('bg-darkBlue');
-        btnPC.classList.remove('bg-gray-400');
-        btnPA.classList.add('bg-gray-400');
-        btnPA.classList.remove('bg-darkBlue');
-
-        document.getElementById('tabelaProjetosConcluidos').classList.remove('hidden');
-        document.getElementById('tabelaProjetosAbertos').classList.add('hidden');
+    btnPC.addEventListener('click', () => {
+        toggleTables(btnPC, btnPA, 'tabelaProjetosConcluidos', 'tabelaProjetosAbertos');
     });
+
+    const toggleTables = (btn1, btn0, table1, table0) => {
+        btn1.classList.add('bg-darkBlue');
+        btn1.classList.remove('bg-gray-400');
+
+        btn0.classList.add('bg-gray-400');
+        btn0.classList.remove('bg-darkBlue');
+
+        document.getElementById(table1).classList.remove('hidden');
+        document.getElementById(table0).classList.add('hidden');
+    };
+
 
     var colaboradorCell = document.getElementsByClassName("colaboradorCell");
     var btnAdicionarColaborador = document.getElementsByClassName("btn-adicionar-colaborador");
 
-    for(var i = 0; i <btnAdicionarColaborador.length;i++){
+    for(var i = 0; i < btnAdicionarColaborador.length;i++){
         btnAdicionarColaborador[i].addEventListener('click', addNewColaboradorField);
     }
 
@@ -728,6 +750,7 @@
         var html = `
         <form action="{{ route('projetos.colaboradores.adicionar', ':id') }}" method="POST">
         @csrf
+            <input type="hidden" name="window" value=":window">
             <div class="flex items-center border-t border-gray-400 p-1">
                 <select name="novoColaboradorId" id=":id" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
                     <option disabled selected>...</option>
@@ -740,6 +763,7 @@
         `;
 
         html = html.replaceAll(':id', this.id);
+        html = html.replaceAll(':window', this.getAttribute('data-origin'));
 
         colaboradorCell.innerHTML += html;
     }

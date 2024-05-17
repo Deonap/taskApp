@@ -45,8 +45,12 @@ class ClienteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Cliente $cliente, $window = 'projetosAbertos')
+    public function show(Cliente $cliente, $window = 'null')
     {
+        // dd($window);
+        if($window == 'null'){
+            $window = 'projetosAbertos';
+        }
         // Buscar projetos relacionados ao cliente
         $projetosAbertos = $cliente->projetos()->where('estado_projeto_id', '!=', 5)->get();
         $projetosConcluidos = $cliente->projetos()->where('estado_projeto_id', 5)->get();
