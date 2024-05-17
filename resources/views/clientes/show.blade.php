@@ -201,13 +201,17 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="text-center">
-                                                <div>
-                                                    @foreach($projeto->users as $user)
-                                                        <div class="text-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
-                                                            {{ $user->tempoGasto($projeto) }}
-                                                        </div>
-                                                    @endforeach
+                                            <td class="">
+                                                <div class="flex justify-center space-x-3">
+                                                    <div>
+                                                        @foreach($projeto->users as $user)
+                                                            <div class="text-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
+                                                                {{ $user->tempoGasto($projeto) }}
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                    <div class="rounded-full size-6 m-auto">
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td>
@@ -383,8 +387,8 @@
                         </div>
                     </div>
                     <div id="tabelaProjetosConcluidos" class="{{$window == 'projetosConcluidos' ? '' : 'hidden' }}">
-                        <div class="hidden xl:block overflow-x-auto">
-                            <table class="w-full whitespace-nowrap">
+                        <div class="hidden xl:block">
+                            <table class="w-full">
                                 <thead>
                                     <tr class="bg-gray-300">
                                         <th scope="col" class="w-[15%]">
@@ -488,7 +492,7 @@
                                                 <div class="flex justify-center space-x-3">
                                                     <div>
                                                         @foreach($projeto->users as $user)
-                                                            <div class="text-center @if(!$loop->last) border-b border-gray-400 @endif">
+                                                            <div class="text-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
                                                                 {{$user->tempoGasto($projeto)}}
                                                             </div>
                                                         @endforeach
@@ -513,7 +517,7 @@
                                                     <div class="bg-{{$bgColor}} rounded-full size-6 m-auto">
                                                     </div>
                                                 </div>
-                                            </td>
+                                            </td> 
                                             <td>
                                             </td>
                                             <td>
