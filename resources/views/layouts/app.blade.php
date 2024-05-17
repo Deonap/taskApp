@@ -25,7 +25,7 @@
     
             <!-- Page Content -->
             <div class="flex-1 mx-10 mt-[3.75rem]">
-
+                <!-- Ícone de logout -->
                 <div class="relative w-full text-white text-end">
                     @include('users.logout')
                 </div>
