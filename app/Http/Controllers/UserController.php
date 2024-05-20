@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Projeto;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -68,6 +69,14 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->tipo = $request->tipo;
+
+        if($request->tipo == "admin"){
+            $projetos = Projeto::all();
+            foreach($projetos as $projeto){
+                $projeto->users()->where('id', $id)->detach($id);
+            }
+        }
+
         $user->save();
 
         return back()->with('success', 'Tipo de usuário atualizado com sucesso!');
