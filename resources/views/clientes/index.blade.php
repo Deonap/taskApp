@@ -6,15 +6,12 @@
                 text-align: left;
                 font-weight: 800;
             }
-
             td {
                 padding: 0.5rem 1rem 0.5rem 1rem;
             }
-
             form {
                 margin: auto;
             }
-            
             table {
                 width: 100%;
                 table-layout: fixed;
