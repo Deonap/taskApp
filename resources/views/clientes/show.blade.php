@@ -190,6 +190,22 @@
                                                                 </div>
                                                             </form>
                                                         @endforeach
+                                                        {{-- newColaborador --}}
+                                                        <form action="{{ route('projetos.colaboradores.adicionar', $projeto->id) }}" id="newColaboradorForm/{{$projeto->id}}" method="POST" class="hidden my-0 py-0">
+                                                        @csrf
+                                                            <input type="hidden" name="origin" value="clientes">
+                                                            <input type="hidden" name="window" value="projetosAbertos">
+                                                            <div class="flex items-center border-t border-gray-400 p-1">
+                                                                <select name="novoColaboradorId" id="{{$projeto->id}}" onchange="this.form.submit()" class="w-fit pl-2 pr-10 border-none focus:border-none">
+                                                                    <option disabled selected>...</option>
+                                                                    @foreach($colaboradores as $colaborador)
+                                                                        @if(!$projeto->users->contains($colaborador))
+                                                                            <option value="{{$colaborador->id}}" class="w-fit">{{ $colaborador->name }}</option>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                     <div class="my-0 mx-3 {{$projeto->users->count() == $colaboradores->count() ? 'hidden' : ''}}">
                                                         <button id="{{$projeto->id}}"class="btn-adicionar-colaborador" data-origin="projetosAbertos">
@@ -498,9 +514,25 @@
                                                                 </div>
                                                             </form>
                                                         @endforeach
+                                                        {{-- newColaborador --}}
+                                                        <form action="{{ route('projetos.colaboradores.adicionar', $projeto->id) }}" id="newColaboradorForm/{{$projeto->id}}" method="POST" class="hidden my-0 py-0">
+                                                        @csrf
+                                                            <input type="hidden" name="origin" value="clientes">
+                                                            <input type="hidden" name="window" value="projetosConcluidos">
+                                                            <div class="flex items-center border-t border-gray-400 p-1">
+                                                                <select name="novoColaboradorId" id="{{$projeto->id}}" onchange="this.form.submit()" class="w-fit pl-2 pr-10 border-none focus:border-none">
+                                                                    <option disabled selected>...</option>
+                                                                    @foreach($colaboradores as $colaborador)
+                                                                        @if(!$projeto->users->contains($colaborador))
+                                                                            <option value="{{$colaborador->id}}" class="w-fit">{{ $colaborador->name }}</option>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                     <div class="my-0 mx-3 {{$projeto->users->count() == $colaboradores->count() ? 'hidden' : ''}}">
-                                                        <button id="{{$projeto->id}}" class="btn-adicionar-colaborador" data-origin="projetosConcluidos">
+                                                        <button id="{{$projeto->id}}" class="btn-adicionar-colaborador">
                                                             <!-- + -->
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                                                                 <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
@@ -747,25 +779,7 @@
 
     function addNewColaboradorField(){
         var colaboradorCell = document.getElementById("colaboradorCell/" + this.id);
-        var html = `
-        <form action="{{ route('projetos.colaboradores.adicionar', ':id') }}" method="POST">
-        @csrf
-            <input type="hidden" name="window" value=":window">
-            <div class="flex items-center border-t border-gray-400 p-1">
-                <select name="novoColaboradorId" id=":id" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
-                    <option disabled selected>...</option>
-                    @foreach($colaboradores as $colaborador)
-                        <option value="{{$colaborador->id}}" class="w-fit">{{ $colaborador->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </form>
-        `;
-
-        html = html.replaceAll(':id', this.id);
-        html = html.replaceAll(':window', this.getAttribute('data-origin'));
-
-        colaboradorCell.innerHTML += html;
+        document.getElementById('newColaboradorForm/' + this.id).classList.remove('hidden');
     }
 
     window.openModal = function(modalId) {

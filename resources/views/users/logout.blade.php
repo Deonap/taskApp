@@ -1,6 +1,5 @@
 <div class="absolute right-0">
     <div class="w-fit" x-data="{ open: false }">
-        
         <button id="logoutDropdownButton" class="flex w-full px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-sidebar rounded-md hover:text-gray-300 focus:outline-none focus:shadow-outline-blue">
             @auth
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">

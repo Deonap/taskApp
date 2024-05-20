@@ -7,6 +7,7 @@ use App\Models\TipoProjeto;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\TipoCliente;
+use App\Models\Projeto;
 
 
 class ClienteController extends Controller
@@ -54,6 +55,7 @@ class ClienteController extends Controller
         // Buscar projetos relacionados ao cliente
         $projetosAbertos = $cliente->projetos()->where('estado_projeto_id', '!=', 5)->get();
         $projetosConcluidos = $cliente->projetos()->where('estado_projeto_id', 5)->get();
+        $projetos = Projeto::all();
 
         // Buscar colaboradores do tipo 'colaborador'
         $colaboradores = User::where('tipo', 'colaborador')->get();
@@ -67,7 +69,7 @@ class ClienteController extends Controller
         $tiposCliente =  TipoCliente::all();
         $tipoProjeto = TipoProjeto::all();
 
-        return view('clientes.show', compact('cliente', 'projetosAbertos', 'projetosConcluidos', 'colaboradores', 'tiposCliente', 'tipoProjeto', 'window'));
+        return view('clientes.show', compact('cliente', 'projetosAbertos', 'projetosConcluidos', 'colaboradores', 'tiposCliente', 'tipoProjeto', 'window', 'projetos'));
     }
     
     /**
