@@ -187,16 +187,9 @@
                 shouldSwitch = false;
                 x = rows[i].getElementsByTagName('a')[0].textContent.toLowerCase().trim();
                 y = rows[i + 1].getElementsByTagName('a')[0].textContent.toLowerCase().trim();
-                if(desc.classList.contains('hidden')){
-                   if(x > y){
-                        shouldSwitch = true;
-                        break;
-                    }
-                }else{
-                    if(x < y){
-                        shouldSwitch = true;
-                        break;
-                    }
+                if(desc.classList.contains('hidden') && x > y || asc.classList.contains('hidden') && x < y){
+                    shouldSwitch = true;
+                    break;
                 }
             }
 
