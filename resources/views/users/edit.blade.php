@@ -44,6 +44,10 @@
             </form>
         </div>
     </div>
-                
+    @else
+    <div>
+        Algo correu mal. Não deveria ser possível aceder esta página.
+    </div>
 @endif
+
 </x-app-layout>

@@ -319,7 +319,7 @@
                                                 <h1 class="font-black">
                                                     {{$projeto->tipoCliente->nome}}
                                                 </h1>
-                                                @if(auth()->user() && auth()->user()->tipo == 'admin')
+                                                @if($hasPermissions)
                                                     <div class="flex justify-center space-x-3">
                                                         <a href="{{ route('projetos.edit', $projeto->id) }}" title="Editar">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-darkBlue hover:text-blue-700">
@@ -605,7 +605,7 @@
                                                 <h1 class="font-black">
                                                     {{$projeto->tipoCliente->nome}}
                                                 </h1>
-                                                @if(auth()->user() && auth()->user()->tipo == 'admin')
+                                                @if($hasPermissions)
                                                     <div class="flex justify-center space-x-3">
                                                         <a href="{{ route('projetos.edit', $projeto->id) }}" title="Editar">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-darkBlue hover:text-blue-700">

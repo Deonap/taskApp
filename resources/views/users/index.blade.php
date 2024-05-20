@@ -77,7 +77,7 @@
                                         @csrf
                                         @method('PUT')
                                         <?php 
-                                            if(auth()->user() && auth()->user()->tipo != 'admin'){
+                                            if(!$hasPermissions){
                                                 # disabled
                                                 $status = 'enabled';
                                             }else{
@@ -126,7 +126,7 @@
                                     </td>
                                     <td>
                                         <?php 
-                                            if(auth()->user() && auth()->user()->tipo != 'admin'){
+                                            if(!$hasPermissions){
                                                 # disabled
                                                 $status = 'enabled';
                                             }else{
