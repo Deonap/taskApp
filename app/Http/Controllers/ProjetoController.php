@@ -256,7 +256,14 @@ class ProjetoController extends Controller
         $pU->user_id = $novoColaboradorId;
         $pU->save();
 
-        return redirect(route('clientes.show', ['cliente' => $projeto->cliente_id, 'window' => $request['window']]));
+        if ($request->has('origin')) {
+            $origin = $request['origin'];
+            if ($origin === 'clientes') {
+                return redirect(route('clientes.show', ['cliente' => $projeto->cliente_id, 'window' => $request['window']]));
+            }elseif($origin === 'prioridades'){
+                return redirect(route('prioridades.index', $request['user']));
+            }
+        }
     }
 
 

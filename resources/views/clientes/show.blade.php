@@ -172,7 +172,7 @@
                                             </td>
                                             <td>
                                                 <div class="flex items-end">
-                                                    <div id="colaboradorCell/{{$projeto->id}}" class="colaboradorCell">
+                                                    <div>
                                                         @foreach($projeto->users as $user)
                                                             <form action="{{ route('projetos.colaboradores.atualizar', $projeto->id) }}" method="POST" class="my-0 py-0">
                                                             @csrf
@@ -180,10 +180,10 @@
                                                                 <input type="hidden" name="origin" value="clientes">
                                                                 <input type="hidden" name="window" value="projetosAbertos">
                                                                 <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
-                                                                    <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" {{$projeto->users->count() == $colaboradores->count() ? 'disabled' : ''}} class="w-fit pl-2 pr-10 border-none focus:border-none">
+                                                                    <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" {{$projeto->users->count() == $colaboradores->count() ? 'disabled' : ''}} class="w-full pl-2 pr-10 border-none focus:border-none">
                                                                         @foreach($colaboradores as $colaborador)
                                                                             @if(!$projeto->users->contains($colaborador) || $colaborador->id == $user->id)
-                                                                                <option value="{{$colaborador->id}}/{{$user->id}}" class="w-fit" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->name }}</option>        
+                                                                                <option value="{{$colaborador->id}}/{{$user->id}}" class="w-full" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->name }}</option>        
                                                                             @endif
                                                                         @endforeach
                                                                     </select>
@@ -196,11 +196,11 @@
                                                             <input type="hidden" name="origin" value="clientes">
                                                             <input type="hidden" name="window" value="projetosAbertos">
                                                             <div class="flex items-center border-t border-gray-400 p-1">
-                                                                <select name="novoColaboradorId" id="{{$projeto->id}}" onchange="this.form.submit()" class="w-fit pl-2 pr-10 border-none focus:border-none">
+                                                                <select name="novoColaboradorId" id="{{$projeto->id}}" onchange="this.form.submit()" class="w-full pl-2 pr-10 border-none focus:border-none">
                                                                     <option disabled selected>...</option>
                                                                     @foreach($colaboradores as $colaborador)
                                                                         @if(!$projeto->users->contains($colaborador))
-                                                                            <option value="{{$colaborador->id}}" class="w-fit">{{ $colaborador->name }}</option>
+                                                                            <option value="{{$colaborador->id}}" class="w-full">{{ $colaborador->name }}</option>
                                                                         @endif
                                                                     @endforeach
                                                                 </select>
@@ -208,7 +208,7 @@
                                                         </form>
                                                     </div>
                                                     <div class="my-0 mx-3 {{$projeto->users->count() == $colaboradores->count() ? 'hidden' : ''}}">
-                                                        <button id="{{$projeto->id}}"class="btn-adicionar-colaborador" data-origin="projetosAbertos">
+                                                        <button id="{{$projeto->id}}" class="btn-adicionar-colaborador" data-origin="projetosAbertos">
                                                             <!-- + -->
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                                                                 <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
@@ -496,7 +496,7 @@
                                             </td>
                                             <td>
                                                 <div class="flex items-end">
-                                                    <div id="colaboradorCell/{{$projeto->id}}" class="colaboradorCell">
+                                                    <div>
                                                         @foreach($projeto->users as $user)
                                                             <form action="{{ route('projetos.colaboradores.atualizar', $projeto->id) }}" method="POST" class="my-0 py-0">
                                                             @csrf
@@ -770,7 +770,6 @@
     };
 
 
-    var colaboradorCell = document.getElementsByClassName("colaboradorCell");
     var btnAdicionarColaborador = document.getElementsByClassName("btn-adicionar-colaborador");
 
     for(var i = 0; i < btnAdicionarColaborador.length;i++){
@@ -778,7 +777,6 @@
     }
 
     function addNewColaboradorField(){
-        var colaboradorCell = document.getElementById("colaboradorCell/" + this.id);
         document.getElementById('newColaboradorForm/' + this.id).classList.remove('hidden');
     }
 

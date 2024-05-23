@@ -1060,7 +1060,7 @@
                                     <input type="hidden" name="origin" value="prioridades">
                                     <input type="hidden" name="user" value="${userProjeto.id}">
                                     <div class="flex items-center p-1">
-                                        <select name="novoColaborador" id=:id onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none" :disabled>
+                                        <select name="novoColaborador" id=:id onchange="this.form.submit()" class="w-full pl-2 pr-8 border-none focus:border-none" :disabled>
                                 `;
 
                                 data.colaboradores.forEach(c => {
@@ -1069,7 +1069,7 @@
 
                                     if (!userIsColaborator || isSelected) {
                                         selectColabs += `
-                                            <option value='${c.id}/${u.id}' class="w-fit" ${isSelected ? ' selected' : ''}>
+                                            <option value='${c.id}/${u.id}' class="w-full" ${isSelected ? ' selected' : ''}>
                                                 ${c.name}
                                             </option>`;
                                     }
@@ -1080,13 +1080,44 @@
                                     </div>
                                 </form>`;
                         });
+
                         selectColabs += `
+                                <form action="{{ route('projetos.colaboradores.adicionar', ':id') }}" id="newColaboradorForm/:id" method="POST" class="hidden my-0 py-0">
+                                @csrf
+                                    <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userId}">
+                                    <div class="flex items-center border-t border-gray-400 p-1">
+                                        <select name="novoColaboradorId" id=":id" onchange="this.form.submit()" class="w-full pl-2 pr-10 border-none focus:border-none">
+                                            <option disabled selected>...</option>`;
+                                            data.colaboradores.forEach(c => {
+                                                if(!projeto.users.some(user => user.id === c.id)){
+                                                    selectColabs += `
+                                                    <option value="${c.id}" class="w-full">
+                                                        ${c.name}
+                                                    </option>`;
+                                                }
+                                            });
+
+                        selectColabs += `
+                                        </select>
+                                    </div>
+                                </form>`;
+
+                        selectColabs += `
+                            </div>
+                            <div class="my-0 mx-3 :hidden">
+                                <button id=:id class="btn-adicionar-colaborador" onclick="addNewColaboradorField(:id)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+                                    </svg>                                                                      
+                                </button>
                             </div>
                         </div>
                         `;
+
                         selectColabs = selectColabs.replaceAll(':id', projeto.id);
                         selectColabs = selectColabs.replaceAll(':disabled', disabled);
-
+                        selectColabs = selectColabs.replaceAll(':hidden', projeto.users.length == data.colaboradores.length ? 'hidden' : '');
                         celulas[5].innerHTML = selectColabs;
 
                         var celulaEstadoProjeto = celulas[6];
@@ -1284,6 +1315,14 @@
         atualizarTabelaProjetosEmAberto(userId);
         atualizarTabelaProjetosPendentes(userId);
         atualizarTabelaProjetosComOutrosColaboradores(userId);
+    }
+
+    var colaboradorCell = document.getElementsByClassName("colaboradorCell");
+
+    function addNewColaboradorField(id){
+        var colaboradorCell = document.getElementById("colaboradorCell/" + id);
+        console.log('newColaboradorForm/' + id);
+        document.getElementById('newColaboradorForm/' + id).classList.remove('hidden');
     }
 
     document.addEventListener('DOMContentLoaded', function () {
