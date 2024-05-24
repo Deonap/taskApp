@@ -148,7 +148,7 @@
 </head>
 
 <body class="bg-gray-100 font-sans">
-    <div class="md:hidden flex justify-end ">
+    <div class="md:hidden flex justify-end">
         <div class="dropdown">
             <button class="dropbtn ml-3 mt-3">Menu</button>
             <div class="dropdown-content">

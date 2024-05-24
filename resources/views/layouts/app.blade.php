@@ -19,7 +19,7 @@
         <div class="md:flex md:flex-row">
     
             <!-- Navigation Sidebar -->
-            <aside class="w-fit h-fit" aria-label="Sidebar">
+            <aside class="w-fit h-fit sticky top-0" aria-label="Sidebar">
                 @include('layouts.navigation')
             </aside>
     
