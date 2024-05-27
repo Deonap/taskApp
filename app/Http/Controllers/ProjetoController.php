@@ -19,7 +19,7 @@ class ProjetoController extends Controller
     public function index()
     {
         $projetos = Projeto::all();
-        
+
         return view('projetos.index', compact('projetos'));
     }
 
@@ -74,7 +74,6 @@ class ProjetoController extends Controller
         return redirect()->route('clientes.show', $projeto->cliente->id);
     }
 
-
     /**
      * Display the specified resource.
      */
@@ -128,7 +127,6 @@ class ProjetoController extends Controller
 
         return redirect()->route('clientes.show', $projeto->cliente_id);
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -268,7 +266,6 @@ class ProjetoController extends Controller
             }
         }
     }
-
 
     // No ProjetoController
     public function buscarColaboradoresDisponiveis(Projeto $projeto)

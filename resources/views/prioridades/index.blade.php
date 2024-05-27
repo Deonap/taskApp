@@ -1292,7 +1292,6 @@
                         </div>
                         `;
 
-
                         responsiveComOutros.innerHTML += `
                         <div class="min-h-fit w-fit flex items-start shadow-lg border-4 py-4 pl-4 pr-12 responsiveElement" data-id='${projeto.id}'>
                             <div class="w-full">

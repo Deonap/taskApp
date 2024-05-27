@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Models\TipoCliente;
 use App\Models\Projeto;
 
-
 class ClienteController extends Controller
 {
     /**

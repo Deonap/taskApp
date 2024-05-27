@@ -769,7 +769,6 @@
         document.getElementById(table0).classList.add('hidden');
     };
 
-
     var btnAdicionarColaborador = document.getElementsByClassName("btn-adicionar-colaborador");
 
     for(var i = 0; i < btnAdicionarColaborador.length;i++){

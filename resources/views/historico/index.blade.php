@@ -309,7 +309,6 @@
                     celula.classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap'); // Adiciona classes de estilo
                 }
 
-
                 var u;
                 for(var i = 0; i < projeto.users.length; i++){
                     if(projeto.users[i].id == userId){
@@ -477,7 +476,6 @@
                         break;
                     }
                 }
-
 
             }
             if(true){
@@ -750,7 +748,6 @@
                     }
                 }
 
-
             }
             if(true){
                 var linha1 = `
@@ -772,8 +769,6 @@
                     </h2>
                     <div style="background-color: ${projeto.estado_projeto.cor};" class="ml-3 size-6 rounded-full">
                     </div>
-
-
                 </div>
                 `;
 
@@ -1041,7 +1036,6 @@
                             </div>
                         </div>
                         `;
-
 
                         responsiveComOutros.innerHTML += `
                         <div class="min-h-fit w-fit flex items-start shadow-lg border-4 py-4 pl-4 pr-12 responsiveElement" data-id='${projeto.id}'>
