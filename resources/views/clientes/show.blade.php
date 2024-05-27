@@ -711,7 +711,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a id="btnAdicionarLinha" class="hover:cursor-pointer bg-darkBlue text-white py-2 px-4 rounded mr-4">
+                        <a id="btnAdicionarLinha" class="hover:cursor-pointer bg-darkBlue text-white py-2 px-4 rounded mr-4 {{$window == 'projetosConcluidos' ? 'hidden' : ''}}">
                             Adicionar Projeto
                         </a>
                     </div>
@@ -751,10 +751,12 @@
     var btnPC = document.getElementById('btnProjetosConcluidos');
 
     btnPA.addEventListener('click', () => {
+        document.getElementById('btnAdicionarLinha').classList.remove("hidden");
         toggleTables(btnPA, btnPC, 'tabelaProjetosAbertos', 'tabelaProjetosConcluidos');
     });
 
     btnPC.addEventListener('click', () => {
+        document.getElementById('btnAdicionarLinha').classList.add("hidden");
         toggleTables(btnPC, btnPA, 'tabelaProjetosConcluidos', 'tabelaProjetosAbertos');
     });
 
