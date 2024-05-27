@@ -54,7 +54,7 @@ class ProjetoController extends Controller
         ]);
 
         if (!$request->filled('estado_projeto_id')) {
-            $validatedData['estado_projeto_id'] = 1; // Replace DEFAULT_VALUE_HERE with your default value
+            $validatedData['estado_projeto_id'] = 2; // Replace DEFAULT_VALUE_HERE with your default value
         }
 
         // Crie o novo projeto com os dados validados
