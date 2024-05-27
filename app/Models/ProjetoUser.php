@@ -21,6 +21,7 @@ class ProjetoUser extends Model
     {
         return $this->belongsTo(Projeto::class, 'projeto_id');
     }
+    
     public function user()
     {
         return $this->belongsTo(Projeto::class, 'user_id');

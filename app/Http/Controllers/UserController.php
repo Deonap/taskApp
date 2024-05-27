@@ -62,6 +62,7 @@ class UserController extends Controller
             DB::table('projeto_users')->where('user_id', $user->id)->delete();
             $user->delete();
         }
+
         return redirect()->route('users.index');
     }
 
@@ -90,6 +91,7 @@ class UserController extends Controller
             $user->vacation = false;
         }
         $user->save();
+        
         return redirect(route('prioridades.index', $request['user']));
     }
 }

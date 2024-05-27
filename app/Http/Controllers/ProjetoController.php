@@ -19,6 +19,7 @@ class ProjetoController extends Controller
     public function index()
     {
         $projetos = Projeto::all();
+        
         return view('projetos.index', compact('projetos'));
     }
 
@@ -31,6 +32,7 @@ class ProjetoController extends Controller
         $users = User::all();
         $estadosProjetos = EstadoProjeto::all();
         $clientes = Cliente::all(); // Recupera todos os clientes disponíveis
+
         return view('projetos.create', compact('tiposClientes', 'clientes', 'users', 'estadosProjetos'));
     }
 
@@ -135,6 +137,7 @@ class ProjetoController extends Controller
     {
         $projeto->users()->detach();
         $projeto->delete();
+
         return redirect()->route('clientes.show', $projeto->cliente->id);
     }
 
@@ -278,7 +281,6 @@ class ProjetoController extends Controller
 
     public function updateTimeSpent(Request $request, Projeto $projeto, User $user)
     {
-
         $validated = $request->validate([
             'tempoGasto' => ' required'
         ]);

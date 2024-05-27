@@ -50,7 +50,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Projeto::class, 'projeto_users')->withPivot('user_id');
     }
 
-    public function tempoGasto(Projeto $projeto){
+    public function tempoGasto(Projeto $projeto)
+    {
         $projetoUser = ProjetoUser::where(['user_id' => $this->id, 'projeto_id' => $projeto->id])->first();
         
         return $projetoUser->tempo_gasto;                   

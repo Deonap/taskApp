@@ -64,6 +64,7 @@ class Projeto extends Model
                 $sum += $h * 60 + $m;
             }
         }
+        
         return $sum;
     }
 }
