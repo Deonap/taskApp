@@ -279,10 +279,10 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <input type="text" name="notas_iniciais">
+                                                <input type="text" name="notas_iniciais" class="w-[90%]">
                                             </td>
                                             <td class="text-center w-full">
-                                                <input type="text" class="text-center w-full" placeholder="hh:mm" name="tempo_previsto" pattern="[0-9]{0,4}:[0-5][0-9]">
+                                                <input type="text" class="text-center w-[55%]" placeholder="hh:mm" name="tempo_previsto" pattern="[0-9]{0,4}:[0-5][0-9]">
                                             </td>
                                             <td>
                                                 <div class="flex items-end">
