@@ -1363,7 +1363,6 @@
         fetch('/filtrar/projetosConcluidos?colaborador_id=' + userId)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 var tbodyConcluidos = document.querySelector('#tabelaProjetosConcluidos tbody');
 
                 
@@ -1537,8 +1536,47 @@
                         celulas[5].innerHTML = selectColabs;
 
 
+                        var tempoGasto = userProjeto ? userProjeto.pivot.tempo_gasto : '00:00';
+                        
+                        var div = document.createElement('div');
+                        div.innerHTML = `
+                        <form action="/projetos/${projeto.id}/${userId}/updateTimeSpent" method="POST" class="m-auto w-[100px] justify-center">
+                            @csrf
+                            @method('PUT')
+                            <input value='${tempoGasto}' onChange='${this.submit}' class="border-none bg-transparent rounded-md p-2 w-full tempo-gasto text-center" autocomplete="off" pattern="[0-9]{0,4}:[0-5][0-9]" type="text" placeholder="${tempoGasto}" name="tempoGasto">
+                        </form>
+                        `;
+
+                        var tempoCum = 0;
+                        projeto.users.forEach(u => {
+                            data.colaboradores.forEach(c => {
+                                if(c.id == u.id){
+                                    var t = u.pivot.tempo_gasto;
+                                    if (t) {
+                                        var HHmm = t.split(":");
+                                        var h = parseInt(HHmm[0], 10);
+                                        var m = parseInt(HHmm[1], 10);
+
+                                        tempoCum += h * 60 + m;
+                                    }
+                                }
+                            })
+                        })
+                        
+                        var h = Math.floor(tempoCum/60);
+                        var m = tempoCum % 60;
+
+                        var hh = h.toString().padStart(2, '0');
+                        var mm = m.toString().padStart(2, '0');
+
+                        tempoCum = `${hh}:${mm}`;
 
                         celulas[6].classList.add('border-l-0');
+                        celulas[6].innerHTML = `
+                        <div class="m-auto text-center">
+                            ${tempoCum}
+                        </div>
+                        `;
 
                         var celulaEstadoProjeto = celulas[7];
                         var tempoGastoMins = 0;
