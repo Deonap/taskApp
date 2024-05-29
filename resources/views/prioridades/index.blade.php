@@ -730,7 +730,7 @@
     function atualizarTabelaProjetosPendentes(userId) {
         var tdClassList = [ 'px-3', 'py-4', 'whitespace-nowrap', 'border', 'border-b'];
 
-        fetch('/filtrar/projetospendentes?colaborador_id=' + userId)
+        fetch('/filtrar/projetosPendentes?colaborador_id=' + userId)
             .then(response => response.json())
             .then(data => {
                 var tbodyPendentes = document.querySelector('#tabelaProjetosPendentes tbody');
@@ -1356,10 +1356,275 @@
             });
     }
 
+    function atualizarTabelaProjetosConcluidos(userId){
+
+        var tdClassList = [ 'px-3', 'py-4', 'whitespace-nowrap', 'border', 'border-b'];
+
+        fetch('/filtrar/projetosConcluidos?colaborador_id=' + userId)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                var tbodyConcluidos = document.querySelector('#tabelaProjetosConcluidos tbody');
+
+                
+                tbodyConcluidos.innerHTML = '';
+
+                data.projetos.forEach((projeto) => {
+                    // Para separação do design para computador / mobile
+                    if(true){
+                        var linha = tbodyConcluidos.insertRow();
+                        var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
+                        linha.setAttribute('data-id', projeto.id);
+                        linha.classList.add('border-b'); // Adiciona borda à linha
+
+                        handlePageReload(userProjeto);
+
+                        var celulas = [];
+
+                        for (let i = 0; i < 9; i++) {
+                            celulas[i] = linha.insertCell(i);
+                            celulas[i].classList.add(...tdClassList);
+                        }
+                        celulas[0].classList.add('border-r-0');
+                        
+                        celulas[1].innerHTML = `
+                        <div class="flex items-end">
+                            <div>
+                                <form action="/projetos/${projeto.id}/cliente/atualizar" method="POST" class="my-0 py-0">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
+                                    <select name="novoCliente" id="novoCliente/${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                        @foreach($clientes as $cliente)
+                                            <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
+                                        @endforeach
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        `;
+
+                        celulas[1].classList.add('border-l-0');
+
+                        celulas[2].innerHTML = `
+                        <div class="flex items-end">
+                            <div>
+                                <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente/${projeto.id}" class="my-0 py-0 hidden">
+                                    @csrf
+                                    @method('POST')
+                                    <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
+                                    <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}"  onchange="${this.submit}">
+                                </form>
+                                <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/${projeto.id}" method="POST" class="my-0 py-0">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
+                                    <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                        @foreach($tiposCliente as $tC)
+                                            <option value="{{$tC->id}}">{{$tC->nome}}</option>
+                                        @endforeach
+                                        <option value="-1" class="font-black">Novo</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        `;
+
+                        celulas[3].innerHTML = `
+                        <div class="flex items-end">
+                            <div>
+                                <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto/${projeto.id}" class="my-0 py-0 hidden">
+                                    @csrf
+                                    @method('POST')
+                                    <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
+                                    <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" onchange="${this.submit}">
+                                </form>
+                                <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/${projeto.id}" method="POST" class="my-0 py-0">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
+                                    <select name="novoTipoProjeto" id="novoTipoProjeto/${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                        @foreach($tiposProjeto as $tP)
+                                            <option value="{{$tP->id}}">{{$tP->nome}}</option>
+                                        @endforeach
+                                        <option value="-1" class="font-black">Novo</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        `;
+
+                        var tarefas = projeto.tarefas.map(tarefa => `<p>${tarefa.descricao}</p>`).join("");
+                        celulas[4].classList.add(...tdClassList);
+                        celulas[4].classList.add("border-r-4", 'border-r-[#A3A2A3]');
+                        celulas[4].innerHTML = tarefas;
+
+                        var disabled = projeto.users.length == data.colaboradores.length ? "disabled" : "";
+                        var selectColabs = `
+                        <div class="flex items-end">
+                            <div id="colaboradorCell/:id" class="colaboradorCell">`;
+                        projeto.users.forEach(u => {
+                            selectColabs += `    
+                                <form action="{{ route('projetos.colaboradores.atualizar', ':id') }}" method="POST" class="my-0 py-0" >
+                                @csrf
+                                @method('PUT')
+                                    <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userProjeto.id}">
+                                    <div class="flex items-center p-1">
+                                        <select name="novoColaborador" id=:id onchange="this.form.submit()" class="w-full pl-2 pr-8 border-none focus:border-none" :disabled>
+                                `;
+
+                                data.colaboradores.forEach(c => {
+                                    var userIsColaborator = projeto.users.some(user => user.id === c.id);
+                                    var isSelected = u.id === c.id;
+
+                                    if (!userIsColaborator || isSelected) {
+                                        selectColabs += `
+                                            <option value='${c.id}/${u.id}' class="w-full" ${isSelected ? ' selected' : ''}>
+                                                ${c.name}
+                                            </option>`;
+                                    }
+                                });
+
+                                selectColabs += `
+                                        </select>
+                                    </div>
+                                </form>`;
+                        });
+
+                        selectColabs += `
+                                <form action="{{ route('projetos.colaboradores.adicionar', ':id') }}" id="newColaboradorForm/:id" method="POST" class="hidden my-0 py-0">
+                                @csrf
+                                    <input type="hidden" name="origin" value="prioridades">
+                                    <input type="hidden" name="user" value="${userId}">
+                                    <div class="flex items-center border-t border-gray-400 p-1">
+                                        <select name="novoColaboradorId" id=":id" onchange="this.form.submit()" class="w-full pl-2 pr-10 border-none focus:border-none">
+                                            <option disabled selected>...</option>`;
+                                            data.colaboradores.forEach(c => {
+                                                if(!projeto.users.some(user => user.id === c.id)){
+                                                    selectColabs += `
+                                                    <option value="${c.id}" class="w-full">
+                                                        ${c.name}
+                                                    </option>`;
+                                                }
+                                            });
+
+                        selectColabs += `
+                                        </select>
+                                    </div>
+                                </form>`;
+
+                        selectColabs += `
+                            </div>
+                            <div class="my-0 mx-3 :hidden">
+                                <button id=:id class="btn-adicionar-colaborador" onclick="addNewColaboradorField(:id)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+                                    </svg>                                                                      
+                                </button>
+                            </div>
+                        </div>
+                        `;
+
+                        selectColabs = selectColabs.replaceAll(':id', projeto.id);
+                        selectColabs = selectColabs.replaceAll(':disabled', disabled);
+                        selectColabs = selectColabs.replaceAll(':hidden', projeto.users.length == data.colaboradores.length ? 'hidden' : '');
+                        celulas[5].innerHTML = selectColabs;
+
+
+
+                        celulas[6].classList.add('border-l-0');
+
+                        var celulaEstadoProjeto = celulas[7];
+                        var tempoGastoMins = 0;
+                        projeto.users.forEach(user => {
+                            var tempoGasto = user.pivot.tempo_gasto.split(":");
+                            var tempoGastoP1 = parseInt(tempoGasto[0]);
+                            var tempoGastoP2 = parseInt(tempoGasto[1]);
+                            tempoGastoMins += tempoGastoP1 * 60 + tempoGastoP2;
+                        });
+
+                        var tempoPrevisto = projeto.tempo_previsto.split(":");
+                        var tempoPrevistoP1 = parseInt(tempoPrevisto[0]);
+                        var tempoPrevistoP2 = parseInt(tempoPrevisto[1]);
+
+                        var tempoPrevistoMinutes = tempoPrevistoP1 * 60 + tempoPrevistoP2;
+
+                        var bgColor;
+                        if (tempoGastoMins < tempoPrevistoMinutes) {
+                            bgColor = 'bg-greenStatus';
+                        } else if (tempoGastoMins === tempoPrevistoMinutes) {
+                            bgColor = 'bg-blueStatus';
+                        } else {
+                            bgColor = 'bg-redStatus';
+                        }
+                        celulaEstadoProjeto.innerHTML =
+                            `<div class="${bgColor} m-auto size-6 rounded-full">
+                            </div>`;
+                            
+                        var celulaAcoes = celulas[8];
+                        celulaAcoes.innerHTML = `
+                        <div class="flex justify-center items-center space-x-4">
+                            <a href="/projetos/${projeto.id}/edit">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-darkBlue hover:text-blue-700">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                </svg>
+                            </a>
+                            <form action="/projetos/${projeto.id}/destroy" method="POST" class="m-0">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" {{$hasPermissions ? "" : "disabled"}} class="disabled:hover:cursor-not-allowed">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-red-700 hover:text-red-500 {{$hasPermissions ? "" : "hover:text-red-700"}}">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                        `;
+
+                        var select = document.querySelector(`#novoCliente\\/${projeto.id}`);
+                        var options = select.options;
+                        for (var i = 0; i < options.length; i++) {
+                            if (options[i].text === projeto.cliente.nome) {
+                                options[i].selected = true;
+                                break;
+                            }
+                        }
+
+                        var select = document.querySelector(`#novoTipoCliente\\/${projeto.id}`);
+                        var options = select.options;
+
+                        for (var i = 0; i < options.length; i++) {
+                            if (options[i].text === projeto.tipo_cliente.nome) {
+                                options[i].selected = true;
+                                break;
+                            }
+                        }
+
+                        var select = document.querySelector(`#novoTipoProjeto\\/${projeto.id}`);
+                        var options = select.options;
+                        for (var i = 0; i < options.length; i++) {
+                            if (options[i].text === projeto.tipo_projeto.nome) {
+                                options[i].selected = true;
+                                break;
+                            }
+                        }
+                    }
+                    
+                });
+            });
+    }
+
     function atualizarTabelas(userId){
         atualizarTabelaProjetosEmAberto(userId);
         atualizarTabelaProjetosPendentes(userId);
         atualizarTabelaProjetosComOutrosColaboradores(userId);
+        atualizarTabelaProjetosConcluidos(userId);
     }
 
     var colaboradorCell = document.getElementsByClassName("colaboradorCell");

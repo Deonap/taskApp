@@ -53,8 +53,9 @@ Route::put('/users/toggleFerias/{id}', [UserController::class, 'toggleFerias'])-
 
 Route::get('/prioridades/{id?}', [PrioridadesController::class, 'index'])->name('prioridades.index');
 Route::get('/filtrar/projetos', [PrioridadesController::class, 'filtrarProjetos']);
-Route::get('/filtrar/projetospendentes', [PrioridadesController::class, 'filtrarProjetosPendente']);
+Route::get('/filtrar/projetosPendentes', [PrioridadesController::class, 'filtrarProjetosPendente']);
 Route::get('/filtrar/projetos-outros-colaboradores/{colaboradorId}', [PrioridadesController::class, 'filtrarProjetosComOutrosColaboradores']);
+Route::get('/filtrar/projetosConcluidos', [PrioridadesController::class, 'filtrarProjetosConcluidos']);
 Route::post('/salvar/projetos', [PrioridadesController::class, 'salvarProjetos']);
 
 Route::get('/historico', [HistoricoController::class, 'index'])->name('historico.index');

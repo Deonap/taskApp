@@ -25,6 +25,7 @@ class PrioridadesController extends Controller
         // Carregar projetos com informações específicas do primeiro colaborador
         $projetosEmAberto = $this->filtrarProjetosPorEstadoEColaborador('Em desenvolvimento', $colaboradorId);
         $projetosPendentes = $this->filtrarProjetosPorEstadoEColaborador('Pendente', $colaboradorId);
+        $projetosConcluidos = $this->filtrarProjetosPorEstadoEColaborador('Concluído', $colaboradorId);
 
         $projetosComOutros = $this->filtrarProjetosComOutrosColaboradores($colaboradorId);
 
@@ -35,7 +36,7 @@ class PrioridadesController extends Controller
         $tiposCliente = TipoCliente::all();
         $tiposProjeto = TipoProjeto::all();
 
-        return view('prioridades.index', compact('selectedUser', 'colaboradores', 'projetosEmAberto', 'projetosPendentes', 'projetosComOutros', 'colaboradorId', 'clientes', 'tiposCliente', 'tiposProjeto'));
+        return view('prioridades.index', compact('selectedUser', 'colaboradores', 'projetosEmAberto', 'projetosPendentes', 'projetosConcluidos','projetosComOutros', 'colaboradorId', 'clientes', 'tiposCliente', 'tiposProjeto'));
     }
 
     private function filtrarProjetosPorEstadoEColaborador($estadoNome, $colaboradorId)
@@ -96,6 +97,22 @@ class PrioridadesController extends Controller
             })->get();
 
         return response()->json($projetos);
+    }
+
+    public function filtrarProjetosConcluidos(Request $request)
+    {
+        $colaboradorId = $request->query('colaborador_id');
+        $estado = 'Concluído'; // Define o estado que você está interessado
+
+        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])
+            ->whereHas('users', function ($query) use ($colaboradorId) {
+                $query->where('id', $colaboradorId);
+            })->whereHas('estadoProjeto', function ($query) use ($estado) {
+                $query->where('nome', $estado);
+            })->get();
+
+        $colaboradores = User::where('tipo', '=', 'colaborador')->get();
+        return response()->json(['projetos' => $projetos, 'colaboradores' => $colaboradores]);
     }
 
     private function buscarProjetosPorColaborador($colaboradorId, $estadoNome)
