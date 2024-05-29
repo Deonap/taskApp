@@ -1857,8 +1857,39 @@
         var sortable = new Sortable(el5, {
             chosenClass: 'chosenDraggable',
             group: 'shared',
+            sort: false,
             ghostClass: 'bg-gray-300',
-            animation: 150
+            animation: 150,
+            onAdd: function(evt){
+                var item = evt.item;
+                var projetosData = [];
+                var userId = document.getElementById('colaborador').value; // Obtém o user_id do dropdown de colaboradores
+
+                projetosData.push({
+                    id: item.getAttribute('data-id'),
+                    user_id: userId,
+                    estado: 5
+                });
+                // Enviar a nova ordem para o servidor
+                fetch('/atualizar/estadoProjeto', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({ projetos: projetosData })
+                }).then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok: ' + response.statusText);
+                        }
+                        return response.json();
+                    }).then(data => {
+                        console.log('Estado do projeto atualizado com sucesso:', data);
+                        atualizarTabelas(userId); // Atualiza a tabela com o usuário atual
+                    }).catch(error => {
+                        console.error('Erro a mudar estado do projeto:', error);
+                    });
+                }
         });
 
     });
