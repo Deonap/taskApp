@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjetoController;
 use App\Http\Controllers\EstadoProjetoController;
 use App\Http\Controllers\TipoClienteController;
+use App\Http\Controllers\TipoProjetoController;
 use App\Http\Controllers\PrioridadesController;
 use App\Http\Controllers\HistoricoController;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,7 @@ Route::resource('projetos', ProjetoController::class);
 
 Route::resource('estado-projetos', EstadoProjetoController::class);
 Route::resource('tipo-clientes', TipoClienteController::class);
+Route::resource('tipo-projetos', TipoProjetoController::class);
 Route::resource('users', UserController::class);
 Route::put('/users/{id}/updateType', [UserController::class, 'updateType'])->name('users.updateType');
 Route::put('/users/toggleFerias/{id}', [UserController::class, 'toggleFerias'])->name('users.toggleFerias');

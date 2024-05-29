@@ -240,6 +240,53 @@
                         </div>
                     </div>
 
+                    <div id="tabelaProjetosConcluidos" class="mb-8">
+                        <div class="hidden xl:block">
+                            <div class="flex items-center text-white mb-4" style="width: 100%;">
+                                <div class="flex-none bg-[rgb(122,166,77)]" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: start; align-items: center;">
+                                    <h3 class="text-lg font-semibold">Projetos Concluídos</h3>
+                                </div>
+                            </div>
+                            <div>
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-[#d5d4d5]">
+                                        <tr>
+                                            <th scope="col" class="opacity-0 hover:cursor-default w-[3%]">
+                                                Nº
+                                            </th>
+                                            <th scope="col" class="text-left w-[18%]">
+                                                Cliente
+                                            </th>
+                                            <th scope="col" class="text-left border w-[15%]">
+                                                Tipo
+                                            </th>
+                                            <th scope="col" class="text-left border w-[15%]">
+                                                Projeto
+                                            </th>
+                                            <th scope="col" class="text-left border border-r-4 border-r-[#A3A2A3] w-[8%]">
+                                                Prioridade
+                                            </th>
+                                            <th scope="col" class="text-left border w-[17%]">
+                                                Colaboradores
+                                            </th>
+                                            <th scope="col" class="text-center border w-[8%]">
+                                                Tempo
+                                            </th>
+                                            <th scope="col" class="text-center border w-[8%]">
+                                                Estado
+                                            </th>
+                                            <th scope="col" class="text-center border w-[8%]">
+                                                Ações
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="tabelaProjetosOutrosColaboradores" class="mb-8">
                         <div class="hidden xl:block">
                             <div class="relative mb-4">
@@ -276,7 +323,6 @@
                                         </th>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
-                                            
                                     </tbody>
                                 </table>
                             </div>
@@ -509,7 +555,7 @@
                         }
                     
                         celulaEstadoProjeto.innerHTML = `
-                        <div class="${bgColor} m-auto size-7 rounded-full">
+                        <div class="${bgColor} m-auto size-6 rounded-full">
                         </div>
                         `;
 
@@ -814,7 +860,7 @@
                             bgColor = 'bg-redStatus';
                         }
                         celulaEstadoProjeto.innerHTML =
-                            `<div class="${bgColor} m-auto size-7 rounded-full">
+                            `<div class="${bgColor} m-auto size-6 rounded-full">
                             </div>`;
                             
                         var celulaAcoes = celulas[8];
@@ -1146,7 +1192,7 @@
                         }
 
                         celulaEstadoProjeto.innerHTML =
-                            `<div class="${bgColor} m-auto size-7 rounded-full">
+                            `<div class="${bgColor} m-auto size-6 rounded-full">
                             </div>`;
 
                         var celulaAcoes = celulas[7];
@@ -1540,6 +1586,14 @@
                         console.error('Erro a mudar estado do projeto:', error);
                     });
             }
+        });
+
+        var el5 = document.getElementById('tabelaProjetosConcluidos').getElementsByTagName('tbody')[0];
+        var sortable = new Sortable(el5, {
+            chosenClass: 'chosenDraggable',
+            group: 'shared',
+            ghostClass: 'bg-gray-300',
+            animation: 150
         });
 
     });
