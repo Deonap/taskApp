@@ -60,7 +60,7 @@ class PrioridadesController extends Controller
             $query->where('id', $colaboradorId);
         })->whereHas('users', function ($query) use ($colaboradorId) {
                 $query->where('id', '!=', $colaboradorId);
-            })->with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])->get();
+            })->with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])->where('estado_projeto_id','!=','5')->get();
 
         $colaboradores = User::where('tipo', '=', 'colaborador')->get();
         return response()->json(['projetos' => $projetos, 'colaboradores' => $colaboradores]);
