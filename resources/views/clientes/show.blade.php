@@ -110,7 +110,7 @@
                                 </thead>
                                 <tbody id="projetosAbertosTbody">
                                     @foreach($projetosAbertos as $projeto)
-                                        <tr class="border-b-4 border-b-[#d1d1d1]">
+                                        <tr class="border-b-2 border-b-[#d1d1d1]">
                                             <td>
                                                 <div class="flex items-end">
                                                     <div>
@@ -217,7 +217,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="">
+                                            <td>
                                                 <div class="flex justify-center space-x-3">
                                                     <div>
                                                         @foreach($projeto->users as $user)
@@ -281,7 +281,7 @@
                                             <td>
                                                 <input type="text" name="notas_iniciais" class="w-[90%]">
                                             </td>
-                                            <td class="text-center w-full">
+                                            <td class="text-center">
                                                 <input type="text" class="text-center w-[55%]" placeholder="hh:mm" name="tempo_previsto" pattern="[0-9]{0,4}:[0-5][0-9]">
                                             </td>
                                             <td>
@@ -435,7 +435,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($projetosConcluidos as $projeto)
-                                        <tr class="border-b-4 border-b-[#d1d1d1]">
+                                        <tr class="border-b-2 border-b-[#d1d1d1]">
                                             <td>
                                                 <div class="flex items-end">
                                                     <div>
