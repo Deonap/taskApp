@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<style>
+    html{
+        overflow-y:scroll;
+    }
+</style>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">

@@ -125,10 +125,10 @@
                                         <h3 class="text-lg font-semibold">Projetos Em Desenvolvimento</h3>
                                     </div>
                                     <div class="text-right">
-                                        <svg id="hideDesenvolvimento" class="size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
+                                        <svg id="hideDesenvolvimento" class="size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                                         </svg>
-                                        <svg id="showDesenvolvimento" class="hidden size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <svg id="showDesenvolvimento" class="hidden size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                           </svg>
                                     </div>
@@ -197,17 +197,17 @@
 
                     <div id="tabelaProjetosPendentes" class="mb-8">
                         <div class="hidden xl:block">
-                            <div class="relative mb-4">
+                            <div class="flex items-center text-white mb-4" style="width: 100%;">
                                 <div class="flex-none text-white bg-projetosPendentesBanner"style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
                                     <div>
                                         <h3 class="text-lg font-semibold">Projetos Pendentes</h3>
                                     </div>
                                     <div>
                                         <div class="text-right">
-                                            <svg id="hidePendentes" class="size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
+                                            <svg id="hidePendentes" class="size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                                             </svg>
-                                            <svg id="showPendentes" class="hidden size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <svg id="showPendentes" class="hidden size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                               </svg>
                                         </div>
@@ -272,10 +272,10 @@
                                 <div class="flex-none text-white bg-[rgb(122,166,77)]" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
                                     <h3 class="text-lg font-semibold">Projetos Concluídos</h3>
                                     <div class="text-right">
-                                        <svg id="hideConcluidos" class="size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
+                                        <svg id="hideConcluidos" class="size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                                         </svg>
-                                        <svg id="showConcluidos" class="hidden size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <svg id="showConcluidos" class="hidden size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                           </svg>
                                     </div>
@@ -323,16 +323,16 @@
 
                     <div id="tabelaProjetosOutrosColaboradores" class="mb-8">
                         <div class="hidden xl:block">
-                            <div class="relative mb-4">
+                            <div class="flex items-center text-white mb-4" style="width: 100%;">
                                 <div class="flex-none text-white bg-projetosOutrosColabBanner" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
                                     <div>
                                         <h3 class="text-lg font-semibold">Projetos com Outros Colaboradores</h3>
                                     </div>
                                     <div class="text-right">
-                                        <svg id="hideOutrosColabs" class="size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
+                                        <svg id="hideOutrosColabs" class="size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                                         </svg>
-                                        <svg id="showOutrosColabs" class="hidden size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <svg id="showOutrosColabs" class="hidden size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                           </svg>
                                     </div>
