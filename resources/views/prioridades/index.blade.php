@@ -36,7 +36,6 @@
                 background-color: rgb(207 207 207);
             }
             .chosenDraggable * {
-                /* background: rgb(150 150 150); */
                 opacity: 1;
             }
             table {
@@ -121,8 +120,18 @@
                     <div id="tabelaProjetosAbertos" class="mb-8">
                         <div class="hidden xl:block">
                             <div class="flex items-center text-white mb-4" style="width: 100%;">
-                                <div class="flex-none bg-projetosDesenvolvimentoBanner" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: start; align-items: center;">
-                                    <h3 class="text-lg font-semibold">Projetos Em Desenvolvimento</h3>
+                                <div class="flex-none text-white bg-projetosDesenvolvimentoBanner" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <h3 class="text-lg font-semibold">Projetos Em Desenvolvimento</h3>
+                                    </div>
+                                    <div class="text-right">
+                                        <svg id="hideDesenvolvimento" class="size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+                                        </svg>
+                                        <svg id="showDesenvolvimento" class="hidden size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                          </svg>
+                                    </div>
                                 </div>
                                 <div class="flex-none ml-4" style="width: 29%; height: 30px; background-color: #f0f1f0; color: black; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: center; align-items: center;">
                                     <p class="text-sm font-medium">
@@ -189,8 +198,20 @@
                     <div id="tabelaProjetosPendentes" class="mb-8">
                         <div class="hidden xl:block">
                             <div class="relative mb-4">
-                                <div class="flex-none text-white w-[70%] h-[40px] p-[1rem] flex items-center bg-projetosPendentesBanner" style="border-radius: 0.2rem; justify-content: start;">
-                                    <h3 class="text-lg font-semibold">Projetos Pendentes</h3>
+                                <div class="flex-none text-white bg-projetosPendentesBanner"style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <h3 class="text-lg font-semibold">Projetos Pendentes</h3>
+                                    </div>
+                                    <div>
+                                        <div class="text-right">
+                                            <svg id="hidePendentes" class="size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+                                            </svg>
+                                            <svg id="showPendentes" class="hidden size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                              </svg>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div>
@@ -248,8 +269,16 @@
                     <div id="tabelaProjetosConcluidos" class="mb-8">
                         <div class="hidden xl:block">
                             <div class="flex items-center text-white mb-4" style="width: 100%;">
-                                <div class="flex-none bg-[rgb(122,166,77)]" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: start; align-items: center;">
+                                <div class="flex-none text-white bg-[rgb(122,166,77)]" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
                                     <h3 class="text-lg font-semibold">Projetos Concluídos</h3>
+                                    <div class="text-right">
+                                        <svg id="hideConcluidos" class="size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+                                        </svg>
+                                        <svg id="showConcluidos" class="hidden size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                          </svg>
+                                    </div>
                                 </div>
                             </div>
                             <div>
@@ -295,8 +324,18 @@
                     <div id="tabelaProjetosOutrosColaboradores" class="mb-8">
                         <div class="hidden xl:block">
                             <div class="relative mb-4">
-                                <div class="flex-none text-white w-[70%] h-[40px] p-[1rem] flex items-center bg-projetosOutrosColabBanner" style="border-radius: 0.2rem; justify-content: start;">
-                                    <h3 class="text-lg font-semibold">Projetos com Outros Colaboradores</h3>
+                                <div class="flex-none text-white bg-projetosOutrosColabBanner" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <h3 class="text-lg font-semibold">Projetos com Outros Colaboradores</h3>
+                                    </div>
+                                    <div class="text-right">
+                                        <svg id="hideOutrosColabs" class="size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+                                        </svg>
+                                        <svg id="showOutrosColabs" class="hidden size-5 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                          </svg>
+                                    </div>
                                 </div>
                             </div>
                             <div>
@@ -374,6 +413,66 @@
         var $userId = userId;
         document.getElementById('emailAnchor').href = '/emailTest/' + $userId;
 
+    });
+
+    // collapse tables
+    document.addEventListener('DOMContentLoaded', function(){
+        var showDesenvolvimento = document.getElementById('showDesenvolvimento');
+        var hideDesenvolvimento = document.getElementById('hideDesenvolvimento');
+        var showPendentes = document.getElementById('showPendentes');
+        var hidePendentes = document.getElementById('hidePendentes');
+        var showConcluidos = document.getElementById('showConcluidos');
+        var hideConcluidos = document.getElementById('hideConcluidos');
+        var showOutrosColabs = document.getElementById('showOutrosColabs');
+        var hideOutrosColabs = document.getElementById('hideOutrosColabs');
+        // ------------------------------------------------ //
+        showDesenvolvimento.addEventListener('click', function(){
+            document.querySelector('#tabelaProjetosAbertos table').classList.toggle("hidden");
+            showDesenvolvimento.classList.toggle('hidden');
+            hideDesenvolvimento.classList.toggle('hidden');
+        });
+
+        hideDesenvolvimento.addEventListener('click', function(){
+            document.querySelector('#tabelaProjetosAbertos table').classList.toggle("hidden");
+            showDesenvolvimento.classList.toggle('hidden');
+            hideDesenvolvimento.classList.toggle('hidden');
+        });
+        // ------------------------------------------------ //
+        showPendentes.addEventListener('click', function(){
+            document.querySelector('#tabelaProjetosPendentes table').classList.toggle("hidden");
+            showPendentes.classList.toggle('hidden');
+            hidePendentes.classList.toggle('hidden');
+        });
+
+        hidePendentes.addEventListener('click', function(){
+            document.querySelector('#tabelaProjetosPendentes table').classList.toggle("hidden");
+            showPendentes.classList.toggle('hidden');
+            hidePendentes.classList.toggle('hidden');
+        });   
+        // ------------------------------------------------ //
+        showConcluidos.addEventListener('click', function(){
+            document.querySelector('#tabelaProjetosConcluidos table').classList.toggle("hidden");
+            showConcluidos.classList.toggle('hidden');
+            hideConcluidos.classList.toggle('hidden');
+        });
+
+        hideConcluidos.addEventListener('click', function(){
+            document.querySelector('#tabelaProjetosConcluidos table').classList.toggle("hidden");
+            showConcluidos.classList.toggle('hidden');
+            hideConcluidos.classList.toggle('hidden');
+        });
+        // ------------------------------------------------ //
+        showOutrosColabs.addEventListener('click', function(){
+            document.querySelector('#tabelaProjetosOutrosColaboradores table').classList.toggle("hidden");
+            showOutrosColabs.classList.toggle('hidden');
+            hideOutrosColabs.classList.toggle('hidden');
+        });
+
+        hideOutrosColabs.addEventListener('click', function(){
+            document.querySelector('#tabelaProjetosOutrosColaboradores table').classList.toggle("hidden");
+            showOutrosColabs.classList.toggle('hidden');
+            hideOutrosColabs.classList.toggle('hidden');
+        });
     });
 
     function handlePageReload(userProjeto) {
@@ -1331,7 +1430,7 @@
 
                         for (let i = 0; i < 9; i++) {
                             celulas[i] = linha.insertCell(i);
-                            celulas[i].classList.add('border', 'py-3');
+                            celulas[i].classList.add('py-3');
                         }
 
                         celulas[0].classList.add('border-r-0', 'invisible');
@@ -1481,8 +1580,11 @@
                         selectColabs = selectColabs.replaceAll(':disabled', disabled);
                         selectColabs = selectColabs.replaceAll(':hidden', projeto.users.length == data.colaboradores.length ? 'hidden' : '');
                         celulas[5].innerHTML = selectColabs;
+                        
+                        celulas[6].classList.add('border-r-0');
 
                         var celulaEstadoProjeto = celulas[7];
+                        celulaEstadoProjeto.classList.add('border-r-0');
 
                         var tempoGastoMins = 0;
                         projeto.users.forEach(user => {
