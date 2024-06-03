@@ -29,6 +29,7 @@
                 </div>
                 <div class="flex justify-between items-center mb-4">
                     <form action="{{ route('clientes.update', $cliente->id) }}" method="POST">
+                        @method('PUT')
                         @csrf
                         <div class="bg-white shadow-md rounded px-5 py-6 mb-4 border w-fit">
                             <div class="mb-4">

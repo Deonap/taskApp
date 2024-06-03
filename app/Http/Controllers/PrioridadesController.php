@@ -71,7 +71,7 @@ class PrioridadesController extends Controller
         $colaboradorId = $request->query('colaborador_id');
         $estado = 'Em desenvolvimento'; // Define o estado que você está interessado
 
-        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'tipoProjeto', 'cliente', 'estadoProjeto', 'users'])
+        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])
             ->join('projeto_users', 'projetos.id', '=', 'projeto_users.projeto_id')
             ->where('projeto_users.user_id', $colaboradorId)
             ->whereHas('estadoProjeto', function ($query) use ($estado) {
