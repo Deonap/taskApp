@@ -512,7 +512,6 @@
 
                         var celulaTarefas = linha.insertCell(4);
                         celulaTarefas.classList.add(...tdClassList, 'border-r-4', 'border-r-[#A3A2A3]')
-                        celulaTarefas.classList.remove('whitespace-nowrap')
                         celulaTarefas.innerHTML = '<div>' + projeto.tarefas.map(tarefa => `<p class="pl-2 break-words">${tarefa.descricao}</p>`).join("") + "</div>";
 
                         var celulaObservacoes = linha.insertCell(5);
@@ -745,7 +744,7 @@
     }
 
     function atualizarTabelaProjetosPendentes(userId) {
-        var tdClassList = [ 'px-3', 'py-4', 'whitespace-nowrap', 'border', 'border-b'];
+        var tdClassList = ['py-3', 'border', 'border-b'];
 
         fetch('/filtrar/projetosPendentes?colaborador_id=' + userId)
             .then(response => response.json())
@@ -846,7 +845,6 @@
                         `;
 
                         var tarefas = projeto.tarefas.map(tarefa => `<p class="pl-2 break-words">${tarefa.descricao}</p>`).join("");
-                        celulas[4].classList.remove('whitespace-nowrap');
                         celulas[4].classList.add(...tdClassList, 'border-r-4', 'border-r-[#A3A2A3]');
                         celulas[4].innerHTML = tarefas;
 
@@ -1013,7 +1011,7 @@
 
     function atualizarTabelaProjetosConcluidos(userId){
 
-        var tdClassList = [ 'px-3', 'py-4', 'whitespace-nowrap', 'border', 'border-b'];
+        var tdClassList = ['py-3', 'border', 'border-b'];
 
         fetch('/filtrar/projetosConcluidos?colaborador_id=' + userId)
             .then(response => response.json())
@@ -1115,7 +1113,6 @@
 
                         var tarefas = projeto.tarefas.map(tarefa => `<p class="pl-2 break-words">${tarefa.descricao}</p>`).join("");
                         celulas[4].classList.add(...tdClassList, 'border-r-4', 'border-r-[#A3A2A3]');
-                        celulas[4].classList.remove('whitespace-nowrap')
                         celulas[4].innerHTML = "<div>" + tarefas + "</div>";
 
                         var disabled = projeto.users.length == data.colaboradores.length ? "disabled" : "";
@@ -1314,8 +1311,6 @@
     }
 
     function atualizarTabelaProjetosComOutrosColaboradores(userId) {
-        var tdClassList = [ 'px-3', 'py-4', 'whitespace-nowrap', 'border', 'border-b'];
-
         fetch('/filtrar/projetos-outros-colaboradores/' + userId)
             .then(response => response.json())
             .then(data => {
@@ -1336,7 +1331,7 @@
 
                         for (let i = 0; i < 9; i++) {
                             celulas[i] = linha.insertCell(i);
-                            celulas[i].classList.add('border', 'px-3', 'py-4', 'whitespace-nowrap');
+                            celulas[i].classList.add('border', 'py-3');
                         }
 
                         celulas[0].classList.add('border-r-0', 'invisible');
@@ -1412,8 +1407,7 @@
                         `;
 
                         var tarefas = projeto.tarefas.map(tarefa => `<p class="pl-2 break-words">${tarefa.descricao}</p>`).join("");
-                        celulas[4].classList.add(...tdClassList, 'border-r-4', 'border-r-[#A3A2A3]');
-                        celulas[4].classList.remove('whitespace-nowrap')
+                        celulas[4].classList.add('border-r-4', 'border-r-[#A3A2A3]');
                         celulas[4].innerHTML = "<div>" + tarefas + "</div>";
 
                         var disabled = projeto.users.length == data.colaboradores.length ? "disabled" : "";
