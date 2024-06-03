@@ -155,19 +155,19 @@
                                             <th scope="col" class="w-[9.5%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col" class="border-r-4 border-r-[#A3A2A3] w-[22.2%]">
+                                            <th scope="col" class="w-[22.2%] border-r-4 border-r-[#A3A2A3]">
                                                 Prioridade
                                             </th>
                                             <th scope="col" class="w-[19%]">
                                                 Observações
                                             </th>
-                                            <th scope="col" class="text-center w-[7.9%]">
+                                            <th scope="col" class="w-[7.9%] text-center">
                                                 Tempo
                                             </th>
-                                            <th scope="col" class="text-center w-[8.3%]">
+                                            <th scope="col" class="w-[8.3%] text-center">
                                                 Estado
                                             </th>
-                                            <th scope="col" class="text-center w-[7.4%]">
+                                            <th scope="col" class="w-[7.4%] text-center">
                                                 Ações
                                             </th>
                                         </tr>
@@ -218,10 +218,10 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
-                                            <th scope="col" class="opacity-0 hover:cursor-default w-[3.8%]">
+                                            <th scope="col" class="w-[3.8%] opacity-0 hover:cursor-default">
                                                 Nº
                                             </th>
-                                            <th scope="col" class="text-left w-[11.5%]">
+                                            <th scope="col" class="w-[11.5%]">
                                                 Cliente
                                             </th>
                                             <th scope="col" class="w-[10.4%]">
@@ -233,7 +233,7 @@
                                             <th scope="col" class="w-[22.2%] border-r-4 border-r-[#A3A2A3]">
                                                 Prioridade
                                             </th>
-                                            <th scope="col" class="w-[19%]opacity-0 hover:cursor-default">
+                                            <th scope="col" class="w-[19%] opacity-0 hover:cursor-default">
                                                 Observações
                                             </th>
                                             <th scope="col" class="w-[7.9%] opacity-0 hover:cursor-default">
@@ -285,7 +285,7 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
-                                            <th scope="col" class="opacity-0 hover:cursor-default w-[3.8%]">
+                                            <th scope="col" class="w-[3.8%] opacity-0 hover:cursor-default">
                                                 Nº
                                             </th>
                                             <th scope="col" class="w-[11.5%]">
@@ -341,33 +341,35 @@
                             <div>
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
-                                        <th scope="col" class="opacity-0 hover:cursor-default w-[3.8%]">
-                                            Nº
-                                        </th>
-                                        <th scope="col" class="w-[11.5%]">
-                                            Cliente
-                                        </th>
-                                        <th scope="col" class="w-[10.4%]">
-                                            Tipo
-                                        </th>
-                                        <th scope="col" class="w-[9.5%]">
-                                            Projeto
-                                        </th>
-                                        <th scope="col" class="w-[22.2%] border-r-4 border-r-[#A3A2A3]">
-                                            Prioridade
-                                        </th>
-                                        <th scope="col" class="w-[19%]">
-                                            Colaboradores
-                                        </th>
-                                        <th scope="col" class="w-[7.9%] opacity-0 hover:cursor-default">
-                                            Tempo
-                                        </th>
-                                        <th scope="col" class="w-[8.3%] text-center">
-                                            Estado
-                                        </th>
-                                        <th scope="col" class="w-[7.4%] text-center">
-                                            Ações
-                                        </th>
+                                        <tr>
+                                            <th scope="col" class="w-[3.8%] opacity-0 hover:cursor-default">
+                                                Nº
+                                            </th>
+                                            <th scope="col" class="w-[11.5%]">
+                                                Cliente
+                                            </th>
+                                            <th scope="col" class="w-[10.4%]">
+                                                Tipo
+                                            </th>
+                                            <th scope="col" class="w-[9.5%]">
+                                                Projeto
+                                            </th>
+                                            <th scope="col" class="w-[22.2%] border-r-4 border-r-[#A3A2A3]">
+                                                Prioridade
+                                            </th>
+                                            <th scope="col" class="w-[19%]">
+                                                Colaboradores
+                                            </th>
+                                            <th scope="col" class="w-[7.9%] opacity-0 hover:cursor-default">
+                                                Tempo
+                                            </th>
+                                            <th scope="col" class="w-[8.3%] text-center">
+                                                Estado
+                                            </th>
+                                            <th scope="col" class="w-[7.4%] text-center">
+                                                Ações
+                                            </th>
+                                        </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
                                     </tbody>
@@ -625,7 +627,7 @@
                             <form action="/projetos/${projeto.id}/${userId}/updateObs" method="POST" class="m-auto justify-center flex flex-wrap">
                                 @csrf
                                 @method('PUT')
-                                <textarea value='${observacoes}' title='${observacoes}' onchange='this.form.submit()'  onkeydown='textAreaKeyDown(event)' class="border-none form-input observacoes bg-transparent w-full resize-none h-16 text-start" name='observacoes' autocomplete='off'>${observacoes}</textarea>
+                                <textarea onchange='this.form.submit()'  onkeydown='textAreaKeyDown(event)' class="border-none form-input observacoes bg-transparent w-full resize-none h-16 text-start" name='observacoes' autocomplete='off'>${observacoes}</textarea>
                             </form>
                         `;
                         celulaObservacoes.appendChild(div);

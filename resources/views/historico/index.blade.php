@@ -14,6 +14,11 @@
                 border-bottom-width: 1px;
                 font-size: 14px;
             }
+            td{
+                font-size: 14px;
+                text-align: left;
+                border-width: 1px;
+            }
             table{
                 width: 100%;
                 table-layout: fixed;
@@ -24,15 +29,25 @@
         <x-app-layout>
             <div>
                 <div>
-                    <div class="flex items-center text-darkBlue">
-                        <h2 class="text-xl font-black">
-                            Histórico
-                        </h2>
+                    <div class="items-center text-darkBlue">
+                        <div class="hidden xl:flex">
+                            <h2 class="text-xl font-black">
+                                Prioridades >
+                            </h2>
+                            <div class="ml-2">
+                                Definir
+                            </div>
+                        </div>
+                        <div class="block xl:hidden">
+                            <h2 class="text-xl font-black">
+                                Projetos
+                            </h2>
+                        </div>
                     </div>
                     <div class="flex justify-between items-center my-4">
                         <div class="flex justify-between mb-4">
                             <div class="flex items-center">
-                                <label for="colaborador"></label>
+                                <label for="colaborador" class="block text-sm font-medium "></label>
                                 <div class="relative">
                                     <select id="colaborador" name="colaborador" class="appearance-none border rounded-md w-48 py-2 pl-3 pr-10 leading-tight focus:outline-none focus:shadow-outline text-white bg-darkBlue">
                                         @foreach($colaboradores as $colaborador)
@@ -40,9 +55,9 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="ml-4">
+                                <div class="ml-[3.75rem]">
                                     <label for="data_semana"></label>
-                                    <input type="date" id="data_semana" name="data_semana" class="border rounded-md py-2 px-3"/>
+                                    <input type="date" id="data_semana" name="data_semana" class="h-[35px] border rounded-md py-2 px-3"/>
                                 </div>
                             </div>
                         </div>
@@ -65,32 +80,32 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
-                                            <th scope="col" class="text-left border w-[3%]">
+                                            <th scope="col" class="w-[3.8%]">
                                                 Nº
                                             </th>
-                                            <th scope="col" class="text-left border w-[18%]">
+                                            <th scope="col" class="w-[11.5%]">
                                                 Cliente
                                             </th>
-                                            <th scope="col" class="text-left border w-[15%]">
+                                            <th scope="col" class="w-[10.4%]">
                                                 Tipo
                                             </th>
-                                            <th scope="col" class="text-left border w-[15%]">
+                                            <th scope="col" class="w-[9.5%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col" class="text-left border border-r-4 border-r-[#A3A2A3] w-[8%]">
+                                            <th scope="col" class="w-[22.2%] border-r-4 border-r-[#A3A2A3]">
                                                 Prioridade
                                             </th>
-                                            <th scope="col" class="text-left border w-[17%]">
+                                            <th scope="col" class="w-[19%]">
                                                 Observações
                                             </th>
-                                            <th scope="col" class="text-left border w-[8%]">
+                                            <th scope="col" class="w-[7.9%] text-center">
                                                 Tempo
                                             </th>
-                                            <th scope="col" class="text-left w-[8%]">
+                                            <th scope="col" class="w-[8.3%] text-center">
                                                 Estado
                                             </th>
-                                            <th scope="col" class="opacity-0 hover:cursor-none w-[8%]">
-                                                
+                                            <th scope="col" class="opacity-0 hover:cursor-default w-[7.8%]">
+                                                Ações
                                             </th>
                                         </tr>
                                     </thead>
@@ -124,32 +139,32 @@
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
-                                            <th scope="col" class="text-left w-[3%]">
-
+                                            <th scope="col" class="w-[3.8%] opacity-0 hover:cursor-default">
+                                                Nº
                                             </th>
-                                            <th scope="col" class="text-left border border-l-0 w-[18%]">
+                                            <th scope="col" class="w-[11.5%]">
                                                 Cliente
                                             </th>
-                                            <th scope="col" class="text-left border w-[15%]">
+                                            <th scope="col" class="w-[10.4%]">
                                                 Tipo
                                             </th>
-                                            <th scope="col" class="text-left border w-[15%]">
+                                            <th scope="col" class="w-[9.5%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col" class="text-left border border-r-4 border-r-[#A3A2A3] w-[8%]">
+                                            <th scope="col" class="w-[22.2%] border-r-4 border-r-[#A3A2A3]">
                                                 Prioridade
                                             </th>
-                                            <th scope="col" class="text-left w-[17%]">
-
+                                            <th scope="col" class="w-[19%] opacity-0 hover:cursor-default">
+                                                Observações
                                             </th>
-                                            <th scope="col" class="text-left w-[8%]">
-
+                                            <th scope="col" class="w-[7.9%] opacity-0 hover:cursor-default">
+                                                Tempo
                                             </th>
-                                            <th scope="col" class="text-left border border-r-0 w-[8%]">
+                                            <th scope="col" class="w-[8.3%] text-center">
                                                 Estado
                                             </th>
-                                            <th scope="col" class="text-left w-[8%]">
-
+                                            <th scope="col" class="w-[7.4%] opacity-0 hover:cursor-default">
+                                                Ações
                                             </th>
                                         </tr>
                                     </thead>
@@ -182,29 +197,32 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-[#d5d4d5]">
                                     <tr>
-                                        <th scope="col" class="text-left w-[3%]">
-
+                                        <th scope="col" class="w-[3.8%] opacity-0 hover:cursor-default">
+                                            Nº
                                         </th>
-                                        <th scope="col" class="text-left border border-l-0 w-[18%]">
+                                        <th scope="col" class="w-[11.5%]">
                                             Cliente
                                         </th>
-                                        <th scope="col" class="text-left border w-[15%]">
+                                        <th scope="col" class="w-[10.4%]">
                                             Tipo
                                         </th>
-                                        <th scope="col" class="text-left border w-[15%]">
+                                        <th scope="col" class="w-[9.5%]">
                                             Projeto
                                         </th>
-                                        <th scope="col" class="text-left border border-r-4 border-r-[#A3A2A3] w-[8%]">
+                                        <th scope="col" class="w-[22.2%] border-r-4 border-r-[#A3A2A3]">
                                             Prioridade
                                         </th>
-                                        <th scope="col" class="text-left border w-[25%]">
+                                        <th scope="col" class="w-[19%]">
                                             Colaboradores
                                         </th>
-                                        <th scope="col" class="text-left border border-r-0 w-[8%]">
+                                        <th scope="col" class="w-[7.9%] opacity-0 hover:cursor-default">
+                                            Tempo
+                                        </th>
+                                        <th scope="col" class="w-[8.3%] text-center">
                                             Estado
                                         </th>
-                                        <th scope="col" class="text-left w-[8%]">
-
+                                        <th scope="col" class="w-[7.4%] opacity-0 hover:cursor-default">
+                                            Ações
                                         </th>
                                     </tr>
                                 </thead>
