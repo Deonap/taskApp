@@ -38,6 +38,9 @@
             .chosenDraggable * {
                 opacity: 1;
             }
+            .hoveredTableRow *{
+                background-color:rgb(207 207 207);
+            }
             table {
                 width:100%;
                 table-layout: fixed;
@@ -54,16 +57,13 @@
                 background-size: 50% 2px, 2px 50%;
                 background-repeat: no-repeat;
             }
-
             .plusIcon {
                 background-image: 
-                    linear-gradient(to right, #fff 0%, #fff 100%),
-                    linear-gradient(to bottom, #fff 0%, #fff 100%);
+                    linear-gradient(to right, #fff 0%, #fff 100%), linear-gradient(to bottom, #fff 0%, #fff 100%);
             }
 
             .minusIcon {
-                background-image: 
-                    linear-gradient(to right, #fff 0%, #fff 100%);
+                background-image: linear-gradient(to right, #fff 0%, #fff 100%);
             }
         </style>
     </head>
@@ -285,11 +285,11 @@
                             <div class="flex items-center text-white mb-4" style="width: 100%;">
                                 <div class="flex-none text-white bg-[rgb(122,166,77)]" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
                                     <h3 class="text-lg font-semibold">Projetos Concluídos</h3>
-                                    <div id="toggleConcluidos" class="text-right collapseIcon minusIcon hover:cursor-pointer">
+                                    <div id="toggleConcluidos" class="text-right collapseIcon plusIcon hover:cursor-pointer">
                                     </div>
                                 </div>
                             </div>
-                            <div id="tabelaProjetosConcluidos" class="collapsible-content">
+                            <div id="tabelaProjetosConcluidos" class="collapsible-content hidden">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
@@ -406,6 +406,10 @@
 </html>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.10.2/Sortable.min.js"></script>
 <script>
+    const tabelaAbertos = document.querySelector('#tabelaProjetosAbertos table');
+    const tabelaPendentes = document.querySelector('#tabelaProjetosPendentes table');
+    const tableOutrosColabs = document.querySelector('#tabelaProjetosOutrosColaboradores table');
+
     document.addEventListener("DOMContentLoaded", function () {
         var userId = document.getElementById('colaborador').value;
         atualizarTabelas(userId);
@@ -463,23 +467,23 @@
     });
 
     function handleTableCollapse(table){
-    if (table.classList.contains('hidden')) {
-            table.style.height = '0px';
-            table.classList.remove('hidden');
-            setTimeout(() => {
-                table.style.height = table.scrollHeight + 'px';
-            }, 10);
-        } else {
-            table.style.height = table.scrollHeight + 'px';
-            setTimeout(() => {
+        if (table.classList.contains('hidden')) {
                 table.style.height = '0px';
-            }, 10);
-            table.addEventListener('transitionend', function handleTransitionEnd() {
-                table.classList.add('hidden');
-                table.style.height = null; // Reset the height
-                table.removeEventListener('transitionend', handleTransitionEnd);
-            });
-        }
+                table.classList.remove('hidden');
+                setTimeout(() => {
+                    table.style.height = table.scrollHeight + 'px';
+                }, 10);
+            } else {
+                table.style.height = table.scrollHeight + 'px';
+                setTimeout(() => {
+                    table.style.height = '0px';
+                }, 10);
+                table.addEventListener('transitionend', function handleTransitionEnd() {
+                    table.classList.add('hidden');
+                    table.style.height = null; // Reset the height
+                    table.removeEventListener('transitionend', handleTransitionEnd);
+                });
+            }
     }
 
     function handlePageReload(userProjeto) {
@@ -527,6 +531,24 @@
                     // Para separação do design para computador / mobile
                     if(true){
                         var linha = tbody.insertRow();
+
+                        linha.addEventListener('mouseover', (event) => {
+                            for(var i = 1; i < tableOutrosColabs.rows.length; i++){
+                                if(tableOutrosColabs.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
+                                linha.classList.add('hoveredTableRow');
+                                    tableOutrosColabs.rows[i].classList.add('hoveredTableRow');
+                                }
+                            }
+                        });
+                        linha.addEventListener('mouseout', (event) => {
+                            for(var i = 1; i < tableOutrosColabs.rows.length; i++){
+                                if(tableOutrosColabs.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
+                                    linha.classList.remove('hoveredTableRow');
+                                    tableOutrosColabs.rows[i].classList.remove('hoveredTableRow');
+                                }
+                            }
+                        });
+
                         linha.setAttribute('data-id', projeto.id);
                         // Encontra o usuário específico e sua prioridade
                         var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
@@ -618,7 +640,7 @@
 
                         var celulaTarefas = linha.insertCell(4);
                         celulaTarefas.classList.add(...tdClassList, 'border-r-4', 'border-r-[#A3A2A3]')
-                        celulaTarefas.innerHTML = '<div>' + projeto.tarefas.map(tarefa => `<p class="pl-2 break-words">${tarefa.descricao}</p>`).join("") + "</div>";
+                        celulaTarefas.innerHTML = '<div>' + projeto.tarefas.map(tarefa => `<p class="px-2 break-words">${tarefa.descricao}</p>`).join("") + "</div>";
 
                         var celulaObservacoes = linha.insertCell(5);
                         var userProjeto = projeto.users.find(user => user.id == userId);
@@ -864,6 +886,24 @@
                     // Para separação do design para computador / mobile
                     if(true){
                         var linha = tbodyPendentes.insertRow();
+
+                        linha.addEventListener('mouseover', (event) => {
+                            for(var i = 1; i < tableOutrosColabs.rows.length; i++){
+                                if(tableOutrosColabs.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
+                                    linha.classList.add('hoveredTableRow');
+                                    tableOutrosColabs.rows[i].classList.add('hoveredTableRow');
+                                }
+                            }
+                        });
+                        linha.addEventListener('mouseout', (event) => {
+                            for(var i = 1; i < tableOutrosColabs.rows.length; i++){
+                                if(tableOutrosColabs.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
+                                    linha.classList.remove('hoveredTableRow');
+                                    tableOutrosColabs.rows[i].classList.remove('hoveredTableRow');
+                                }
+                            }
+                        });
+
                         var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
                         linha.setAttribute('data-id', projeto.id);
                         linha.classList.add('border-b'); // Adiciona borda à linha
@@ -950,7 +990,7 @@
                         </div>
                         `;
 
-                        var tarefas = projeto.tarefas.map(tarefa => `<p class="pl-2 break-words">${tarefa.descricao}</p>`).join("");
+                        var tarefas = projeto.tarefas.map(tarefa => `<p class="px-2 break-words">${tarefa.descricao}</p>`).join("");
                         celulas[4].classList.add(...tdClassList, 'border-r-4', 'border-r-[#A3A2A3]');
                         celulas[4].innerHTML = tarefas;
 
@@ -1131,6 +1171,24 @@
                     // Para separação do design para computador / mobile
                     if(true){
                         var linha = tbodyConcluidos.insertRow();
+
+                        linha.addEventListener('mouseover', (event) => {
+                            for(var i = 1; i < tableOutrosColabs.rows.length; i++){
+                                if(tableOutrosColabs.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
+                                    linha.classList.add('hoveredTableRow');
+                                    tableOutrosColabs.rows[i].classList.add('hoveredTableRow');
+                                }
+                            }
+                        });
+                        linha.addEventListener('mouseout', (event) => {
+                            for(var i = 1; i < tableOutrosColabs.rows.length; i++){
+                                if(tableOutrosColabs.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
+                                    linha.classList.remove('hoveredTableRow');
+                                    tableOutrosColabs.rows[i].classList.remove('hoveredTableRow');
+                                }
+                            }
+                        });
+
                         var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
                         linha.setAttribute('data-id', projeto.id);
                         linha.classList.add('border-b'); // Adiciona borda à linha
@@ -1217,7 +1275,7 @@
                         </div>
                         `;
 
-                        var tarefas = projeto.tarefas.map(tarefa => `<p class="pl-2 break-words">${tarefa.descricao}</p>`).join("");
+                        var tarefas = projeto.tarefas.map(tarefa => `<p class="px-2 break-words">${tarefa.descricao}</p>`).join("");
                         celulas[4].classList.add(...tdClassList, 'border-r-4', 'border-r-[#A3A2A3]');
                         celulas[4].innerHTML = "<div>" + tarefas + "</div>";
 
@@ -1428,6 +1486,37 @@
                     // Para separação do design para computador / mobile
                     if(true){
                         var linha = tbodyOutrosColaboradores.insertRow();
+
+                        linha.addEventListener('mouseover', (event) => {
+                            for(var i = 1; i < tabelaAbertos.rows.length; i++){
+                                if(tabelaAbertos.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
+                                    linha.classList.add('hoveredTableRow');
+                                    tabelaAbertos.rows[i].classList.add('hoveredTableRow');
+                                }
+                            }
+                            for(var i = 1; i < tabelaPendentes.rows.length; i++){
+                                if(tabelaPendentes.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
+                                    linha.classList.add('hoveredTableRow');
+                                    tabelaPendentes.rows[i].classList.add('hoveredTableRow');
+                                }
+                            }
+                        });
+                        linha.addEventListener('mouseout', (event) => {
+                            for(var i = 1; i < tabelaAbertos.rows.length; i++){
+                                if(tabelaAbertos.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
+                                    linha.classList.remove('hoveredTableRow');
+                                    tabelaAbertos.rows[i].classList.remove('hoveredTableRow');
+                                }
+                            }
+                            for(var i = 1; i < tabelaPendentes.rows.length; i++){
+                                if(tabelaPendentes.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
+                                    linha.classList.remove('hoveredTableRow');
+                                    tabelaPendentes.rows[i].classList.remove('hoveredTableRow');
+                                }
+                            }
+                        });
+
+                        linha.setAttribute('data-id', projeto.id);
                         linha.classList.add('border-b'); // Adiciona borda à linha
                         var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
 
@@ -1440,7 +1529,7 @@
                             celulas[i].classList.add('py-3');
                         }
 
-                        celulas[0].classList.add('border-r-0', 'invisible');
+                        celulas[0].classList.add('border-r-0');
                         celulas[1].innerHTML = `
                         <div class="flex items-end">
                             <div>
@@ -1512,7 +1601,7 @@
                         </div>
                         `;
 
-                        var tarefas = projeto.tarefas.map(tarefa => `<p class="pl-2 break-words">${tarefa.descricao}</p>`).join("");
+                        var tarefas = projeto.tarefas.map(tarefa => `<p class="px-2 break-words">${tarefa.descricao}</p>`).join("");
                         celulas[4].classList.add('border-r-4', 'border-r-[#A3A2A3]');
                         celulas[4].innerHTML = "<div>" + tarefas + "</div>";
 
@@ -1796,13 +1885,14 @@
         document.getElementById('newColaboradorForm/' + id).classList.remove('hidden');
     }
 
+    // sortables
     document.addEventListener('DOMContentLoaded', function () {
         var el = document.getElementById('tabelaProjetosAbertos').getElementsByTagName('tbody')[0];
         var sortable = new Sortable(el, {
             chosenClass: 'chosenDraggable',
             group: 'shared',
             ghostClass: 'bg-gray-300',
-            animation: 150,
+            animation: 100,
             onAdd: function(evt){
                 var item = evt.item;
                 var projetosData = [];
