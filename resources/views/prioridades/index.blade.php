@@ -411,6 +411,7 @@
 <script>
     const tabelaAbertos = document.querySelector('#tabelaProjetosAbertos table');
     const tabelaPendentes = document.querySelector('#tabelaProjetosPendentes table');
+    const tabelaConcluidos = document.querySelector('#tabelaProjetosConcluidos table');
     const tableOutrosColabs = document.querySelector('#tabelaProjetosOutrosColaboradores table');
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -424,45 +425,44 @@
 
         var $userId = userId;
         document.getElementById('emailAnchor').href = '/emailTest/' + $userId;
-
     });
 
     // collapse tables
     document.addEventListener('DOMContentLoaded', function(){            
         const toggleDesenvolvimento = document.getElementById('toggleDesenvolvimento');
-        const tabelaProjetosAbertos = document.getElementById('tabelaProjetosAbertos');
+        const divProjetosAbertos = document.getElementById('tabelaProjetosAbertos');
         // ------------------------------------------------ //
         const togglePendentes = document.getElementById('togglePendentes');
-        const tabelaProjetosPendentes = document.getElementById('tabelaProjetosPendentes');
+        const divProjetosPendentes = document.getElementById('tabelaProjetosPendentes');
         // ------------------------------------------------ //
         const toggleConcluidos = document.getElementById('toggleConcluidos');
-        const tabelaProjetosConcluidos = document.getElementById('tabelaProjetosConcluidos');
+        const divProjetosConcluidos = document.getElementById('tabelaProjetosConcluidos');
         // ------------------------------------------------ //
         const toggleOutrosColabs = document.getElementById('toggleOutrosColabs');
-        const tabelaProjetosOutrosColaboradores = document.getElementById('tabelaProjetosOutrosColaboradores');
+        const divProjetosOutrosColaboradores = document.getElementById('tabelaProjetosOutrosColaboradores');
         // ------------------------------------------------ //
         toggleDesenvolvimento.addEventListener('click', function () {
-            handleTableCollapse(tabelaProjetosAbertos);
+            handleTableCollapse(divProjetosAbertos);
             toggleDesenvolvimento.classList.toggle('plusIcon');
             toggleDesenvolvimento.classList.toggle('minusIcon');
         });
         // ------------------------------------------------ //
         togglePendentes.addEventListener('click', function(){
-           handleTableCollapse(tabelaProjetosPendentes); 
+           handleTableCollapse(divProjetosPendentes); 
            togglePendentes.classList.toggle('plusIcon');
            togglePendentes.classList.toggle('minusIcon');
         });
 
         // ------------------------------------------------ //
         toggleConcluidos.addEventListener('click', function(){
-            handleTableCollapse(tabelaProjetosConcluidos);
+            handleTableCollapse(divProjetosConcluidos);
             toggleConcluidos.classList.toggle('plusIcon');
             toggleConcluidos.classList.toggle('minusIcon');
         });
 
         //------------------------------------------------ //
         toggleOutrosColabs.addEventListener('click', function(){
-            handleTableCollapse(tabelaProjetosOutrosColaboradores);
+            handleTableCollapse(divProjetosOutrosColaboradores);
             toggleOutrosColabs.classList.toggle('plusIcon');
             toggleOutrosColabs.classList.toggle('minusIcon');
         });
@@ -471,23 +471,47 @@
 
     function handleTableCollapse(table){
         if (table.classList.contains('hidden')) {
-                table.style.height = '0px';
-                table.classList.remove('hidden');
-                setTimeout(() => {
-                    table.style.height = table.scrollHeight + 'px';
-                }, 10);
-            } else {
+            table.style.height = '0px';
+            table.classList.remove('hidden');
+            requestAnimationFrame(() => {
                 table.style.height = table.scrollHeight + 'px';
-                setTimeout(() => {
-                    table.style.height = '0px';
-                }, 10);
-                table.addEventListener('transitionend', function handleTransitionEnd() {
-                    table.classList.add('hidden');
-                    table.style.height = null; // Reset the height
-                    table.removeEventListener('transitionend', handleTransitionEnd);
-                });
-            }
+            });
+        } else {
+            table.style.height = table.scrollHeight + 'px';
+            requestAnimationFrame(() => {
+                table.style.height = '0px';
+            });
+            table.addEventListener('transitionend', function handleTransitionEnd() {
+                table.classList.add('hidden');
+                table.style.height = null; // Reset the height
+                table.removeEventListener('transitionend', handleTransitionEnd);
+            });
+        }
     }
+    // atualizar altura de tabela quando conteúdo mudo
+    function updateTableHeight(table) {
+        if (!table.classList.contains('hidden')) {
+            table.style.height = 0 + 'px';
+            table.style.height = table.scrollHeight + 'px';
+        }
+    }
+
+    // tratar de mudanças no conteúdo das tabelas
+    const observer = new MutationObserver((mutations) => {
+        let contentChanged = false;
+        mutations.forEach(mutation => {
+            if (mutation.type === 'childList' || mutation.type === 'subtree' || mutation.type === 'characterData') {
+                contentChanged = true;
+            }
+        });
+        if (contentChanged) {
+            updateTableHeight(tabelaAbertos);
+            updateTableHeight(tabelaPendentes);
+            updateTableHeight(tabelaConcluidos);
+            updateTableHeight(tableOutrosColabs);
+        }
+    });
+
 
     function handlePageReload(userProjeto) {
         const toggleFerias = document.getElementById('toggleFerias');
