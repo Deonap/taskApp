@@ -26,10 +26,13 @@
                 border-bottom-width: 1px;
                 font-size: 14px;
             }
-            td{
+            td {
                 font-size: 14px;
                 text-align: left;
                 border-width: 1px;
+            }
+            textarea{
+                font-size:14px !important;
             }
             .disabledTable *{
                 pointer-events: none;
@@ -654,7 +657,7 @@
                             <form action="/projetos/${projeto.id}/${userId}/updateObs" method="POST" class="m-auto justify-center flex flex-wrap">
                                 @csrf
                                 @method('PUT')
-                                <textarea onchange='this.form.submit()'  onkeydown='textAreaKeyDown(event)' class="border-none form-input observacoes bg-transparent w-full resize-none h-16 text-start" name='observacoes' autocomplete='off'>${observacoes}</textarea>
+                                <textarea onchange='this.form.submit()' onkeydown='textAreaKeyDown(event)' class="border-none form-input observacoes bg-transparent size-full resize-none text-start" name='observacoes' autocomplete='off'>${observacoes}</textarea>
                             </form>
                         `;
                         celulaObservacoes.appendChild(div);
