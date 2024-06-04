@@ -42,6 +42,29 @@
                 width:100%;
                 table-layout: fixed;
             }
+            .collapsible-content {
+                transition: height 0.3s ease-in;
+                overflow: hidden;
+            }
+            .plusIcon, .minusIcon {
+                display: inline-block;
+                width: 24px;
+                height: 24px;
+                background-position: center;
+                background-size: 50% 2px, 2px 50%;
+                background-repeat: no-repeat;
+            }
+
+            .plusIcon {
+                background-image: 
+                    linear-gradient(to right, #fff 0%, #fff 100%),
+                    linear-gradient(to bottom, #fff 0%, #fff 100%);
+            }
+
+            .minusIcon {
+                background-image: 
+                    linear-gradient(to right, #fff 0%, #fff 100%);
+            }
         </style>
     </head>
     <?php
@@ -117,20 +140,16 @@
                     </div>
                 </div>
                 <div>
-                    <div id="tabelaProjetosAbertos" class="mb-8">
+                    {{-- tabela projetos abertos --}}
+                    <div class="mb-8">
                         <div class="hidden xl:block">
                             <div class="flex items-center text-white mb-4" style="width: 100%;">
                                 <div class="flex-none text-white bg-projetosDesenvolvimentoBanner" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
                                     <div>
                                         <h3 class="text-lg font-semibold">Projetos Em Desenvolvimento</h3>
                                     </div>
-                                    <div class="text-right">
-                                        <svg id="hideDesenvolvimento" class="size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
-                                        </svg>
-                                        <svg id="showDesenvolvimento" class="hidden size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                          </svg>
+                                    <div id="toggleDesenvolvimento" class="text-right collapseIcon minusIcon hover:cursor-pointer">
+                                        
                                     </div>
                                 </div>
                                 <div class="flex-none ml-4" style="width: 29%; height: 30px; background-color: #f0f1f0; color: black; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: center; align-items: center;">
@@ -139,7 +158,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <div>
+                            <div id="tabelaProjetosAbertos" class="collapsible-content">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
@@ -194,8 +213,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <div id="tabelaProjetosPendentes" class="mb-8">
+                    {{-- tabela projetos pendentes --}}
+                    <div class="mb-8">
                         <div class="hidden xl:block">
                             <div class="flex items-center text-white mb-4" style="width: 100%;">
                                 <div class="flex-none text-white bg-projetosPendentesBanner"style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
@@ -203,18 +222,13 @@
                                         <h3 class="text-lg font-semibold">Projetos Pendentes</h3>
                                     </div>
                                     <div>
-                                        <div class="text-right">
-                                            <svg id="hidePendentes" class="size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
-                                            </svg>
-                                            <svg id="showPendentes" class="hidden size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                              </svg>
+                                        <div id="togglePendentes" class="text-right collapseIcon minusIcon hover:cursor-pointer">
+                                        
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div id="tabelaProjetosPendentes" class="collapsible-content">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
@@ -265,23 +279,17 @@
                             </div>
                         </div>
                     </div>
-
-                    <div id="tabelaProjetosConcluidos" class="mb-8">
+                    {{-- tabela projetos concluidos --}}
+                    <div class="mb-8">
                         <div class="hidden xl:block">
                             <div class="flex items-center text-white mb-4" style="width: 100%;">
                                 <div class="flex-none text-white bg-[rgb(122,166,77)]" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
                                     <h3 class="text-lg font-semibold">Projetos Concluídos</h3>
-                                    <div class="text-right">
-                                        <svg id="hideConcluidos" class="size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
-                                        </svg>
-                                        <svg id="showConcluidos" class="hidden size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                          </svg>
+                                    <div id="toggleConcluidos" class="text-right collapseIcon minusIcon hover:cursor-pointer">
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div id="tabelaProjetosConcluidos" class="collapsible-content">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
@@ -320,25 +328,20 @@
                             </div>
                         </div>
                     </div>
-
-                    <div id="tabelaProjetosOutrosColaboradores" class="mb-8">
+                    {{-- tabela projetos com outros colaboradores --}}
+                    <div class="mb-8">
                         <div class="hidden xl:block">
                             <div class="flex items-center text-white mb-4" style="width: 100%;">
                                 <div class="flex-none text-white bg-projetosOutrosColabBanner" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
                                     <div>
                                         <h3 class="text-lg font-semibold">Projetos com Outros Colaboradores</h3>
                                     </div>
-                                    <div class="text-right">
-                                        <svg id="hideOutrosColabs" class="size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth='1.5' stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
-                                        </svg>
-                                        <svg id="showOutrosColabs" class="hidden size-6 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                          </svg>
+                                    <div id="toggleOutrosColabs" class="text-right collapseIcon minusIcon hover:cursor-pointer">
+                                        
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div id="tabelaProjetosOutrosColaboradores" class="collapsible-content">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
@@ -418,64 +421,66 @@
     });
 
     // collapse tables
-    document.addEventListener('DOMContentLoaded', function(){
-        var showDesenvolvimento = document.getElementById('showDesenvolvimento');
-        var hideDesenvolvimento = document.getElementById('hideDesenvolvimento');
-        var showPendentes = document.getElementById('showPendentes');
-        var hidePendentes = document.getElementById('hidePendentes');
-        var showConcluidos = document.getElementById('showConcluidos');
-        var hideConcluidos = document.getElementById('hideConcluidos');
-        var showOutrosColabs = document.getElementById('showOutrosColabs');
-        var hideOutrosColabs = document.getElementById('hideOutrosColabs');
+    document.addEventListener('DOMContentLoaded', function(){            
+        const toggleDesenvolvimento = document.getElementById('toggleDesenvolvimento');
+        const tabelaProjetosAbertos = document.getElementById('tabelaProjetosAbertos');
         // ------------------------------------------------ //
-        showDesenvolvimento.addEventListener('click', function(){
-            document.querySelector('#tabelaProjetosAbertos table').classList.toggle("hidden");
-            showDesenvolvimento.classList.toggle('hidden');
-            hideDesenvolvimento.classList.toggle('hidden');
-        });
-
-        hideDesenvolvimento.addEventListener('click', function(){
-            document.querySelector('#tabelaProjetosAbertos table').classList.toggle("hidden");
-            showDesenvolvimento.classList.toggle('hidden');
-            hideDesenvolvimento.classList.toggle('hidden');
+        const togglePendentes = document.getElementById('togglePendentes');
+        const tabelaProjetosPendentes = document.getElementById('tabelaProjetosPendentes');
+        // ------------------------------------------------ //
+        const toggleConcluidos = document.getElementById('toggleConcluidos');
+        const tabelaProjetosConcluidos = document.getElementById('tabelaProjetosConcluidos');
+        // ------------------------------------------------ //
+        const toggleOutrosColabs = document.getElementById('toggleOutrosColabs');
+        const tabelaProjetosOutrosColaboradores = document.getElementById('tabelaProjetosOutrosColaboradores');
+        // ------------------------------------------------ //
+        toggleDesenvolvimento.addEventListener('click', function () {
+            handleTableCollapse(tabelaProjetosAbertos);
+            toggleDesenvolvimento.classList.toggle('plusIcon');
+            toggleDesenvolvimento.classList.toggle('minusIcon');
         });
         // ------------------------------------------------ //
-        showPendentes.addEventListener('click', function(){
-            document.querySelector('#tabelaProjetosPendentes table').classList.toggle("hidden");
-            showPendentes.classList.toggle('hidden');
-            hidePendentes.classList.toggle('hidden');
+        togglePendentes.addEventListener('click', function(){
+           handleTableCollapse(tabelaProjetosPendentes); 
+           togglePendentes.classList.toggle('plusIcon');
+           togglePendentes.classList.toggle('minusIcon');
         });
 
-        hidePendentes.addEventListener('click', function(){
-            document.querySelector('#tabelaProjetosPendentes table').classList.toggle("hidden");
-            showPendentes.classList.toggle('hidden');
-            hidePendentes.classList.toggle('hidden');
-        });   
         // ------------------------------------------------ //
-        showConcluidos.addEventListener('click', function(){
-            document.querySelector('#tabelaProjetosConcluidos table').classList.toggle("hidden");
-            showConcluidos.classList.toggle('hidden');
-            hideConcluidos.classList.toggle('hidden');
+        toggleConcluidos.addEventListener('click', function(){
+            handleTableCollapse(tabelaProjetosConcluidos);
+            toggleConcluidos.classList.toggle('plusIcon');
+            toggleConcluidos.classList.toggle('minusIcon');
         });
 
-        hideConcluidos.addEventListener('click', function(){
-            document.querySelector('#tabelaProjetosConcluidos table').classList.toggle("hidden");
-            showConcluidos.classList.toggle('hidden');
-            hideConcluidos.classList.toggle('hidden');
-        });
-        // ------------------------------------------------ //
-        showOutrosColabs.addEventListener('click', function(){
-            document.querySelector('#tabelaProjetosOutrosColaboradores table').classList.toggle("hidden");
-            showOutrosColabs.classList.toggle('hidden');
-            hideOutrosColabs.classList.toggle('hidden');
+        //------------------------------------------------ //
+        toggleOutrosColabs.addEventListener('click', function(){
+            handleTableCollapse(tabelaProjetosOutrosColaboradores);
+            toggleOutrosColabs.classList.toggle('plusIcon');
+            toggleOutrosColabs.classList.toggle('minusIcon');
         });
 
-        hideOutrosColabs.addEventListener('click', function(){
-            document.querySelector('#tabelaProjetosOutrosColaboradores table').classList.toggle("hidden");
-            showOutrosColabs.classList.toggle('hidden');
-            hideOutrosColabs.classList.toggle('hidden');
-        });
     });
+
+    function handleTableCollapse(table){
+    if (table.classList.contains('hidden')) {
+            table.style.height = '0px';
+            table.classList.remove('hidden');
+            setTimeout(() => {
+                table.style.height = table.scrollHeight + 'px';
+            }, 10);
+        } else {
+            table.style.height = table.scrollHeight + 'px';
+            setTimeout(() => {
+                table.style.height = '0px';
+            }, 10);
+            table.addEventListener('transitionend', function handleTransitionEnd() {
+                table.classList.add('hidden');
+                table.style.height = null; // Reset the height
+                table.removeEventListener('transitionend', handleTransitionEnd);
+            });
+        }
+    }
 
     function handlePageReload(userProjeto) {
         const toggleFerias = document.getElementById('toggleFerias');
