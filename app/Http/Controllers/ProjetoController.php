@@ -286,7 +286,8 @@ class ProjetoController extends Controller
         $pU->tempo_gasto = $validated['tempoGasto'];
 
         $pU->update();
-        return back();
+
+        return redirect(route('prioridades.index', $user->id));
     }
 
     public function updateObs(Request $request, Projeto $projeto, User $user)
@@ -298,7 +299,7 @@ class ProjetoController extends Controller
         $pU = ProjetoUser::where(['projeto_id' => $projeto->id, 'user_id' => $user->id])->first();
         $pU->observacoes = $validated['observacoes'];
         $pU->update();
-        return back();
+        return redirect(route('prioridades.index', $user->id));
     }
 
 }
