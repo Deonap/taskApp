@@ -583,7 +583,7 @@
                         linha.setAttribute('data-id', projeto.id);
                         // Encontra o usuário específico e sua prioridade
                         var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
-                        var prioridade = userProjeto.pivot.prioridade ? userProjeto.pivot.prioridade : 'N/A';
+                        var prioridade = userProjeto.pivot.prioridade ? userProjeto.pivot.prioridade : '1';
 
                         handlePageReload(userProjeto);
 
@@ -691,7 +691,7 @@
                         celulaObservacoes.appendChild(div);
 
                         var celulaTempoGasto = linha.insertCell(6);
-                        var tempoGasto = userProjeto ? userProjeto.pivot.tempo_gasto : '--:--';
+                        var tempoGasto = userProjeto ? userProjeto.pivot.tempo_gasto : '00:00';
                         celulaTempoGasto.classList.add(...tdClassList);
                         var div = document.createElement('div');
                         div.innerHTML = `
