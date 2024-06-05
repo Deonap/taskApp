@@ -412,7 +412,7 @@
     const tabelaAbertos = document.querySelector('#tabelaProjetosAbertos table');
     const tabelaPendentes = document.querySelector('#tabelaProjetosPendentes table');
     const tabelaConcluidos = document.querySelector('#tabelaProjetosConcluidos table');
-    const tableOutrosColabs = document.querySelector('#tabelaProjetosOutrosColaboradores table');
+    const tabelaOutrosColabs = document.querySelector('#tabelaProjetosOutrosColaboradores table');
 
     document.addEventListener("DOMContentLoaded", function () {
         var userId = document.getElementById('colaborador').value;
@@ -508,10 +508,29 @@
             updateTableHeight(tabelaAbertos);
             updateTableHeight(tabelaPendentes);
             updateTableHeight(tabelaConcluidos);
-            updateTableHeight(tableOutrosColabs);
+            updateTableHeight(tabelaOutrosColabs);
         }
     });
 
+    function handleTableRowHovering(row, table){
+        row.addEventListener('mouseover', (event) => {
+            for(var i = 1; i < table.rows.length; i++){
+                if(table.rows[i].getAttribute('data-id') == row.getAttribute('data-id')){
+                row.classList.add('hoveredTableRow');
+                    table.rows[i].classList.add('hoveredTableRow');
+                }
+            }
+        });
+        row.addEventListener('mouseout', (event) => {
+            for(var i = 1; i < table.rows.length; i++){
+                if(table.rows[i].getAttribute('data-id') == row.getAttribute('data-id')){
+                    row.classList.remove('hoveredTableRow');
+                    table.rows[i].classList.remove('hoveredTableRow');
+                }
+            }
+        });
+    }
+    
 
     function handlePageReload(userProjeto) {
         const toggleFerias = document.getElementById('toggleFerias');
@@ -559,22 +578,7 @@
                     if(true){
                         var linha = tbody.insertRow();
 
-                        linha.addEventListener('mouseover', (event) => {
-                            for(var i = 1; i < tableOutrosColabs.rows.length; i++){
-                                if(tableOutrosColabs.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
-                                linha.classList.add('hoveredTableRow');
-                                    tableOutrosColabs.rows[i].classList.add('hoveredTableRow');
-                                }
-                            }
-                        });
-                        linha.addEventListener('mouseout', (event) => {
-                            for(var i = 1; i < tableOutrosColabs.rows.length; i++){
-                                if(tableOutrosColabs.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
-                                    linha.classList.remove('hoveredTableRow');
-                                    tableOutrosColabs.rows[i].classList.remove('hoveredTableRow');
-                                }
-                            }
-                        });
+                        handleTableRowHovering(linha, tabelaOutrosColabs);
 
                         linha.setAttribute('data-id', projeto.id);
                         // Encontra o usuário específico e sua prioridade
@@ -914,22 +918,7 @@
                     if(true){
                         var linha = tbodyPendentes.insertRow();
 
-                        linha.addEventListener('mouseover', (event) => {
-                            for(var i = 1; i < tableOutrosColabs.rows.length; i++){
-                                if(tableOutrosColabs.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
-                                    linha.classList.add('hoveredTableRow');
-                                    tableOutrosColabs.rows[i].classList.add('hoveredTableRow');
-                                }
-                            }
-                        });
-                        linha.addEventListener('mouseout', (event) => {
-                            for(var i = 1; i < tableOutrosColabs.rows.length; i++){
-                                if(tableOutrosColabs.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
-                                    linha.classList.remove('hoveredTableRow');
-                                    tableOutrosColabs.rows[i].classList.remove('hoveredTableRow');
-                                }
-                            }
-                        });
+                        handleTableRowHovering(linha, tabelaOutrosColabs);
 
                         var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
                         linha.setAttribute('data-id', projeto.id);
@@ -1199,22 +1188,7 @@
                     if(true){
                         var linha = tbodyConcluidos.insertRow();
 
-                        linha.addEventListener('mouseover', (event) => {
-                            for(var i = 1; i < tableOutrosColabs.rows.length; i++){
-                                if(tableOutrosColabs.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
-                                    linha.classList.add('hoveredTableRow');
-                                    tableOutrosColabs.rows[i].classList.add('hoveredTableRow');
-                                }
-                            }
-                        });
-                        linha.addEventListener('mouseout', (event) => {
-                            for(var i = 1; i < tableOutrosColabs.rows.length; i++){
-                                if(tableOutrosColabs.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
-                                    linha.classList.remove('hoveredTableRow');
-                                    tableOutrosColabs.rows[i].classList.remove('hoveredTableRow');
-                                }
-                            }
-                        });
+                        handleTableRowHovering(linha, tabelaOutrosColabs);
 
                         var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
                         linha.setAttribute('data-id', projeto.id);
@@ -1514,34 +1488,8 @@
                     if(true){
                         var linha = tbodyOutrosColaboradores.insertRow();
 
-                        linha.addEventListener('mouseover', (event) => {
-                            for(var i = 1; i < tabelaAbertos.rows.length; i++){
-                                if(tabelaAbertos.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
-                                    linha.classList.add('hoveredTableRow');
-                                    tabelaAbertos.rows[i].classList.add('hoveredTableRow');
-                                }
-                            }
-                            for(var i = 1; i < tabelaPendentes.rows.length; i++){
-                                if(tabelaPendentes.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
-                                    linha.classList.add('hoveredTableRow');
-                                    tabelaPendentes.rows[i].classList.add('hoveredTableRow');
-                                }
-                            }
-                        });
-                        linha.addEventListener('mouseout', (event) => {
-                            for(var i = 1; i < tabelaAbertos.rows.length; i++){
-                                if(tabelaAbertos.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
-                                    linha.classList.remove('hoveredTableRow');
-                                    tabelaAbertos.rows[i].classList.remove('hoveredTableRow');
-                                }
-                            }
-                            for(var i = 1; i < tabelaPendentes.rows.length; i++){
-                                if(tabelaPendentes.rows[i].getAttribute('data-id') == linha.getAttribute('data-id')){
-                                    linha.classList.remove('hoveredTableRow');
-                                    tabelaPendentes.rows[i].classList.remove('hoveredTableRow');
-                                }
-                            }
-                        });
+                        handleTableRowHovering(linha, tabelaAbertos);
+                        handleTableRowHovering(linha, tabelaPendentes);
 
                         linha.setAttribute('data-id', projeto.id);
                         linha.classList.add('border-b'); // Adiciona borda à linha
