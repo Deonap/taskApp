@@ -623,7 +623,7 @@
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
                                     <input type="hidden" name="user" value="${userProjeto.id}">
-                                    <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}" class="w-fit" onchange="${this.submit}">
+                                    <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}" class="w-[150px] mx-1" onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
@@ -651,7 +651,7 @@
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
                                     <input type="hidden" name="user" value="${userProjeto.id}">
-                                    <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" onchange="${this.submit}">
+                                    <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" class="w-[140px] mx-1" onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
@@ -962,7 +962,7 @@
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
                                     <input type="hidden" name="user" value="${userProjeto.id}">
-                                    <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}"  onchange="${this.submit}">
+                                    <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}" class="w-[150px] mx-1" onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
@@ -988,7 +988,7 @@
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
                                     <input type="hidden" name="user" value="${userProjeto.id}">
-                                    <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" onchange="${this.submit}">
+                                    <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" class="w-[140px] mx-1" onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
@@ -1232,7 +1232,7 @@
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
                                     <input type="hidden" name="user" value="${userProjeto.id}">
-                                    <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}"  onchange="${this.submit}">
+                                    <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}" class="w-[150px] mx-1" onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
@@ -1258,7 +1258,7 @@
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
                                     <input type="hidden" name="user" value="${userProjeto.id}">
-                                    <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" onchange="${this.submit}">
+                                    <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" class="w-[140px] mx-1" onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
@@ -1532,7 +1532,7 @@
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
                                     <input type="hidden" name="user" value="${userProjeto.id}">
-                                    <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}"  onchange="${this.submit}">
+                                    <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}" class="w-[150px] mx-1" onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/colab${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
@@ -1558,7 +1558,7 @@
                                     @method('POST')
                                     <input type="hidden" name="origin" value="prioridades">
                                     <input type="hidden" name="user" value="${userProjeto.id}">
-                                    <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" onchange="${this.submit}">
+                                    <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" class="w-[140px] mx-1" onchange="${this.submit}">
                                 </form>
                                 <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/colab${projeto.id}" method="POST" class="my-0 py-0">
                                     @csrf
