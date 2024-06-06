@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TipoCliente;
+use App\Models\Projeto;
 use Illuminate\Http\Request;
 
 class TipoClienteController extends Controller
@@ -71,7 +72,23 @@ class TipoClienteController extends Controller
      */
     public function destroy(TipoCliente $tipoCliente)
     {
-        $tipoCliente->delete();
-        return redirect()->route('tipo-clientes.index')->with('success', 'Tipo de cliente excluído com sucesso');
+        try {
+            $projetos = Projeto::where('tipo_cliente_id', '=', $tipoCliente->id)->get();
+            
+            // Check if there are associated projects
+            if ($projetos->count() > 0) {
+                // Optional: you can also throw an exception manually here
+                throw new \Exception('Tipos de cliente associados a projetos não podem ser removidos.');
+            }
+
+            $tipoCliente->delete();
+
+            return redirect()->route('tipo-clientes.index');
+        } catch (\Exception $e) {
+            $errorMessage = 'Tipos de cliente associados a projetos não podem ser removidos.';
+            return redirect()->route('tipo-clientes.index')->with('error', $errorMessage);
+        }
     }
+
+
 }

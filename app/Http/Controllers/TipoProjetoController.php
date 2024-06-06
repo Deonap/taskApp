@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TipoProjeto;
+use App\Models\Projeto;
 use Illuminate\Http\Request;
 
 class TipoProjetoController extends Controller
@@ -30,8 +31,7 @@ class TipoProjetoController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nome' => 'required|unique:tipo_clientes|max:255',
-            'cor' => 'required',
+            'nome' => 'required|unique:tipo_clientes|max:255'
         ]);
         TipoProjeto::create($validatedData);
         return redirect()->route('tipo-projetos.index');
@@ -59,8 +59,7 @@ class TipoProjetoController extends Controller
     public function update(Request $request, TipoProjeto $tipoProjeto)
     {
         $validatedData = $request->validate([
-            'nome' => 'string|max:255',
-            'cor' => 'string',
+            'nome' => 'string|max:255'
         ]);
         $tipoProjeto->update($validatedData);
         return redirect()->route('tipo-projetos.index');
@@ -71,7 +70,23 @@ class TipoProjetoController extends Controller
      */
     public function destroy(TipoProjeto $tipoProjeto)
     {
-        $tipoProjeto->delete();
-        return redirect()->route('tipo-projetos.index')->with('success', 'Tipo de cliente excluído com sucesso');
+        try {
+            $projetos = Projeto::where('cliente_id', '=', $tipoProjeto->id)->get();
+            
+            // Check if there are associated projects
+            if ($projetos->count() > 0) {
+                // Optional: you can also throw an exception manually here
+                throw new \Exception('Tipos de projeto associados a projetos não podem ser removidos.');
+            }
+
+            $tipoProjeto->delete();
+
+            return redirect()->route('tipo-projetos.index');
+        } catch (\Exception $e) {
+            $errorMessage = 'Tipos de projeto associados a projetos não podem ser removidos.';
+            return redirect()->route('tipo-projetos.index')->with('error', $errorMessage);
+        }
     }
+
+
 }

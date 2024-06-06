@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\TipoCliente;
 use App\Models\Projeto;
+use PhpOption\None;
 
 class ClienteController extends Controller
 {
@@ -47,7 +48,6 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente, $window = 'null')
     {
-        // dd($window);
         if($window == 'null'){
             $window = 'projetosAbertos';
         }
@@ -97,7 +97,21 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        $cliente->delete();
-        return redirect()->route('clientes.index');
+        try {
+            $projetos = Projeto::where('cliente_id', '=', $cliente->id)->get();
+            
+            // Check if there are associated projects
+            if ($projetos->count() > 0) {
+                // Optional: you can also throw an exception manually here
+                throw new \Exception('Clientes com projetos associados não podem ser removidos.');
+            }
+
+            $cliente->delete();
+
+            return redirect()->route('clientes.index');
+        } catch (\Exception $e) {
+            $errorMessage = 'Clientes com projetos associados não podem ser removidos.';
+            return redirect()->route('clientes.index')->with('error', $errorMessage);
+        }
     }
 }

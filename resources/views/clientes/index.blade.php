@@ -23,6 +23,16 @@
     ?>
     <body>
         <x-app-layout>
+            @if(session('error'))
+                <script>
+                    document.addEventListener('DOMContentLoaded', function(){
+                        alert('Clientes com projetos associados não podem ser removidos.');
+                    });
+                </script>
+            @endif
+            @if($errors->any())
+                {{ implode('', $errors->all(':message')) }}
+            @endif
             <div>
                 <div>
                     <div class="flex items-center text-darkBlue">
@@ -145,6 +155,8 @@
     </body>
 </html>
 <script>
+
+
     document.addEventListener("DOMContentLoaded", function () {
         const filterInput = document.getElementById("searchFilter");
         const tableRows = document.querySelectorAll("#clientTable tbody tr");
