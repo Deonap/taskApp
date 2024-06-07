@@ -171,13 +171,13 @@
                                             <th scope="col" class="w-[11.5%]">
                                                 Cliente
                                             </th>
-                                            <th scope="col" class="w-[10.4%]">
+                                            <th scope="col" class="w-[11.5%]">
                                                 Tipo
                                             </th>
-                                            <th scope="col" class="w-[9.5%]">
+                                            <th scope="col" class="w-[11.5%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col" class="w-[22.2%] border-r-4 border-r-[#A3A2A3]">
+                                            <th scope="col" class="w-[19%] border-r-4 border-r-[#A3A2A3]">
                                                 Prioridade
                                             </th>
                                             <th scope="col" class="w-[19%]">
@@ -186,7 +186,7 @@
                                             <th scope="col" class="w-[7.9%] text-center">
                                                 Tempo
                                             </th>
-                                            <th scope="col" class="w-[8.3%] text-center">
+                                            <th scope="col" class="w-[8.4%] text-center">
                                                 Estado
                                             </th>
                                             <th scope="col" class="w-[7.4%] text-center">
@@ -220,7 +220,7 @@
                     <div class="mb-8">
                         <div class="hidden xl:block">
                             <div class="flex items-center text-white mb-4" style="width: 100%;">
-                                <div class="flex-none text-white bg-projetosPendentesBanner"style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
+                                <div class="flex-none text-white bg-projetosPendentesBanner" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
                                     <div>
                                         <h3 class="text-lg font-semibold">Projetos Pendentes</h3>
                                     </div>
@@ -241,13 +241,13 @@
                                             <th scope="col" class="w-[11.5%]">
                                                 Cliente
                                             </th>
-                                            <th scope="col" class="w-[10.4%]">
+                                            <th scope="col" class="w-[11.5%]">
                                                 Tipo
                                             </th>
-                                            <th scope="col" class="w-[9.5%]">
+                                            <th scope="col" class="w-[11.5%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col" class="w-[22.2%] border-r-4 border-r-[#A3A2A3]">
+                                            <th scope="col" class="w-[19%] border-r-4 border-r-[#A3A2A3]">
                                                 Prioridade
                                             </th>
                                             <th scope="col" class="w-[19%] opacity-0 hover:cursor-default">
@@ -256,7 +256,7 @@
                                             <th scope="col" class="w-[7.9%] opacity-0 hover:cursor-default">
                                                 Tempo
                                             </th>
-                                            <th scope="col" class="w-[8.3%] text-center">
+                                            <th scope="col" class="w-[8.4%] text-center">
                                                 Estado
                                             </th>
                                             <th scope="col" class="w-[7.4%] text-center">
@@ -302,13 +302,13 @@
                                             <th scope="col" class="w-[11.5%]">
                                                 Cliente
                                             </th>
-                                            <th scope="col" class="w-[10.4%]">
+                                            <th scope="col" class="w-[11.5%]">
                                                 Tipo
                                             </th>
-                                            <th scope="col" class="w-[9.5%]">
+                                            <th scope="col" class="w-[11.5%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col" class="w-[22.2%] border-r-4 border-r-[#A3A2A3]">
+                                            <th scope="col" class="w-[19%] border-r-4 border-r-[#A3A2A3]">
                                                 Prioridade
                                             </th>
                                             <th scope="col" class="w-[19%]">
@@ -317,7 +317,7 @@
                                             <th scope="col" class="w-[7.9%] text-center">
                                                 Tempo
                                             </th>
-                                            <th scope="col" class="w-[8.3%] text-center">
+                                            <th scope="col" class="w-[8.4%] text-center">
                                                 Estado
                                             </th>
                                             <th scope="col" class="w-[7.4%] text-center">
@@ -354,13 +354,13 @@
                                             <th scope="col" class="w-[11.5%]">
                                                 Cliente
                                             </th>
-                                            <th scope="col" class="w-[10.4%]">
+                                            <th scope="col" class="w-[11.5%]">
                                                 Tipo
                                             </th>
-                                            <th scope="col" class="w-[9.5%]">
+                                            <th scope="col" class="w-[11.5%]">
                                                 Projeto
                                             </th>
-                                            <th scope="col" class="w-[22.2%] border-r-4 border-r-[#A3A2A3]">
+                                            <th scope="col" class="w-[19%] border-r-4 border-r-[#A3A2A3]">
                                                 Prioridade
                                             </th>
                                             <th scope="col" class="w-[19%]">
@@ -369,7 +369,7 @@
                                             <th scope="col" class="w-[7.9%] opacity-0 hover:cursor-default">
                                                 Tempo
                                             </th>
-                                            <th scope="col" class="w-[8.3%] text-center">
+                                            <th scope="col" class="w-[8.4%] text-center">
                                                 Estado
                                             </th>
                                             <th scope="col" class="w-[7.4%] text-center">
@@ -1352,18 +1352,6 @@
                         selectColabs = selectColabs.replaceAll(':hidden', projeto.users.length == data.colaboradores.length ? 'hidden' : '');
                         celulas[5].innerHTML = selectColabs;
 
-
-                        var tempoGasto = userProjeto ? userProjeto.pivot.tempo_gasto : '00:00';
-                        
-                        var div = document.createElement('div');
-                        div.innerHTML = `
-                        <form action="/projetos/${projeto.id}/${userId}/updateTimeSpent" method="POST" class="m-auto w-[100px] justify-center">
-                            @csrf
-                            @method('PUT')
-                            <input value='${tempoGasto}' onChange='${this.submit}' class="border-none bg-transparent rounded-md p-2 w-full tempo-gasto text-center" autocomplete="off" pattern="[0-9]{0,4}:[0-5][0-9]" type="text" placeholder="${tempoGasto}" name="tempoGasto">
-                        </form>
-                        `;
-
                         var tempoCum = 0;
                         projeto.users.forEach(u => {
                             data.colaboradores.forEach(c => {
@@ -2185,6 +2173,7 @@
             })
         }
     };
+
     function handleTipoClienteForms(id){
         var select = document.getElementById(id);
         if(select.value == -1){

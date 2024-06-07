@@ -61,6 +61,7 @@ Route::post('/salvar/projetos', [PrioridadesController::class, 'salvarProjetos']
 Route::get('/historico', [HistoricoController::class, 'index'])->name('historico.index');
 Route::get('/api/historico/projetos-em-aberto', [HistoricoController::class, 'filtrarProjetos']);
 Route::get('/api/historico/projetos-pendentes', [HistoricoController::class, 'filtrarProjetosPendente']);
+Route::get('/api/historico/projetos-concluidos', [HistoricoController::class, 'filtrarProjetosConcluidos']);
 Route::get('/api/historico/projetos-com-outros', [HistoricoController::class, 'filtrarProjetosComOutrosColaboradores']);
 
 Route::post('/atualizar/prioridades', [PrioridadesController::class, 'atualizarOrdemProjetos']);
