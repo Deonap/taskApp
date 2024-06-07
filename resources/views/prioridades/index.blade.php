@@ -288,11 +288,11 @@
                             <div class="flex items-center text-white mb-4" style="width: 100%;">
                                 <div class="flex-none text-white bg-[rgb(122,166,77)]" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
                                     <h3 class="text-lg font-semibold">Projetos Concluídos</h3>
-                                    <div id="toggleConcluidos" class="text-right collapseIcon plusIcon hover:cursor-pointer">
+                                    <div id="toggleConcluidos" class="text-right collapseIcon minusIcon hover:cursor-pointer">
                                     </div>
                                 </div>
                             </div>
-                            <div id="tabelaProjetosConcluidos" class="collapsible-content hidden">
+                            <div id="tabelaProjetosConcluidos" class="collapsible-content">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-[#d5d4d5]">
                                         <tr>
