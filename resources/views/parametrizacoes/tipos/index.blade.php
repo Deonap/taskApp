@@ -24,11 +24,11 @@
     <body>
         <x-app-layout>
             @if(session('error'))
-            <script>
-                document.addEventListener('DOMContentLoaded', function(){
-                    alert('Tipos de cliente associados a projetos não podem ser removidos.');
-                });
-            </script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function(){
+                        alert('Tipos de cliente associados a projetos não podem ser removidos.');
+                    });
+                </script>
             @endif
             @if($errors->any())
                 {{ implode('', $errors->all(':message')) }}

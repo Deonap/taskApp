@@ -28,6 +28,22 @@
             form{
                 margin:auto;
             }
+            .plusIcon, .minusIcon {
+                display: inline-block;
+                width: 24px;
+                height: 24px;
+                background-position: center;
+                background-size: 50% 2px, 2px 50%;
+                background-repeat: no-repeat;
+            }
+            .plusIcon {
+                background-image: 
+                    linear-gradient(to right, #000000 0%, #000000 100%), linear-gradient(to bottom, #000000 0%, #000000 100%);
+            }
+
+            .minusIcon {
+                background-image: linear-gradient(to right, #000000 0%, #000000 100%);
+            }
         </style>
     </head>
     <?php
@@ -174,46 +190,79 @@
                                                 <div class="flex items-end">
                                                     <div>
                                                         @foreach($projeto->users as $user)
-                                                            <form action="{{ route('projetos.colaboradores.atualizar', $projeto->id) }}" method="POST" class="my-0 py-0">
+                                                            <div class="flex">
+                                                                <form action="{{ route('projetos.colaboradores.atualizar', $projeto->id) }}" method="POST" class="my-0 py-0 w-full">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                    <input type="hidden" name="origin" value="clientes">
+                                                                    <input type="hidden" name="window" value="projetosAbertos">
+                                                                    <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
+                                                                        <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" {{$projeto->users->count() == $colaboradores->count() ? 'disabled' : ''}} class="w-full pr-10 border-none focus:border-none">
+                                                                            @foreach($colaboradores as $colaborador)
+                                                                                @if(!$projeto->users->contains($colaborador) || $colaborador->id == $user->id)
+                                                                                    <option value="{{$colaborador->id}}/{{$user->id}}" class="w-full" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->name }}</option>        
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </form>
+                                                                <div class="flex">
+                                                                    <form action="{{ route('projetos.colaboradores.remover', $projeto->id) }}" method="POST" class="my-0 py-0 ml-2 {{$projeto->users->count() == 1 ? 'opacity-0 pointer-events-none':''}}">
+                                                                        @csrf
+                                                                        @method('PUT')
+                                                                        <input type="hidden" value="{{$user->id}}" name="colaborador_id">
+                                                                        <input type="hidden" name="window" value="projetosAbertos">
+                                                                        <input type="hidden" name="origin" value="clientes">
+                                                                        
+                                                                        <input type="hidden" value="{{$user->id}}" name="colaborador_id">
+
+                                                                        <button data-origin="projetosAbertos" {{$hasPermissions ? '' : 'disabled'}} class="btn-remover-colaborador hover:cursor-pointer disabled:hover:cursor-not-allowed">
+                                                                            <div class="minusIcon">
+
+                                                                            </div>
+                                                                        </button>
+                                                                    </form>
+                                                                    <div class="{{$projeto->users->count() == $colaboradores->count() ? 'hidden' : ''}} {{!$loop->last ? 'opacity-0 pointer-events-none' : ''}}">
+                                                                        <div id="{{$projeto->id}}" class="btn-adicionar-colaborador plusIcon" data-origin="projetosAbertos">
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                        {{-- newColaborador --}}
+                                                        <div class="hidden" id="newColaboradorDiv/{{$projeto->id}}">
+                                                            <form action="{{ route('projetos.colaboradores.adicionar', $projeto->id) }}" id="newColaboradorForm/{{$projeto->id}}" method="POST" class="hidden ml-0 my-0 py-0 w-full">
                                                             @csrf
-                                                            @method('PUT')
                                                                 <input type="hidden" name="origin" value="clientes">
                                                                 <input type="hidden" name="window" value="projetosAbertos">
-                                                                <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
-                                                                    <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" {{$projeto->users->count() == $colaboradores->count() ? 'disabled' : ''}} class="w-full pl-2 pr-10 border-none focus:border-none">
+                                                                <div class="flex items-center border-t border-gray-400 p-1">
+                                                                    <select name="novoColaboradorId" id="{{$projeto->id}}" onchange="this.form.submit()" class="w-full pr-10 border-none focus:border-none">
+                                                                        <option disabled selected>...</option>
                                                                         @foreach($colaboradores as $colaborador)
-                                                                            @if(!$projeto->users->contains($colaborador) || $colaborador->id == $user->id)
-                                                                                <option value="{{$colaborador->id}}/{{$user->id}}" class="w-full" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->name }}</option>        
+                                                                            @if(!$projeto->users->contains($colaborador))
+                                                                                <option value="{{$colaborador->id}}" class="w-full">{{ $colaborador->name }}</option>
                                                                             @endif
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
                                                             </form>
-                                                        @endforeach
-                                                        {{-- newColaborador --}}
-                                                        <form action="{{ route('projetos.colaboradores.adicionar', $projeto->id) }}" id="newColaboradorForm/{{$projeto->id}}" method="POST" class="hidden my-0 py-0">
-                                                        @csrf
-                                                            <input type="hidden" name="origin" value="clientes">
-                                                            <input type="hidden" name="window" value="projetosAbertos">
-                                                            <div class="flex items-center border-t border-gray-400 p-1">
-                                                                <select name="novoColaboradorId" id="{{$projeto->id}}" onchange="this.form.submit()" class="w-full pl-2 pr-10 border-none focus:border-none">
-                                                                    <option disabled selected>...</option>
-                                                                    @foreach($colaboradores as $colaborador)
-                                                                        @if(!$projeto->users->contains($colaborador))
-                                                                            <option value="{{$colaborador->id}}" class="w-full">{{ $colaborador->name }}</option>
-                                                                        @endif
-                                                                    @endforeach
-                                                                </select>
+                                                            <div class="flex opacity-0 pointer-events-none">
+                                                                <form action="{{ route('projetos.colaboradores.remover', $projeto->id) }}" method="POST" class="my-0 py-0 ml-2">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <input type="hidden" value="{{$user->id}}" name="colaborador_id">
+                                                                    <button data-origin="projetosAbertos" class="btn-remover-colaborador hover:cursor-pointer">
+                                                                        <div class="minusIcon"></div>
+                                                                    </button>
+                                                                </form>
+                                                                <div class="{{$projeto->users->count() == $colaboradores->count() ? 'hidden' : ''}} {{!$loop->last ? 'opacity-0 pointer-events-none' : ''}}">
+                                                                    <div id="{{$projeto->id}}" class="btn-adicionar-colaborador plusIcon" data-origin="projetosAbertos">
+                                                                        
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </form>
-                                                    </div>
-                                                    <div class="my-0 mx-3 {{$projeto->users->count() == $colaboradores->count() ? 'hidden' : ''}}">
-                                                        <button id="{{$projeto->id}}" class="btn-adicionar-colaborador" data-origin="projetosAbertos">
-                                                            <!-- + -->
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                                                                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
-                                                            </svg>                                                                      
-                                                        </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -772,6 +821,7 @@
     };
 
     var btnAdicionarColaborador = document.getElementsByClassName("btn-adicionar-colaborador");
+    var btnRemoverColaborador = document.getElementsByClassName("btn-remover-colaborador");
 
     for(var i = 0; i < btnAdicionarColaborador.length;i++){
         btnAdicionarColaborador[i].addEventListener('click', addNewColaboradorField);
@@ -779,6 +829,8 @@
 
     function addNewColaboradorField(){
         document.getElementById('newColaboradorForm/' + this.id).classList.remove('hidden');
+        document.getElementById('newColaboradorDiv/' + this.id).classList.remove('hidden');
+        document.getElementById('newColaboradorDiv/' + this.id).classList.add('flex');
     }
 
     window.openModal = function(modalId) {

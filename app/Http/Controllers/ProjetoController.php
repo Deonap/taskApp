@@ -158,6 +158,13 @@ class ProjetoController extends Controller
         }
     }
 
+    public function removerColaborador(Request $request, Projeto $projeto){
+        $colabId = $request['colaborador_id'];
+        $projeto->users()->detach($colabId);
+        $projeto->update();
+        return redirect()->back();
+    }
+
     public function atualizarCliente(Request $request, Projeto $projeto)
     {
         $novoCliente = $request['novoCliente'];
