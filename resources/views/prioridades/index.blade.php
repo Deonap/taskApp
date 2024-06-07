@@ -394,7 +394,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="flex justify-end mb-8">
                         <a href="/emailTest/{{$colaboradores[0]->id}}" id='emailAnchor'>
                             <button id="btnGuardar" class="bg-darkBlue hover:bg-blue-700 text-white p-5 rounded">
@@ -632,9 +631,9 @@
                                     <input type="hidden" name="user" value="${userProjeto.id}">
                                     <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposCliente as $tC)
-                                            <option value="{{$tC->id}}">{{$tC->nome}}</option>
+                                            <option value="{{$tC->id}}" style="color:{{$tC->cor}};">{{$tC->nome}}</option>
                                         @endforeach
-                                        <option value="-1" class="font-black">Novo</option>
+                                        <option value="-1" class="text-black font-black">Novo</option>
                                     </select>
                                 </form>
                             </div>
@@ -768,6 +767,7 @@
                         var options = select.options;
                         for (var i = 0; i < options.length; i++) {
                             if (options[i].text === projeto.tipo_cliente.nome) {
+                                select.style.color = projeto.tipo_cliente.cor;
                                 options[i].selected = true;
                                 break;
                             }
@@ -971,7 +971,7 @@
                                     <input type="hidden" name="user" value="${userProjeto.id}">
                                     <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposCliente as $tC)
-                                            <option value="{{$tC->id}}">{{$tC->nome}}</option>
+                                            <option value="{{$tC->id}}" style="color:{{$tC->cor}};">{{$tC->nome}}</option>
                                         @endforeach
                                         <option value="-1" class="font-black">Novo</option>
                                     </select>
@@ -1074,6 +1074,7 @@
 
                         for (var i = 0; i < options.length; i++) {
                             if (options[i].text === projeto.tipo_cliente.nome) {
+                                select.style.color = projeto.tipo_cliente.cor;
                                 options[i].selected = true;
                                 break;
                             }
@@ -1241,7 +1242,7 @@
                                     <input type="hidden" name="user" value="${userProjeto.id}">
                                     <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposCliente as $tC)
-                                            <option value="{{$tC->id}}">{{$tC->nome}}</option>
+                                            <option value="{{$tC->id}}" style="color:{{$tC->cor}};">{{$tC->nome}}</option>
                                         @endforeach
                                         <option value="-1" class="font-black">Novo</option>
                                     </select>
@@ -1444,6 +1445,7 @@
 
                         for (var i = 0; i < options.length; i++) {
                             if (options[i].text === projeto.tipo_cliente.nome) {
+                                select.style.color = projeto.tipo_cliente.cor;
                                 options[i].selected = true;
                                 break;
                             }
@@ -1529,7 +1531,7 @@
                                     <input type="hidden" name="user" value="${userProjeto.id}">
                                     <select name="novoTipoCliente" id="novoTipoCliente/colab${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
                                         @foreach($tiposCliente as $tC)
-                                            <option value="{{$tC->id}}">{{$tC->nome}}</option>
+                                            <option value="{{$tC->id}}" style="color:{{$tC->cor}};">{{$tC->nome}}</option>
                                         @endforeach
                                         <option value="-1" class="font-black">Novo</option>
                                     </select>
@@ -1705,6 +1707,7 @@
                         var options = select.options;
                         for (var i = 0; i < options.length; i++) {
                             if (options[i].text === projeto.tipo_cliente.nome) {
+                                select.style.color = projeto.tipo_cliente.cor;
                                 options[i].selected = true;
                                 break;
                             }
