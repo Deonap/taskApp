@@ -41,7 +41,7 @@
             .chosenDraggable * {
                 opacity: 1;
             }
-            .hoveredTableRow *{
+            .hoveredTableRow *:not(.mainDivEP *){
                 background-color:rgb(207 207 207);
             }
             table {
@@ -68,6 +68,20 @@
             .minusIcon {
                 background-image: linear-gradient(to right, #fff 0%, #fff 100%);
             }
+            .itemEP {
+                transition: border 0.2s ease;
+            }
+
+            .itemEP:hover, .selectedEP {
+                border: 3px solid darkblue; /* Add border on hover */
+            }
+            .triangle {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid black;
+        }
         </style>
     </head>
     <?php
@@ -561,6 +575,46 @@
         }
     }
 
+    function triggerEPdiv(id){
+        var tempID = 'divEP/' + id;
+        
+        document.getElementById(tempID).classList.remove('hidden');
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        setTimeout(() => {
+            var itemsEP = document.getElementsByClassName('itemEP');
+            console.log(itemsEP.length);
+            for(var i = 0; i < itemsEP.length; i++){
+                item = itemsEP[i];
+                item.addEventListener('mouseover', function(event) {
+                    for(var u = 0; u < itemsEP.length; u++){
+                        itemsEP[u].classList.remove('selectedEP');
+                    }
+                    this.classList.add('selectedEP');
+                });
+                
+                item.addEventListener('mouseout', function() {
+                    this.classList.remove('selectedEP');
+                    for(var u = 0; u < itemsEP.length; u++){
+                        if(itemsEP[u].classList.contains('mainSelected')){
+                            itemsEP[u].classList.add('selectedEP');
+                        }
+                    }
+                });
+            }
+        }, 500);
+    });
+
+    document.addEventListener('click', function(event){
+        var epDivs = document.getElementsByClassName('mainDivEP');
+        for(var i = 0; i < epDivs.length; i++){
+            if(!epDivs[i].classList.contains('hidden') && !epDivs[i].parentNode.contains(event.target)){
+                epDivs[i].classList.add('hidden');
+            }
+        }
+    });
+
     function atualizarTabelaProjetosEmAberto(userId) {
         var tdClassList = ['py-3', 'border', 'border-b'];
         
@@ -572,7 +626,7 @@
                 responsiveDesenvolvimento.innerHTML = '';
                 tbody.innerHTML = '';
 
-                data.forEach((projeto) => {
+                data.projetos.forEach((projeto) => {
                     // Para separação do design para computador / mobile
                     if(true){
                         var linha = tbody.insertRow();
@@ -729,9 +783,36 @@
                         }
                     
                         celulaEstadoProjeto.innerHTML = `
-                        <div class="${bgColor} m-auto size-6 rounded-full">
+                        <div class="${bgColor} m-auto size-6 rounded-full" onclick="triggerEPdiv(${projeto.id})">
                         </div>
                         `;
+
+
+
+                        var divEP = `<div class="flex items-center space-x-2">`;
+                        data.estadoProjetos.forEach(eP => {
+                            var selected = eP.id == projeto.estado_projeto.id ? 'mainSelected selectedEP' : '';
+                            divEP += `<div style="background-color: ${eP.cor} !important;" title="${eP.nome}" class="size-6 rounded-full cursor-pointer itemEP ${selected}"></div>`
+                        });
+
+                        divEP += "</div>";
+                        celulaEstadoProjeto.innerHTML += `
+                            <div id="divEP/${projeto.id}" class="mainDivEP bg-white flex flex-col items-center absolute hidden transform translate-x-4">
+                                <div class="relative flex flex-col items-center">
+                                    <div class="triangle"></div>
+                                    <div class="p-4 relative z-10">
+
+                                        <div class="text-center">
+                                            ${divEP}
+                                        </div>
+                                        <div class="absolute top-0 left-0 right-0 bottom-0 border border-black rounded-md pointer-events-none"></div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        `;
+
 
                         var celulaAcoes = linha.insertCell(8);
                         celulaAcoes.classList.add(...tdClassList);

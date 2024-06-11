@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\TipoCliente;
 use App\Models\ProjetoUser;
 use App\Models\TipoProjeto;
+use App\Models\EstadoProjeto;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -63,7 +64,9 @@ class PrioridadesController extends Controller
             })->with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])->where('estado_projeto_id','!=','5')->get();
 
         $colaboradores = User::where('tipo', '=', 'colaborador')->get();
-        return response()->json(['projetos' => $projetos, 'colaboradores' => $colaboradores]);
+        $estados = EstadoProjeto::all();
+
+        return response()->json(['projetos' => $projetos, 'colaboradores' => $colaboradores, 'estadoProjetos' => $estados]);
     }
 
     public function filtrarProjetos(Request $request)
@@ -81,7 +84,8 @@ class PrioridadesController extends Controller
             ->select('projetos.*') // Evita colunas duplicadas
             ->get();
 
-        return response()->json($projetos);        
+        $estados = EstadoProjeto::all();
+        return response()->json(['projetos' => $projetos, 'estadoProjetos' => $estados]);        
     }
 
     public function filtrarProjetosPendente(Request $request)

@@ -275,6 +275,7 @@
                                                             </div>
                                                         @endforeach
                                                     </div>
+                                                    {{-- Necessário para alinhamento com aba de projetos concluídos --}}
                                                     <div class="rounded-full size-6 m-auto">
                                                     </div>
                                                 </div>
