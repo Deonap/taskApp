@@ -575,12 +575,6 @@
         }
     }
 
-    function triggerEPdiv(id){
-        var tempID = 'divEP/' + id;
-        
-        document.getElementById(tempID).classList.remove('hidden');
-    }
-
     document.addEventListener("DOMContentLoaded", function() {
         setTimeout(() => {
             var itemsEP = document.getElementsByClassName('itemEP');
@@ -605,6 +599,12 @@
             }
         }, 500);
     });
+
+    function triggerEPdiv(id){
+        var tempID = 'divEP/' + id;
+        
+        document.getElementById(tempID).classList.toggle('hidden');
+    }
 
     document.addEventListener('click', function(event){
         var epDivs = document.getElementsByClassName('mainDivEP');
@@ -783,11 +783,9 @@
                         }
                     
                         celulaEstadoProjeto.innerHTML = `
-                        <div class="${bgColor} m-auto size-6 rounded-full" onclick="triggerEPdiv(${projeto.id})">
+                        <div class="${bgColor} m-auto size-6 rounded-full hover:cursor-pointer" onclick="triggerEPdiv(${projeto.id})">
                         </div>
                         `;
-
-
 
                         var divEP = `<div class="flex items-center space-x-2">`;
                         data.estadoProjetos.forEach(eP => {
@@ -797,10 +795,10 @@
 
                         divEP += "</div>";
                         celulaEstadoProjeto.innerHTML += `
-                            <div id="divEP/${projeto.id}" class="mainDivEP bg-white flex flex-col items-center absolute hidden transform translate-x-4">
+                            <div id="divEP/${projeto.id}" class="mainDivEP bg-white flex flex-col items-center absolute hidden">
                                 <div class="relative flex flex-col items-center">
                                     <div class="triangle"></div>
-                                    <div class="p-4 relative z-10">
+                                    <div class="p-4 relative">
 
                                         <div class="text-center">
                                             ${divEP}
@@ -812,6 +810,8 @@
                                 </div>
                             </div>
                         `;
+
+                        
 
 
                         var celulaAcoes = linha.insertCell(8);
