@@ -606,6 +606,20 @@
         document.getElementById(tempID).classList.toggle('hidden');
     }
 
+    function positionDivEP(id){
+        
+        var mainDivEP = document.getElementById(id);
+        mainDivEP.classList.remove('hidden');
+
+        var divW = mainDivEP.offsetWidth;
+        var parentW = mainDivEP.parentElement.offsetWidth;
+        console.log(parentW);
+        mainDivEP.style.marginLeft = (parentW / 2) - (divW / 2) + 'px';
+
+
+        mainDivEP.classList.add('hidden');
+    }
+
     document.addEventListener('click', function(event){
         var epDivs = document.getElementsByClassName('mainDivEP');
         for(var i = 0; i < epDivs.length; i++){
@@ -795,7 +809,7 @@
 
                         divEP += "</div>";
                         celulaEstadoProjeto.innerHTML += `
-                            <div id="divEP/${projeto.id}" class="mainDivEP bg-white flex flex-col items-center absolute hidden">
+                            <div id="divEP/${projeto.id}" class="mainDivEP bg-white items-center absolute hidden">
                                 <div class="relative flex flex-col items-center">
                                     <div class="triangle"></div>
                                     <div class="p-4 relative">
@@ -810,9 +824,8 @@
                                 </div>
                             </div>
                         `;
-
                         
-
+                        positionDivEP('divEP/' + projeto.id);
 
                         var celulaAcoes = linha.insertCell(8);
                         celulaAcoes.classList.add(...tdClassList);
