@@ -41,8 +41,8 @@
             .chosenDraggable * {
                 opacity: 1;
             }
-            .hoveredTableRow *:not(.mainDivEP *){
-                background-color:rgb(207 207 207);
+            .hoveredTableRow *:not(.mainDivEP *):not(.statusCircle){
+                background-color: rgb(207 207 207);
             }
             table {
                 width:100%;
@@ -75,13 +75,15 @@
             .itemEP:hover, .selectedEP {
                 border: 3px solid darkblue; /* Add border on hover */
             }
+            
+
             .triangle {
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-bottom: 10px solid black;
-        }
+                width: 0;
+                height: 0;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-bottom: 10px solid black;
+            }
         </style>
     </head>
     <?php
@@ -613,7 +615,6 @@
 
         var divW = mainDivEP.offsetWidth;
         var parentW = mainDivEP.parentElement.offsetWidth;
-        console.log(parentW);
         mainDivEP.style.marginLeft = (parentW / 2) - (divW / 2) + 'px';
 
 
@@ -797,25 +798,29 @@
                         }
                     
                         celulaEstadoProjeto.innerHTML = `
-                        <div class="${bgColor} m-auto size-6 rounded-full hover:cursor-pointer" onclick="triggerEPdiv(${projeto.id})">
+                        <div class="${bgColor} statusCircle m-auto size-6 rounded-full hover:cursor-pointer" onclick="triggerEPdiv(${projeto.id})">
                         </div>
                         `;
 
                         var divEP = `<div class="flex items-center space-x-2">`;
                         data.estadoProjetos.forEach(eP => {
                             var selected = eP.id == projeto.estado_projeto.id ? 'mainSelected selectedEP' : '';
-                            divEP += `<div style="background-color: ${eP.cor} !important;" title="${eP.nome}" class="size-6 rounded-full cursor-pointer itemEP ${selected}"></div>`
+                            divEP += `
+                            <div onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${eP}" 
+                            style="background-color: ${eP.cor} !important;" title="${eP.nome}" class="size-6 rounded-full cursor-pointer itemEP ${selected}">
+                            `;
                         });
 
                         divEP += "</div>";
                         celulaEstadoProjeto.innerHTML += `
-                            <div id="divEP/${projeto.id}" class="mainDivEP bg-white items-center absolute hidden">
+                            <div id="divEP/${projeto.id}" class="mainDivEP items-center absolute hidden">
                                 <div class="relative flex flex-col items-center">
                                     <div class="triangle"></div>
-                                    <div class="p-4 relative">
-
-                                        <div class="text-center">
-                                            ${divEP}
+                                    <div class="relative">
+                                        <div class="text-center p-4" style="background-color: white !important;">
+                                            <form id="formEP/${projeto.id}" class="m-auto justify-center">
+                                                ${divEP}
+                                            </form>
                                         </div>
                                         <div class="absolute top-0 left-0 right-0 bottom-0 border border-black rounded-md pointer-events-none"></div>
 
@@ -1067,7 +1072,7 @@
                                         @foreach($tiposCliente as $tC)
                                             <option value="{{$tC->id}}" style="color:{{$tC->cor}};">{{$tC->nome}}</option>
                                         @endforeach
-                                        <option value="-1" class="font-black">Novo</option>
+                                        <option value="-1" class="text-black font-black">Novo</option>
                                     </select>
                                 </form>
                             </div>
@@ -1093,7 +1098,7 @@
                                         @foreach($tiposProjeto as $tP)
                                             <option value="{{$tP->id}}">{{$tP->nome}}</option>
                                         @endforeach
-                                        <option value="-1" class="font-black">Novo</option>
+                                        <option value="-1" class="text-black font-black">Novo</option>
                                     </select>
                                 </form>
                             </div>
@@ -1338,7 +1343,7 @@
                                         @foreach($tiposCliente as $tC)
                                             <option value="{{$tC->id}}" style="color:{{$tC->cor}};">{{$tC->nome}}</option>
                                         @endforeach
-                                        <option value="-1" class="font-black">Novo</option>
+                                        <option value="-1" class="text-black font-black">Novo</option>
                                     </select>
                                 </form>
                             </div>
@@ -1364,7 +1369,7 @@
                                         @foreach($tiposProjeto as $tP)
                                             <option value="{{$tP->id}}">{{$tP->nome}}</option>
                                         @endforeach
-                                        <option value="-1" class="font-black">Novo</option>
+                                        <option value="-1" class="text-black font-black">Novo</option>
                                     </select>
                                 </form>
                             </div>
@@ -1627,7 +1632,7 @@
                                         @foreach($tiposCliente as $tC)
                                             <option value="{{$tC->id}}" style="color:{{$tC->cor}};">{{$tC->nome}}</option>
                                         @endforeach
-                                        <option value="-1" class="font-black">Novo</option>
+                                        <option value="-1" class="text-black font-black">Novo</option>
                                     </select>
                                 </form>
                             </div>
@@ -1653,7 +1658,7 @@
                                         @foreach($tiposProjeto as $tP)
                                             <option value="{{$tP->id}}">{{$tP->nome}}</option>
                                         @endforeach
-                                        <option value="-1" class="font-black">Novo</option>
+                                        <option value="-1" class="text-black font-black">Novo</option>
                                     </select>
                                 </form>
                             </div>
@@ -1941,7 +1946,6 @@
 
     function addNewColaboradorField(id){
         var colaboradorCell = document.getElementById("colaboradorCell/" + id);
-        console.log('newColaboradorForm/' + id);
         document.getElementById('newColaboradorForm/' + id).classList.remove('hidden');
     }
 
