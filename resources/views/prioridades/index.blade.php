@@ -714,19 +714,19 @@
                         var divEP = `<div class="flex items-center space-x-2">`;
                         
                         divEP += `
-                        <div onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[3]}" 
+                        <button onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[3].id}" 
                         style="background-color: ${data.estadoProjetos[3].cor} !important;" title="${data.estadoProjetos[3].nome}" class="size-6 rounded-full cursor-pointer itemEP">
-                        </div>`
+                        </button>`
 
                         divEP +=
-                        `<div onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[4]}" 
+                        `<button onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[4].id}" 
                         style="background-color: ${data.estadoProjetos[4].cor} !important;" title="${data.estadoProjetos[4].nome}" class="size-6 rounded-full cursor-pointer itemEP">
-                        </div>`
+                        </button>`
                         
                         divEP +=
-                        `<div onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[2]}" 
+                        `<button onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[2].id}" 
                         style="background-color: ${data.estadoProjetos[2].cor} !important;" title="${data.estadoProjetos[2].nome}" class="size-6 rounded-full cursor-pointer itemEP">
-                        </div>
+                        </button>
                         `;
 
                         divEP += "</div>";
@@ -736,7 +736,10 @@
                                     <div class="triangle"></div>
                                     <div class="relative">
                                         <div class="text-center p-4" style="background-color: white !important;">
-                                            <form id="formEP/${projeto.id}" class="m-auto justify-center">
+                                            <form id="formEP/${projeto.id}" action="/projetos/${projeto.id}/updateEstadoProjeto" method="POST" class="m-auto justify-center">
+                                            @csrf
+                                            @method('PUT')
+                                                <input type="hidden" name="user" value="${userProjeto.id}">
                                                 ${divEP}
                                             </form>
                                         </div>

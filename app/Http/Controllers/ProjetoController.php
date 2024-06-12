@@ -309,4 +309,14 @@ class ProjetoController extends Controller
         return redirect(route('prioridades.index', $user->id));
     }
 
+    public function updateEstadoProjeto(Request $request, Projeto $projeto){
+        $newId = $request['secondaryStatus'];
+        if($newId == 5){
+            return redirect()->back();
+        }
+        $projeto->estado_secundario_id = $newId;
+        $projeto->update();
+        return redirect()->back();
+    }
+
 }
