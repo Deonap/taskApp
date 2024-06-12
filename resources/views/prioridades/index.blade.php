@@ -5,15 +5,17 @@
                 background-color: rgb(10,56,87);
                 /* Change this to your desired color when toggle is active */
             }
+
             #toggleFerias:checked+.toggle-line+.toggle-dot {
                 transform: translateX(100%);
             }
-            .toggle-line,
-            .toggle-dot {
+
+            .toggle-line, .toggle-dot {
                 transition-duration: 1s;
                 /* Adjust the duration as needed */
             }
-            th{
+
+            th {
                 /* px-3 py-1 text-left font-bold text-black uppercase tracking-wider border-b */
                 padding-left: 0.75rem;
                 padding-right: 0.75rem;
@@ -26,32 +28,40 @@
                 border-bottom-width: 1px;
                 font-size: 14px;
             }
+            
             td {
                 font-size: 14px;
                 text-align: left;
                 border-width: 1px;
             }
-            textarea{
+            
+            textarea {
                 font-size:14px !important;
             }
-            .disabledTable *{
+            
+            .disabledTable * {
                 pointer-events: none;
                 background-color: rgb(207 207 207);
             }
+            
             .chosenDraggable * {
                 opacity: 1;
             }
+            
             .hoveredTableRow *:not(.mainDivEP *):not(.statusCircle){
                 background-color: rgb(207 207 207);
             }
+            
             table {
                 width:100%;
                 table-layout: fixed;
             }
+            
             .collapsible-content {
                 transition: height 0.3s ease-in;
                 overflow: hidden;
             }
+            
             .plusIcon, .minusIcon {
                 display: inline-block;
                 width: 24px;
@@ -60,6 +70,7 @@
                 background-size: 50% 2px, 2px 50%;
                 background-repeat: no-repeat;
             }
+            
             .plusIcon {
                 background-image: 
                     linear-gradient(to right, #fff 0%, #fff 100%), linear-gradient(to bottom, #fff 0%, #fff 100%);
@@ -68,15 +79,15 @@
             .minusIcon {
                 background-image: linear-gradient(to right, #fff 0%, #fff 100%);
             }
+            
             .itemEP {
                 transition: border 0.2s ease;
             }
 
-            .itemEP:hover, .selectedEP {
+            .itemEP:hover {
                 border: 3px solid darkblue; /* Add border on hover */
             }
             
-
             .triangle {
                 width: 0;
                 height: 0;
@@ -298,55 +309,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- tabela projetos concluidos --}}
-                    <div class="mb-8">
-                        <div class="hidden xl:block">
-                            <div class="flex items-center text-white mb-4" style="width: 100%;">
-                                <div class="flex-none text-white bg-[rgb(122,166,77)]" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
-                                    <h3 class="text-lg font-semibold">Projetos Concluídos</h3>
-                                    <div id="toggleConcluidos" class="text-right collapseIcon minusIcon hover:cursor-pointer">
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="tabelaProjetosConcluidos" class="collapsible-content">
-                                <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-[#d5d4d5]">
-                                        <tr>
-                                            <th scope="col" class="w-[3.8%] opacity-0 hover:cursor-default">
-                                                Nº
-                                            </th>
-                                            <th scope="col" class="w-[11.5%]">
-                                                Cliente
-                                            </th>
-                                            <th scope="col" class="w-[11.5%]">
-                                                Tipo
-                                            </th>
-                                            <th scope="col" class="w-[11.5%]">
-                                                Projeto
-                                            </th>
-                                            <th scope="col" class="w-[19%] border-r-4 border-r-[#A3A2A3]">
-                                                Prioridade
-                                            </th>
-                                            <th scope="col" class="w-[19%]">
-                                                Colaboradores
-                                            </th>
-                                            <th scope="col" class="w-[7.9%] text-center">
-                                                Tempo
-                                            </th>
-                                            <th scope="col" class="w-[8.4%] text-center">
-                                                Estado
-                                            </th>
-                                            <th scope="col" class="w-[7.4%] text-center">
-                                                Ações
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                     {{-- tabela projetos com outros colaboradores --}}
                     <div class="mb-8">
                         <div class="hidden xl:block">
@@ -426,7 +388,6 @@
 <script>
     const tabelaAbertos = document.querySelector('#tabelaProjetosAbertos table');
     const tabelaPendentes = document.querySelector('#tabelaProjetosPendentes table');
-    const tabelaConcluidos = document.querySelector('#tabelaProjetosConcluidos table');
     const tabelaOutrosColabs = document.querySelector('#tabelaProjetosOutrosColaboradores table');
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -450,9 +411,6 @@
         const togglePendentes = document.getElementById('togglePendentes');
         const divProjetosPendentes = document.getElementById('tabelaProjetosPendentes');
         // ------------------------------------------------ //
-        const toggleConcluidos = document.getElementById('toggleConcluidos');
-        const divProjetosConcluidos = document.getElementById('tabelaProjetosConcluidos');
-        // ------------------------------------------------ //
         const toggleOutrosColabs = document.getElementById('toggleOutrosColabs');
         const divProjetosOutrosColaboradores = document.getElementById('tabelaProjetosOutrosColaboradores');
         // ------------------------------------------------ //
@@ -467,14 +425,6 @@
            togglePendentes.classList.toggle('plusIcon');
            togglePendentes.classList.toggle('minusIcon');
         });
-
-        // ------------------------------------------------ //
-        toggleConcluidos.addEventListener('click', function(){
-            handleTableCollapse(divProjetosConcluidos);
-            toggleConcluidos.classList.toggle('plusIcon');
-            toggleConcluidos.classList.toggle('minusIcon');
-        });
-
         //------------------------------------------------ //
         toggleOutrosColabs.addEventListener('click', function(){
             handleTableCollapse(divProjetosOutrosColaboradores);
@@ -503,7 +453,7 @@
             });
         }
     }
-    // atualizar altura de tabela quando conteúdo mudo
+    // atualizar altura de tabela quando conteúdo muda
     function updateTableHeight(table) {
         if (!table.classList.contains('hidden')) {
             table.style.height = 0 + 'px';
@@ -522,7 +472,6 @@
         if (contentChanged) {
             updateTableHeight(tabelaAbertos);
             updateTableHeight(tabelaPendentes);
-            updateTableHeight(tabelaConcluidos);
             updateTableHeight(tabelaOutrosColabs);
         }
     });
@@ -546,7 +495,6 @@
         });
     }
     
-
     function handlePageReload(userProjeto) {
         const toggleFerias = document.getElementById('toggleFerias');
         const tabelaProjetosAbertosTbody = document.querySelector('#tabelaProjetosAbertos tbody');
@@ -576,31 +524,6 @@
             parent.onchange();
         }
     }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        setTimeout(() => {
-            var itemsEP = document.getElementsByClassName('itemEP');
-            console.log(itemsEP.length);
-            for(var i = 0; i < itemsEP.length; i++){
-                item = itemsEP[i];
-                item.addEventListener('mouseover', function(event) {
-                    for(var u = 0; u < itemsEP.length; u++){
-                        itemsEP[u].classList.remove('selectedEP');
-                    }
-                    this.classList.add('selectedEP');
-                });
-                
-                item.addEventListener('mouseout', function() {
-                    this.classList.remove('selectedEP');
-                    for(var u = 0; u < itemsEP.length; u++){
-                        if(itemsEP[u].classList.contains('mainSelected')){
-                            itemsEP[u].classList.add('selectedEP');
-                        }
-                    }
-                });
-            }
-        }, 500);
-    });
 
     function triggerEPdiv(id){
         var tempID = 'divEP/' + id;
@@ -774,43 +697,37 @@
                         var celulaEstadoProjeto = linha.insertCell(7);
                         celulaEstadoProjeto.classList.add(...tdClassList);
                         
-                        var tempoGastoMins = 0;
-                        projeto.users.forEach(user => {
-                            var tempoGasto = user.pivot.tempo_gasto.split(":");
-                            var tempoGastoP1 = parseInt(tempoGasto[0]);
-                            var tempoGastoP2 = parseInt(tempoGasto[1]);
-                            tempoGastoMins += tempoGastoP1 * 60 + tempoGastoP2;
+                        
+                        var bgColor = '';
+                        var title = '';
+                        data.estadoProjetos.forEach(eP => {
+                            if(eP.id == projeto.estado_secundario_id){
+                                bgColor = eP.cor;
+                                title = eP.nome;
+                            }
                         });
-
-                        var tempoPrevisto = projeto.tempo_previsto.split(":");
-                        var tempoPrevistoP1 = parseInt(tempoPrevisto[0]);
-                        var tempoPrevistoP2 = parseInt(tempoPrevisto[1]);
-
-                        var tempoPrevistoMinutes = tempoPrevistoP1 * 60 + tempoPrevistoP2;
-
-                        var bgColor;
-                        if (tempoGastoMins < tempoPrevistoMinutes) {
-                            bgColor = 'bg-greenStatus';
-                        } else if (tempoGastoMins === tempoPrevistoMinutes) {
-                            bgColor = 'bg-blueStatus';
-                        } else {
-                            bgColor = 'bg-redStatus';
-                        }
-                    
                         celulaEstadoProjeto.innerHTML = `
-                        <div class="${bgColor} statusCircle m-auto size-6 rounded-full hover:cursor-pointer" onclick="triggerEPdiv(${projeto.id})">
+                        <div style="background-color: ${bgColor};" title="${title}" class="statusCircle m-auto size-6 rounded-full hover:cursor-pointer" onclick="triggerEPdiv(${projeto.id})">
                         </div>
                         `;
-
+                        
                         var divEP = `<div class="flex items-center space-x-2">`;
-                        data.estadoProjetos.forEach(eP => {
-                            var selected = eP.id == projeto.estado_projeto.id ? 'mainSelected selectedEP' : '';
-                            divEP += `
-                            <div onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${eP}" 
-                            style="background-color: ${eP.cor} !important;" title="${eP.nome}" class="size-6 rounded-full cursor-pointer itemEP ${selected}">
-                            </div>
-                            `;
-                        });
+                        
+                        divEP += `
+                        <div onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[3]}" 
+                        style="background-color: ${data.estadoProjetos[3].cor} !important;" title="${data.estadoProjetos[3].nome}" class="size-6 rounded-full cursor-pointer itemEP">
+                        </div>`
+
+                        divEP +=
+                        `<div onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[4]}" 
+                        style="background-color: ${data.estadoProjetos[4].cor} !important;" title="${data.estadoProjetos[4].nome}" class="size-6 rounded-full cursor-pointer itemEP">
+                        </div>`
+                        
+                        divEP +=
+                        `<div onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[2]}" 
+                        style="background-color: ${data.estadoProjetos[2].cor} !important;" title="${data.estadoProjetos[2].nome}" class="size-6 rounded-full cursor-pointer itemEP">
+                        </div>
+                        `;
 
                         divEP += "</div>";
                         celulaEstadoProjeto.innerHTML += `
@@ -1272,299 +1189,6 @@
             });
     }
 
-    function atualizarTabelaProjetosConcluidos(userId){
-
-        var tdClassList = ['py-3', 'border', 'border-b'];
-
-        fetch('/filtrar/projetosConcluidos?colaborador_id=' + userId)
-            .then(response => response.json())
-            .then(data => {
-                var tbodyConcluidos = document.querySelector('#tabelaProjetosConcluidos tbody');
-
-                
-                tbodyConcluidos.innerHTML = '';
-
-                data.projetos.forEach((projeto) => {
-                    // Para separação do design para computador / mobile
-                    if(true){
-                        var linha = tbodyConcluidos.insertRow();
-
-                        handleTableRowHovering(linha, tabelaOutrosColabs);
-
-                        var userProjeto = projeto.users.find(user => user.id === parseInt(userId));
-                        linha.setAttribute('data-id', projeto.id);
-                        linha.classList.add('border-b'); // Adiciona borda à linha
-
-                        handlePageReload(userProjeto);
-
-                        var celulas = [];
-
-                        for (let i = 0; i < 9; i++) {
-                            celulas[i] = linha.insertCell(i);
-                            celulas[i].classList.add(...tdClassList);
-                        }
-                        celulas[0].classList.add('border-r-0');
-                        
-                        celulas[1].innerHTML = `
-                        <div class="flex items-end">
-                            <div>
-                                <form action="/projetos/${projeto.id}/cliente/atualizar" method="POST" class="my-0 py-0">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="origin" value="prioridades">
-                                    <input type="hidden" name="user" value="${userProjeto.id}">
-                                    <select name="novoCliente" id="novoCliente/${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
-                                        @foreach($clientes as $cliente)
-                                            <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
-                                        @endforeach
-                                    </select>
-                                </form>
-                            </div>
-                        </div>
-                        `;
-
-                        celulas[1].classList.add('border-l-0');
-
-                        celulas[2].innerHTML = `
-                        <div class="flex items-end">
-                            <div>
-                                <form action="{{route('projetos.tipoCliente.create')}}" id="formNovoTipoCliente/${projeto.id}" class="my-0 py-0 hidden">
-                                    @csrf
-                                    @method('POST')
-                                    <input type="hidden" name="origin" value="prioridades">
-                                    <input type="hidden" name="user" value="${userProjeto.id}">
-                                    <input type="text" name="nome" id="newTipoClienteInput/${projeto.id}" class="w-[150px] mx-1" onchange="${this.submit}">
-                                </form>
-                                <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/${projeto.id}" method="POST" class="my-0 py-0">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="origin" value="prioridades">
-                                    <input type="hidden" name="user" value="${userProjeto.id}">
-                                    <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
-                                        @foreach($tiposCliente as $tC)
-                                            <option value="{{$tC->id}}" style="color:{{$tC->cor}};">{{$tC->nome}}</option>
-                                        @endforeach
-                                        <option value="-1" class="text-black font-black">Novo</option>
-                                    </select>
-                                </form>
-                            </div>
-                        </div>
-                        `;
-
-                        celulas[3].innerHTML = `
-                        <div class="flex items-end">
-                            <div>
-                                <form action="{{route('projetos.tipoProjeto.create')}}" id="formNovoTipoProjeto/${projeto.id}" class="my-0 py-0 hidden">
-                                    @csrf
-                                    @method('POST')
-                                    <input type="hidden" name="origin" value="prioridades">
-                                    <input type="hidden" name="user" value="${userProjeto.id}">
-                                    <input type="text" name="nome" id="newTipoProjetoInput/${projeto.id}" class="w-[140px] mx-1" onchange="${this.submit}">
-                                </form>
-                                <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/${projeto.id}" method="POST" class="my-0 py-0">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="origin" value="prioridades">
-                                    <input type="hidden" name="user" value="${userProjeto.id}">
-                                    <select name="novoTipoProjeto" id="novoTipoProjeto/${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
-                                        @foreach($tiposProjeto as $tP)
-                                            <option value="{{$tP->id}}">{{$tP->nome}}</option>
-                                        @endforeach
-                                        <option value="-1" class="text-black font-black">Novo</option>
-                                    </select>
-                                </form>
-                            </div>
-                        </div>
-                        `;
-
-                        var tarefas = projeto.tarefas.map(tarefa => `<p class="px-2 break-words">${tarefa.descricao}</p>`).join("");
-                        celulas[4].classList.add(...tdClassList, 'border-r-4', 'border-r-[#A3A2A3]');
-                        celulas[4].innerHTML = "<div>" + tarefas + "</div>";
-
-                        var disabled = projeto.users.length == data.colaboradores.length ? "disabled" : "";
-                        var selectColabs = `
-                        <div class="flex items-end">
-                            <div id="colaboradorCell/:id" class="colaboradorCell">`;
-                        projeto.users.forEach(u => {
-                            selectColabs += `    
-                                <form action="{{ route('projetos.colaboradores.atualizar', ':id') }}" method="POST" class="my-0 py-0" >
-                                @csrf
-                                @method('PUT')
-                                    <input type="hidden" name="origin" value="prioridades">
-                                    <input type="hidden" name="user" value="${userProjeto.id}">
-                                    <div class="flex items-center p-1">
-                                        <select name="novoColaborador" id=:id onchange="this.form.submit()" class="w-full pl-2 pr-8 border-none focus:border-none" :disabled>
-                                `;
-
-                                data.colaboradores.forEach(c => {
-                                    var userIsColaborator = projeto.users.some(user => user.id === c.id);
-                                    var isSelected = u.id === c.id;
-
-                                    if (!userIsColaborator || isSelected) {
-                                        selectColabs += `
-                                            <option value='${c.id}/${u.id}' class="w-full" ${isSelected ? ' selected' : ''}>
-                                                ${c.name}
-                                            </option>`;
-                                    }
-                                });
-
-                                selectColabs += `
-                                        </select>
-                                    </div>
-                                </form>`;
-                        });
-
-                        selectColabs += `
-                                <form action="{{ route('projetos.colaboradores.adicionar', ':id') }}" id="newColaboradorForm/:id" method="POST" class="hidden my-0 py-0">
-                                @csrf
-                                    <input type="hidden" name="origin" value="prioridades">
-                                    <input type="hidden" name="user" value="${userId}">
-                                    <div class="flex items-center border-t border-gray-400 p-1">
-                                        <select name="novoColaboradorId" id=":id" onchange="this.form.submit()" class="w-full pl-2 pr-10 border-none focus:border-none">
-                                            <option disabled selected>...</option>`;
-                                            data.colaboradores.forEach(c => {
-                                                if(!projeto.users.some(user => user.id === c.id)){
-                                                    selectColabs += `
-                                                    <option value="${c.id}" class="w-full">
-                                                        ${c.name}
-                                                    </option>`;
-                                                }
-                                            });
-
-                        selectColabs += `
-                                        </select>
-                                    </div>
-                                </form>`;
-
-                        selectColabs += `
-                            </div>
-                            <div class="my-0 mx-3 :hidden">
-                                <button id=:id class="btn-adicionar-colaborador" onclick="addNewColaboradorField(:id)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
-                                    </svg>                                                                      
-                                </button>
-                            </div>
-                        </div>
-                        `;
-
-                        selectColabs = selectColabs.replaceAll(':id', projeto.id);
-                        selectColabs = selectColabs.replaceAll(':disabled', disabled);
-                        selectColabs = selectColabs.replaceAll(':hidden', projeto.users.length == data.colaboradores.length ? 'hidden' : '');
-                        celulas[5].innerHTML = selectColabs;
-
-                        var tempoCum = 0;
-                        projeto.users.forEach(u => {
-                            data.colaboradores.forEach(c => {
-                                if(c.id == u.id){
-                                    var t = u.pivot.tempo_gasto;
-                                    if (t) {
-                                        var HHmm = t.split(":");
-                                        var h = parseInt(HHmm[0], 10);
-                                        var m = parseInt(HHmm[1], 10);
-
-                                        tempoCum += h * 60 + m;
-                                    }
-                                }
-                            })
-                        })
-                        
-                        var h = Math.floor(tempoCum/60);
-                        var m = tempoCum % 60;
-
-                        var hh = h.toString().padStart(2, '0');
-                        var mm = m.toString().padStart(2, '0');
-
-                        tempoCum = `${hh}:${mm}`;
-
-                        celulas[6].classList.add('border-l-0');
-                        celulas[6].innerHTML = `
-                        <div class="m-auto text-center">
-                            ${tempoCum}
-                        </div>
-                        `;
-
-                        var celulaEstadoProjeto = celulas[7];
-                        var tempoGastoMins = 0;
-                        projeto.users.forEach(user => {
-                            var tempoGasto = user.pivot.tempo_gasto.split(":");
-                            var tempoGastoP1 = parseInt(tempoGasto[0]);
-                            var tempoGastoP2 = parseInt(tempoGasto[1]);
-                            tempoGastoMins += tempoGastoP1 * 60 + tempoGastoP2;
-                        });
-
-                        var tempoPrevisto = projeto.tempo_previsto.split(":");
-                        var tempoPrevistoP1 = parseInt(tempoPrevisto[0]);
-                        var tempoPrevistoP2 = parseInt(tempoPrevisto[1]);
-
-                        var tempoPrevistoMinutes = tempoPrevistoP1 * 60 + tempoPrevistoP2;
-
-                        var bgColor;
-                        if (tempoGastoMins < tempoPrevistoMinutes) {
-                            bgColor = 'bg-greenStatus';
-                        } else if (tempoGastoMins === tempoPrevistoMinutes) {
-                            bgColor = 'bg-blueStatus';
-                        } else {
-                            bgColor = 'bg-redStatus';
-                        }
-                        celulaEstadoProjeto.innerHTML =
-                            `<div class="${bgColor} m-auto size-6 rounded-full">
-                            </div>`;
-                            
-                        var celulaAcoes = celulas[8];
-                        celulaAcoes.innerHTML = `
-                        <div class="flex justify-center items-center space-x-4">
-                            <a href="/projetos/${projeto.id}/edit">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-darkBlue hover:text-blue-700">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                </svg>
-                            </a>
-                            <form action="/projetos/${projeto.id}/destroy" method="POST" class="m-0">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" {{$hasPermissions ? "" : "disabled"}} class="disabled:hover:cursor-not-allowed">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-red-700 hover:text-red-500 {{$hasPermissions ? "" : "hover:text-red-700"}}">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                    </svg>
-                                </button>
-                            </form>
-                        </div>
-                        `;
-
-                        var select = document.querySelector(`#novoCliente\\/${projeto.id}`);
-                        var options = select.options;
-                        for (var i = 0; i < options.length; i++) {
-                            if (options[i].text === projeto.cliente.nome) {
-                                options[i].selected = true;
-                                break;
-                            }
-                        }
-
-                        var select = document.querySelector(`#novoTipoCliente\\/${projeto.id}`);
-                        var options = select.options;
-
-                        for (var i = 0; i < options.length; i++) {
-                            if (options[i].text === projeto.tipo_cliente.nome) {
-                                select.style.color = projeto.tipo_cliente.cor;
-                                options[i].selected = true;
-                                break;
-                            }
-                        }
-
-                        var select = document.querySelector(`#novoTipoProjeto\\/${projeto.id}`);
-                        var options = select.options;
-                        for (var i = 0; i < options.length; i++) {
-                            if (options[i].text === projeto.tipo_projeto.nome) {
-                                options[i].selected = true;
-                                break;
-                            }
-                        }
-                    }
-                    
-                });
-            });
-    }
-
     function atualizarTabelaProjetosComOutrosColaboradores(userId) {
         fetch('/filtrar/projetos-outros-colaboradores/' + userId)
             .then(response => response.json())
@@ -1940,7 +1564,6 @@
         atualizarTabelaProjetosEmAberto(userId);
         atualizarTabelaProjetosPendentes(userId);
         atualizarTabelaProjetosComOutrosColaboradores(userId);
-        atualizarTabelaProjetosConcluidos(userId);
     }
 
     var colaboradorCell = document.getElementsByClassName("colaboradorCell");
@@ -2168,46 +1791,6 @@
                     });
             }
         });
-
-        var el5 = document.getElementById('tabelaProjetosConcluidos').getElementsByTagName('tbody')[0];
-        var sortable = new Sortable(el5, {
-            chosenClass: 'chosenDraggable',
-            group: 'shared',
-            sort: false,
-            ghostClass: 'bg-gray-300',
-            animation: 150,
-            onAdd: function(evt){
-                var item = evt.item;
-                var projetosData = [];
-                var userId = document.getElementById('colaborador').value; // Obtém o user_id do dropdown de colaboradores
-
-                projetosData.push({
-                    id: item.getAttribute('data-id'),
-                    user_id: userId,
-                    estado: 5
-                });
-                // Enviar a nova ordem para o servidor
-                fetch('/atualizar/estadoProjeto', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({ projetos: projetosData })
-                }).then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok: ' + response.statusText);
-                        }
-                        return response.json();
-                    }).then(data => {
-                        console.log('Estado do projeto atualizado com sucesso:', data);
-                        atualizarTabelas(userId); // Atualiza a tabela com o usuário atual
-                    }).catch(error => {
-                        console.error('Erro a mudar estado do projeto:', error);
-                    });
-                }
-        });
-
     });
 
     document.getElementById('btnGuardar').addEventListener('click', function () {

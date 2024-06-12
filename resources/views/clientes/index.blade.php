@@ -48,7 +48,7 @@
                             <input id='searchFilter' type="text" placeholder="Pesquisar..." class="rounded-md border-gray-300 focus:border-darkBlue h-[40px]"/>
                         </div>
                         <div>
-                            <button href="{{ route('clientes.create') }}" class="bg-darkBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
+                            <button id="btnAdicionarLinha" class="bg-darkBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
                                 Adicionar
                             </button>
                         </div>
@@ -147,6 +147,27 @@
                                     </td>
                                 </tr>
                             @endforeach
+                            <tr class="" id="newClientRow">
+                                <form method="POST" action="{{ route('clientes.store') }}" autocomplete="off">
+                                @csrf
+                                    <td>
+                                        <div class="p-2">
+                                            <input name="nome" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                        </div>
+                                    </td>
+                                    <td class="hidden lg:table-cell">
+                                        
+                                        <input name="email" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                        
+                                    </td>
+                                    <td class="hidden lg:table-cell"> 
+                                        <input name="telefone" value='{{ $cliente->telefone }}' class="border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                    </td>
+                                    <td class="flex justify-end pr-[3rem]">
+                                        <button type="submit" onclick="this.form.submit()" class="font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">Adicionar</button>
+                                    </td>
+                                </form>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -155,8 +176,6 @@
     </body>
 </html>
 <script>
-
-
     document.addEventListener("DOMContentLoaded", function () {
         const filterInput = document.getElementById("searchFilter");
         const tableRows = document.querySelectorAll("#clientTable tbody tr");
@@ -175,7 +194,11 @@
             });
         });
     });
-    
+
+    document.getElementById('btnAdicionarLinha').addEventListener('click', () => {
+        document.getElementById('newClientRow').classList.remove("hidden");
+    })
+
     function sortByName(){
         var defaultSort = document.getElementById('sortByDefault');
         var asc = document.getElementById('sortByNameAsc');

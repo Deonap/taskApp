@@ -101,7 +101,7 @@
                         @endforeach
                         <tr class="hidden" id="newStateRow">
                             <form method="POST" action="{{ route('estado-projetos.store') }}" autocomplete="off">
-                                @csrf
+                            @csrf
                                 <td>
                                     <input name="nome" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
                                 </td>
