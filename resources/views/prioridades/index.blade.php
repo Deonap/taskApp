@@ -808,6 +808,7 @@
                             divEP += `
                             <div onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${eP}" 
                             style="background-color: ${eP.cor} !important;" title="${eP.nome}" class="size-6 rounded-full cursor-pointer itemEP ${selected}">
+                            </div>
                             `;
                         });
 
