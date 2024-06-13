@@ -227,55 +227,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- tabela projetos concluidos --}}
-                    <div class="mb-8">
-                        <div class="hidden xl:block">
-                            <div class="flex items-center text-white mb-4" style="width: 100%;">
-                                <div class="flex-none text-white bg-[rgb(122,166,77)]" style="width: 70%; height: 40px; padding: 1rem; border-radius: 0.2rem; display: flex; justify-content: space-between; align-items: center;">
-                                    <h3 class="text-lg font-semibold">Projetos Concluídos</h3>
-                                    <div id="toggleConcluidos" class="text-right collapseIcon minusIcon hover:cursor-pointer">
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="tabelaProjetosConcluidos" class="collapsible-content">
-                                <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-[#d5d4d5]">
-                                        <tr>
-                                            <th scope="col" class="w-[3.8%] opacity-0 hover:cursor-default">
-                                                Nº
-                                            </th>
-                                            <th scope="col" class="w-[11.5%]">
-                                                Cliente
-                                            </th>
-                                            <th scope="col" class="w-[11.5%]">
-                                                Tipo
-                                            </th>
-                                            <th scope="col" class="w-[11.5%]">
-                                                Projeto
-                                            </th>
-                                            <th scope="col" class="w-[19%] border-r-4 border-r-[#A3A2A3]">
-                                                Prioridade
-                                            </th>
-                                            <th scope="col" class="w-[19%]">
-                                                Colaboradores
-                                            </th>
-                                            <th scope="col" class="w-[7.9%] text-center">
-                                                Tempo
-                                            </th>
-                                            <th scope="col" class="w-[8.4%] text-center">
-                                                Estado
-                                            </th>
-                                            <th scope="col" class="w-[7.4%] opacity-0 hover:cursor-default">
-                                                Ações
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                     {{-- tabela projetos com outros colaboradores --}}
                     <div class="mb-8">
                         <div class="hidden xl:block">
@@ -349,7 +300,6 @@
 <script>
     const tabelaAbertos = document.querySelector('#tabelaProjetosAbertos table');
     const tabelaPendentes = document.querySelector('#tabelaProjetosPendentes table');
-    const tabelaConcluidos = document.querySelector('#tabelaProjetosConcluidos table');
     const tabelaOutrosColabs = document.querySelector('#tabelaProjetosOutrosColaboradores table');
 
     // handle table collapsing
@@ -360,8 +310,6 @@
         const togglePendentes = document.getElementById('togglePendentes');
         const divProjetosPendentes = document.getElementById('tabelaProjetosPendentes');
         // ------------------------------------------------ //
-        const toggleConcluidos = document.getElementById('toggleConcluidos');
-        const divProjetosConcluidos = document.getElementById('tabelaProjetosConcluidos');
         // ------------------------------------------------ //
         const toggleOutrosColabs = document.getElementById('toggleOutrosColabs');
         const divProjetosOutrosColaboradores = document.getElementById('tabelaProjetosOutrosColaboradores');
@@ -377,14 +325,6 @@
            togglePendentes.classList.toggle('plusIcon');
            togglePendentes.classList.toggle('minusIcon');
         });
-
-        // ------------------------------------------------ //
-        toggleConcluidos.addEventListener('click', function(){
-            handleTableCollapse(divProjetosConcluidos);
-            toggleConcluidos.classList.toggle('plusIcon');
-            toggleConcluidos.classList.toggle('minusIcon');
-        });
-
         //------------------------------------------------ //
         toggleOutrosColabs.addEventListener('click', function(){
             handleTableCollapse(divProjetosOutrosColaboradores);
@@ -432,7 +372,6 @@
         if (contentChanged) {
             updateTableHeight(tabelaAbertos);
             updateTableHeight(tabelaPendentes);
-            updateTableHeight(tabelaConcluidos);
             updateTableHeight(tabelaOutrosColabs);
         }
     });
@@ -489,17 +428,6 @@
             }
             atualizarTabelaProjetosPendentes(data);
         }).catch(error => console.error('Erro ao buscar projetos pendentes:', error));
-
-        // Fetch para projetos concluidos
-        fetch(`/api/historico/projetos-concluidos?colaborador_id=${colaboradorId}&inicio_semana=${inicioSemanaFormatado}&fim_semana=${fimSemanaFormatado}`)
-            .then(response => response.json())
-            .then(data => {
-            // Se a resposta não for um array, converte em um array
-            if (!Array.isArray(data)) {
-                data = [data];
-            }
-            atualizarTabelaProjetosConcluidos(data);
-        }).catch(error => console.error('Erro ao buscar projetos concluidos:', error));
 
         // Fetch para projetos com outros colaboradores
         fetch(`/api/historico/projetos-com-outros?colaborador_id=${colaboradorId}&inicio_semana=${inicioSemanaFormatado}&fim_semana=${fimSemanaFormatado}`)
@@ -1006,265 +934,6 @@
             }
         });
     }
-
-    function atualizarTabelaProjetosConcluidos(projetos){
-        var tbody = document.querySelector('#tabelaProjetosConcluidos tbody');
-        tbody.innerHTML = '';
-        if(!Array.isArray(projetos)) {
-            projetos = convertObjectToArray(projetos);
-        }
-        projetos.forEach(projeto => {
-            // Verifica se o projeto tem mais de um colaborador
-            if (projeto.users && projeto.users.length > 1) {
-                // Para separação do design para computador / mobile
-                if(true){
-                    var linha = tbody.insertRow();
-
-                    for (let i = 0; i < 9; i++) {
-                        var celula = linha.insertCell();
-                        celula.classList.add('py-3', 'border', 'border-b'); // Adiciona classes de estilo
-                    }
-                    linha.cells[0].classList.add('border-r-0');
-                    linha.cells[1].innerHTML = `
-                    <div class="flex items-end">
-                        <div>
-                            <form action="/projetos/${projeto.id}/cliente/atualizar" method="POST" class="my-0 py-0">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="origin" value="historico">
-                                <select name="novoCliente" id="novoCliente/colab${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
-                                    @foreach($clientes as $cliente)
-                                        <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
-                                    @endforeach
-                                </select>
-                            </form>
-                        </div>
-                    </div>
-                    `;
-                    linha.cells[1].classList.add('border-l-0');
-                    linha.cells[2].innerHTML = `
-                    <div class="flex items-end">
-                        <div>
-                            <form action="/projetos/${projeto.id}/tipoCliente/atualizar" id="formAlterarTipoCliente/colab${projeto.id}" method="POST" class="my-0 py-0">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="origin" value="historico">
-                                <select name="novoTipoCliente" id="novoTipoCliente/colab${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
-                                    @foreach($tiposCliente as $tC)
-                                        <option value="{{$tC->id}}">{{$tC->nome}}</option>
-                                    @endforeach
-                                </select>
-                            </form>
-                        </div>
-                    </div>
-                    `;
-                    linha.cells[3].innerHTML = `
-                    <div class="flex items-end">
-                        <div>
-                            <form action="/projetos/${projeto.id}/tipoProjeto/atualizar" id="formAlterarTipoProjeto/colab${projeto.id}" method="POST" class="my-0 py-0">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="origin" value="historico">
-                                <select name="novoTipoProjeto" id="novoTipoProjeto/colab${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
-                                    @foreach($tiposProjeto as $tP)
-                                        <option value="{{$tP->id}}">{{$tP->nome}}</option>
-                                    @endforeach
-                                </select>
-                            </form>
-                        </div>
-                    </div>
-                    `;
-
-                    linha.cells[4].innerHTML = '<div>' + projeto.tarefas.map(tarefa => `<p class="px-2 break-words">${tarefa.descricao}</p>`).join("") + "</div>";
-                    linha.cells[4].classList.add('border-r-4', 'border-r-[#A3A2A3]');
-
-                    // Lista os nomes dos colaboradores
-                    var colaboradores = projeto.users.map(user => `<p class="ml-2">${user.name}</p>`).join("");
-                    linha.cells[5].innerHTML = colaboradores;
-
-                    var tempoCum = 0;
-                    
-                    projeto.users.forEach(u => {
-                        var t = u.pivot.tempo_gasto;
-                        if (t) {
-                            var HHmm = t.split(":");
-                            var h = parseInt(HHmm[0], 10);
-                            var m = parseInt(HHmm[1], 10);
-
-                            tempoCum += h * 60 + m;
-                        }
-                    });
-                    
-                    var h = Math.floor(tempoCum/60);
-                    var m = tempoCum % 60;
-
-                    var hh = h.toString().padStart(2, '0');
-                    var mm = m.toString().padStart(2, '0');
-
-                    tempoCum = `${hh}:${mm}`;
-                
-                    linha.cells[6].classList.add('border-l-0');
-                    linha.cells[6].innerHTML = `
-                    <div class="m-auto text-center">
-                        ${tempoCum}
-                    </div>
-                    `;
-
-                    linha.cells[7].classList.add('border-r-0');
-                    
-                    var tempoGastoMins = 0;
-                    projeto.users.forEach(user => {
-                        var tempoGasto = user.pivot.tempo_gasto.split(":");
-                        var tempoGastoP1 = parseInt(tempoGasto[0]);
-                        var tempoGastoP2 = parseInt(tempoGasto[1]);
-                        tempoGastoMins += tempoGastoP1 * 60 + tempoGastoP2;
-                    });
-
-                    var tempoPrevisto = projeto.tempo_previsto.split(":");
-                    var tempoPrevistoP1 = parseInt(tempoPrevisto[0]);
-                    var tempoPrevistoP2 = parseInt(tempoPrevisto[1]);
-
-                    var tempoPrevistoMinutes = tempoPrevistoP1 * 60 + tempoPrevistoP2;
-
-                    var bgColor;
-                    if (tempoGastoMins < tempoPrevistoMinutes) {
-                        bgColor = 'bg-greenStatus';
-                    } else if (tempoGastoMins === tempoPrevistoMinutes) {
-                        bgColor = 'bg-blueStatus';
-                    } else {
-                        bgColor = 'bg-redStatus';
-                    }
-                    linha.cells[7].innerHTML = `
-                    <div class="${bgColor} m-auto size-7 rounded-full">
-                    </div>
-                    `;
-                    linha.cells[8].classList.add('border-l-0');
-
-                    var select = document.querySelector(`#novoCliente\\/colab${projeto.id}`);
-                    var options = select.options;
-                    for (var i = 0; i < options.length; i++) {
-                        if (options[i].text === projeto.cliente.nome) {
-                            options[i].selected = true;
-                            break;
-                        }
-                    }
-
-                    var select = document.querySelector(`#novoTipoCliente\\/colab${projeto.id}`);
-                    var options = select.options;
-                    for (var i = 0; i < options.length; i++) {
-                        if (options[i].text === projeto.tipo_cliente.nome) {
-                            options[i].selected = true;
-                            break;
-                        }
-                    }
-
-                    var select = document.querySelector(`#novoTipoProjeto\\/colab${projeto.id}`);
-                    var options = select.options;
-                    for (var i = 0; i < options.length; i++) {
-                        if (options[i].text === projeto.tipo_projeto.nome) {
-                            options[i].selected = true;
-                            break;
-                        }
-                    }
-
-                }
-                if(true){
-                        var linha1 = `
-                        <div class="mt-3 flex items-start space-x-2">
-                            <h2 class="font-semibold">
-                                Cliente: ${projeto.cliente.nome}
-                            </h2>
-                            :
-                            <h2 class="font-semibold">
-                                ${projeto.tipo_cliente.nome}
-                            </h2>
-                        </div>`
-                        ;
-
-                        var linha2 = `
-                        <div class="mt-3 flex">
-                            <h2 class="font-semibold">
-                                ${projeto.nome}
-                            </h2>
-                            <div style="background-color: ${projeto.estado_projeto.cor};" class="ml-3 size-6 rounded-full">
-                            </div>
-                        </div>
-                        `;
-
-                        var descricaoTarefas = projeto.tarefas.map(tarefa => `<div>${tarefa.descricao}</div>`).join("");
-                        var linha3 = `
-                        <div class="mt-5">
-                            <div>
-                                <a class="bg-darkBlue text-white py-2 px-4 rounded mr-4 hover:cursor-pointer" onclick="openModal('modal_${projeto.id}')">
-                                    Tarefas
-                                </a>
-                                <div id="modal_${projeto.id}" class="modal fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4 m-auto ">
-                                    <div class="relative top-40 mx-auto shadow-xl rounded-md bg-white w-fit">
-                                        <div class="flex justify-end p-2">
-                                            <button onclick="closeModal('modal_${projeto.id}')" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
-                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd">
-                                                    </path>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <div class="p-6 pt-0 text-center">
-                                            <div>
-                                                ${descricaoTarefas}
-                                            </div> 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        `;
-
-                        var nomeColaboradores = projeto.users.map(user => '<div>'+user.name+'</div>').join("");
-                        var linha4 = `
-                        <div class="mt-5 mb-4 flex items-center">
-                            <div>
-                                <a class="bg-darkBlue text-white py-2 px-4 rounded mr-4 hover:cursor-pointer" onclick="openModal('modal_${projeto.id}/colab')">
-                                    Colaboradores
-                                </a>
-                                <div id="modal_${projeto.id}/colab" class="modal fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4 m-auto ">
-                                    <div class="relative top-40 mx-auto shadow-xl rounded-md bg-white w-fit">
-                                        <div class="flex justify-end p-2">
-                                            <button onclick="closeModal('modal_${projeto.id}/colab')" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
-                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd">
-                                                    </path>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <div class="p-6 pt-0 text-center">
-                                            <div>
-                                                ${nomeColaboradores}
-                                            </div> 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        `;
-
-                        responsiveComOutros.innerHTML += `
-                        <div class="min-h-fit w-fit flex items-start shadow-lg border-4 py-4 pl-4 pr-12 responsiveElement" data-id='${projeto.id}'>
-                            <div class="w-full">
-                                ${linha1}
-                                
-                                ${linha2}
-                                
-                                ${linha3}
-
-                                ${linha4}
-                            </div>
-                        </div>
-                        `;
-                    }
-            }
-        });
-    }
-
     
     function atualizarTabelaProjetosOutrosColaboradores(projetos) {
         var tbody = document.querySelector('#tabelaProjetosOutrosColaboradores tbody');
