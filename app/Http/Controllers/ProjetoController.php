@@ -314,6 +314,8 @@ class ProjetoController extends Controller
         // dd($projeto);
         $newId = $request['secondaryStatus'];
         if($newId == 5){
+            $projeto->estado_projeto_id = 5;
+            $projeto->update();
             return redirect()->back();
         }
         $projeto->estado_secundario_id = $newId;
