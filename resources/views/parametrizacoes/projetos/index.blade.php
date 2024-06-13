@@ -65,13 +65,26 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr class="hidden" id="newTypeRow">
+                                <form method="POST" action="{{ route('tipo-projetos.store') }}" autocomplete="off">
+                                @csrf
+                                    <td>
+                                        <input name="nome" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                    </td>
+                                    <td class="flex justify-end pr-[3rem]">
+                                        <button type="submit" onclick="this.form.submit()" class="my-auto font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">
+                                            Adicionar
+                                        </button>
+                                    </td>
+                                </form>
+                            </tr>
                             @foreach ($tipos as $tipo)
                                 <tr class="border-b">
                                     <td>
                                         <form action="{{route('tipo-projetos.update', $tipo->id)}}" method="POST">
                                             @csrf
                                             @method('PUT')
-                                            <input name="nome" value='{{ $tipo->nome }}' onchange="this.form.submit()" class="border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                            <input name="nome" value="{{ $tipo->nome }}" onchange="this.form.submit()" class="w-3/4 border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
                                         </form>
                                     </td>
                                     <td>
@@ -94,19 +107,6 @@
                                     </td>
                                 </tr>
                             @endforeach
-                            <tr class="hidden" id="newTypeRow">
-                                <form method="POST" action="{{ route('tipo-projetos.store') }}" autocomplete="off">
-                                @csrf
-                                    <td>
-                                        <input name="nome" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
-                                    </td>
-                                    <td class="flex justify-end pr-[3rem]">
-                                        <button type="submit" onclick="this.form.submit()" class="my-auto font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">
-                                            Adicionar
-                                        </button>
-                                    </td>
-                                </form>
-                            </tr>
                         </tbody>
                     </table>
                 </div>

@@ -15,14 +15,6 @@
                 /* Adjust the duration as needed */
             }
 
-
-            .wrapTextSelect{
-                overflow: hidden;
-                white-space: pre;
-                text-overflow: ellipsis;
-                -webkit-appearance: none;
-            }
-
             th {
                 /* px-3 py-1 text-left font-bold text-black uppercase tracking-wider border-b */
                 padding-left: 0.75rem;

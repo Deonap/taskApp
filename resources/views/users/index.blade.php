@@ -53,6 +53,37 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr id="newUserRow" class="hidden border-b border-gray-200">
+                                <form method="POST" action="{{ route('users.store') }}" autocomplete="off">
+                                @csrf
+                                    <td>
+                                        <input name="name" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                    </td>
+                                    <td>
+                                        <input name="email" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                    </td>
+                                    <td>
+                                        <input name="password" class="bg-transparent rounded-md p-2" autocomplete="off" type="password" >
+                                    </td>
+                                    <td>
+                                        <?php 
+                                            if(!$hasPermissions){
+                                                # disabled
+                                                $status = 'enabled';
+                                            }else{
+                                                $status = 'enabled';
+                                            }
+                                        ?>
+                                        <select name="tipo" {{$status}} class="pr-10 pl-1 text-left py-1 border-none">
+                                            <option value="colaborador" {{ $user->tipo == 'colaborador' ? 'selected' : '' }}>COLAB</option>
+                                            <option value="admin" {{ $user->tipo == 'admin' ? 'selected' : '' }}>ADMIN</option>
+                                        </select>
+                                    </td>
+                                    <td class="flex justify-end pr-[3rem]">
+                                        <button type="submit" onclick="this.form.submit()" class="font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">Adicionar</button>
+                                    </td>
+                                </form>
+                            </tr>
                             @foreach($users as $user)
                             <tr class="border-b border-gray-200">
                                 <td>
@@ -112,37 +143,6 @@
                                 </td>
                             </tr>
                             @endforeach
-                            <tr id="newUserRow" class="hidden border-b border-gray-200">
-                                <form method="POST" action="{{ route('users.store') }}" autocomplete="off">
-                                @csrf
-                                    <td>
-                                        <input name="name" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
-                                    </td>
-                                    <td>
-                                        <input name="email" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
-                                    </td>
-                                    <td>
-                                        <input name="password" class="bg-transparent rounded-md p-2" autocomplete="off" type="password" >
-                                    </td>
-                                    <td>
-                                        <?php 
-                                            if(!$hasPermissions){
-                                                # disabled
-                                                $status = 'enabled';
-                                            }else{
-                                                $status = 'enabled';
-                                            }
-                                        ?>
-                                        <select name="tipo" {{$status}} class="pr-10 pl-1 text-left py-1 border-none">
-                                            <option value="colaborador" {{ $user->tipo == 'colaborador' ? 'selected' : '' }}>COLAB</option>
-                                            <option value="admin" {{ $user->tipo == 'admin' ? 'selected' : '' }}>ADMIN</option>
-                                        </select>
-                                    </td>
-                                    <td class="flex justify-end pr-[3rem]">
-                                        <button type="submit" onclick="this.form.submit()" class="font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">Adicionar</button>
-                                    </td>
-                                </form>
-                            </tr>
                         </tbody>
                     </table>
                 </div>

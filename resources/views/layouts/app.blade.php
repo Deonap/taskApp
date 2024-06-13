@@ -3,6 +3,13 @@
     html{
         overflow-y:scroll;
     }
+    .wrapTextSelect {
+        overflow: hidden;
+        white-space: pre;
+        text-overflow: ellipsis;
+        -webkit-appearance: none;
+    }
+
 </style>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>

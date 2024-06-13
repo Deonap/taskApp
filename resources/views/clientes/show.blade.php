@@ -144,7 +144,7 @@
                                                             @method('PUT')
                                                             <input type="hidden" name="origin" value="clientes">
                                                             <input type="hidden" name="window" value="projetosAbertos">
-                                                            <select name="novoTipoCliente" id="novoTipoCliente/{{$projeto->id}}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                            <select name="novoTipoCliente" id="novoTipoCliente/{{$projeto->id}}" onchange="handleTipoClienteForms(this.id)" class="wrapTextSelect w-full pl-2 pr-8 border-none focus:border-none">
                                                                 @foreach($tiposCliente as $tC)
                                                                     <option value="{{$tC->id}}" {{$tC->nome == $projeto->tipoCliente->nome ? "selected" : ""}}>{{$tC->nome}}</option>
                                                                 @endforeach
@@ -171,7 +171,7 @@
                                                             @method('PUT')
                                                             <input type="hidden" name="origin" value="clientes">
                                                             <input type="hidden" name="window" value="projetosAbertos">
-                                                            <select name="novoTipoProjeto" id="novoTipoProjeto/{{$projeto->id}}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                            <select name="novoTipoProjeto" id="novoTipoProjeto/{{$projeto->id}}" onchange="handleTipoProjetoForms(this.id)" class="wrapTextSelect w-full pl-2 pr-8 border-none focus:border-none">
                                                                 @foreach($tipoProjeto as $tP)
                                                                     <option value="{{$tP->id}}" {{$tP->nome == $projeto->tipoProjeto->nome ? "selected" : ""}}>{{$tP->nome}}</option>
                                                                 @endforeach
@@ -200,7 +200,7 @@
                                                                     <input type="hidden" name="origin" value="clientes">
                                                                     <input type="hidden" name="window" value="projetosAbertos">
                                                                     <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
-                                                                        <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" {{$projeto->users->count() == $colaboradores->count() ? 'disabled' : ''}} class="w-full pr-10 border-none focus:border-none">
+                                                                        <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" {{$projeto->users->count() == $colaboradores->count() ? 'disabled' : ''}} class="wrapTextSelect w-full pr-10 border-none focus:border-none">
                                                                             @foreach($colaboradores as $colaborador)
                                                                                 @if(!$projeto->users->contains($colaborador) || $colaborador->id == $user->id)
                                                                                     <option value="{{$colaborador->id}}/{{$user->id}}" class="w-full" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->name }}</option>        
@@ -240,7 +240,7 @@
                                                                 <input type="hidden" name="origin" value="clientes">
                                                                 <input type="hidden" name="window" value="projetosAbertos">
                                                                 <div class="flex items-center border-t border-gray-400 p-1">
-                                                                    <select name="novoColaboradorId" id="{{$projeto->id}}" onchange="this.form.submit()" class="w-full pr-10 border-none focus:border-none">
+                                                                    <select name="novoColaboradorId" id="{{$projeto->id}}" onchange="this.form.submit()" class="wrapTextSelect w-full pr-10 border-none focus:border-none">
                                                                         <option disabled selected>...</option>
                                                                         @foreach($colaboradores as $colaborador)
                                                                             @if(!$projeto->users->contains($colaborador))
@@ -310,7 +310,7 @@
                                             <td>
                                                 <div class="flex items-end">
                                                     <div>
-                                                        <select name="tipo_cliente_id" class="w-fit pl-2 pr-8 py-2">
+                                                        <select name="tipo_cliente_id" class="wrapTextSelect w-full pl-2 pr-8 py-2">
                                                             <option selected disabled>...</option>
                                                             @foreach($tiposCliente as $tC)
                                                                 <option value="{{$tC->id}}">{{$tC->nome}}</option>
@@ -322,7 +322,7 @@
                                             <td>
                                                 <div class="flex items-end">
                                                     <div>
-                                                        <select name="tipo_projeto_id" class="w-fit pl-2 pr-8 py-2">
+                                                        <select name="tipo_projeto_id" class="wrapTextSelect w-full pl-2 pr-8 py-2">
                                                             <option selected disabled>...</option>
                                                             @foreach($tipoProjeto as $tP)
                                                                 <option value={{$tP->id}}>{{$tP->nome}}</option>
@@ -345,7 +345,7 @@
                                                 <div class="flex items-end">
                                                     <div>
                                                         <div class="flex items-center p-1">
-                                                            <select name="users[]" class="w-fit pl-2 pr-8 py-2">
+                                                            <select name="users[]" class="wrapTextSelect w-full pl-2 pr-8 py-2">
                                                                 <option selected disabled value="">...</option>
                                                                 @foreach($colaboradores as $colaborador)
                                                                     <option value="{{$colaborador->id}}" class="w-fit">{{$colaborador->name}}</option>        
@@ -506,7 +506,7 @@
                                                             @method('PUT')
                                                             <input type="hidden" name="origin" value="clientes">
                                                             <input type="hidden" name="window" value="projetosConcluidos">
-                                                            <select name="novoTipoCliente" id="novoTipoCliente/{{$projeto->id}}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                            <select name="novoTipoCliente" id="novoTipoCliente/{{$projeto->id}}" onchange="handleTipoClienteForms(this.id)" class="wrapTextSelect w-full pl-2 pr-8 border-none focus:border-none">
                                                                 @foreach($tiposCliente as $tC)
                                                                     <option value="{{$tC->id}}" {{$tC->nome == $projeto->tipoCliente->nome ? "selected" : ""}}>{{$tC->nome}}</option>
                                                                 @endforeach
@@ -532,7 +532,7 @@
                                                             @method('PUT')
                                                             <input type="hidden" name="origin" value="clientes">
                                                             <input type="hidden" name="window" value="projetosConcluidos">
-                                                            <select name="novoTipoProjeto" id="novoTipoProjeto/{{$projeto->id}}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                                            <select name="novoTipoProjeto" id="novoTipoProjeto/{{$projeto->id}}" onchange="handleTipoProjetoForms(this.id)" class="wrapTextSelect w-full pl-2 pr-8 border-none focus:border-none">
                                                                 @foreach($tipoProjeto as $tP)
                                                                     <option value="{{$tP->id}}" {{$tP->nome == $projeto->tipoProjeto->nome ? "selected" : ""}}>{{$tP->nome}}</option>
                                                                 @endforeach
@@ -559,7 +559,7 @@
                                                                     <input type="hidden" name="origin" value="clientes">
                                                                     <input type="hidden" name="window" value="projetosConcluidos">
                                                                     <div class="flex items-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
-                                                                        <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" {{$projeto->users->count() == $colaboradores->count() ? 'disabled' : ''}} class="w-full pr-10 border-none focus:border-none">
+                                                                        <select name="novoColaborador" id={{$projeto->id}} onchange="this.form.submit()" {{$projeto->users->count() == $colaboradores->count() ? 'disabled' : ''}} class="wrapTextSelect w-full pr-10 border-none focus:border-none">
                                                                             @foreach($colaboradores as $colaborador)
                                                                                 @if(!$projeto->users->contains($colaborador) || $colaborador->id == $user->id)
                                                                                     <option value="{{$colaborador->id}}/{{$user->id}}" class="w-full" {{$colaborador->id == $user->id ? 'selected' : ''}}>{{ $colaborador->name }}</option>        
@@ -600,7 +600,7 @@
                                                                 <input type="hidden" name="origin" value="clientes">
                                                                 <input type="hidden" name="window" value="projetosConcluidos">
                                                                 <div class="flex items-center border-t border-gray-400 p-1">
-                                                                    <select name="novoColaboradorId" id="{{$projeto->id}}" onchange="this.form.submit()" class="w-full pr-10 border-none focus:border-none">
+                                                                    <select name="novoColaboradorId" id="{{$projeto->id}}" onchange="this.form.submit()" class="wrapTextSelect w-full pr-10 border-none focus:border-none">
                                                                         <option disabled selected>...</option>
                                                                         @foreach($colaboradores as $colaborador)
                                                                             @if(!$projeto->users->contains($colaborador))

@@ -63,6 +63,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr class="hidden" id="newStateRow">
+                            <form method="POST" action="{{ route('estado-projetos.store') }}" autocomplete="off">
+                            @csrf
+                                <td>
+                                    <input name="nome" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                </td>
+                                <td>
+                                    <div class="size-6 w-full text-center">
+                                        <input class="w-6" id="cor" type="color" name="cor">
+                                    </div>
+                                </td>
+                                <td class="flex justify-end pr-[3rem]">
+                                    <button type="submit" onclick="this.form.submit()" class="font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">Adicionar</button>
+                                </td>
+                            </form>
+                        </tr>
                         @foreach ($estados as $estado)
                             <tr class="border-b">
                                 <td>
@@ -99,22 +115,6 @@
                                 </td>
                             </tr>
                         @endforeach
-                        <tr class="hidden" id="newStateRow">
-                            <form method="POST" action="{{ route('estado-projetos.store') }}" autocomplete="off">
-                            @csrf
-                                <td>
-                                    <input name="nome" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
-                                </td>
-                                <td>
-                                    <div class="size-6 w-full text-center">
-                                        <input class="w-6" id="cor" type="color" name="cor">
-                                    </div>
-                                </td>
-                                <td class="flex justify-end pr-[3rem]">
-                                    <button type="submit" onclick="this.form.submit()" class="font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">Adicionar</button>
-                                </td>
-                            </form>
-                        </tr>
                     </tbody>
                 </table>
             </div>

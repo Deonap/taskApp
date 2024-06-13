@@ -93,6 +93,25 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr class="hidden avoidFilter" id="newClientRow">
+                                <form method="POST" action="{{ route('clientes.store') }}" autocomplete="off">
+                                @csrf
+                                    <td>
+                                        <div class="p-2">
+                                            <input name="nome" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                        </div>
+                                    </td>
+                                    <td class="hidden lg:table-cell">
+                                        <input name="email" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                    </td>
+                                    <td class="hidden lg:table-cell"> 
+                                        <input name="telefone" class="border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                    </td>
+                                    <td class="flex justify-end pr-[3rem]">
+                                        <button type="submit" onclick="this.form.submit()" class="font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">Adicionar</button>
+                                    </td>
+                                </form>
+                            </tr>
                             @foreach ($clientes as $cliente)
                                 <tr class="border-b border-gray-200">
                                     <td>
@@ -147,25 +166,6 @@
                                     </td>
                                 </tr>
                             @endforeach
-                            <tr class="hidden avoidFilter" id="newClientRow">
-                                <form method="POST" action="{{ route('clientes.store') }}" autocomplete="off">
-                                @csrf
-                                    <td>
-                                        <div class="p-2">
-                                            <input name="nome" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
-                                        </div>
-                                    </td>
-                                    <td class="hidden lg:table-cell">
-                                        <input name="email" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
-                                    </td>
-                                    <td class="hidden lg:table-cell"> 
-                                        <input name="telefone" value='{{ $cliente->telefone }}' class="border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
-                                    </td>
-                                    <td class="flex justify-end pr-[3rem]">
-                                        <button type="submit" onclick="this.form.submit()" class="font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">Adicionar</button>
-                                    </td>
-                                </form>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
