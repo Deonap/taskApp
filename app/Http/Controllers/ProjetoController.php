@@ -310,6 +310,7 @@ class ProjetoController extends Controller
     }
 
     public function updateEstadoProjeto(Request $request, Projeto $projeto){
+        // dd($projeto);
         $newId = $request['secondaryStatus'];
         if($newId == 5){
             return redirect()->back();

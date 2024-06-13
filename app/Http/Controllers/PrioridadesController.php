@@ -100,7 +100,9 @@ class PrioridadesController extends Controller
                 $query->where('nome', $estado);
             })->get();
 
-        return response()->json($projetos);
+        $estados = EstadoProjeto::all();
+
+        return response()->json(['projetos' => $projetos, 'estadoProjetos' => $estados]);
     }
 
     public function filtrarProjetosConcluidos(Request $request)
