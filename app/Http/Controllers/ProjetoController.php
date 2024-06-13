@@ -44,6 +44,7 @@ class ProjetoController extends Controller
         $validatedData = $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'tipo_cliente_id' => 'required|exists:tipo_clientes,id',
+            'tipo_projeto_id' => 'required|exists:tipo_projetos,id',
             'estado_projeto_id' => 'exists:estado_projetos,id', // Substitua pelos tipos que você possui
             'nome' => 'string|max:255',
             'tarefas' => 'array',
@@ -54,7 +55,7 @@ class ProjetoController extends Controller
         ]);
 
         if (!$request->filled('estado_projeto_id')) {
-            $validatedData['estado_projeto_id'] = 2; // Replace DEFAULT_VALUE_HERE with your default value
+            $validatedData['estado_projeto_id'] = 2;
         }
 
         // Crie o novo projeto com os dados validados

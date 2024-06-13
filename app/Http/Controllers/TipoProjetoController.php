@@ -31,7 +31,7 @@ class TipoProjetoController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nome' => 'required|unique:tipo_clientes|max:255'
+            'nome' => 'required|unique:tipo_projetos|max:255'
         ]);
         TipoProjeto::create($validatedData);
         return redirect()->route('tipo-projetos.index');

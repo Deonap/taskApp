@@ -52,6 +52,7 @@
     <body>
         <x-app-layout>
             <div>
+                {{-- {{dd($projetosAbertos)}} --}}
                 <div class="flex justify-between items-center mb-4">
                     <div class="flex items-center text-darkBlue">
                         <h2 class="hidden md:block text-xl font-black">
@@ -101,22 +102,22 @@
                             <table class="w-full">
                                 <thead>
                                     <tr class="bg-gray-300">
-                                        <th scope="col" class="w-[15%]">
+                                        <th scope="col" class="w-[14%]">
                                             Tipo
                                         </th>
-                                        <th scope="col" class="w-[13%]">
+                                        <th scope="col" class="w-[14%]">
                                             Projeto
                                         </th>
-                                        <th scope="col" class="w-[14%]">
+                                        <th scope="col" class="w-[18%]">
                                             Notas Iniciais
                                         </th>
-                                        <th scope="col" class="text-center w-[13%]">
+                                        <th scope="col" class="text-center w-[11%]">
                                             Tempo Previsto
                                         </th>
                                         <th scope="col" class="w-[20%]">
                                             Colaborador
                                         </th>
-                                        <th scope="col" class="text-center w-[15%]">
+                                        <th scope="col" class="text-center w-[11%]">
                                             Tempo Investido
                                         </th>
                                         <th scope="col" class="w-[10%] text-right pr-[5rem]">
@@ -181,7 +182,9 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                {{$projeto->notas_iniciais}}
+                                                @foreach($projeto->tarefas as $t)
+                                                    <p class="px-2 break-words">{{$t->descricao}}</p>
+                                                @endforeach
                                             </td>
                                             <td class="text-center">
                                                 {{ $projeto->tempo_previsto }}
@@ -267,10 +270,10 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="flex justify-center space-x-3">
+                                                <div class="flex space-x-3 mx-auto">
                                                     <div>
                                                         @foreach($projeto->users as $user)
-                                                            <div class="text-center @if(!$loop->last) border-b border-gray-400 @endif p-1">
+                                                            <div class="mx-auto @if(!$loop->last) border-b border-gray-400 @endif p-1">
                                                                 {{ $user->tempoGasto($projeto) }}
                                                             </div>
                                                         @endforeach
@@ -328,9 +331,13 @@
                                                     </div>
                                                 </div>
                                             </td>
+
+
                                             <td>
-                                                <input type="text" name="notas_iniciais" class="w-[90%]">
+                                                <input type="text" name="tarefas[]" class="w-[90%]">
                                             </td>
+
+
                                             <td class="text-center">
                                                 <input type="text" class="text-center w-[55%]" placeholder="hh:mm" name="tempo_previsto" pattern="[0-9]{0,4}:[0-5][0-9]">
                                             </td>
@@ -457,26 +464,23 @@
                             <table class="w-full">
                                 <thead>
                                     <tr class="bg-gray-300">
-                                        <th scope="col" class="w-[15%]">
+                                        <th scope="col" class="w-[16%]">
                                             Tipo
                                         </th>
-                                        <th scope="col" class="w-[13%]">
+                                        <th scope="col" class="w-[16%]">
                                             Projeto
                                         </th>
-                                        <th scope="col" class="w-[14%]">
+                                        <th scope="col" class="w-[20%]">
                                             Notas Iniciais
                                         </th>
-                                        <th class="text-center w-[13%]">
+                                        <th class="text-center w-[9%]">
                                             Tempo Previsto
                                         </th>
                                         <th scope="col" class="w-[20%]">
                                             Colaborador
                                         </th>
-                                        <th class="text-center w-[15%]">
+                                        <th class="text-center w-[9%]">
                                             Tempo Investido
-                                        </th>
-                                        <th scope="col" class="w-[0%]">
-
                                         </th>
                                         <th class="w-[10%] text-right pr-[5rem]">
                                             Ações
@@ -626,7 +630,7 @@
                                                     
                                                 </div>
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <div class="flex justify-center space-x-3">
                                                     <div>
                                                         @foreach($projeto->users as $user)
@@ -655,8 +659,6 @@
                                                     <div class="bg-{{$bgColor}} rounded-full size-6 m-auto">
                                                     </div>
                                                 </div>
-                                            </td> 
-                                            <td>
                                             </td>
                                             <td>
                                                 <div class="flex justify-end pr-[3rem] space-x-3">
