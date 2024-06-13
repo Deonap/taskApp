@@ -176,7 +176,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const filterInput = document.getElementById("searchFilter");
-        const tableRows = document.querySelectorAll("#clientTable tbody tr");
+        var tableRows = document.querySelectorAll("#clientTable tbody tr:not(.avoidFilter)");
 
         filterInput.addEventListener("input", function () {
             const filterValue = this.value.toLowerCase().trim();
@@ -201,7 +201,8 @@
         var defaultSort = document.getElementById('sortByDefault');
         var asc = document.getElementById('sortByNameAsc');
         var desc = document.getElementById('sortByNameDesc');
-        var table = document.getElementById('clientTable');
+        var tableRows = document.querySelectorAll("#clientTable tbody tr:not(.avoidFilter)");
+
         var shouldSwitch, x, y;
 
         if(!defaultSort.classList.contains("hidden")){
@@ -212,8 +213,7 @@
         var switching = true;
         while(switching){
             switching = false;
-            rows = table.rows;
-            for(var i = 1; i < rows.length - 2; i++){
+            for(var i = 1; i < tableRows.length - 1; i++){
                 shouldSwitch = false;
                 x = rows[i].getElementsByTagName('a')[0].textContent.toLowerCase().trim();
                 y = rows[i + 1].getElementsByTagName('a')[0].textContent.toLowerCase().trim();

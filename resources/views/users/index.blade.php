@@ -75,8 +75,8 @@
                                             }
                                         ?>
                                         <select name="tipo" {{$status}} class="pr-10 pl-1 text-left py-1 border-none">
-                                            <option value="colaborador" {{ $user->tipo == 'colaborador' ? 'selected' : '' }}>COLAB</option>
-                                            <option value="admin" {{ $user->tipo == 'admin' ? 'selected' : '' }}>ADMIN</option>
+                                            <option value="colaborador">COLAB</option>
+                                            <option value="admin">ADMIN</option>
                                         </select>
                                     </td>
                                     <td class="flex justify-end pr-[3rem]">
