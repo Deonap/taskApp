@@ -13,7 +13,7 @@ class TipoProjetoController extends Controller
      */
     public function index()
     {
-        $tipos = TipoProjeto::all();
+        $tipos = TipoProjeto::orderBy('nome', 'asc')->get();
         return view('parametrizacoes.projetos.index', compact('tipos'));
     }
 

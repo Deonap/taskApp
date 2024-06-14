@@ -13,7 +13,7 @@ class TipoClienteController extends Controller
      */
     public function index()
     {
-        $tipos = TipoCliente::all();
+        $tipos = TipoCliente::orderBy('nome', 'asc')->get();
         return view('parametrizacoes.tipos.index', compact('tipos'));
     }
 

@@ -33,9 +33,9 @@ class PrioridadesController extends Controller
         if(auth()->user() && auth()->user()->tipo == 'admin'){
             ProjetoUser::query()->update(['notificacaoVista' => true]);
         }
-        $clientes = Cliente::all();
-        $tiposCliente = TipoCliente::all();
-        $tiposProjeto = TipoProjeto::all();
+        $clientes = Cliente::orderBy('nome', 'asc')->get();
+        $tiposCliente = TipoCliente::orderBy('nome', 'asc')->get();
+        $tiposProjeto = TipoProjeto::orderBy('nome', 'asc')->get();
 
         return view('prioridades.index', compact('selectedUser', 'colaboradores', 'projetosEmAberto', 'projetosPendentes', 'projetosConcluidos','projetosComOutros', 'colaboradorId', 'clientes', 'tiposCliente', 'tiposProjeto'));
     }

@@ -17,8 +17,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        // $clientes = Cliente::orderBy('nome','asc')->get();
-        $clientes = Cliente::all();
+        $clientes = Cliente::orderBy('nome', 'asc')->get();
         return view('clientes.index', compact('clientes'));
     }
 
@@ -65,8 +64,8 @@ class ClienteController extends Controller
             }
         }
 
-        $tiposCliente =  TipoCliente::all();
-        $tipoProjeto = TipoProjeto::all();
+        $tiposCliente =  TipoCliente::orderBy('nome', 'asc')->get();
+        $tipoProjeto = TipoProjeto::orderBy('nome', 'asc')->get();
 
         return view('clientes.show', compact('cliente', 'projetosAbertos', 'projetosConcluidos', 'colaboradores', 'tiposCliente', 'tipoProjeto', 'window'));
     }
