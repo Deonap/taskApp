@@ -68,4 +68,9 @@ class Projeto extends Model
         
         return $sum;
     }
+
+    public function firstTarefa(){
+        return $this->tarefas[0];
+    }
+
 }

@@ -182,9 +182,9 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                @foreach($projeto->tarefas as $t)
-                                                    <p class="px-2 break-words">{{$t->descricao}}</p>
-                                                @endforeach
+                                                <div class="m-auto justify-center flex flex-wrap">
+                                                    <textarea class="border-none form-input observacoes bg-transparent size-full resize-none text-start" autocomplete='off'>{{$projeto->firstTarefa()->descricao}}</textarea>
+                                                </div>
                                             </td>
                                             <td class="text-center">
                                                 {{ $projeto->tempo_previsto }}
@@ -332,7 +332,10 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <input type="text" name="tarefas[]" class="w-[90%]">
+                                                <div class="mx-auto justify-center flex flex-wrap">
+                                                    <textarea name="tarefas[]" class="observacoes size-full resize-none text-start"></textarea>
+                                                </div>
+                                                {{-- <input type="text" name="tarefas[]" class="w-[90%]"> --}}
                                             </td>
                                             <td class="text-center">
                                                 <input type="text" class="text-center w-[55%]" placeholder="hh:mm" name="tempo_previsto" pattern="[0-9]{0,4}:[0-5][0-9]">
@@ -460,22 +463,22 @@
                             <table class="w-full">
                                 <thead>
                                     <tr class="bg-gray-300">
-                                        <th scope="col" class="w-[16%]">
+                                        <th scope="col" class="w-[14%]">
                                             Tipo
                                         </th>
-                                        <th scope="col" class="w-[16%]">
+                                        <th scope="col" class="w-[14%]">
                                             Projeto
                                         </th>
-                                        <th scope="col" class="w-[20%]">
+                                        <th scope="col" class="w-[18%]">
                                             Notas Iniciais
                                         </th>
-                                        <th class="text-center w-[9%]">
+                                        <th class="text-center w-[11%]">
                                             Tempo Previsto
                                         </th>
                                         <th scope="col" class="w-[20%]">
                                             Colaborador
                                         </th>
-                                        <th class="text-center w-[9%]">
+                                        <th class="text-center w-[11%]">
                                             Tempo Investido
                                         </th>
                                         <th class="w-[10%] text-right pr-[5rem]">
@@ -539,7 +542,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                {{$projeto->notas_iniciais}}
+                                                <textarea readonly class="border-none form-input observacoes bg-transparent size-full resize-none text-start" autocomplete='off'>{{$projeto->firstTarefa()->descricao}}</textarea>
                                             </td>
                                             <td class="text-center">
                                                 {{ $projeto->tempo_previsto }}
