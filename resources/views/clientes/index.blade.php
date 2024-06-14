@@ -179,9 +179,9 @@
         var tableRows = document.querySelectorAll("#clientTable tbody tr:not(.avoidFilter)");
 
         filterInput.addEventListener("input", function () {
-            const filterValue = this.value.toLowerCase().trim();
+            const filterValue = this.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, '').trim();
             tableRows.forEach(function (row) {
-                const name = row.querySelector("td:first-child").textContent.toLowerCase();
+                const name = row.querySelector("td:first-child").textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, '');
                 if (name.includes(filterValue)) {
                     row.style.display = "";
                     row.classList.remove("hidden");
