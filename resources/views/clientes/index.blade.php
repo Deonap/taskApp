@@ -201,8 +201,7 @@
         var defaultSort = document.getElementById('sortByDefault');
         var asc = document.getElementById('sortByNameAsc');
         var desc = document.getElementById('sortByNameDesc');
-        var tableRows = document.querySelectorAll("#clientTable tbody tr:not(.avoidFilter)");
-
+        var table = document.getElementById('clientTable');
         var shouldSwitch, x, y;
 
         if(!defaultSort.classList.contains("hidden")){
@@ -213,7 +212,8 @@
         var switching = true;
         while(switching){
             switching = false;
-            for(var i = 1; i < tableRows.length - 1; i++){
+            rows = table.rows;
+            for(var i = 2; i < rows.length - 1; i++){
                 shouldSwitch = false;
                 x = rows[i].getElementsByTagName('a')[0].textContent.toLowerCase().trim();
                 y = rows[i + 1].getElementsByTagName('a')[0].textContent.toLowerCase().trim();
