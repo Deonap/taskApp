@@ -1039,13 +1039,13 @@
         });
     }
     
-    function atualizarTabelaProjetosOutrosColaboradores(projetos) {
+    function atualizarTabelaProjetosOutrosColaboradores(data) {
         var tbody = document.querySelector('#tabelaProjetosOutrosColaboradores tbody');
         tbody.innerHTML = '';
-        if(!Array.isArray(projetos)) {
-            projetos = convertObjectToArray(projetos);
+        if(!Array.isArray(data.projetos)) {
+            data.projetos = convertObjectToArray(data.projetos);
         }
-        projetos.forEach(projeto => {
+        data.projetos.forEach(projeto => {
             // Verifica se o projeto tem mais de um colaborador
             if (projeto.users && projeto.users.length > 1) {
                 // Para separação do design para computador / mobile
@@ -1111,36 +1111,22 @@
                     linha.cells[4].classList.add('border-r-4', 'border-r-[#A3A2A3]');
 
                     // Lista os nomes dos colaboradores
-                    var colaboradores = projeto.users.map(user => `<p class="ml-2">${user.name}</p>`).join("");
-                    linha.cells[5].innerHTML = colaboradores;
-                    linha.cells[7].classList.add('border-r-0');
-                    
-                    var tempoGastoMins = 0;
-                    projeto.users.forEach(user => {
-                        var tempoGasto = user.pivot.tempo_gasto.split(":");
-                        var tempoGastoP1 = parseInt(tempoGasto[0]);
-                        var tempoGastoP2 = parseInt(tempoGasto[1]);
-                        tempoGastoMins += tempoGastoP1 * 60 + tempoGastoP2;
+                    var celulaEstadoProjeto = linha.cells[7];
+
+                    var bgColor = '';
+                    var title = '';
+                    data.estadoProjetos.forEach( eP=> {
+                        if(eP.id == projeto.estado_secundario_id){
+                            bgColor = eP.cor;
+                            title = eP.nome;
+                        }
                     });
 
-                    var tempoPrevisto = projeto.tempo_previsto.split(":");
-                    var tempoPrevistoP1 = parseInt(tempoPrevisto[0]);
-                    var tempoPrevistoP2 = parseInt(tempoPrevisto[1]);
-
-                    var tempoPrevistoMinutes = tempoPrevistoP1 * 60 + tempoPrevistoP2;
-
-                    var bgColor;
-                    if (tempoGastoMins < tempoPrevistoMinutes) {
-                        bgColor = 'bg-greenStatus';
-                    } else if (tempoGastoMins === tempoPrevistoMinutes) {
-                        bgColor = 'bg-blueStatus';
-                    } else {
-                        bgColor = 'bg-redStatus';
-                    }
-                    linha.cells[7].innerHTML = `
-                    <div class="${bgColor} m-auto size-7 rounded-full">
+                    celulaEstadoProjeto.innerHTML = `
+                    <div style="background-color: ${bgColor};" title="${title}" class="statusCircle m-auto size-6 rounded-full"">
                     </div>
                     `;
+
                     linha.cells[8].classList.add('border-l-0');
 
                     var select = document.querySelector(`#novoCliente\\/colab${projeto.id}`);

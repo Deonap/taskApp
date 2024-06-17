@@ -29,7 +29,7 @@ class HistoricoController extends Controller
         $projetosComOutros = $this->filtrarProjetosComOutrosColaboradores($request);
 
         logger()->info('Request recebido:', $request->all());
-        logger()->info('Projetos com outros colaboradores no Index:', $projetosComOutros->toArray());
+        // logger()->info('Projetos com outros colaboradores no Index:', $projetosComOutros->toArray());
 
         $clientes= Cliente::all();
         $tiposCliente= TipoCliente::all();
@@ -84,9 +84,10 @@ class HistoricoController extends Controller
                         ->filter(function ($projeto) {
                             return $projeto->users->count() > 1;
                         });
-                        logger()->info('Projetos com outros colaboradores:', $projetos->toArray());
         // Retorna a coleção de projetos diretamente
-        return $projetos;
+        $estadoProjetos = EstadoProjeto::all();
+
+        return response()->json(['projetos' => $projetos, 'estadoProjetos' => $estadoProjetos]);
     }
 
     public function filtrarProjetos(Request $request)
