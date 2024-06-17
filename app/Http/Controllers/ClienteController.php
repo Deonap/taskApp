@@ -34,13 +34,19 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'nome' => 'required|max:255',
-            'email' => 'required|email',
-            'telefone' => 'required',
-        ]);
-        Cliente::create($validatedData);
-        return redirect()->route('clientes.index');
+        try{
+            $validatedData = $request->validate([
+                'nome' => 'required|max:255',
+                'email' => 'required|email',
+                'telefone' => 'required',
+            ]);
+
+            Cliente::create($validatedData);
+            return redirect()->route('clientes.index');
+        } catch (\Exception $e) {
+            $errorMessage = 'Já existe um cliente com esse e-mail.';
+            return redirect()->route('clientes.index')->with('error', $errorMessage);
+        }
     }
 
     /**

@@ -26,7 +26,7 @@
             @if(session('error'))
                 <script>
                     document.addEventListener('DOMContentLoaded', function(){
-                        alert('Clientes com projetos associados não podem ser removidos.');
+                        alert('{{ session('error') }}');
                     });
                 </script>
             @endif
@@ -105,7 +105,7 @@
                                         <input name="email" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
                                     </td>
                                     <td class="hidden lg:table-cell"> 
-                                        <input name="telefone" class="border-none bg-transparent rounded-md p-2" autocomplete="off" type="text">
+                                        <input name="telefone" class="bg-transparent rounded-md p-2" autocomplete="off" type="text">
                                     </td>
                                     <td class="flex justify-end pr-[3rem]">
                                         <button type="submit" onclick="this.form.submit()" class="font-bold py-2 px-4 rounded bg-darkBlue text-white hover:cursor-pointer">Adicionar</button>
