@@ -104,7 +104,9 @@ class HistoricoController extends Controller
                         })->whereBetween('updated_at', [$inicioSemana, $fimSemana])
                         ->get();
 
-        return response()->json($projetos);
+        $estadoProjetos = EstadoProjeto::all();
+
+        return response()->json(['projetos' => $projetos, 'estadoProjetos' => $estadoProjetos]);
     }
 
     public function filtrarProjetosPendente(Request $request)
@@ -122,6 +124,7 @@ class HistoricoController extends Controller
                         })->whereBetween('updated_at', [$inicioSemana, $fimSemana])
                         ->get();
 
-        return response()->json($projetos);
-    }
+        $estadoProjetos = EstadoProjeto::all();
+
+        return response()->json(['projetos' => $projetos, 'estadoProjetos' => $estadoProjetos]);    }
 }

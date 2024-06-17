@@ -49,6 +49,21 @@
             .minusIcon {
                 background-image: linear-gradient(to right, #fff 0%, #fff 100%);
             }
+            .itemEP {
+                transition: border 0.2s ease;
+            }
+
+            .itemEP:hover {
+                border: 3px solid darkblue; /* Add border on hover */
+            }
+            
+            .triangle {
+                width: 0;
+                height: 0;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-bottom: 10px solid black;
+            }
         </style>
     </head>
     <body>
@@ -397,6 +412,34 @@
         return (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
     }
 
+    function triggerEPdiv(id){
+        var tempID = 'divEP/' + id;
+        
+        document.getElementById(tempID).classList.toggle('hidden');
+    }
+
+    function positionDivEP(id){
+        
+        var mainDivEP = document.getElementById(id);
+        mainDivEP.classList.remove('hidden');
+
+        var divW = mainDivEP.offsetWidth;
+        var parentW = mainDivEP.parentElement.offsetWidth;
+        mainDivEP.style.marginLeft = (parentW / 2) - (divW / 2) + 'px';
+
+
+        mainDivEP.classList.add('hidden');
+    }
+
+    document.addEventListener('click', function(event){
+        var epDivs = document.getElementsByClassName('mainDivEP');
+        for(var i = 0; i < epDivs.length; i++){
+            if(!epDivs[i].classList.contains('hidden') && !epDivs[i].parentNode.contains(event.target)){
+                epDivs[i].classList.add('hidden');
+            }
+        }
+    });
+
     function atualizarTabelas() {
         var colaboradorId = document.getElementById('colaborador').value;
         var dataSemana = document.getElementById('data_semana').value;
@@ -423,8 +466,8 @@
             .then(response => response.json())
             .then(data => {
             // Se a resposta não for um array, converte em um array
-            if (!Array.isArray(data)) {
-                data = [data];
+            if (!Array.isArray(data.projetos)) {
+                data.projetos = [data.projetos];
             }
             atualizarTabelaProjetosPendentes(data);
         }).catch(error => console.error('Erro ao buscar projetos pendentes:', error));
@@ -436,13 +479,13 @@
             .catch(error => console.error('Erro ao buscar projetos com outros colaboradores:', error));
     }
 
-    function atualizarTabelaProjetos(idTabela, projetos) {
+    function atualizarTabelaProjetos(idTabela, data) {
         var tbody = document.querySelector(`#${idTabela} tbody`);
         var responsiveDesenvolvimento = document.getElementById('responsiveDesenvolvimento');
         responsiveDesenvolvimento.innerHTML = '';
         tbody.innerHTML = ''; // Limpa o conteúdo atual da tabela
 
-        projetos.forEach((projeto, index) => {
+        data.projetos.forEach((projeto, index) => {
             // Para separação do design para computador / mobile
             if(true){
                 var linha = tbody.insertRow(); // Insere uma nova linha na tabela
@@ -471,7 +514,7 @@
                             @method('PUT')
                             <input type="hidden" name="origin" value="historico">
                             <input type="hidden" name="user" value="${u.id}">
-                            <select name="novoCliente" id="novoCliente/${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                            <select name="novoCliente" id="novoCliente/${projeto.id}" onchange="this.form.submit()" class="wrapTextSelect w-full pl-2 pr-8 border-none focus:border-none">
                                 @foreach($clientes as $cliente)
                                     <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
                                 @endforeach
@@ -490,9 +533,9 @@
                             @method('PUT')
                             <input type="hidden" name="origin" value="historico">
                             <input type="hidden" name="user" value="${u.id}">
-                            <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                            <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="wrapTextSelect w-full pl-2 pr-8 border-none focus:border-none">
                                 @foreach($tiposCliente as $tC)
-                                    <option value="{{$tC->id}}">{{$tC->nome}}</option>
+                                    <option value="{{$tC->id}}" style="color:{{$tC->cor}};">{{$tC->nome}}</option>
                                 @endforeach
                             </select>
                         </form>
@@ -509,7 +552,7 @@
                             @method('PUT')
                             <input type="hidden" name="origin" value="historico">
                             <input type="hidden" name="user" value="${u.id}">
-                            <select name="novoTipoProjeto" id="novoTipoProjeto/${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                            <select name="novoTipoProjeto" id="novoTipoProjeto/${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="wrapTextSelect w-full pl-2 pr-8 border-none focus:border-none">
                                 @foreach($tiposProjeto as $tP)
                                     <option value="{{$tP->id}}">{{$tP->nome}}</option>
                                 @endforeach
@@ -554,33 +597,60 @@
                 // Coluna de Estado do Projeto
                 var celulaEstadoProjeto = linha.cells[7];
                 celulaEstadoProjeto.classList.add('border-r-0');
-                var tempoGastoMins = 0;
-                projeto.users.forEach(user => {
-                    var tempoGasto = user.pivot.tempo_gasto.split(":");
-                    var tempoGastoP1 = parseInt(tempoGasto[0]);
-                    var tempoGastoP2 = parseInt(tempoGasto[1]);
-                    tempoGastoMins += tempoGastoP1 * 60 + tempoGastoP2;
+                var bgColor = '';
+                var title = '';
+                data.estadoProjetos.forEach(eP => {
+                    if(eP.id == projeto.estado_secundario_id){
+                        bgColor = eP.cor;
+                        title = eP.nome;
+                    }
                 });
-
-                var tempoPrevisto = projeto.tempo_previsto.split(":");
-                var tempoPrevistoP1 = parseInt(tempoPrevisto[0]);
-                var tempoPrevistoP2 = parseInt(tempoPrevisto[1]);
-
-                var tempoPrevistoMinutes = tempoPrevistoP1 * 60 + tempoPrevistoP2;
-
-                var bgColor;
-                if (tempoGastoMins < tempoPrevistoMinutes) {
-                    bgColor = 'bg-greenStatus';
-                } else if (tempoGastoMins === tempoPrevistoMinutes) {
-                    bgColor = 'bg-blueStatus';
-                } else {
-                    bgColor = 'bg-redStatus';
-                }
-
                 celulaEstadoProjeto.innerHTML = `
-                <div class="${bgColor} m-auto size-7 rounded-full">
+                <div style="background-color: ${bgColor};" title="${title}" class="statusCircle m-auto size-6 rounded-full hover:cursor-pointer" onclick="triggerEPdiv(${projeto.id})">
                 </div>
                 `;
+                
+                var divEP = `<div class="flex items-center space-x-2">`;
+                
+                divEP += `
+                <button onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[3].id}" 
+                style="background-color: ${data.estadoProjetos[3].cor} !important;" title="${data.estadoProjetos[3].nome}" class="size-6 rounded-full cursor-pointer itemEP">
+                </button>`
+
+                divEP +=
+                `<button onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[4].id}" 
+                style="background-color: ${data.estadoProjetos[4].cor} !important;" title="${data.estadoProjetos[4].nome}" class="size-6 rounded-full cursor-pointer itemEP">
+                </button>`
+                
+                divEP +=
+                `<button onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[2].id}" 
+                style="background-color: ${data.estadoProjetos[2].cor} !important;" title="${data.estadoProjetos[2].nome}" class="size-6 rounded-full cursor-pointer itemEP">
+                </button>
+                `;
+
+                divEP += "</div>";
+                celulaEstadoProjeto.innerHTML += `
+                    <div id="divEP/${projeto.id}" class="mainDivEP items-center absolute hidden">
+                        <div class="relative flex flex-col items-center">
+                            <div class="triangle"></div>
+                            <div class="relative">
+                                <div class="text-center p-4" style="background-color: white !important;">
+                                    <form id="formEP/${projeto.id}" action="/projetos/${projeto.id}/updateEstadoProjeto" method="POST" class="m-auto justify-center">
+                                    @csrf
+                                    @method('PUT')
+                                        <input type="hidden" name="user" value="${userId}">
+                                        ${divEP}
+                                    </form>
+                                </div>
+                                <div class="absolute top-0 left-0 right-0 bottom-0 border border-black rounded-md pointer-events-none"></div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                `;
+                
+                positionDivEP('divEP/' + projeto.id);
 
                 linha.cells[8].classList.add("border-l-0");
 
@@ -597,6 +667,7 @@
                 var options = select.options;
                 for (var i = 0; i < options.length; i++) {
                     if (options[i].text === projeto.tipo_cliente.nome) {
+                        select.style.color = projeto.tipo_cliente.cor;
                         options[i].selected = true;
                         break;
                     }
@@ -724,9 +795,9 @@
         });
     }
 
-    function atualizarTabelaProjetosPendentes(projetos) {
+    function atualizarTabelaProjetosPendentes(data) {
     // Se não for um array, não prosseguir
-        if (!Array.isArray(projetos)) {
+        if (!Array.isArray(data.projetos)) {
             console.error('Erro: a entrada não é um array.');
             return;
         }
@@ -735,8 +806,9 @@
         var responsivePendentes = document.getElementById('responsivePendentes');
         responsivePendentes.innerHTML = '';
         tbody.innerHTML = ''; // Limpa o conteúdo atual da tabela
+        var userId = document.getElementById('colaborador').value;
 
-        projetos.forEach((projeto, index) => {
+        data.projetos.forEach((projeto, index) => {
             // Para separação do design para computador / mobile
             if(true){
                 var linha = tbody.insertRow(); // Insere uma nova linha na tabela
@@ -756,7 +828,7 @@
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="origin" value="historico">
-                            <select name="novoCliente" id="novoCliente/${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                            <select name="novoCliente" id="novoCliente/${projeto.id}" onchange="this.form.submit()" class="wrapTextSelect w-full pl-2 pr-8 border-none focus:border-none">
                                 @foreach($clientes as $cliente)
                                     <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
                                 @endforeach
@@ -775,9 +847,9 @@
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="origin" value="historico">
-                            <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                            <select name="novoTipoCliente" id="novoTipoCliente/${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="wrapTextSelect w-full pl-2 pr-8 border-none focus:border-none">
                                 @foreach($tiposCliente as $tC)
-                                    <option value="{{$tC->id}}">{{$tC->nome}}</option>
+                                    <option value="{{$tC->id}}" style="color:{{$tC->cor}};">{{$tC->nome}}</option>
                                 @endforeach
                             </select>
                         </form>
@@ -792,7 +864,7 @@
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="origin" value="historico">
-                            <select name="novoTipoProjeto" id="novoTipoProjeto/${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                            <select name="novoTipoProjeto" id="novoTipoProjeto/${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="wrapTextSelect w-full pl-2 pr-8 border-none focus:border-none">
                                 @foreach($tiposProjeto as $tP)
                                     <option value="{{$tP->id}}">{{$tP->nome}}</option>
                                 @endforeach
@@ -806,38 +878,69 @@
                 linha.cells[4].classList.add('border-r-4', 'border-r-[#A3A2A3]');
 
                 // Coluna invisivel
+
                 linha.cells[5].classList.add('border', 'border-l-0', 'border-r-0');
                 // Coluna invisivel
                 linha.cells[6].classList.add('border', 'border-l-0', 'border-r-0');
+
                 // Coluna de Estado do Projeto
-                linha.cells[7].classList.add('border-r-0')
-                var tempoGastoMins = 0;
-                projeto.users.forEach(user => {
-                    var tempoGasto = user.pivot.tempo_gasto.split(":");
-                    var tempoGastoP1 = parseInt(tempoGasto[0]);
-                    var tempoGastoP2 = parseInt(tempoGasto[1]);
-                    tempoGastoMins += tempoGastoP1 * 60 + tempoGastoP2;
+                var celulaEstadoProjeto = linha.cells[7];
+                celulaEstadoProjeto.classList.add('border-r-0');
+                var bgColor = '';
+                var title = '';
+                data.estadoProjetos.forEach(eP => {
+                    if(eP.id == projeto.estado_secundario_id){
+                        bgColor = eP.cor;
+                        title = eP.nome;
+                    }
                 });
-
-                var tempoPrevisto = projeto.tempo_previsto.split(":");
-                var tempoPrevistoP1 = parseInt(tempoPrevisto[0]);
-                var tempoPrevistoP2 = parseInt(tempoPrevisto[1]);
-
-                var tempoPrevistoMinutes = tempoPrevistoP1 * 60 + tempoPrevistoP2;
-
-                var bgColor;
-                if (tempoGastoMins < tempoPrevistoMinutes) {
-                    bgColor = 'bg-greenStatus';
-                } else if (tempoGastoMins === tempoPrevistoMinutes) {
-                    bgColor = 'bg-blueStatus';
-                } else {
-                    bgColor = 'bg-redStatus';
-                }
-
-                linha.cells[7].innerHTML = `
-                <div class="${bgColor} m-auto size-7 rounded-full">
+                celulaEstadoProjeto.innerHTML = `
+                <div style="background-color: ${bgColor};" title="${title}" class="statusCircle m-auto size-6 rounded-full hover:cursor-pointer" onclick="triggerEPdiv(${projeto.id})">
                 </div>
                 `;
+                
+                var divEP = `<div class="flex items-center space-x-2">`;
+                
+                divEP += `
+                <button onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[3].id}" 
+                style="background-color: ${data.estadoProjetos[3].cor} !important;" title="${data.estadoProjetos[3].nome}" class="size-6 rounded-full cursor-pointer itemEP">
+                </button>`
+
+                divEP +=
+                `<button onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[4].id}" 
+                style="background-color: ${data.estadoProjetos[4].cor} !important;" title="${data.estadoProjetos[4].nome}" class="size-6 rounded-full cursor-pointer itemEP">
+                </button>`
+                
+                divEP +=
+                `<button onclick="document.getElementById('formEP/${projeto.id}').submit();" name="secondaryStatus" value="${data.estadoProjetos[2].id}" 
+                style="background-color: ${data.estadoProjetos[2].cor} !important;" title="${data.estadoProjetos[2].nome}" class="size-6 rounded-full cursor-pointer itemEP">
+                </button>
+                `;
+
+                divEP += "</div>";
+                celulaEstadoProjeto.innerHTML += `
+                    <div id="divEP/${projeto.id}" class="mainDivEP items-center absolute hidden">
+                        <div class="relative flex flex-col items-center">
+                            <div class="triangle"></div>
+                            <div class="relative">
+                                <div class="text-center p-4" style="background-color: white !important;">
+                                    <form id="formEP/${projeto.id}" action="/projetos/${projeto.id}/updateEstadoProjeto" method="POST" class="m-auto justify-center">
+                                    @csrf
+                                    @method('PUT')
+                                        <input type="hidden" name="user" value="${userId}">
+                                        ${divEP}
+                                    </form>
+                                </div>
+                                <div class="absolute top-0 left-0 right-0 bottom-0 border border-black rounded-md pointer-events-none"></div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                `;
+                
+                positionDivEP('divEP/' + projeto.id);
+
                 // Coluna invisivel
                 linha.cells[8].classList.add('border-l-0');
 
@@ -855,6 +958,7 @@
 
                 for (var i = 0; i < options.length; i++) {
                     if (options[i].text === projeto.tipo_cliente.nome) {
+                        select.style.color = projeto.tipo_cliente.cor;
                         options[i].selected = true;
                         break;
                     }
@@ -960,7 +1064,7 @@
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="origin" value="historico">
-                                <select name="novoCliente" id="novoCliente/colab${projeto.id}" onchange="this.form.submit()" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                <select name="novoCliente" id="novoCliente/colab${projeto.id}" onchange="this.form.submit()" class="wrapTextSelect w-full pl-2 pr-8 border-none focus:border-none">
                                     @foreach($clientes as $cliente)
                                         <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
                                     @endforeach
@@ -977,9 +1081,9 @@
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="origin" value="historico">
-                                <select name="novoTipoCliente" id="novoTipoCliente/colab${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                <select name="novoTipoCliente" id="novoTipoCliente/colab${projeto.id}" onchange="handleTipoClienteForms(this.id)" class="wrapTextSelect w-full pl-2 pr-8 border-none focus:border-none">
                                     @foreach($tiposCliente as $tC)
-                                        <option value="{{$tC->id}}">{{$tC->nome}}</option>
+                                        <option value="{{$tC->id}}" style="color:{{$tC->cor}};">{{$tC->nome}}</option>
                                     @endforeach
                                 </select>
                             </form>
@@ -993,7 +1097,7 @@
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="origin" value="historico">
-                                <select name="novoTipoProjeto" id="novoTipoProjeto/colab${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="w-fit pl-2 pr-8 border-none focus:border-none">
+                                <select name="novoTipoProjeto" id="novoTipoProjeto/colab${projeto.id}" onchange="handleTipoProjetoForms(this.id)" class="wrapTextSelect w-full pl-2 pr-8 border-none focus:border-none">
                                     @foreach($tiposProjeto as $tP)
                                         <option value="{{$tP->id}}">{{$tP->nome}}</option>
                                     @endforeach
@@ -1052,6 +1156,7 @@
                     var options = select.options;
                     for (var i = 0; i < options.length; i++) {
                         if (options[i].text === projeto.tipo_cliente.nome) {
+                            select.style.color = projeto.tipo_cliente.cor;
                             options[i].selected = true;
                             break;
                         }
