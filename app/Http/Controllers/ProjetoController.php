@@ -48,7 +48,7 @@ class ProjetoController extends Controller
             'estado_projeto_id' => 'exists:estado_projetos,id', // Substitua pelos tipos que você possui
             'nome' => 'string|max:255',
             'tarefas' => 'array',
-            'tarefas.*' => 'string', // Assumindo que as tarefas são enviadas como um array
+            'tarefas.*' => 'nullable|string', // Assumindo que as tarefas são enviadas como um array
             'users' => 'required|array|exists:users,id', // Assumindo que os colaboradores são enviados como um array
             'tempo_previsto' => 'required|string',
             'notas_iniciais' => 'nullable|string',
@@ -106,8 +106,8 @@ class ProjetoController extends Controller
             'tipo_cliente_id' => 'required|exists:tipo_clientes,id',
             'estado_projeto_id' => 'required|exists:estado_projetos,id',
             'nome' => 'required|max:255',
-            'tarefas' => 'required|array',
-            'tarefas.*' => 'string',
+            'tarefas' => 'array',
+            'tarefas.*' => 'nullable|string',
             'users' => 'required|array|exists:users,id',
             'tempo_previsto' => 'required|string',
             'observacoes' => 'nullable|string',
@@ -132,10 +132,14 @@ class ProjetoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Projeto $projeto)
+    public function destroy(Request $request, Projeto $projeto)
     {
         $projeto->users()->detach();
         $projeto->delete();
+
+        if($request->has('origin')){
+            return redirect()->route('prioridades.index', $request['user']);
+        }
 
         return redirect()->route('clientes.show', $projeto->cliente->id);
     }
@@ -301,11 +305,15 @@ class ProjetoController extends Controller
     public function updateObs(Request $request, Projeto $projeto, User $user)
     {
         $validated = $request->validate([
-            'observacoes' => ' required'
+            'observacoes' => 'nullable|string'
         ]);
-
         $pU = ProjetoUser::where(['projeto_id' => $projeto->id, 'user_id' => $user->id])->first();
-        $pU->observacoes = $validated['observacoes'];
+        if($request->has('observacoes')){
+            $pU->observacoes = $validated['observacoes'];
+        }
+        else {
+            $pU->observacoes = "";
+        }
         $pU->update();
         return redirect(route('prioridades.index', $user->id));
     }

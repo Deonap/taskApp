@@ -52,7 +52,11 @@
     <body>
         <x-app-layout>
             <div>
-                {{-- {{dd($projetosAbertos)}} --}}
+                @if(session('errors'))
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function(){alert('{{session('errors')}}')});
+                    </script>
+                @endif
                 <div class="flex justify-between items-center mb-4">
                     <div class="flex items-center text-darkBlue">
                         <h2 class="hidden md:block text-xl font-black">
@@ -183,7 +187,7 @@
                                             </td>
                                             <td>
                                                 <div class="m-auto justify-center flex flex-wrap">
-                                                    <textarea class="border-none form-input observacoes bg-transparent size-full resize-none text-start" autocomplete='off'>{{$projeto->firstTarefa()->descricao}}</textarea>
+                                                    <textarea readonly class="border-none form-input observacoes bg-transparent size-full resize-none text-start" autocomplete='off'>{{$projeto->firstTarefa()->descricao}}</textarea>
                                                 </div>
                                             </td>
                                             <td class="text-center">

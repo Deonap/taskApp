@@ -69,6 +69,7 @@ Route::post('/atualizar/estadoProjeto', [PrioridadesController::class, 'atualiza
 
 Route::put('/projetos/{projeto}/colaboradores/atualizar', [ProjetoController::class, 'atualizarColaborador'])->name('projetos.colaboradores.atualizar');
 Route::put('/projetos/{projeto}/colaboradores/remover', [ProjetoController::class, 'removerColaborador'])->name('projetos.colaboradores.remover');
+Route::delete('/projetos/{projeto}/destroy', [ProjetoController::class, 'destroy'])->name('projetos.destroy');
 
 Route::put('/projetos/{projeto}/{user}/updateTimeSpent', [ProjetoController::class, 'updateTimeSpent']);
 Route::put('/projetos/{projeto}/updateEstadoProjeto', [ProjetoController::class, 'updateEstadoProjeto']);
