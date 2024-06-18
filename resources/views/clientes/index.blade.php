@@ -45,7 +45,7 @@
                     </div>
                     <div class="flex justify-between items-center mb-4 mt-[1.75rem]">
                         <div>
-                            <input id='searchFilter' type="text" placeholder="Pesquisar..." class="rounded-md border-gray-300 focus:border-darkBlue h-[40px]"/>
+                            <input id='searchFilter' type="text" placeholder="Pesquisar..." class="rounded-md border-gray-300 focus:border-darkBlue h-[40px]" autocomplete="off"/>
                         </div>
                         <div>
                             <button id="btnAdicionarLinha" class="bg-darkBlue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">

@@ -47,7 +47,7 @@ class ProjetoController extends Controller
             'tipo_projeto_id' => 'required|exists:tipo_projetos,id',
             'estado_projeto_id' => 'exists:estado_projetos,id', // Substitua pelos tipos que você possui
             'nome' => 'string|max:255',
-            'tarefas' => 'array',
+            'tarefas' => 'nullable|array',
             'tarefas.*' => 'nullable|string', // Assumindo que as tarefas são enviadas como um array
             'users' => 'required|array|exists:users,id', // Assumindo que os colaboradores são enviados como um array
             'tempo_previsto' => 'required|string',
@@ -66,9 +66,22 @@ class ProjetoController extends Controller
             $tarefasData = array_map(function ($descricao) {
                 return ['descricao' => $descricao];
             }, $validatedData['tarefas']);
-
-            $projeto->tarefas()->createMany($tarefasData);
         }
+        if (array_filter($tarefasData, function ($tarefa) {
+            return $tarefa['descricao'] === null;
+        })) {
+            $tarefasData = array_map(function ($tarefa) {
+                if ($tarefa['descricao'] === null) {
+                    return ['descricao' => 'Sem observações'];
+                }
+                return $tarefa;
+            }, $tarefasData);
+        }
+        
+        // Create the tasks
+        $projeto->tarefas()->createMany($tarefasData);
+
+
         // Anexe os usuários relacionados ao projeto
         $projeto->users()->sync($validatedData['users']);
 
