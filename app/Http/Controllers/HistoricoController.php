@@ -25,7 +25,6 @@ class HistoricoController extends Controller
         // Faça as consultas aqui para buscar os dados das tabelas
         $projetosEmAberto = $this->filtrarProjetosPorEstadoEColaborador('Em desenvolvimento', $colaboradorId, $inicioSemana, $fimSemana);
         $projetosPendentes = $this->filtrarProjetosPorEstadoEColaborador('Pendente', $colaboradorId, $inicioSemana, $fimSemana);
-        $projetosConcluidos = $this->filtrarProjetosPorEstadoEColaborador('Concluídos', $colaboradorId, $inicioSemana, $fimSemana);
         $projetosComOutros = $this->filtrarProjetosComOutrosColaboradores($request);
 
         logger()->info('Request recebido:', $request->all());
@@ -35,7 +34,7 @@ class HistoricoController extends Controller
         $tiposCliente= TipoCliente::all();
         $tiposProjeto = TipoProjeto::all();
 
-        return view('historico.index', compact( 'colaboradores', 'inicioSemana', 'fimSemana', 'projetosEmAberto', 'projetosPendentes', 'projetosConcluidos', 'projetosComOutros', 'clientes', 'tiposCliente', 'tiposProjeto'));
+        return view('historico.index', compact( 'colaboradores', 'inicioSemana', 'fimSemana', 'projetosEmAberto', 'projetosPendentes', 'projetosComOutros', 'clientes', 'tiposCliente', 'tiposProjeto'));
     }
 
     private function filtrarProjetosPorEstadoEColaborador($estadoNome, $colaboradorId, $inicioSemana, $fimSemana)
@@ -48,27 +47,9 @@ class HistoricoController extends Controller
             $query->where('users.id', $colaboradorId);
         })
         // Filtra projetos atualizados dentro do período da semana selecionada
-        ->whereBetween('updated_at', [$inicioSemana, $fimSemana])
+        ->whereBetween('created_at', [$inicioSemana, $fimSemana])
         ->get();
     }
-
-    public function filtrarProjetosConcluidos(Request $request)
-    {
-        $colaboradorId = $request->query('colaborador_id');
-        $inicioSemana = $request->query('inicio_semana');
-        $fimSemana = $request->query('fim_semana');
-        $estado = 'Concluído';
-
-
-        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])
-            ->whereHas('users', function ($query) use ($colaboradorId) {
-                $query->where('id', $colaboradorId);
-            })->whereBetween('updated_at', [$inicioSemana, $fimSemana])
-            ->where('estado_projeto_id', '=', 5)->get();
-
-        return $projetos;
-    }
-
 
     public function filtrarProjetosComOutrosColaboradores(Request $request)
     {

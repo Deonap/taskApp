@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Projeto;
 use App\Models\Cliente;
@@ -26,7 +27,6 @@ class PrioridadesController extends Controller
         // Carregar projetos com informações específicas do primeiro colaborador
         $projetosEmAberto = $this->filtrarProjetosPorEstadoEColaborador('Em desenvolvimento', $colaboradorId);
         $projetosPendentes = $this->filtrarProjetosPorEstadoEColaborador('Pendente', $colaboradorId);
-        $projetosConcluidos = $this->filtrarProjetosPorEstadoEColaborador('Concluído', $colaboradorId);
 
         $projetosComOutros = $this->filtrarProjetosComOutrosColaboradores($colaboradorId);
 
@@ -37,7 +37,7 @@ class PrioridadesController extends Controller
         $tiposCliente = TipoCliente::orderBy('nome', 'asc')->get();
         $tiposProjeto = TipoProjeto::orderBy('nome', 'asc')->get();
 
-        return view('prioridades.index', compact('selectedUser', 'colaboradores', 'projetosEmAberto', 'projetosPendentes', 'projetosConcluidos','projetosComOutros', 'colaboradorId', 'clientes', 'tiposCliente', 'tiposProjeto'));
+        return view('prioridades.index', compact('selectedUser', 'colaboradores', 'projetosEmAberto', 'projetosPendentes','projetosComOutros', 'colaboradorId', 'clientes', 'tiposCliente', 'tiposProjeto'));
     }
 
     private function filtrarProjetosPorEstadoEColaborador($estadoNome, $colaboradorId)
@@ -51,7 +51,7 @@ class PrioridadesController extends Controller
                 $query->where('users.id', $colaboradorId);
             }])->whereHas('estadoProjeto', function ($query) use ($estadoNome) {
                 $query->where('nome', $estadoNome);
-            })->get();
+            })->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
     }
 
     public function filtrarProjetosComOutrosColaboradores($colaboradorId)
@@ -61,7 +61,9 @@ class PrioridadesController extends Controller
             $query->where('id', $colaboradorId);
         })->whereHas('users', function ($query) use ($colaboradorId) {
                 $query->where('id', '!=', $colaboradorId);
-            })->with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])->where('estado_projeto_id','!=','5')->get();
+            })->with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])->where('estado_projeto_id','!=','5')
+            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]) // Add this line
+            ->get();
 
         $colaboradores = User::where('tipo', '=', 'colaborador')->get();
         $estados = EstadoProjeto::all();
@@ -80,6 +82,7 @@ class PrioridadesController extends Controller
             ->whereHas('estadoProjeto', function ($query) use ($estado) {
                 $query->where('nome', $estado);
             })
+            ->whereBetween('projetos.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->orderByRaw('ISNULL(projeto_users.prioridade), projeto_users.prioridade')
             ->select('projetos.*') // Evita colunas duplicadas
             ->get();
@@ -98,27 +101,11 @@ class PrioridadesController extends Controller
                 $query->where('id', $colaboradorId);
             })->whereHas('estadoProjeto', function ($query) use ($estado) {
                 $query->where('nome', $estado);
-            })->get();
+            })->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
 
         $estados = EstadoProjeto::all();
 
         return response()->json(['projetos' => $projetos, 'estadoProjetos' => $estados]);
-    }
-
-    public function filtrarProjetosConcluidos(Request $request)
-    {
-        $colaboradorId = $request->query('colaborador_id');
-        $estado = 'Concluído'; // Define o estado que você está interessado
-
-        $projetos = Projeto::with(['tarefas', 'tipoCliente', 'cliente', 'estadoProjeto', 'users', 'tipoProjeto'])
-            ->whereHas('users', function ($query) use ($colaboradorId) {
-                $query->where('id', $colaboradorId);
-            })->whereHas('estadoProjeto', function ($query) use ($estado) {
-                $query->where('nome', $estado);
-            })->get();
-
-        $colaboradores = User::where('tipo', '=', 'colaborador')->get();
-        return response()->json(['projetos' => $projetos, 'colaboradores' => $colaboradores]);
     }
 
     private function buscarProjetosPorColaborador($colaboradorId, $estadoNome)
