@@ -339,10 +339,9 @@
                                                 <div class="mx-auto justify-center flex flex-wrap">
                                                     <textarea name="tarefas[]" class="observacoes size-full resize-none text-start"></textarea>
                                                 </div>
-                                                {{-- <input type="text" name="tarefas[]" class="w-[90%]"> --}}
                                             </td>
                                             <td class="text-center">
-                                                <input type="text" class="text-center w-[55%]" placeholder="hh:mm" name="tempo_previsto" pattern="[0-9]{0,4}:[0-5][0-9]">
+                                                <input type="text" class="text-center w-[55%]" placeholder="hh:mm" value="10:00" name="tempo_previsto" pattern="[0-9]{0,4}:[0-5][0-9]">
                                             </td>
                                             <td>
                                                 <div class="flex items-end">

@@ -69,8 +69,12 @@ class Projeto extends Model
         return $sum;
     }
 
-    public function firstTarefa(){
-        return $this->tarefas[0];
+    public function firstTarefa()
+    {
+        if ($this->tarefas->isNotEmpty()) {
+            return $this->tarefas->first();
+        }
+        return (object)['descricao' => ''];
     }
 
 }
