@@ -1,5 +1,6 @@
 <html lang="en">
     <head>
+        <title>Tipo de Projeto</title>
         <style>
             th{
                 padding: 0.5rem 1rem 0.5rem 1rem;

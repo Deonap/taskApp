@@ -1,5 +1,6 @@
 <html lang="en">
     <head>
+        <title>Prioridades</title>
         <style>
             #toggleFerias:checked+.toggle-line {
                 background-color: rgb(10,56,87);

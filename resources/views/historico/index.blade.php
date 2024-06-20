@@ -1,5 +1,6 @@
 <html lang="en">
     <head>
+        <title>Histórico</title>
         <style>
             th{
                 /* px-3 py-1 text-left font-bold text-black uppercase tracking-wider border-b */

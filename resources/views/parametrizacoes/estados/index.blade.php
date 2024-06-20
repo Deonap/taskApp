@@ -1,6 +1,7 @@
 <html lang="en">
 
 <head>
+    <title>Estados</title>
     <style>
         th {
             padding: 0.5rem 1rem 0.5rem 1rem;

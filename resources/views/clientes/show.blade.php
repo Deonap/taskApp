@@ -1,5 +1,6 @@
 <html lang='en'>
     <head>
+        <title>Cliente: {{$cliente->nome}}</title>
         <style>
             .content-margin {
                 margin: 50px;
