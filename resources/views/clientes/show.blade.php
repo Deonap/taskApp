@@ -116,13 +116,13 @@
                                         <th scope="col" class="w-[18%]">
                                             Notas Iniciais
                                         </th>
-                                        <th scope="col" class="text-center w-[11%]">
+                                        <th scope="col" class="text-center w-[12%]">
                                             Tempo Previsto
                                         </th>
                                         <th scope="col" class="w-[20%]">
                                             Colaborador
                                         </th>
-                                        <th scope="col" class="text-center w-[11%]">
+                                        <th scope="col" class="text-center w-[12%]">
                                             Tempo Investido
                                         </th>
                                         <th scope="col" class="w-[10%] text-right pr-[5rem]">
@@ -275,7 +275,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="flex space-x-3 mx-auto">
+                                                <div class="flex space-x-3 justify-center">
                                                     <div>
                                                         @foreach($projeto->users as $user)
                                                             <div class="mx-auto @if(!$loop->last) border-b border-gray-400 @endif p-1">
@@ -342,7 +342,7 @@
                                                 </div>
                                             </td>
                                             <td class="text-center">
-                                                <input type="text" class="text-center w-[55%]" placeholder="hh:mm" value="10:00" name="tempo_previsto" pattern="[0-9]{0,4}:[0-5][0-9]">
+                                                <input type="text" class="text-center w-[55%]" placeholder="hh:mm" name="tempo_previsto" pattern="[0-9]{0,4}:[0-5][0-9]">
                                             </td>
                                             <td>
                                                 <div class="flex items-end">
@@ -476,13 +476,13 @@
                                         <th scope="col" class="w-[18%]">
                                             Notas Iniciais
                                         </th>
-                                        <th class="text-center w-[11%]">
+                                        <th class="text-center w-[12%]">
                                             Tempo Previsto
                                         </th>
                                         <th scope="col" class="w-[20%]">
                                             Colaborador
                                         </th>
-                                        <th class="text-center w-[11%]">
+                                        <th class="text-center w-[12%]">
                                             Tempo Investido
                                         </th>
                                         <th class="w-[10%] text-right pr-[5rem]">
